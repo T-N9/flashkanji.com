@@ -1,16 +1,19 @@
-import { Button } from "@nextui-org/react";
-import KanjiStrokeViewer from "@/components/KanjiStrokeViewer"
+import ContributionSection from "@/components/Home/ContributionSection";
+import ExampleSection from "@/components/Home/ExampleSection";
+import HeroSection from "@/components/Home/HeroSection";
+import JukugoSection from "@/components/Home/JukugoSection";
+import QuizSection from "@/components/Home/QuizSection";
+import ViewerSection from "@/components/Home/ViewerSection";
 
 export default function Home() {
   return (
     <main>
-      <h1 className="heading-1">
-        Master Kanji with FlashKanji
-        フラッシュ漢字
-      </h1>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro nulla quas possimus obcaecati dignissimos suscipit est quam placeat labore vel, a delectus repellat, sit unde ipsam fuga, dolor dolorum distinctio?</p>
-      <Button>Hello</Button>
-      <KanjiStrokeViewer kanji={"普"} isSearch={true} />
+      <HeroSection/>
+      <ExampleSection/>
+      <ViewerSection/>
+      <JukugoSection/>
+      <QuizSection/>
+      <ContributionSection/>
     </main>
   );
 }

@@ -6,4 +6,12 @@
     .heading-1 {
         @apply font-bold text-5xl;
     }
+
+    .btn-primary {
+        @apply !bg-primary !text-white !tracking-tight;
+    }
+
+    .main-container {
+        @apply max-w-[1280px] mx-auto px-4 md:px-6;
+    }
 }

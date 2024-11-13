@@ -10,7 +10,11 @@ export default {
   ],
   theme: {
     extend: {
-      
+      colors : {
+        primary : '#F57C00',
+        light : '#fff1e0',
+        dark : '#2f4858'
+      }
     },
   },
   darkMode: "class",

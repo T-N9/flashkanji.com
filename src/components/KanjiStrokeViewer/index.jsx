@@ -141,7 +141,7 @@ const KanjiStrokeViewer = ({ kanji, isSearch = false }) => {
                 variant="outlined"
                 size="sm"
                 color="orange"
-                className="kanjivg-button w-fit rounded-full border-2 border-orange-500 px-5 text-sm py-2"
+                className="kanjivg-button w-fit rounded-full border-2 border-primary px-5 text-sm py-2"
               >
                 Animate
               </button>
