@@ -1,14 +1,23 @@
-import {NextUIProvider} from "@nextui-org/react";
+'use client'
+import { NextUIProvider } from "@nextui-org/react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+const queryClient = new QueryClient();
 
 const Providers = ({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) => {
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   return (
-    <NextUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextUIProvider>
         {children}
-    </NextUIProvider>
+      </NextUIProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+
   )
 }
 

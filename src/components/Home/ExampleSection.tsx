@@ -1,5 +1,12 @@
+'use client'
+import { useRandomKanji } from "@/services/kanji";
+import KanjiCard from "../cards/KanjiCard";
+import LoadingKanjiCard from "../cards/LoadingKanjiCard";
 
 const ExampleSection = () => {
+
+    const { data, isLoading, error } = useRandomKanji(4);
+
     return (
         <section className="w-full py-12 md:py-14 lg:py-16">
             <div className="main-container space-y-12 ">
@@ -55,11 +62,24 @@ const ExampleSection = () => {
                     <div className="table mb-4 mx-auto rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">
                         Example kanjis
                     </div>
-                    {/* <div className="mx-auto grid items-start gap-4 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-4 grid-cols-2">
-          {exampleKanji?.map((kanji, index) => {
-            return <FlashCard key={index} item={kanji}/>;
-          })}
-        </div> */}
+                    <div className="mx-auto grid items-start gap-4 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-4 grid-cols-2">
+                        {
+                            isLoading ? (
+                                <>
+                                    <LoadingKanjiCard />
+                                    <LoadingKanjiCard />
+                                    <LoadingKanjiCard />
+                                    <LoadingKanjiCard />
+                                </>
+                            )
+                                :
+                                data?.map((kanji, index) => {
+                                    return <KanjiCard key={index} item={kanji} />;
+                                })
+                        }
+
+
+                    </div>
                 </div>
             </div>
         </section>
