@@ -1,0 +1,293 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;300;400;500;700;800;900&family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: 0px !important;
+}
+
+.card {
+  width: 99%;
+  height: 200px;
+  cursor: pointer;
+
+  /*transition effects */
+  -webkit-transition: -webkit-transform 0.6s;
+  -moz-transition: -moz-transform 0.6s;
+  -o-transition: -o-transform 0.6s;
+  transition: transform 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.card.flipped {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.card .front,
+.card .back {
+  display: block;
+  text-align: center;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card .back {
+  text-align: center;
+  line-height: 25px;
+}
+
+.card .back {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.card.jukugo_card.flipped {
+  -webkit-transform: rotateX(180deg);
+  -moz-transform: rotateX(180deg);
+  -o-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+}
+
+.card.jukugo_card .back {
+  -webkit-transform: rotateY(180deg) rotate(180deg);
+  -moz-transform: rotateY(180deg) rotate(180deg);
+  -o-transform: rotateY(180deg) rotate(180deg);
+  transform: rotateY(180deg) rotate(180deg);
+}
+
+.select-box>div {
+  min-width: unset !important;
+}
+
+.flashSwiper {
+  width: 50vw;
+  padding: 3rem 0rem !important;
+  /* background-color: #33333320; */
+  border-radius: 20px;
+}
+
+.flashSwiper .card {
+  width: 500px;
+  height: 500px;
+}
+
+.flashSwiper .card .back {
+  text-align: center;
+  line-height: 70px;
+}
+
+.flashSwiper .swiper-slide-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flashSwiper .swiper-button-left {
+  left: 0;
+}
+
+.flashSwiper .swiper-button-next {
+  right: 0;
+}
+
+.flashSwiper .swiper-pagination {
+  color: white;
+}
+
+
+.jukugoSwiper {
+  width: 50vw;
+  padding: 3rem 0rem !important;
+  /* background-color: #33333320; */
+  border-radius: 20px;
+}
+
+.jukugoSwiper .card {
+  width: 500px;
+  height: 300px;
+}
+
+.jukugoSwiper .card .back {
+  text-align: center;
+  line-height: 70px;
+}
+
+.jukugoSwiper .swiper-slide-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.jukugoSwiper .swiper-button-left {
+  left: 0;
+}
+
+.jukugoSwiper .swiper-button-next {
+  right: 0;
+}
+
+.jukugoSwiper .swiper-pagination {
+  color: white;
+}
+
+.option-item .font-light.select-none.cursor-pointer.mt-px {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rainbow-text {
+  background: linear-gradient(to right,
+      #ef5350,
+      #f48fb1,
+      #7e57c2,
+      #2196f3,
+      #26c6da,
+      #43a047,
+      #eeff41,
+      #f9a825,
+      #ff5722);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media screen and (max-width: 830px) {
+
+  .flashSwiper,
+  .jukugoSwiper {
+    width: 90vw;
+  }
+
+  .flashSwiper .card {
+    width: 500px;
+    height: 500px;
+  }
+
+  .jukugoSwiper .card {
+    width: 500px;
+    height: 300px;
+  }
+
+  .flashSwiper .card .back {
+    text-align: center;
+    line-height: 70px;
+  }
+
+  .jukugoSwiper .card .back {
+    text-align: center;
+    line-height: 70px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+
+  .flashSwiper,
+  .jukugoSwiper {
+    width: 90vw;
+    padding: 6rem 0 !important;
+  }
+
+  .flashSwiper .swiper-button-prev {
+    top: 29rem;
+  }
+
+  .flashSwiper .swiper-button-next {
+    top: 29rem;
+  }
+
+  .flashSwiper .card {
+    width: 300px;
+    height: 300px;
+  }
+
+  .flashSwiper .card .back {
+    text-align: center;
+    line-height: 40px;
+  }
+
+  .jukugoSwiper .swiper-button-prev {
+    top: 23rem;
+  }
+
+  .jukugoSwiper .swiper-button-next {
+    top: 23rem;
+  }
+
+  .jukugoSwiper .card {
+    width: 300px;
+    height: 200px;
+  }
+
+  .jukugoSwiper .card .back {
+    text-align: center;
+    line-height: 40px;
+  }
+}
+
+.modal-kanji p {
+  display: none;
+}
+
+#kanji-image p {
+  display: none;
+}
+
+.group-image figcaption {
+  color: #ef5350;
+}
+
+.outlined_title {
+  color: white !important;
+  -webkit-text-stroke: #fb8c00;
+  -webkit-text-stroke-width: 2px;
+}
+
+button {
+  letter-spacing: 2px;
+}
+
+.search-view-form svg {
+  width: 400px;
+  height: 400px;
+}
+
+@media screen and (max-width : 380px) {
+  .search-view-form svg {
+    width: 330px;
+    height: 330px;
+  }
+}
+
+.data-\[active\=true\]\:font-semibold[data-active=true] {
+  color: orange !important;
+}
+
+#radical-images {
+  display: flex;
+  gap: 1rem;
+}
+
+#kanji-svg text {
+  font-size: 5px;
+}
+
+nav header {
+  max-width: 1280px !important;
+}
