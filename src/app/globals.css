@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .heading-1 {
+        @apply font-bold text-5xl;
+    }
+}
