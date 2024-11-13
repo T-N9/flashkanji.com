@@ -3,6 +3,8 @@ import "./globals.css";
 import "@/styles/style.css"
 import Providers from "./Providers";
 import { poppins } from "@/fonts";
+import Link from "next/link";
+import HeadingBar from "@/components/Navigation/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,6 +22,7 @@ export default function RootLayout({
         className={`${poppins.className} antialiased text-dark`}
       >
         <Providers>
+          <HeadingBar/>
           {children}
         </Providers>
       </body>
