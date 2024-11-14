@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
+    "@phosphor-icons/react": "^2.1.7",
     "axios": "^1.7.7",
     "framer-motion": "^11.11.13",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "react-query": "^3.39.3"
+    "react-query": "^3.39.3",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
