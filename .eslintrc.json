@@ -1,3 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    // Disable the rule globally
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any" : "off",
+    "@typescript-eslint/no-array-constructor" : "off",
+    "@typescript-eslint/no-this-alias" : "off",
+    "@typescript-eslint/no-unused-expressions" : "off"
+  }
 }

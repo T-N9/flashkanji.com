@@ -5,7 +5,7 @@ import LoadingKanjiCard from "../cards/LoadingKanjiCard";
 
 const ExampleSection = () => {
 
-    const { data, isLoading, error } = useRandomKanji(4);
+    const { data, isLoading } = useRandomKanji(4);
 
     return (
         <section className="w-full py-12 md:py-14 lg:py-16">

@@ -37,7 +37,7 @@ export function FlashDetailModal() {
   };
 
   // console.log({ jukugoData });
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { onOpenChange, onClose } = useDisclosure();
 
   return (
     <>

@@ -9,7 +9,7 @@ import {
   import { KanjivgAnimate } from "./kanjivgAnimate";
   
   // These colours are used to colour the different groups of the kanji.
-  var colours = Array("red", "orange", "green", "blue", "goldenrod");
+  var colours = ["red", "orange", "green", "blue", "goldenrod"];
   
   // const kanjiSVGID = "kanji-svg";
   
