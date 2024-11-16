@@ -2,18 +2,23 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // Check if the pathname is "/kanji" and has no query parameters
-  if (request.nextUrl.pathname === "/kanji" && !request.nextUrl.searchParams.has("chapter") && !request.nextUrl.searchParams.has("level")) {
-    // Clone the URL and add the query parameters
-    const url = request.nextUrl.clone();
-    url.searchParams.set("chapter", "1");
-    url.searchParams.set("level", "5");
+  const url = request.nextUrl;
 
-    // Redirect to the new URL
-    return NextResponse.redirect(url);
+  // Check if pathname is "/kanji"
+  if (url.pathname === "/kanji") {
+    const hasDefaultParams =
+      url.searchParams.has("chapter") && url.searchParams.has("level");
+
+    // Skip if query already has `chapter` or `level` OR if other params like `chapters` exist
+    if (!hasDefaultParams && !url.searchParams.has("chapters")) {
+      const updatedUrl = url.clone();
+      updatedUrl.searchParams.set("chapter", "1");
+      updatedUrl.searchParams.set("level", "5");
+      return NextResponse.redirect(updatedUrl);
+    }
   }
 
-  // Allow the request to proceed if it doesn't match the criteria
+  // Proceed as normal for all other cases
   return NextResponse.next();
 }
 

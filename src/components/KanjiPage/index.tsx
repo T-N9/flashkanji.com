@@ -2,15 +2,14 @@
 import React, { useEffect } from 'react'
 import { KanjiSetting } from './KanjiSetting'
 import { useKanjiSetting } from './useKanjiSetting';
-import { useKanjiByChapterAndLevel } from '@/services/kanji';
+import { useKanjiByChapterAndLevel, useKanjiByMultipleChapters } from '@/services/kanji';
 import KanjiCard from '../cards/KanjiCard';
 import { LoadingGround } from '../common/LoadingGround';
 
 const KanjiGround = () => {
 
     const {
-        noChapters,
-        setSelectedMultiChapters,
+        chapters,
         level,
         chapter,
         setNoChapters,
@@ -19,7 +18,7 @@ const KanjiGround = () => {
         n3NoChapters
     } = useKanjiSetting();
 
-    const { data, isLoading, error } = useKanjiByChapterAndLevel(
+    const { data, isLoading, error } = chapters?.length ? useKanjiByMultipleChapters(chapters.toString(), level ? parseInt(level) : null) : useKanjiByChapterAndLevel(
         chapter ? parseInt(chapter) : null,
         level ? parseInt(level) : null
     );
@@ -52,7 +51,7 @@ const KanjiGround = () => {
             <KanjiSetting />
 
             <div
-                className={`relative transition-all duration-200 ease-out container w-full flex flex-col items-center p-3`}
+                className={`relative transition-all main-container duration-200 ease-out container w-full flex flex-col items-center p-3`}
             >
                 <div className="flex w-full justify-center gap-4">
                     {/* <div className="w-[300px] hidden lg:block">

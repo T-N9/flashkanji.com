@@ -1,5 +1,6 @@
 import {
   fetchKanjiByChapterAndLevel,
+  fetchKanjiByMultipleChapters,
   fetchKanjiDetail,
   fetchRandomKanji,
 } from "@/api/kanjiRoute";
@@ -26,9 +27,20 @@ export const useKanjiByChapterAndLevel = (chapter: number | null, level: number 
   return useQuery({
     queryKey: ["kanjiByChapterAndLevel", chapter, level],
     queryFn: () => fetchKanjiByChapterAndLevel(chapter!, level!),
-    enabled: !!chapter && !!level, // Only run the query if both chapter and level are provided
-    staleTime: 5 * 60 * 1000, // 5 minutes before data is stale
-    cacheTime: 10 * 60 * 1000, // Cache for 10 minutes
-    placeholderData: [], // Optional: provide initial data
+    enabled: !!chapter && !!level, 
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000, 
+    placeholderData: [],
   });
 };
+
+export const useKanjiByMultipleChapters = (chapters: string | null, level: number | null) => {
+  return useQuery({
+    queryKey: ["kanjiByMultipleChapters", chapters, level],
+    queryFn: () => fetchKanjiByMultipleChapters(chapters!, level!),
+    enabled: !!chapters && !!level,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000, 
+    placeholderData: [],
+  });
+}; 

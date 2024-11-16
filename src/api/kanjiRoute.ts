@@ -17,6 +17,16 @@ export const fetchKanjiByChapterAndLevel = async (
   return response.data;
 };
 
+export const fetchKanjiByMultipleChapters = async (
+  chapters: string,
+  level: number
+): Promise<Kanji[]> => {
+  const response = await apiClient.get("/kanji", {
+    params: { chapters, level },
+  });
+  return response.data;
+}
+
 /* From KanjiAPI backend */
 export const fetchKanjiDetail = async (char: string) => {
   if (!char) throw new Error("Kanji character is required");
