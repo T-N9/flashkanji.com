@@ -1,13 +1,15 @@
 import KanjiGround from '@/components/KanjiPage'
 import { KanjiDetailModal } from '@/components/modals/KanjiDetailModal'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const KanjiPage = () => {
   return (
-   <>
-     <KanjiGround/>
-     <KanjiDetailModal/>
-   </>
+    <>
+      <Suspense fallback={<p>Loading...</p>}>
+        <KanjiGround />
+      </Suspense>
+      <KanjiDetailModal />
+    </>
   )
 }
 
