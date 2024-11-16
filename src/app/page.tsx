@@ -4,7 +4,7 @@ import HeroSection from "@/components/Home/HeroSection";
 import JukugoSection from "@/components/Home/JukugoSection";
 import QuizSection from "@/components/Home/QuizSection";
 import ViewerSection from "@/components/Home/ViewerSection";
-import { FlashDetailModal } from "@/components/modals/KanjiDetailModal";
+import { KanjiDetailModal } from "@/components/modals/KanjiDetailModal";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <JukugoSection/>
       <QuizSection/>
       <ContributionSection/>
-      <FlashDetailModal />
+      <KanjiDetailModal />
     </main>
   );
 }

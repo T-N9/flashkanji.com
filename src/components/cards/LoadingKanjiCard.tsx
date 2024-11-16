@@ -3,7 +3,7 @@ const LoadingKanjiCard: React.FC = () => {
   return (
     <div className="relative">
       <div
-        className={`bg-dark relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md !cursor-progress`}
+        className={`bg-gradient-to-br from-black via-gray-900 to-orange-900 relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md !cursor-progress`}
       >
         {/* Front Side */}
         <span className="bg-gray-500 rounded text-gray-400 w-12 h-5 animate-pulse mx-auto table"></span>

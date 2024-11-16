@@ -15,7 +15,7 @@ import {
 import { Button, Spinner } from "@nextui-org/react";
 
 
-export function FlashDetailModal() {
+export function KanjiDetailModal() {
   const { isDetailModalOpen, toggleDetailModal, setCurrentDetail, currentDetail } = useGeneralStore((state) => state);
 
   const {data : charData, isLoading } = useKanjiDetail(currentDetail || "");
