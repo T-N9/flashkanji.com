@@ -47,12 +47,6 @@ const KanjiGround = () => {
         }
     };
 
-    console.log({ data })
-
-    if(isLoading) {
-        console.log({isLoading})
-    }
-
     return (
         <div>
             <KanjiSetting />

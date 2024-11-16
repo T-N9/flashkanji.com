@@ -17,7 +17,7 @@ const ViewerSection = () => {
         </p>
       </div>
       <div className="mx-auto w-full max-w-sm space-y-2">
-        <KanjiStrokeViewer kanji={"普"} isSearch={true} />
+        <KanjiStrokeViewer kanji={"愛"} isSearch={true} />
       </div>
     </div>
   </section>
