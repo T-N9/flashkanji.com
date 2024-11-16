@@ -12,6 +12,8 @@ export const useKanjiSetting = () => {
     setNoChapters,
     setSelectedMultiChapters,
     selectedMultiChapters,
+    isFlippedMode,
+    toggleIsFlippedMode
   } = useFlashGroundState();
 
   const searchParams = useSearchParams();
@@ -72,5 +74,7 @@ export const useKanjiSetting = () => {
     n4NoChapters,
     n3NoChapters,
     handleIncludedChapterClick,
+    isFlippedMode,
+    toggleIsFlippedMode
   };
 };

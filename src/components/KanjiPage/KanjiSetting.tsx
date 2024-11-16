@@ -1,12 +1,16 @@
 "use client";
 
-import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem } from "@nextui-org/react";
+import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, Tooltip } from "@nextui-org/react";
 
 /* Hook */
 import { useKanjiSetting } from "./useKanjiSetting";
-import { RowsPlusBottom } from "@phosphor-icons/react";
+import { ArrowsClockwise, RowsPlusBottom, Shuffle } from "@phosphor-icons/react";
 
-export const KanjiSetting = () => {
+interface KanjiSettingProps {
+  handleShuffle: () => void; // Add this prop type
+}
+
+export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => {
   const {
     noChapters,
     selectedMultiChapters,
@@ -15,6 +19,7 @@ export const KanjiSetting = () => {
     chapter,
     updateQueryParams,
     handleIncludedChapterClick,
+    toggleIsFlippedMode
   } = useKanjiSetting();
 
   return (
@@ -25,67 +30,69 @@ export const KanjiSetting = () => {
       <div
         className={`w-full flex flex-col lg:flex-row justify-between gap-4 items-center transition-all duration-200 ease-in `}
       >
-        <div className="flex gap-4 w-full md:w-fit justify-center items-center">
-          <div className="flex w-full md:w-36 min-w-36 select-box flex-col gap-6">
-            <Select
-              // @ts-ignore
-              items={[5, 4, 3, 2, 1]}
-              color="default"
-              size="sm"
-              className="drop-shadow"
-              label="Select Level"
-              defaultSelectedKeys={level?.toString()}
-              onSelectionChange={() => {
-                setSelectedMultiChapters([]);
-              }}
-            >
-              {[5, 4, 3, 2, 1].map((item) => (
-                <SelectItem
-                  key={item}
-                  onClick={() => {
-                    updateQueryParams('level', item.toString())
-                  }}
-                  value={"N" + item.toString()}
-                  isDisabled={item <= 2} // Assuming that levels 3 and above are disabled
-                  isSelected={"N" + item === level}
-                >
-                  {"N" + item.toString()}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div className="flex w-full md:w-36 min-w-36 select-box flex-col gap-6">
-            <Select
-              // @ts-ignore
-              items={noChapters}
-              color="default"
-              size="sm"
-              className="drop-shadow"
-              label="Select Chapter"
-              defaultSelectedKeys={[
+        <div className="flex gap-4 w-full md:w-fit justify-center items-center flex-wrap">
+          <div className="flex gap-4 w-full md:w-fit">
+            <div className="flex w-full md:w-36 min-w-36 select-box flex-col gap-6">
+              <Select
                 // @ts-ignore
-                noChapters[chapter - 1]?.toString(),
-              ]}
-              onSelectionChange={() => {
-                setSelectedMultiChapters([]);
-              }}
-              // @ts-ignore
-              selectedKeys={[chapter?.toString() || '']}
-            >
-              {noChapters.map((item) => (
-                <SelectItem
-                  key={item}
-                  onClick={() => {
-                    updateQueryParams('chapter', item.toString())
-                  }}
-                  value={item.toString()}
-                  isSelected={item.toString() === chapter}
-                  textValue={item.toString()}
-                >
-                  {item}
-                </SelectItem>
-              ))}
-            </Select>
+                items={[5, 4, 3, 2, 1]}
+                color="default"
+                size="sm"
+                className="drop-shadow"
+                label="Select Level"
+                defaultSelectedKeys={level?.toString()}
+                onSelectionChange={() => {
+                  setSelectedMultiChapters([]);
+                }}
+              >
+                {[5, 4, 3, 2, 1].map((item) => (
+                  <SelectItem
+                    key={item}
+                    onClick={() => {
+                      updateQueryParams('level', item.toString())
+                    }}
+                    value={"N" + item.toString()}
+                    isDisabled={item <= 2} // Assuming that levels 3 and above are disabled
+                    isSelected={"N" + item === level}
+                  >
+                    {"N" + item.toString()}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            <div className="flex w-full md:w-36 min-w-36 select-box flex-col gap-6">
+              <Select
+                // @ts-ignore
+                items={noChapters}
+                color="default"
+                size="sm"
+                className="drop-shadow"
+                label="Select Chapter"
+                defaultSelectedKeys={[
+                  // @ts-ignore
+                  noChapters[chapter - 1]?.toString(),
+                ]}
+                onSelectionChange={() => {
+                  setSelectedMultiChapters([]);
+                }}
+                // @ts-ignore
+                selectedKeys={[chapter?.toString() || '']}
+              >
+                {noChapters.map((item) => (
+                  <SelectItem
+                    key={item}
+                    onClick={() => {
+                      updateQueryParams('chapter', item.toString())
+                    }}
+                    value={item.toString()}
+                    isSelected={item.toString() === chapter}
+                    textValue={item.toString()}
+                  >
+                    {item}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
           </div>
           <Popover backdrop="opaque" placement="bottom" showArrow={true}>
             <PopoverTrigger>
@@ -134,6 +141,31 @@ export const KanjiSetting = () => {
 
             </PopoverContent>
           </Popover>
+
+          <Tooltip className="font-primary-san" content="Shuffle" color="primary" placement="bottom">
+            <Button
+              onClick={() => handleShuffle()}
+              variant="bordered"
+              className=" text-info rounded-full"
+              title="Shuffle"
+            >
+              <Shuffle size={32} />
+            </Button>
+          </Tooltip>
+
+          <Tooltip className="font-primary-san" content="Flip All" color="primary" placement="bottom">
+            <Button
+              onClick={() => {
+                toggleIsFlippedMode();
+              }}
+              isIconOnly
+              // variant="gradient"
+              className="bg-dark rounded-full"
+              title="Flip All"
+            >
+              <ArrowsClockwise size={32} color="#fff" />
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </section>

@@ -3,6 +3,7 @@ import { Kanji } from "@/types/kanji";
 import { Button } from "@nextui-org/react";
 import { Info } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
+import { useKanjiSetting } from "../KanjiPage/useKanjiSetting";
 
 interface KanjiCardProps {
   item: Kanji;
@@ -14,6 +15,8 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
   const [isFlipped, setIsFlipped] = useState(false);
   const {  toggleDetailModal, setCurrentDetail } = useGeneralStore((state) => state);
 
+  const {isFlippedMode} = useKanjiSetting();
+
   const handleOpen = (character: string) => {
     toggleDetailModal()
     setCurrentDetail(character);
@@ -23,6 +26,10 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
   useEffect(() => {
     setIsFlipped(false);
   }, [item]);
+
+  useEffect(() => {
+    setIsFlipped(isFlippedMode);
+  }, [isFlippedMode]);
 
   return (
     <div className="relative">
