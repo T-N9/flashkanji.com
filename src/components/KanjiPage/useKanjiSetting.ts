@@ -51,7 +51,7 @@ export const useKanjiSetting = () => {
 
   const handleIncludedChapterClick = (item: number) => {
     const isSelected = selectedMultiChapters.includes(item);
-    console.log({item, isSelected})
+    // console.log({item, isSelected})
     setSelectedMultiChapters(
       isSelected
         ? selectedMultiChapters.filter((selectedItem) => selectedItem !== item)
@@ -59,7 +59,7 @@ export const useKanjiSetting = () => {
     );
   };
 
-  console.log({selectedMultiChapters})
+  // console.log({selectedMultiChapters})
 
   return {
     noChapters,

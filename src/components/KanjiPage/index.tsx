@@ -16,6 +16,7 @@ const KanjiGround = () => {
         chapters,
         level,
         chapter,
+        selectedMultiChapters,
         setNoChapters,
         n5NoChapters,
         n4NoChapters,
@@ -33,7 +34,7 @@ const KanjiGround = () => {
     );
 
     const { data, isLoading, error } =
-        Array.isArray(chapters) && chapters.length > 0
+        Array.isArray(selectedMultiChapters) && selectedMultiChapters.length > 0
             ? multipleChaptersData
             : singleChapterData;
 
@@ -67,9 +68,13 @@ const KanjiGround = () => {
     }
 
     useEffect(() => {
+        if (data && JSON.stringify(data) !== JSON.stringify(kanjiData)) {
+            console.log({data});
         // @ts-ignore
-        setKanjiData(data)
-    }, [data])
+            setKanjiData(data);
+        }
+    }, [data]);
+
 
     return (
         <div>
