@@ -9,9 +9,9 @@ export const KanjiGif: React.FC<KanjiGifProps> = ({ kanji }) => {
     <div className="flex flex-col items-center">
       <Image
         src={`https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/${kanji}.gif`}
-        width={100}
-        height={100}
-        className="rounded-md border-4 border-orange-500 shadow-md"
+        width={200}
+        height={200}
+        className="rounded-md w-2/3 border-4 border-orange-500 shadow-md"
         alt={`Kanji ${kanji} GIF animation`}
       />
 
