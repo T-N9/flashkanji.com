@@ -1,4 +1,4 @@
-import useFlashGroundState from "@/store/kanjiGroundState";
+import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -13,8 +13,9 @@ export const useKanjiSetting = () => {
     setSelectedMultiChapters,
     selectedMultiChapters,
     isFlippedMode,
-    toggleIsFlippedMode
-  } = useFlashGroundState();
+    toggleIsFlippedMode,
+    setKanji
+  } = useKanjiGroundState();
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -70,6 +71,7 @@ export const useKanjiSetting = () => {
     chapter,
     updateQueryParams,
     setNoChapters,
+    setKanji,
     n5NoChapters,
     n4NoChapters,
     n3NoChapters,

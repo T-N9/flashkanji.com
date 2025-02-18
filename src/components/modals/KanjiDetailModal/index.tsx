@@ -20,7 +20,7 @@ export function KanjiDetailModal() {
   const { isDetailModalOpen, toggleDetailModal, setCurrentDetail, currentDetail } = useGeneralStore((state) => state);
 
   const { data: charData, isLoading } = useKanjiDetail(currentDetail || "");
-  const { data: jukugoData } = useRelatedJukugo(currentDetail || "");
+  // const { data: jukugoData } = useRelatedJukugo(currentDetail || "");
   // Function to generate stars based on the grade
   const renderStars = () => {
     const stars = Array.from({ length: charData?.grade }, (_, index) => (
@@ -112,22 +112,6 @@ export function KanjiDetailModal() {
                       <div className="grid grid-cols-2  mt-4 gap-4 flex-wrap">
                         <div className="bg-white p-3 rounded-md">
                           <p className="text-info font-english text-xs">
-                            On Readings:
-                          </p>
-                          <ul className="list-disc pl-4  gap-4 flex flex-col text-dark font-bold text-xl">
-                            {charData?.on_readings.length > 0
-                              ? charData?.on_readings.map((onReading: string, index: number) => (
-                                // <li onClick={() =>speakJapaneseText(onReading)} key={index}>{onReading}</li>
-                                <li>
-                                  <TextSpeech key={index} japaneseText={onReading} />
-                                </li>
-                              ))
-                              : "-"}
-                          </ul>
-                        </div>
-
-                        <div className="bg-white p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
                             Kun Readings:
                           </p>
                           <ul className="list-disc pl-4 gap-4 flex flex-col text-dark font-bold text-xl">
@@ -135,7 +119,7 @@ export function KanjiDetailModal() {
                               ? charData?.kun_readings.map(
                                 (kunReading: string, index: number) => (
                                   // <li onClick={() =>speakJapaneseText(kunReading)} key={index}>{kunReading}</li>
-                                  <li>
+                                  <li key={index}>
                                     <TextSpeech key={index} japaneseText={kunReading} />
                                   </li>
                                 )
@@ -143,13 +127,31 @@ export function KanjiDetailModal() {
                               : "-"}
                           </ul>
                         </div>
+
+                        <div className="bg-white p-3 rounded-md">
+                          <p className="text-info font-english text-xs">
+                            On Readings:
+                          </p>
+                          <ul className="list-disc pl-4  gap-4 flex flex-col text-dark font-bold text-xl">
+                            {charData?.on_readings.length > 0
+                              ? charData?.on_readings.map((onReading: string, index: number) => (
+                                // <li onClick={() =>speakJapaneseText(onReading)} key={index}>{onReading}</li>
+                                <li key={index}>
+                                  <TextSpeech key={index} japaneseText={onReading} />
+                                </li>
+                              ))
+                              : "-"}
+                          </ul>
+                        </div>
+
+
                       </div>
                     </div>
                     <div className="flex-1">
                       <KanjiGif kanji={currentDetail} />
                     </div>
 
-                    {jukugoData && jukugoData?.length > 0 && (
+                    {/* {jukugoData && jukugoData?.length > 0 && (
                       <div className="mt-4">
                         <strong className="text-info font-english text-xs">
                           Related jukugo:
@@ -178,7 +180,7 @@ export function KanjiDetailModal() {
                           })}
                         </div>
                       </div>
-                    )}
+                    )} */}
 
                     <div className="mt-4 hidden">
                       <strong className="text-info font-english text-xs">Notes:</strong>

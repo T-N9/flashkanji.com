@@ -7,6 +7,7 @@ import KanjiCard from '../cards/KanjiCard';
 import { LoadingGround } from '../common/LoadingGround';
 import { Kanji } from '@/types/kanji';
 import { shuffleArray } from '@/util';
+import { SpeedDialMenu } from '../common/SpeedDailMenu';
 
 const KanjiGround = () => {
 
@@ -20,7 +21,8 @@ const KanjiGround = () => {
         setNoChapters,
         n5NoChapters,
         n4NoChapters,
-        n3NoChapters
+        n3NoChapters,
+        setKanji,
     } = useKanjiSetting();
 
     // Call both hooks unconditionally
@@ -69,8 +71,9 @@ const KanjiGround = () => {
 
     useEffect(() => {
         if (data && JSON.stringify(data) !== JSON.stringify(kanjiData)) {
-            console.log({data});
-        // @ts-ignore
+            console.log({ data });
+            setKanji(data)
+            // @ts-ignore
             setKanjiData(data);
         }
     }, [data]);
@@ -106,6 +109,7 @@ const KanjiGround = () => {
                     {/* <div className="w-[300px] hidden lg:block">
             <AdsComponent isDisplay={true} slotId={"7647610361"} />
           </div> */}
+                    <SpeedDialMenu mode={1}/>
                 </div>
             </div>
         </div>

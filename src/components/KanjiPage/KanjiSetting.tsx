@@ -4,7 +4,7 @@ import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, To
 
 /* Hook */
 import { useKanjiSetting } from "./useKanjiSetting";
-import { ArrowsClockwise, RowsPlusBottom, Shuffle } from "@phosphor-icons/react";
+import { ArrowsClockwise, DiamondsFour,  Shuffle } from "@phosphor-icons/react";
 
 interface KanjiSettingProps {
   handleShuffle: () => void; // Add this prop type
@@ -104,7 +104,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
                 color="primary"
                 variant="solid"
               >
-                <RowsPlusBottom size={32} />
+                <DiamondsFour size={32} />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="p-4">

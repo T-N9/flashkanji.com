@@ -36,13 +36,13 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
       <div
         onClick={() => setIsFlipped((prev) => !prev)}
         className={`${isSwiped
-            ? "bg-primary "
-            : "bg-gradient-to-br from-black via-gray-900 to-orange-900"
+            ? "bg-gradient-to-br from-orange-400  to-orange-700"
+            : "bg-gradient-to-br from-orange-400  to-orange-700"
           } relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md ${isFlipped && "flipped"
           }`}
       >
         {/* Front Side */}
-        {!isSwiped && <span className="front text-gray-400">{item.id}</span>}
+        {!isSwiped && <span className="front text-gray-100">{item.id}</span>}
         <p
           className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-7xl"
             } front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
@@ -56,7 +56,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
             }`}
         >
           {/* Kunyomi */}
-          <p className="text-primary flex flex-wrap justify-center">
+          <p className="text-white flex flex-wrap justify-center">
             {item.kunyomi?.split(",").map((i, index) => (
               <React.Fragment key={index}>
                 <span>{i}</span>
@@ -66,7 +66,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
           </p>
 
           {/* Onyomi */}
-          <p className="text-blue-400 flex flex-wrap justify-center">
+          <p className="text-gray-700 flex flex-wrap justify-center">
             {item.onyomi?.split(",").map((i, index) => (
               <React.Fragment key={index}>
                 <span>{i}</span>

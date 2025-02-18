@@ -1,7 +1,8 @@
+import { Kanji } from "@/types/kanji";
 import { create } from "zustand";
 
 type FlashGroundState = {
-  kanji: string[];
+  kanji: Kanji[];
   isLoading: boolean;
   level: number;
   selectedLevel: string;
@@ -22,7 +23,7 @@ type FlashGroundActions = {
   setLevel: (level: number) => void;
   setSelectedLevel: (selectedLevel: string) => void;
   setSelectedChapter: (selectedChapter: number) => void;
-  setKanji: (kanji: string[]) => void;
+  setKanji: (kanji: Kanji[]) => void;
   setSelectedMultiChapters: (selectedMultiChapters: number[]) => void;
   setSearchValue: (searchValue: string) => void;
   toggleIsFlippedMode: () => void;
@@ -33,7 +34,7 @@ type FlashGroundActions = {
   setKanjiPracticeData: (kanjiPracticeData: string[]) => void;
 };
 
-const useFlashGroundState = create<FlashGroundState & FlashGroundActions>((set) => ({
+const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>((set) => ({
   // Initial State
   kanji: [],
   isLoading: false,
@@ -69,4 +70,4 @@ const useFlashGroundState = create<FlashGroundState & FlashGroundActions>((set) 
     set({ kanjiPracticeData }),
 }));
 
-export default useFlashGroundState;
+export default useKanjiGroundState;
