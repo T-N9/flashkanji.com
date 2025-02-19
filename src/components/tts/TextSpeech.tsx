@@ -34,8 +34,8 @@ export default function TextSpeech({ japaneseText }: { japaneseText: string }) {
 
 
     return (
-        <div className=" flex gap-2">
-            <p>{japaneseText}</p>
+        <span className=" flex gap-2">
+            <span>{japaneseText}</span>
             <button onClick={speak} disabled={isLoading} className="">
                 {
                     isLoading ?
@@ -45,6 +45,6 @@ export default function TextSpeech({ japaneseText }: { japaneseText: string }) {
                 }
 
             </button>
-        </div>
+        </span>
     );
 }

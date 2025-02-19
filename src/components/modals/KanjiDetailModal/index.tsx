@@ -20,7 +20,7 @@ export function KanjiDetailModal() {
   const { isDetailModalOpen, toggleDetailModal, setCurrentDetail, currentDetail } = useGeneralStore((state) => state);
 
   const { data: charData, isLoading } = useKanjiDetail(currentDetail || "");
-  // const { data: jukugoData } = useRelatedJukugo(currentDetail || "");
+  const { data: jukugoData } = useRelatedJukugo(currentDetail || "");
   // Function to generate stars based on the grade
   const renderStars = () => {
     const stars = Array.from({ length: charData?.grade }, (_, index) => (
@@ -72,7 +72,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             Grade:
                           </p>{" "}
-                          <span className="text-dark font-bold text-xl">
+                          <span className="text-dark font-bold text-lg flex flex-wrap">
                             {renderStars()}
                           </span>
                         </div>
@@ -146,41 +146,47 @@ export function KanjiDetailModal() {
 
 
                       </div>
+
+                      {jukugoData && jukugoData?.length > 0 && (
+                        <div className="mt-4 bg-white p-3 rounded-md">
+                          <p className="text-info font-english text-xs">
+                            Related jukugo:
+                          </p>
+
+                          <ul className="flex gap-2 flex-wrap mt-3">
+                            {jukugoData?.map((item, index) => {
+                              return (
+                                <li
+                                  className="bg-white p-2 rounded-md shadow-md"
+                                  key={index}
+                                >
+                                  <p className="flex justify-between flex-col">
+              
+                                    <ruby className="text-dark text-2xl -mb-7">
+                                    
+                                      <rt className="text-sm text-gray-400 tracking-tighter">
+                                        {item.hiragana}
+                                      </rt>
+                                    </ruby>{" "}
+                                    <span className="text-2xl">
+                                      <TextSpeech japaneseText={item.jukugo_char}/>{" "}
+                                    </span>
+                                    <span className="text-sm font-english-text text-dark">
+                                      {item.english_meaning}
+                                    </span>
+                                  </p>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1">
                       <KanjiGif kanji={currentDetail} />
                     </div>
 
-                    {/* {jukugoData && jukugoData?.length > 0 && (
-                      <div className="mt-4">
-                        <strong className="text-info font-english text-xs">
-                          Related jukugo:
-                        </strong>
 
-                        <div className="flex gap-2 flex-wrap mt-3">
-                          {jukugoData?.map((item, index) => {
-                            return (
-                              <div
-                                className="bg-white p-2 rounded-md shadow-md"
-                                key={index}
-                              >
-                                <p className="flex justify-between flex-col">
-                                  <ruby className="text-dark text-2xl">
-                                    {item.jukugo_char}{" "}
-                                    <rt className="text-sm text-gray-400">
-                                      {item.hiragana}
-                                    </rt>
-                                  </ruby>{" "}
-                                  <span className="text-sm font-english-text text-dark">
-                                    {item.english_meaning}
-                                  </span>
-                                </p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )} */}
 
                     <div className="mt-4 hidden">
                       <strong className="text-info font-english text-xs">Notes:</strong>
