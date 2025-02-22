@@ -38,7 +38,7 @@ export const JukugoGround = () => {
     <section className="relative flex min-h-screen flex-col items-center">
       <JukugoSetting handleShuffle={handleShuffleJukugoData}/>
       <div className="flex w-full justify-center px-4 lg:px-0 gap-4">
-        {isLoading ? (
+        {jukugoData?.length === 0 ? (
           <LoadingGround mode={2} />
         ) : (
           <div

@@ -1,5 +1,6 @@
 import React from "react";
 import LoadingKanjiCard from "../cards/LoadingKanjiCard";
+import LoadingJukugoCard from "../cards/LoadingJukugoCard";
 
 export const LoadingGround = ({ mode } : {mode : number}) => {
   /* mode 1 = flash ground
@@ -23,7 +24,7 @@ export const LoadingGround = ({ mode } : {mode : number}) => {
           {Array.from({ length: 8 }, (_, index) => index + 1).map(
             (item, index) => {
               return (
-                <LoadingKanjiCard key={index}/>
+                <LoadingJukugoCard key={index}/>
               );
             }
           )}
