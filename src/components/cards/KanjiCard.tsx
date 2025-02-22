@@ -22,7 +22,6 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
     setCurrentDetail(character);
   };
 
-
   useEffect(() => {
     setIsFlipped(false);
   }, [item]);
@@ -66,7 +65,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
           </p>
 
           {/* Onyomi */}
-          <p className="text-gray-700 flex flex-wrap justify-center">
+          <p className="text-white flex flex-wrap justify-center">
             {item.onyomi?.split(",").map((i, index) => (
               <React.Fragment key={index}>
                 <span>{i}</span>

@@ -7,3 +7,13 @@ export const fetchRelatedJukugo = async (
   const response = await apiClient.get("/jukugo", { params: { kanjis } });
   return response.data;
 };
+
+export const fetchJukugoByChapterAndLevel = async (
+  chapter: number,
+  level: number
+): Promise<relatedJukugoItem[]> => {
+  const response = await apiClient.get("/jukugo", {
+    params: { chapter, level },
+  });
+  return response.data;
+};
