@@ -39,9 +39,9 @@ export default function TextSpeech({ japaneseText }: { japaneseText: string }) {
             <button onClick={speak} disabled={isLoading} className="">
                 {
                     isLoading ?
-                        <Spinner className="animate-spin" size={22} />
+                        <Spinner color="#F57C00" className="animate-spin" size={22} />
                         :
-                        <SpeakerHigh size={22} />
+                        <SpeakerHigh color="#F57C00" size={22} />
                 }
 
             </button>
