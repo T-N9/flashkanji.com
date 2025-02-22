@@ -1,5 +1,6 @@
 'use client'
 import { KanjiGif } from "@/components/KanjiGif";
+import TextSpeech from "@/components/tts/TextSpeech";
 import { useGeneralStore } from "@/store/generalState";
 import {
     Modal,
@@ -18,19 +19,20 @@ export const JukugoDetailModal = () => {
 
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-    const [currentStrokeWord, setCurrentStrokeWord] = useState("");
+    const [currentStrokeWord, setCurrentStrokeWord] = useState<string>("");
 
     const handleOpen = (character: string | null) => {
         toggleJukugoDetailModal();
 
-        setJukugoDetail(character);
+        setJukugoDetail(null);
     };
 
     useEffect(() => {
-        if (jukugoDetail?.split("")[0] === "～") {
-            setCurrentStrokeWord(jukugoDetail?.split("")[1]);
+        if (jukugoDetail?.character?.split("")[0] === "～") {
+            setCurrentStrokeWord(jukugoDetail?.character?.split("")[1]);
         } else {
-            setCurrentStrokeWord(jukugoDetail?.split("")[0]);
+            // @ts-ignore
+            setCurrentStrokeWord(jukugoDetail?.character?.split("")[0]);
         }
     }, [jukugoDetail]);
 
@@ -55,13 +57,18 @@ export const JukugoDetailModal = () => {
                     <ModalBody className=" bg-gradient-orange-card overflow-y-auto">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1">
-                                <h1 className="text-4xl text-dark">{jukugoDetail}</h1>
+                                <h1 className="text-4xl text-dark">{jukugoDetail?.character}</h1>
+                                {
+                                    jukugoDetail?.hiragana &&
+                                    <TextSpeech japaneseText={jukugoDetail?.hiragana} />
+                                }
+
 
 
                                 <div>
                                     <p className="mt-5 font-english-text text-info">Stroke Information</p>
                                     <div className="flex gap-2 text-dark">
-                                        {jukugoDetail?.split("").map((item: string, index: number) => {
+                                        {jukugoDetail?.character?.split("").map((item: string, index: number) => {
                                             return (
                                                 <div key={index}>
                                                     {item !== "～" && (
@@ -72,7 +79,7 @@ export const JukugoDetailModal = () => {
                                                             >
                                                                 {item}
                                                             </h3>
-                                                            {jukugoDetail.split("").length - 1 !== index && "+"}
+                                                            {jukugoDetail?.character?.split("").length - 1 !== index && "+"}
                                                         </div>
                                                     )}
                                                 </div>

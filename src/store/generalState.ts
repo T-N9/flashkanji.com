@@ -10,7 +10,7 @@ interface GeneralState {
   /* JukugoGround */
   isJukugoModalOpen: boolean;
   isJukugoDetailModalOpen: boolean;
-  jukugoDetail: any;
+  jukugoDetail: {character : string, hiragana: string} | null;
   userInfo: any;
 
   /* Actions */
@@ -21,7 +21,7 @@ interface GeneralState {
 
   toggleJukugoModal: () => void;
   toggleJukugoDetailModal: () => void;
-  setJukugoDetail: (detail: any) => void;
+  setJukugoDetail: (detail: {character : string, hiragana: string} | null) => void;
   setUserInfo: (userInfo: any) => void;
 }
 
