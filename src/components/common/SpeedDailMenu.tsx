@@ -19,7 +19,7 @@ export function SpeedDialMenu({ mode = 1 }: { mode: number }) {
 
     return (
         <>
-            <div className="fixed bottom-40 right-10 z-50">
+            <div className="fixed bottom-20 right-10 z-50">
                 <Dropdown placement="top">
                     <DropdownTrigger>
                         <Button
@@ -52,7 +52,7 @@ export function SpeedDialMenu({ mode = 1 }: { mode: number }) {
                                 <Slideshow size={22} />
                             </div>
                         </DropdownItem>
-                        {mode === 1 ? (
+                        {/* {mode === 1 ? (
                             <DropdownItem key="copy">
                                 <div
                                     className="flex justify-between"
@@ -62,7 +62,7 @@ export function SpeedDialMenu({ mode = 1 }: { mode: number }) {
                                     <Gear size={22} />
                                 </div>
                             </DropdownItem>
-                        ) : <DropdownItem key="copy"></DropdownItem>}
+                        ) : <DropdownItem key="copy"></DropdownItem>} */}
 
                     </DropdownMenu>
                 </Dropdown>

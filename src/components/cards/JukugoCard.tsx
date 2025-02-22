@@ -43,7 +43,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
       >
         {/* Front Side */}
         <p
-          className={`${isSwiped ? "text-[9rem] md:text-[5rem]" : "text-3xl"
+          className={`${isSwiped ? "text-4xl md:text-[5rem]" : "text-3xl"
             } front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
         >
           {item.jukugo_char}
