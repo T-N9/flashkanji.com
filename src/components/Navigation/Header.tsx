@@ -13,6 +13,7 @@ import {
   NavbarMenu,
 } from "@nextui-org/navbar";
 import { Logo } from "../common/Logo";
+import Image from "next/image";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
@@ -67,7 +68,8 @@ export function HeadingBar() {
       {/* Navbar Brand */}
       <NavbarBrand>
         <Link href="/">
-          <Logo/>
+          {/* <Logo/> */}
+          <Image className="w-28" src={'/logo.png'} width={638} height={205} alt="Flash Kanji Logo"/>
         </Link>
       </NavbarBrand>
 
