@@ -1,9 +1,12 @@
 import StartQuiz from '@/components/QuizGround/StartQuiz';
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const StartQuizPage = () => {
   return (
-    <StartQuiz/>
+    <Suspense fallback={<p>Loading...</p>}>
+      <StartQuiz />
+    </Suspense>
+
   )
 }
 
