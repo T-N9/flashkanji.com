@@ -39,46 +39,52 @@ const StartQuiz = () => {
                     </div>
                 )}
             </div>
-            <div className="container mx-auto w-full lg:w-1/2">
-                <div className="flex flex-col gap-4">
-                    {data?.map((item, index) => {
-                        return (
-                            <QuizItem
-                                key={index}
-                                number={index}
-                                isSubmitted={isQuizSubmit}
-                                quizItem={item}
-                            />
-                        );
-                    })}
-                </div>
+            {
+                data?.length !== 0 ?
+                    <div className="container mx-auto w-full lg:w-1/2">
+                        <div className="flex flex-col gap-4">
+                            {data?.map((item, index) => {
+                                return (
+                                    <QuizItem
+                                        key={index}
+                                        number={index}
+                                        isSubmitted={isQuizSubmit}
+                                        quizItem={item}
+                                    />
+                                );
+                            })}
+                        </div>
 
-                {isQuizSubmit && (
-                    <div className="text-xl text-center font-english mt-5 text-gray-500">
-                        Score :{" "}
-                        <span className="font-medium text-info">{currentMark}</span> /{" "}
-                        {data?.length}
+                        {isQuizSubmit && (
+                            <div className="text-xl text-center font-english mt-5 text-gray-500">
+                                Score :{" "}
+                                <span className="font-medium text-info">{currentMark}</span> /{" "}
+                                {data?.length}
+                            </div>
+                        )}
+                        <div className="my-5 flex gap-4 justify-center items-center">
+                            <Link href="/quiz">
+                                <Button
+                                    // onClick={() => handleQuizQuit()}
+                                    className=""
+                                >
+                                    Quit
+                                </Button>
+                            </Link>
+                            <Button
+                                // @ts-ignore
+                                disable={answeredCount !== data?.length || isQuizSubmit}
+                                className={`bg-gradient-radial text-white ${answeredCount !== data?.length || isQuizSubmit ? "cursor-not-allowed" : ""}`}
+                                onClick={() => handleQuizSubmit()}
+                            >
+                                Submit
+                            </Button>
+                        </div>
                     </div>
-                )}
-                <div className="my-5 flex gap-4 justify-center items-center">
-                    <Link href="/quiz">
-                        <Button
-                            // onClick={() => handleQuizQuit()}
-                            className=""
-                        >
-                            Quit
-                        </Button>
-                    </Link>
-                    <Button
-                        // @ts-ignore
-                        disable={answeredCount !== data?.length || isQuizSubmit}
-                        className={`bg-gradient-radial text-white ${answeredCount !== data?.length || isQuizSubmit ? "cursor-not-allowed" : ""}`}
-                        onClick={() => handleQuizSubmit()}
-                    >
-                        Submit
-                    </Button>
-                </div>
-            </div>
+                    :
+                    <div className='text-center'>Generating Quiz</div>
+            }
+
         </div>
     )
 }

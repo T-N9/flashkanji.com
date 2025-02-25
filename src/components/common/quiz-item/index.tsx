@@ -25,10 +25,10 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
   } = useContainer(quizItem.answer);
 
   return (
-    <Card>
+    <Card className="py-5 lg:py-0">
       <CardBody>
         <div className="flex gap-4 flex-col lg:flex-row">
-          <span className="absolute top-1 left-1 w-5 h-5 text-primary font-bold flex justify-center items-center  rounded-full">
+          <span className="absolute top-3 left-3 w-5 h-5 text-primary font-bold flex justify-center items-center  rounded-full">
             {number + 1}
           </span>
           <div className="flex-1 flex-col gap-5 flex justify-center items-center">
