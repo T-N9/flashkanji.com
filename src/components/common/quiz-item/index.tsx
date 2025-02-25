@@ -38,7 +38,7 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
 
           <div className="grid grid-cols-1 gap-10 flex-1 w-full option-item p-4">
             {quizItem?.options.map((option, index) => {
-              let optionItem = option.split(",").map((i, idx) => (
+              const optionItem = option.split(",").map((i, idx) => (
                 <div className="" key={idx}>
                   <span>{i}</span>
                   {idx !== option?.split(",").length - 1 && ","}
