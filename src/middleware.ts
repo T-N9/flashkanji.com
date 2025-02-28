@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl;
 
   // Check if pathname is "/kanji"
-  if (url.pathname === "/kanji" || url.pathname === "/jukugo") {
+  if (url.pathname === "/study/kanji/cards" || url.pathname === "/study/kanji/repetition") {
     const hasDefaultParams =
       url.searchParams.has("chapter") && url.searchParams.has("level");
 
@@ -23,6 +23,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/kanji", "/jukugo"], // Apply middleware only to `/kanji` route
-
+  matcher: ["/study/kanji/cards", "/study/kanji/repetition"], // Apply middleware only to `/kanji` route
 };

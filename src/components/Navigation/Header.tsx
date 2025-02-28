@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/navbar";
 import { Logo } from "../common/Logo";
 import Image from "next/image";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
@@ -34,12 +35,22 @@ export function HeadingBar() {
         <Link href="/">Home</Link>
       </NavbarItem>
 
-      <NavbarItem
+      {/* <NavbarItem
         isActive={path === "/kanji"}
         onClick={() => delayedSetIsMenuOpen(false)}
       >
         <Link href="/kanji">Kanji</Link>
-      </NavbarItem>
+      </NavbarItem> */}
+      <Dropdown>
+        <DropdownTrigger>
+          <Button variant="bordered">Kanji</Button>
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Static Actions">
+          <DropdownItem key="cards"><Link href={'/study/kanji/cards'}>Flash Cards</Link></DropdownItem>
+          <DropdownItem key="repetition"><Link href={'/study/kanji/repetition'}>Flash Repetition</Link> </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+
 
       <NavbarItem
         isActive={path === "/quiz"}
@@ -69,7 +80,7 @@ export function HeadingBar() {
       <NavbarBrand>
         <Link href="/">
           {/* <Logo/> */}
-          <Image className="w-28" src={'/logo.png'} width={638} height={205} alt="Flash Kanji Logo"/>
+          <Image className="w-28" src={'/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
 

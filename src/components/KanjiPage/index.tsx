@@ -8,6 +8,8 @@ import { LoadingGround } from '../common/LoadingGround';
 import { Kanji } from '@/types/kanji';
 import { shuffleArray } from '@/util';
 import { SpeedDialMenu } from '../common/SpeedDailMenu';
+import { Button } from '@nextui-org/react';
+import Link from 'next/link';
 
 const KanjiGround = () => {
 
@@ -111,9 +113,15 @@ const KanjiGround = () => {
                     {/* <div className="w-[300px] hidden lg:block">
             <AdsComponent isDisplay={true} slotId={"7647610361"} />
           </div> */}
-                    <SpeedDialMenu mode={1}/>
+                    <SpeedDialMenu mode={1} />
                 </div>
             </div>
+
+            <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>
+                <Button variant='bordered' className='table mx-auto mt-10'>
+                    Enter Flash Repetition
+                </Button>
+            </Link>
         </div>
     )
 }
