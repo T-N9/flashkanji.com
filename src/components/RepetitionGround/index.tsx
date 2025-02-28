@@ -73,9 +73,8 @@ const Flash_Kanji_Item = ({
                             <div className="flex justify-around mt-4 gap-4 flex-wrap">
                                 {[{ reaction: "🤯", text: "ဟာ သွားပါပြီ" }, { reaction: "🤔", text: "ခက်တယ်ဟ" }, { reaction: "😎", text: "ရပါတယ်" }, { reaction: "😴", text: "အေးဆေးပဲ" }].map((rating, index) => (
                                     /* [I, H, M , E] */
-                                    <div>
+                                    <div  key={index}>
                                         <Button
-                                            key={index}
                                             className="bg-gray-200 text-2xl text-gray-800 font-semibold py-1 px-3 rounded-lg hover:bg-gray-300"
                                             onClick={() => {
                                                 const updatedCard = calculateNextReview(sr_data, index);
