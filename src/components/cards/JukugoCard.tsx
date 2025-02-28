@@ -38,7 +38,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
     <div className="relative">
       <div
         onClick={() => setIsFlipped((prev) => !prev)}
-        className={`bg-gradient-to-br from-orange-400  to-orange-700 relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md ${isFlipped && "flipped"
+        className={`bg-gradient-to-br from-orange-400  to-orange-700 relative font-writing-1 text-white p-5 rounded-md card jukugo_card min-w-[150px] border-4 lg:min-w-[200px] shadow-md ${isFlipped && "flipped"
           } }`}
       >
         {/* Front Side */}
