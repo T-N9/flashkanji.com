@@ -21,7 +21,9 @@ export const JukugoGround = () => {
 
   const handleShuffleJukugoData = () => {
     if (jukugoData) {
-      setJukugoData(shuffleArray(jukugoData));
+      const shuffledJukugoData = shuffleArray(jukugoData);
+      setJukugoData(shuffledJukugoData);
+      setJukugo(shuffledJukugoData);
     }
   }
 

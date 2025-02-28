@@ -65,7 +65,9 @@ const KanjiGround = () => {
 
     const handleShuffleKanjiData = () => {
         if (kanjiData) {
-            setKanjiData(shuffleArray(kanjiData));
+            const shuffledKanjiData = shuffleArray(kanjiData)
+            setKanjiData(shuffledKanjiData);
+            setKanji(shuffledKanjiData);
         }
     }
 
