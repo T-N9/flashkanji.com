@@ -4,6 +4,7 @@ import "@/styles/style.css"
 import Providers from "./Providers";
 import { poppins } from "@/fonts";
 import HeadingBar from "@/components/Navigation/Header";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Providers>
           <HeadingBar/>
           {children}
+          <Footer/>
         </Providers>
       </body>
     </html>
