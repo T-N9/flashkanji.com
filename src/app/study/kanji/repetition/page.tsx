@@ -1,10 +1,12 @@
 import SpacedRepetition from '@/components/RepetitionGround'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const KanjiRepetitionPage = () => {
   return (
     <div>
-        <SpacedRepetition/>
+      <Suspense>
+        <SpacedRepetition />
+      </Suspense>
     </div>
   )
 }
