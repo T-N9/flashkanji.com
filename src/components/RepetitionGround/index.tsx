@@ -70,30 +70,33 @@ const Flash_Kanji_Item = ({
          Difficult 🤯 */}
                     {
                         isFlipped ?
-                            <div className="flex justify-around mt-4 gap-4">
-                                {["🤯", "🤔", "😎", "😴"].map((rating, index) => (
+                            <div className="flex justify-around mt-4 gap-4 flex-wrap">
+                                {[{ reaction: "🤯", text: "ဟာ သွားပါပြီ" }, { reaction: "🤔", text: "ခက်တယ်ဟ" }, { reaction: "😎", text: "ရပါတယ်" }, { reaction: "😴", text: "အေးဆေးပဲ" }].map((rating, index) => (
                                     /* [I, H, M , E] */
-                                    <Button
-                                        key={rating}
-                                        className="bg-gray-200 text-2xl text-gray-800 font-semibold py-1 px-3 rounded-lg hover:bg-gray-300"
-                                        onClick={() => {
-                                            const updatedCard = calculateNextReview(sr_data, index);
-                                            console.log({ index })
-                                            const updatedStoredData = spacedRepetitionData.map(item =>
-                                                item.id === updatedCard.id ? updatedCard : item
-                                            );
+                                    <div>
+                                        <Button
+                                            key={index}
+                                            className="bg-gray-200 text-2xl text-gray-800 font-semibold py-1 px-3 rounded-lg hover:bg-gray-300"
+                                            onClick={() => {
+                                                const updatedCard = calculateNextReview(sr_data, index);
+                                                console.log({ index })
+                                                const updatedStoredData = spacedRepetitionData.map(item =>
+                                                    item.id === updatedCard.id ? updatedCard : item
+                                                );
 
-                                            setSpacedRepetitionData(updatedStoredData)
+                                                setSpacedRepetitionData(updatedStoredData)
 
-                                            localStorage.setItem('spacedRepetitionData', JSON.stringify(updatedStoredData));
+                                                localStorage.setItem('spacedRepetitionData', JSON.stringify(updatedStoredData));
 
-                                            handleClickLevel(updatedCard.id, index);
-                                        }
+                                                handleClickLevel(updatedCard.id, index);
+                                            }
 
-                                        }
-                                    >
-                                        {rating}
-                                    </Button>
+                                            }
+                                        >
+                                            {rating.reaction}
+                                        </Button>
+                                        <p>{rating.text}</p>
+                                    </div>
                                 ))}
                             </div>
                             :
