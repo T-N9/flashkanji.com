@@ -59,12 +59,15 @@ export function HeadingBar() {
         <Link href="/quiz">Quiz</Link>
       </NavbarItem>
 
-      <NavbarItem
-        isActive={path === "/jukugo"}
-        onClick={() => delayedSetIsMenuOpen(false)}
-      >
-        <Link href="/jukugo">Jukugo</Link>
-      </NavbarItem>
+      <Dropdown>
+        <DropdownTrigger>
+          <Button variant="bordered">Jukugo</Button>
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Static Actions">
+          <DropdownItem key="cards"><Link href={'/study/jukugo/cards'}>Flash Cards</Link></DropdownItem>
+          <DropdownItem key="repetition"><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </>
   );
 

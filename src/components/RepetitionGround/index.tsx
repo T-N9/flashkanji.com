@@ -28,7 +28,7 @@ const Flash_Kanji_Item = ({
     return (
         <div className="px-4">
 
-            <div className="h-[500px] py-10">
+            <div className=" py-10">
                 <div
                     className={`flex h-full flex-col justify-between items-center transition-all duration-200 ease-out`}
                 >
@@ -70,7 +70,7 @@ const Flash_Kanji_Item = ({
          Difficult 🤯 */}
                     {
                         isFlipped ?
-                            <div className="flex justify-around mt-4 gap-4 flex-wrap">
+                            <div className="flex justify-around mt-10 gap-4 flex-wrap">
                                 {[{ reaction: "🤯", text: "ဟာ သွားပါပြီ" }, { reaction: "🤔", text: "ခက်တယ်ဟ" }, { reaction: "😎", text: "ရပါတယ်" }, { reaction: "😴", text: "အေးဆေးပဲ" }].map((rating, index) => (
                                     /* [I, H, M , E] */
                                     <div  key={index}>
@@ -99,7 +99,7 @@ const Flash_Kanji_Item = ({
                                 ))}
                             </div>
                             :
-                            <Button onClick={() => setIsFlipped(true)}>
+                            <Button className="mt-10" onClick={() => setIsFlipped(true)}>
                                 Show Answer
                             </Button>
                     }
