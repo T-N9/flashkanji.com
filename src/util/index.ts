@@ -7,13 +7,12 @@ export const shuffleArray = (array: any[]) => {
   return shuffled;
 };
 
-/// SM-2 Algorithm with 4 Difficulty Levels
-export type SR_Flashcard = {
+export type SR_KanjiCard = {
   id: number;
-  interval: number; // Days until next review
-  repetitions: number; // Number of successful reviews
-  easeFactor: number; // Ease factor (default: 2.5)
-  nextReviewDate: Date; // Calculated next review date
+  interval: number; 
+  repetitions: number; 
+  easeFactor: number;
+  nextReviewDate: Date;
 };
 
 export type Clicked_Item = {
@@ -21,59 +20,10 @@ export type Clicked_Item = {
   clickedLevel: number;
 };
 
-// // Function to calculate the next interval
-// export function calculateNextReview(
-//   card: SR_Flashcard,
-//   quality: number // User rating (0-3)
-// ): SR_Flashcard {
-
-//   console.log({card})
-//   if (quality < 0 || quality > 3) {
-//     throw new Error("Quality must be between 0 and 3.");
-//   }
-
-//   const updatedCard = { ...card };
-
-//   if (quality === 0) { // Insane (reset progress)
-//     updatedCard.repetitions = 0;
-//     updatedCard.interval = 1;
-//   } else {
-//     updatedCard.repetitions += 1;
-
-//     if (updatedCard.repetitions === 1) {
-//       updatedCard.interval = 1; // First review
-//     } else if (updatedCard.repetitions === 2) {
-//       updatedCard.interval = 5; // Second review
-//     } else {
-//       // Adjust interval based on ease factor
-//       updatedCard.interval = Math.round(updatedCard.interval * updatedCard.easeFactor);
-//     }
-
-//     // Adjust Ease Factor
-//     const easeAdjustments = [
-//       -0.2, // Hard
-//       -0.1, // Medium
-//       0.1  // Easy
-//     ];
-
-//     updatedCard.easeFactor += easeAdjustments[quality - 1] || 0;
-//     updatedCard.easeFactor = Math.max(updatedCard.easeFactor, 1.3); // Minimum ease factor
-//   }
-
-//   // Calculate the next review date
-//   const currentDate = new Date();
-//   updatedCard.nextReviewDate = new Date(
-//     currentDate.setDate(currentDate.getDate() + updatedCard.interval)
-//   );
-
-//   console.log({ updatedCard });
-//   return updatedCard;
-// }
-
 export function calculateNextReview(
-  card: SR_Flashcard,
+  card: SR_KanjiCard,
   quality: number // User rating (0-3)
-): SR_Flashcard {
+): SR_KanjiCard {
   console.log({ card });
 
   if (quality < 0 || quality > 3) {
