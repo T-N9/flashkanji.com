@@ -117,11 +117,11 @@ const KanjiGround = () => {
                 </div>
             </div>
 
-            <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>
+            {/* <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>
                 <Button variant='bordered' className='table mx-auto mt-10'>
                     Enter Flash Repetition
                 </Button>
-            </Link>
+            </Link> */}
         </div>
     )
 }

@@ -4,7 +4,8 @@ import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, To
 
 /* Hook */
 import { useKanjiSetting } from "./useKanjiSetting";
-import { ArrowsClockwise, DiamondsFour,  Shuffle } from "@phosphor-icons/react";
+import { ArrowsClockwise, Brain, DiamondsFour, Shuffle } from "@phosphor-icons/react";
+import Link from "next/link";
 
 interface KanjiSettingProps {
   handleShuffle: () => void; // Add this prop type
@@ -28,7 +29,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
       w-full mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4`}
     >
       <div
-        className={`w-full flex flex-col lg:flex-row justify-between gap-4 items-center transition-all duration-200 ease-in `}
+        className={`w-full flex flex-col lg:flex-row justify-center gap-4 items-center transition-all duration-200 ease-in `}
       >
         <div className="flex gap-4 w-full md:w-fit justify-center items-center flex-wrap">
           <div className="flex gap-4 w-full md:w-fit">
@@ -165,6 +166,20 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
             >
               <ArrowsClockwise size={32} color="#fff" />
             </Button>
+          </Tooltip>
+
+          <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
+            <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>
+              <Button
+
+                isIconOnly
+                // variant="gradient"
+                className="bg-primary rounded-full"
+                title="Spaced Repetition"
+              >
+                <Brain size={32} color="#fff" />
+              </Button>
+            </Link>
           </Tooltip>
         </div>
       </div>

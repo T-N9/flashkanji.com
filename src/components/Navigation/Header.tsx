@@ -46,8 +46,12 @@ export function HeadingBar() {
           <Button variant="bordered">Kanji</Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="cards"><Link href={'/study/kanji/cards'}>Flash Cards</Link></DropdownItem>
-          <DropdownItem key="repetition"><Link href={'/study/kanji/repetition'}>Flash Repetition</Link> </DropdownItem>
+          <DropdownItem key="cards" onClick={() => delayedSetIsMenuOpen(false)}>
+            <Link href={'/study/kanji/cards'}>
+              Flash Cards
+            </Link>
+          </DropdownItem>
+          <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/kanji/repetition'}>Flash Repetition</Link> </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
@@ -64,8 +68,8 @@ export function HeadingBar() {
           <Button variant="bordered">Jukugo</Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="cards"><Link href={'/study/jukugo/cards'}>Flash Cards</Link></DropdownItem>
-          <DropdownItem key="repetition"><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
+          <DropdownItem key="cards" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/cards'}>Flash Cards</Link></DropdownItem>
+          <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </>

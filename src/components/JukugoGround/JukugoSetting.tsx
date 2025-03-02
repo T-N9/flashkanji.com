@@ -3,10 +3,11 @@
 /* Compoents */
 // import { Select, Option, Button, Switch } from "@material-tailwind/react";
 
-import { Select, SelectItem, Switch, Tooltip } from "@nextui-org/react";
+import { Button, Select, SelectItem, Switch, Tooltip } from "@nextui-org/react";
 import { Button as NextButton } from "@nextui-org/react";
 import useJukugoSetting from "./useJukugoSetting";
-import { ArrowsClockwise, Shuffle } from "@phosphor-icons/react";
+import { ArrowsClockwise, Brain, Shuffle } from "@phosphor-icons/react";
+import Link from "next/link";
 
 interface JukugoSettingProps {
   handleShuffle: () => void; // Add this prop type
@@ -140,6 +141,20 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
             >
               <ArrowsClockwise size={32} color="#fff" />
             </NextButton>
+          </Tooltip>
+
+          <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
+            <Link href={`/study/jukugo/repetition?chapter=${chapter}&level=${level}`}>
+              <Button
+
+                isIconOnly
+                // variant="gradient"
+                className="bg-primary rounded-full"
+                title="Spaced Repetition"
+              >
+                <Brain size={32} color="#fff" />
+              </Button>
+            </Link>
           </Tooltip>
         </div>
       </div>
