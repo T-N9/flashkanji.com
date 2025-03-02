@@ -24,9 +24,9 @@ export const KanjiRepetitionItem = ({
     const [isFlipped, setIsFlipped] = useState(false);
 
     const ratingButtons = [
-        { reaction: "🤯", text: "ဟာ သွားပါပြီ" }, 
-        { reaction: "🤔", text: "ခက်တယ်ဟ" }, 
-        { reaction: "😎", text: "ရပါတယ်" }, 
+        { reaction: "🤯", text: "ဟာ သွားပါပြီ" },
+        { reaction: "🤔", text: "ခက်တယ်ဟ" },
+        { reaction: "😎", text: "ရပါတယ်" },
         { reaction: "😴", text: "အေးဆေးပဲ" }
     ];
 
@@ -91,14 +91,18 @@ export const KanjiRepetitionItem = ({
                                     >
                                         {rating.reaction}
                                     </Button>
-                                    <p>{rating.text}</p>
+                                    <p className="text-sm mt-2">{rating.text}</p>
+                                    <span className="text-gray-400 text-sm text-center hidden lg:block">Press {index + 1}</span>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <Button className="mt-10" onClick={() => setIsFlipped(true)}>
-                            Show Answer
-                        </Button>
+                        <div className="flex flex-col justify-center items-center gap-3">
+                            <Button className="mt-10" onClick={() => setIsFlipped(true)}>
+                                Show Answer
+                            </Button>
+                            <span className="text-gray-400 text-sm hidden lg:block">Press Enter</span>
+                        </div>
                     )}
                 </div>
             </div>
