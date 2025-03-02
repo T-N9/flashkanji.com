@@ -16,10 +16,18 @@ const SpacedRepetition = () => {
     const pathname = usePathname();
 
     const { chapter, level } = useRepetitionGround()
-    const rawData = (pathname === "/study/kanji/repetition"
-        ? useKanjiByChapterAndLevel(chapter ? parseInt(chapter) : null, level ? parseInt(level) : null)
-        : useJukugoByChapterAndLevel(chapter ? parseInt(chapter) : null, level ? parseInt(level) : null)
-    )?.data as RepetitionType;
+    const kanjiData = useKanjiByChapterAndLevel(
+        chapter ? parseInt(chapter) : null,
+        level ? parseInt(level) : null
+    )?.data;
+    
+    const jukugoData = useJukugoByChapterAndLevel(
+        chapter ? parseInt(chapter) : null,
+        level ? parseInt(level) : null
+    )?.data;
+    
+    const rawData = pathname === "/study/kanji/repetition" ? kanjiData : jukugoData;
+    
     const data = useMemo(() => rawData, [rawData]); // Memoize data
     const [spacedRepetitionData, setSpacedRepetitionData] = useState<SR_KanjiCard[]>([]);
     const [clickedRepetitionData, setClickedRepetitionData] = useState<Clicked_Item[]>([]);
