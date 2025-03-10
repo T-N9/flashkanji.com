@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        'slow-spin': 'spin 10s linear infinite', // Slower spin (4s duration)
+      },
       backgroundImage: {
         "gradient-radial":
           "linear-gradient(180deg, #DC1D24 0%, #D41B21 49.48%, #A60308 100%) !important",

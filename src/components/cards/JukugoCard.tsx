@@ -16,13 +16,13 @@ interface JukugoCardProps {
 
 const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoShow = true, isShowMeanings = true }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const { setJukugoDetail , toggleJukugoDetailModal} = useGeneralStore((state) => state);
+  const { setJukugoDetail, toggleJukugoDetailModal } = useGeneralStore((state) => state);
 
   const { isFlippedMode } = useJukugoSetting();
 
-  const handleOpen = (character: string, hiragana : string) => {
+  const handleOpen = (character: string, hiragana: string) => {
     toggleJukugoDetailModal()
-    setJukugoDetail({character, hiragana});
+    setJukugoDetail({ character, hiragana });
   };
 
 
@@ -38,12 +38,19 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
     <div className="relative">
       <div
         onClick={() => setIsFlipped((prev) => !prev)}
-        className={`bg-gradient-to-br from-orange-400  to-orange-700 relative font-writing-1 text-white p-5 rounded-md card jukugo_card min-w-[150px] border-4 lg:min-w-[200px] shadow-md ${isFlipped && "flipped"
-          } }`}
+        className={`bg-gradient-to-br from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card jukugo_card min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped" 
+          } ${isSwiped && "!h-[350px]"}`}
       >
+        <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
+          <filter id="noise" x="0" y="0">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+            <feBlend mode="screen" />
+          </filter>
+          <rect className='w-full h-full' filter="url(#noise)" opacity="0.5" />
+        </svg>
         {/* Front Side */}
         <p
-          className={`${isSwiped ? "text-4xl md:text-[5rem]" : "text-3xl"
+          className={`${isSwiped ? "text-3xl md:text-[3rem]" : "text-3xl"
             } front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
         >
           {item.jukugo_char}
@@ -51,7 +58,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
 
         {/* Back Side */}
         <div
-          className={`back bg-gray-800 absolute w-full top-[30%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col gap-5 px-2 py-6 ${isSwiped ? "text-2xl md:text-[3rem]" : "text-xl"
+          className={`back bg-gray-800 absolute w-full  -left-[0%] flex flex-col gap-2 px-2 py-6  ${isSwiped ? "top-[30%] text-2xl md:text-[2rem] !leading-10" : "top-[20%] text-xl !leading-8"
             }`}
         >
           {/* Hiragana */}

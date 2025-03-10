@@ -31,67 +31,76 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
   }, [isFlippedMode]);
 
   return (
-    <div className="relative">
-      <div
-        onClick={() => setIsFlipped((prev) => !prev)}
-        className={`${isSwiped
-            ? "bg-gradient-to-br from-orange-400  to-orange-700"
-            : "bg-gradient-to-br from-orange-400  to-orange-700"
-          } relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md ${isFlipped && "flipped"
-          }`}
-      >
-        {/* Front Side */}
-        {!isSwiped && <span className="front text-gray-100">{item.id}</span>}
-        <p
-          className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-7xl"
-            } front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
-        >
-          {item.kanji_character}
-        </p>
+      <div className="relative">
 
-        {/* Back Side */}
+
         <div
-          className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col gap-5 bg-gray-800  px-2 py-4 p-2 ${isSwiped ? "text-2xl md:text-[3rem]" : "text-lg md:text-xl"
+            onClick={() => setIsFlipped((prev) => !prev)}
+            className={`${isSwiped
+                ? "bg-gradient-to-br from-black via-slate-800 to-orange-700"
+                : "bg-gradient-to-br from-black via-slate-800 to-orange-700"
+            } relative card-shadow font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] ${isFlipped && "flipped"
             }`}
         >
-          {/* Kunyomi */}
-          <p className="text-white flex flex-wrap justify-center">
-            {item.kunyomi?.split(",").map((i, index) => (
-              <React.Fragment key={index}>
-                <span>{i}</span>
-                {index !== item.kunyomi.split(",").length - 1 && ", "}
-              </React.Fragment>
-            ))}
-          </p>
-
-          {/* Onyomi */}
-          <p className="text-white flex flex-wrap justify-center">
-            {item.onyomi?.split(",").map((i, index) => (
-              <React.Fragment key={index}>
-                <span>{i}</span>
-                {index !== item.onyomi.split(",").length - 1 && ", "}
-              </React.Fragment>
-            ))}
-          </p>
-
-          {/* Meaning */}
-          <p className="text-gray-200">{item.meaning}</p>
-        </div>
-      </div>
-
-      {isInfoShow && (
-        <div className="absolute -right-2 top-0">
-          <Button
-            onClick={() => handleOpen(item.kanji_character)}
-            isIconOnly
-            className="mt-2 mx-auto shadow-md text-xs flex justify-center items-center rounded-full bg-[#FA8245]"
-            size="sm"
+          <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
+            <filter id="noise" x="0" y="0">
+              <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+              <feBlend mode="screen"/>
+            </filter>
+            <rect className='w-full h-full' filter="url(#noise)" opacity="0.5"/>
+          </svg>
+          {/* Front Side */}
+          {!isSwiped && <span className="front text-gray-100">{item.id}</span>}
+          <p
+              className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-7xl"
+              } front text-white absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
           >
-            <Info size={38} color="#fff" weight="fill" />
-          </Button>
+            {item.kanji_character}
+          </p>
+
+          {/* Back Side */}
+          <div
+              className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col gap-5 bg-slate-900  px-2 py-4 p-2 ${isSwiped ? "text-2xl md:text-[3rem]" : "text-base md:text-xl"
+              }`}
+          >
+            {/* Kunyomi */}
+            <p className="text-white flex flex-wrap justify-center">
+              {item.kunyomi?.split(",").map((i, index) => (
+                  <React.Fragment key={index}>
+                    <span>{i}</span>
+                    {index !== item.kunyomi.split(",").length - 1 && ", "}
+                  </React.Fragment>
+              ))}
+            </p>
+
+            {/* Onyomi */}
+            <p className="text-white flex flex-wrap justify-center">
+              {item.onyomi?.split(",").map((i, index) => (
+                  <React.Fragment key={index}>
+                    <span>{i}</span>
+                    {index !== item.onyomi.split(",").length - 1 && ", "}
+                  </React.Fragment>
+              ))}
+            </p>
+
+            {/* Meaning */}
+            <p className="text-gray-200">{item.meaning}</p>
+          </div>
         </div>
-      )}
-    </div>
+
+        {isInfoShow && (
+            <div className="absolute -right-2 top-0">
+              <Button
+                  onClick={() => handleOpen(item.kanji_character)}
+                  isIconOnly
+                  className="mt-2 mx-auto shadow-md text-xs flex justify-center items-center rounded-full bg-[#FA8245]"
+                  size="sm"
+              >
+                <Info size={38} color="#fff" weight="fill"/>
+              </Button>
+            </div>
+        )}
+      </div>
   );
 };
 

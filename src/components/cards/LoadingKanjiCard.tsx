@@ -1,18 +1,27 @@
+import React from "react";
+
 const LoadingKanjiCard: React.FC = () => {
 
   return (
     <div className="relative">
-      <div
-        className={`bg-gradient-to-br from-orange-400  to-orange-700 relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md !cursor-progress`}
-      >
-        {/* Front Side */}
-        <span className="bg-gray-200 rounded text-gray-400 w-12 h-5 animate-pulse mx-auto table"></span>
-        <p
-          className={` text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl animate-pulse`}
+        <div
+            className={`bg-gradient-to-br from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md !cursor-progress`}
         >
-         ?
-        </p>
-      </div>
+            <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
+                <filter id="noise" x="0" y="0">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                    <feBlend mode="screen"/>
+                </filter>
+                <rect className='w-full h-full' filter="url(#noise)" opacity="0.5"/>
+            </svg>
+            {/* Front Side */}
+            <span className="bg-gray-200 rounded text-gray-400 w-12 h-5 animate-pulse mx-auto table"></span>
+            <p
+                className={` text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl animate-pulse`}
+            >
+                ?
+            </p>
+        </div>
     </div>
   );
 };

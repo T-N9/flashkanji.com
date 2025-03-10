@@ -20,43 +20,43 @@ export const JukugoRepetitionItem = ({
     hiragana: string;
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
-   
-       const ratingButtons = [
-           { reaction: "🤯", text: "ဟာ သွားပါပြီ" }, 
-           { reaction: "🤔", text: "ခက်တယ်ဟ" }, 
-           { reaction: "😎", text: "ရပါတယ်" }, 
-           { reaction: "😴", text: "အေးဆေးပဲ" }
-       ];
-   
-       // Handle keyboard shortcuts
-       useEffect(() => {
-           const handleKeyPress = (event: KeyboardEvent) => {
-               if (!isFlipped) {
-                   if (event.key === "Enter") {
-                       setIsFlipped(true);
-                   }
-               } else {
-                   if (event.key >= "1" && event.key <= "4") {
-                       const index = Number(event.key) - 1;
-                       handleButtonClick(index);
-                   }
-               }
-           };
-   
-           window.addEventListener("keydown", handleKeyPress);
-           return () => window.removeEventListener("keydown", handleKeyPress);
-       }, [isFlipped]);
-   
-       const handleButtonClick = (index: number) => {
-           const updatedCard = calculateNextReview(sr_data, index);
-           const updatedStoredData = spacedRepetitionData.map(item =>
-               item.id === updatedCard.id ? updatedCard : item
-           );
-   
-           setSpacedRepetitionData(updatedStoredData);
-           localStorage.setItem("spacedRepetitionData", JSON.stringify(updatedStoredData));
-           handleClickLevel(updatedCard.id, index);
-       };
+
+    const ratingButtons = [
+        { reaction: "🤯", text: "ဟာ သွားပါပြီ" },
+        { reaction: "🤔", text: "ခက်တယ်ဟ" },
+        { reaction: "😎", text: "ရပါတယ်" },
+        { reaction: "😴", text: "အေးဆေးပဲ" }
+    ];
+
+    // Handle keyboard shortcuts
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (!isFlipped) {
+                if (event.key === "Enter") {
+                    setIsFlipped(true);
+                }
+            } else {
+                if (event.key >= "1" && event.key <= "4") {
+                    const index = Number(event.key) - 1;
+                    handleButtonClick(index);
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyPress);
+        return () => window.removeEventListener("keydown", handleKeyPress);
+    }, [isFlipped]);
+
+    const handleButtonClick = (index: number) => {
+        const updatedCard = calculateNextReview(sr_data, index);
+        const updatedStoredData = spacedRepetitionData.map(item =>
+            item.id === updatedCard.id ? updatedCard : item
+        );
+
+        setSpacedRepetitionData(updatedStoredData);
+        localStorage.setItem("spacedRepetitionData", JSON.stringify(updatedStoredData));
+        handleClickLevel(updatedCard.id, index);
+    };
 
     return (
         <div className="px-4">
@@ -65,12 +65,19 @@ export const JukugoRepetitionItem = ({
                 <div
                     className={`flex h-full flex-col justify-between items-center transition-all duration-200 ease-out`}
                 >
-                    <div className="relative w-full md:w-[400px] h-[300px]">
+                    <div className="relative w-full md:w-[400px] h-[270px]">
                         <div
                             // onClick={() => setIsFlipped((prev) => !prev)}
-                            className={`bg-gradient-to-br !h-full from-orange-400  to-orange-700 relative font-writing-1 text-white p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] shadow-md ${isFlipped && "flipped"
+                            className={`bg-gradient-to-br !h-full from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
                                 }`}
                         >
+                            <svg className='absolute w-full md:w-[400px] h-[270px] opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
+                                <filter id="noise" x="0" y="0">
+                                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+                                    <feBlend mode="screen" />
+                                </filter>
+                                <rect className='w-full h-full' filter="url(#noise)" opacity="0.5" />
+                            </svg>
                             {/* Front Side */}
 
                             <p
@@ -81,7 +88,7 @@ export const JukugoRepetitionItem = ({
 
                             {/* Back Side */}
                             <div
-                                className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 space-y-3 bg-gray-800  px-2 py-4 p-2 text-2xl md:text-2xl
+                                className={`back absolute w-full top-[32%] -left-[0%] space-y-3 bg-gray-800  px-2 py-4 p-2 text-2xl md:text-2xl
                `}
                             >
                                 <div className="">{meaning}</div>
@@ -110,14 +117,18 @@ export const JukugoRepetitionItem = ({
                                         >
                                             {rating.reaction}
                                         </Button>
-                                        <p>{rating.text}</p>
+                                        <p className="text-sm mt-2">{rating.text}</p>
+                                        <span className="text-gray-400 text-sm text-center hidden lg:block">Press {index + 1}</span>
                                     </div>
                                 ))}
                             </div>
                             :
-                            <Button className="mt-10" onClick={() => setIsFlipped(true)}>
-                                Show Answer
-                            </Button>
+                            <div className="flex flex-col justify-center items-center gap-3">
+                                <Button className="mt-10" onClick={() => setIsFlipped(true)}>
+                                    Show Answer
+                                </Button>
+                                <span className="text-gray-400 text-sm hidden lg:block">Press Enter</span>
+                            </div>
                     }
 
 

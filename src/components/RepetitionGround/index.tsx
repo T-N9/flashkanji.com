@@ -119,7 +119,7 @@ const SpacedRepetition = () => {
                                     {
                                         activeItem === kanji.id &&
                                         <div key={index}>
-                                            <p className="font-bold text-red-600 text-xl text-center">{index + 1}</p>
+                                            <p className="font-bold text-orange-600 table mx-auto text-xl text-center">{index + 1}</p>
                                             <KanjiRepetitionItem
                                                 sr_data={spacedRepetitionData.find(item => item.id === kanji.id) || {
                                                     id: kanji.id,
@@ -158,7 +158,7 @@ const SpacedRepetition = () => {
                                     {
                                         activeItem === jukugo.id &&
                                         <div key={index}>
-                                            <p className="font-bold text-red-600 text-xl text-center">{index + 1}</p>
+                                            <p className="font-bold text-orange-600 table mx-auto text-xl text-center">{index + 1}</p>
                                             <JukugoRepetitionItem
                                                 sr_data={spacedRepetitionData.find(item => item.id === jukugo.id) || {
                                                     id: jukugo.id,
