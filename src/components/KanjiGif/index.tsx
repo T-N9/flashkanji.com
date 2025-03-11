@@ -6,7 +6,7 @@ interface KanjiGifProps {
 
 export const KanjiGif: React.FC<KanjiGifProps> = ({ kanji }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex sticky top-4 flex-col items-center">
       <Image
         src={`https://raw.githubusercontent.com/jcsirot/kanji.gif/master/kanji/gif/150x150/${kanji}.gif`}
         width={200}
