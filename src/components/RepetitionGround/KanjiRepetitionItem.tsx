@@ -41,6 +41,7 @@ export const KanjiRepetitionItem = ({
                 if (event.key >= "1" && event.key <= "4") {
                     const index = Number(event.key) - 1;
                     handleButtonClick(index);
+                    setIsFlipped(false);
                 }
             }
         };
@@ -92,14 +93,14 @@ export const KanjiRepetitionItem = ({
                     {isFlipped ? (
                         <div className="flex justify-around mt-10 gap-4 flex-wrap">
                             {ratingButtons.map((rating, index) => (
-                                <div key={index}>
+                                <div key={index} className="gap-3 flex flex-col items-center">
                                     <Button
                                         className="bg-gray-200 text-2xl text-gray-800 font-semibold py-1 px-3 rounded-lg hover:bg-gray-300"
                                         onClick={() => handleButtonClick(index)}
                                     >
                                         {rating.reaction}
                                     </Button>
-                                    <p className="text-sm mt-2">{rating.text}</p>
+                                    <p className="text-sm mt-2 hidden">{rating.text}</p>
                                     <span className="text-gray-400 text-sm text-center hidden lg:block">Press {index + 1}</span>
                                 </div>
                             ))}
