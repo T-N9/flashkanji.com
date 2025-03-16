@@ -145,7 +145,7 @@ export const JukugoRepetitionItem = ({
          Hard 🤔
          Difficult 🤯 */}
                     {
-                        isFlipped ?
+                        isAnswerShown ?
                             <div className="flex justify-around mt-10 gap-4 flex-wrap">
                                 {ratingButtons.map((rating, index) => (
                                     /* [I, H, M , E] */
