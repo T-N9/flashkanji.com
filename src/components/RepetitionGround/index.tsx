@@ -11,6 +11,8 @@ import { relatedJukugoItem } from "@/types/jukugo";
 import { JukugoRepetitionItem } from "./JukugoRepetitionItem";
 import { Button } from "@nextui-org/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import Image from "next/image";
+import Avatar from "../common/avatar/Avatar";
 
 type RepetitionType = Kanji[] | relatedJukugoItem[];
 
@@ -168,11 +170,11 @@ const SpacedRepetition = () => {
                 <React.Fragment key={index}>
                   {activeItem === kanji.id && (
                     <div key={index}>
-                      <p className="text-center text-4xl">{getConfidenceEmoji(satisfactionPoint)}</p>
-                      <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
-                      <p className=" text-gray-600 table mx-auto text-base text-center">
+                      <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+                      {/* <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p> */}
+                      {/* <p className=" text-gray-600 table mx-auto text-base text-center">
                         {clickedRepetitionData.length} cards left
-                      </p>
+                      </p> */}
 
                       <KanjiRepetitionItem
                         sr_data={
@@ -208,7 +210,7 @@ const SpacedRepetition = () => {
                 <p className="text-center">
                   Flash Repetition Session Completed.
                 </p>
-                <p className="text-center text-xl">You are feeling {getConfidenceEmoji(satisfactionPoint)}.</p>
+                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
                 <Button
                   isIconOnly
                   onClick={() => handleRestartRepetitionSession()}
@@ -224,11 +226,11 @@ const SpacedRepetition = () => {
               <React.Fragment key={index}>
                 {activeItem === jukugo.id && (
                   <div key={index}>
-                    <p className="text-center text-4xl">{getConfidenceEmoji(satisfactionPoint)}</p>
-                    <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
+                   <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+                    {/* <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
                     <p className=" text-gray-600 table mx-auto text-base text-center">
                       {clickedRepetitionData.length} cards left
-                    </p>
+                    </p> */}
                     <JukugoRepetitionItem
                       sr_data={
                         spacedRepetitionData.find(
@@ -260,7 +262,7 @@ const SpacedRepetition = () => {
           ) : (
             <div className="flex flex-col gap-5 items-center">
               <p className="text-center">Flash Repetition Session Completed.</p>
-              <p className="text-center">You are feeling {getConfidenceEmoji(satisfactionPoint)}.</p>
+              <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
               <Button
                 isIconOnly
                 onClick={() => handleRestartRepetitionSession()}
