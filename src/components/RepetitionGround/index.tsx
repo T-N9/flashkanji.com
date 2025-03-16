@@ -170,7 +170,7 @@ const SpacedRepetition = () => {
                 <React.Fragment key={index}>
                   {activeItem === kanji.id && (
                     <div key={index}>
-                      <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+                      {/* <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/> */}
                       {/* <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p> */}
                       {/* <p className=" text-gray-600 table mx-auto text-base text-center">
                         {clickedRepetitionData.length} cards left
@@ -226,7 +226,7 @@ const SpacedRepetition = () => {
               <React.Fragment key={index}>
                 {activeItem === jukugo.id && (
                   <div key={index}>
-                   <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+                   {/* <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/> */}
                     {/* <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
                     <p className=" text-gray-600 table mx-auto text-base text-center">
                       {clickedRepetitionData.length} cards left

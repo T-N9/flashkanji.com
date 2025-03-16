@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { calculateNextReview, SR_KanjiCard } from "@/util";
 import { Button } from "@nextui-org/react";
+import Avatar from "../common/avatar/Avatar";
 
 export const KanjiRepetitionItem = ({
     sr_data,
@@ -150,10 +151,10 @@ export const KanjiRepetitionItem = ({
                                 <div key={index} className="gap-3 flex flex-col items-center">
                                     <Button
 
-                                        className={`${rating.color} border-2 text-3xl text-gray-800 font-semibold w-24 h-24 rounded-full hover:bg-gray-300`}
+                                        className={`${rating.color} text-3xl text-gray-800 font-semibold w-28 h-28 bg-transparent rounded-full hover:bg-gray-300`}
                                         onClick={() => handleButtonClick(index)}
                                     >
-                                        {rating.reaction}
+                                        <Avatar emoji={rating.reaction}/>
                                     </Button>
                                     <p className="text-sm mt-2 hidden">{rating.text}</p>
                                     <span className="text-gray-400 text-sm text-center hidden lg:block">
