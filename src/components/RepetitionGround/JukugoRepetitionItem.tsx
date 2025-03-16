@@ -106,7 +106,7 @@ export const JukugoRepetitionItem = ({
                 >
                     <div className="relative w-full md:w-[400px] h-[270px]">
                         <div
-                            // onClick={() => setIsFlipped((prev) => !prev)}
+                            onClick={() => handleShowAnswer()}
                             className={`bg-gradient-to-br !h-full from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
                                 }`}
                         >
@@ -166,7 +166,7 @@ export const JukugoRepetitionItem = ({
                             </div>
                             :
                             <div className="flex flex-col justify-center items-center gap-3">
-                                <Button className="mt-10" onClick={() => setIsFlipped(true)}>
+                                <Button className="mt-10"  onClick={() => handleShowAnswer()}>
                                     Show Answer
                                 </Button>
                                 <span className="text-gray-400 text-sm hidden lg:block">Press Enter</span>
