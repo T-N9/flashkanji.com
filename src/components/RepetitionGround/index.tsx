@@ -4,7 +4,7 @@ import { Clicked_Item, SR_KanjiCard } from "@/util";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import useRepetitionGround from "./useRepetitionGround";
 import { KanjiRepetitionItem } from "./KanjiRepetitionItem";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useJukugoByChapterAndLevel } from "@/services/jukugo";
 import { Kanji } from "@/types/kanji";
 import { relatedJukugoItem } from "@/types/jukugo";
@@ -44,7 +44,7 @@ const SpacedRepetition = () => {
     localStorage?.getItem("spacedRepetitionData");
 
   const [activeItem, setActiveItem] = useState<number | null>(null);
-  const [ satisfactionPoint, setSatisfactionPoint ] = useState<number>(0);
+  const [satisfactionPoint, setSatisfactionPoint] = useState<number>(0);
 
   const handleShuffleRepetitionData = (
     array: Kanji[] | relatedJukugoItem[]
@@ -80,7 +80,7 @@ const SpacedRepetition = () => {
           repetitions: 0,
           easeFactor: 2.5,
           nextReviewDate: new Date(),
-          previousClick : null,
+          previousClick: null,
         }));
 
         setSpacedRepetitionData(initialData);
@@ -148,6 +148,11 @@ const SpacedRepetition = () => {
     if (confidence <= 24) return "😃"; // Very confident
     return "🤩"; // Mastered (25 - 30+)
   }
+  const router = useRouter();
+  const handleEndSRSession = () => {
+    localStorage.removeItem("spacedRepetitionData");
+    router.push("/");
+  }
 
   return (
     <div className="h-screen">
@@ -164,10 +169,11 @@ const SpacedRepetition = () => {
                   {activeItem === kanji.id && (
                     <div key={index}>
                       <p className="text-center text-4xl">{getConfidenceEmoji(satisfactionPoint)}</p>
+                      <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
                       <p className=" text-gray-600 table mx-auto text-base text-center">
                         {clickedRepetitionData.length} cards left
                       </p>
-                      
+
                       <KanjiRepetitionItem
                         sr_data={
                           spacedRepetitionData.find(
@@ -178,7 +184,7 @@ const SpacedRepetition = () => {
                             repetitions: 0,
                             easeFactor: 2.5,
                             nextReviewDate: new Date(),
-                            previousClick : null,
+                            previousClick: null,
                           }
                         }
                         handleClickLevel={handleClickLevel}
@@ -210,6 +216,7 @@ const SpacedRepetition = () => {
                 >
                   <ArrowCounterClockwise size={52} />
                 </Button>
+                <Button variant="solid" onClick={() => handleEndSRSession()}>End Session</Button>
               </div>
             )
           ) : clickedRepetitionData.length !== 0 ? (
@@ -217,8 +224,10 @@ const SpacedRepetition = () => {
               <React.Fragment key={index}>
                 {activeItem === jukugo.id && (
                   <div key={index}>
-                    <p className="font-bold text-orange-600 table mx-auto text-xl text-center">
-                      {index + 1}
+                    <p className="text-center text-4xl">{getConfidenceEmoji(satisfactionPoint)}</p>
+                    <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
+                    <p className=" text-gray-600 table mx-auto text-base text-center">
+                      {clickedRepetitionData.length} cards left
                     </p>
                     <JukugoRepetitionItem
                       sr_data={
@@ -230,7 +239,7 @@ const SpacedRepetition = () => {
                           repetitions: 0,
                           easeFactor: 2.5,
                           nextReviewDate: new Date(),
-                          previousClick : null,
+                          previousClick: null,
                         }
                       }
                       handleClickLevel={handleClickLevel}
@@ -239,6 +248,8 @@ const SpacedRepetition = () => {
                       character={(jukugo as relatedJukugoItem).jukugo_char}
                       meaning={(jukugo as relatedJukugoItem).english_meaning}
                       hiragana={(jukugo as relatedJukugoItem).hiragana}
+                      satisfaction={satisfactionPoint}
+                      setSatisfaction={setSatisfactionPoint}
                     />
 
                     {/* if it is not kanji route (jukugo route) this will conditionally render <JukugoRepetitionItem/> */}
@@ -257,6 +268,7 @@ const SpacedRepetition = () => {
               >
                 <ArrowCounterClockwise size={52} />
               </Button>
+              <Button variant="solid" onClick={() => handleEndSRSession()}>End Session</Button>
             </div>
           )}
         </div>

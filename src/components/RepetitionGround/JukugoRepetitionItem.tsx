@@ -10,6 +10,8 @@ export const JukugoRepetitionItem = ({
     character,
     meaning,
     hiragana,
+    satisfaction,
+    setSatisfaction,
 }: {
     sr_data: SR_KanjiCard;
     spacedRepetitionData: SR_KanjiCard[];
@@ -18,30 +20,55 @@ export const JukugoRepetitionItem = ({
     character: string;
     meaning: string;
     hiragana: string;
+    satisfaction: number;
+    setSatisfaction: React.Dispatch<React.SetStateAction<number>>;
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
+    const [isAnswerShown, setIsAnswerShown] = useState(false);
+
+    const [seconds, setSeconds] = useState<number>(0);
+    const [isRunning, setIsRunning] = useState<boolean>(true);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout | undefined;
+
+        if (isRunning) {
+            interval = setInterval(() => {
+                setSeconds((prev) => prev + 1);
+            }, 1000);
+        } else if (interval) {
+            clearInterval(interval);
+        }
+
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [isRunning]);
 
     const ratingButtons = [
-        { reaction: "🤯", text: "ဟာ သွားပါပြီ" },
-        { reaction: "🤔", text: "ခက်တယ်ဟ" },
-        { reaction: "😎", text: "ရပါတယ်" },
-        { reaction: "😴", text: "အေးဆေးပဲ" }
+        { reaction: "🤯", text: "ဟာ သွားပါပြီ", color: "border-red-400" },
+        { reaction: "🤔", text: "ခက်တယ်ဟ", color: "border-yellow-400" },
+        { reaction: "😎", text: "ရပါတယ်", color: "border-violet-400 " },
+        { reaction: "😴", text: "အေးဆေးပဲ", color: "border-green-400" },
     ];
 
     // Handle keyboard shortcuts
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
-            if (!isFlipped) {
-                if (event.key === "Enter") {
-                    setIsFlipped(true);
-                }
-            } else {
-                if (event.key >= "1" && event.key <= "4") {
-                    const index = Number(event.key) - 1;
-                    handleButtonClick(index);
-                    setIsFlipped(false);
-                }
+            if (event.key === "Enter") {
+                setIsFlipped((isFlipped) => !isFlipped);
+                setIsAnswerShown(true);
+                setIsRunning(false);
             }
+            // if (!isFlipped) {
+
+            // } else {
+            if (isAnswerShown && event.key >= "1" && event.key <= "4") {
+                const index = Number(event.key) - 1;
+                handleButtonClick(index);
+                setIsFlipped(false);
+            }
+            // }
         };
 
         window.addEventListener("keydown", handleKeyPress);
@@ -49,16 +76,26 @@ export const JukugoRepetitionItem = ({
     }, [isFlipped]);
 
     const handleButtonClick = (index: number) => {
-        const updatedCard = calculateNextReview(sr_data, index);
-        const updatedStoredData = spacedRepetitionData.map(item =>
-            item.id === updatedCard.id ? updatedCard : item
+        const updatedCard = calculateNextReview(sr_data, index, satisfaction, seconds);
+        const updatedStoredData = spacedRepetitionData.map((item) =>
+            item.id === updatedCard.updatedCard.id ? updatedCard.updatedCard : item
         );
 
         setSpacedRepetitionData(updatedStoredData);
-        localStorage.setItem("spacedRepetitionData", JSON.stringify(updatedStoredData));
-        handleClickLevel(updatedCard.id, index);
+        localStorage.setItem(
+            "spacedRepetitionData",
+            JSON.stringify(updatedStoredData)
+        );
+        handleClickLevel(updatedCard.updatedCard.id, index);
+        setSatisfaction(updatedCard.satisfaction);
+        console.log({ satisfaction: updatedCard.satisfaction });
     };
 
+    const handleShowAnswer = () => {
+        setIsFlipped(isFlipped => !isFlipped);
+        setIsRunning(false);
+        setIsAnswerShown(true);
+    }
     return (
         <div className="px-4">
 
@@ -113,13 +150,16 @@ export const JukugoRepetitionItem = ({
                                     /* [I, H, M , E] */
                                     <div key={index} className="gap-3 flex flex-col items-center">
                                         <Button
-                                            className="bg-gray-200 text-2xl text-gray-800 font-semibold py-1 px-3 rounded-lg hover:bg-gray-300"
+
+                                            className={`${rating.color} border-2 text-3xl text-gray-800 font-semibold w-24 h-24 rounded-full hover:bg-gray-300`}
                                             onClick={() => handleButtonClick(index)}
                                         >
                                             {rating.reaction}
                                         </Button>
                                         <p className="text-sm mt-2 hidden">{rating.text}</p>
-                                        <span className="text-gray-400 text-sm text-center hidden lg:block">Press {index + 1}</span>
+                                        <span className="text-gray-400 text-sm text-center hidden lg:block">
+                                            Press {index + 1}
+                                        </span>
                                     </div>
                                 ))}
                             </div>
