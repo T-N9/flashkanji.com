@@ -19,6 +19,7 @@ const useJukugoSetting = () => {
     toggleIsFlippedMode,
     toggleShowMeaning,
     setJukugo,
+    setNoChapters,
   } = useJukugoGroundState();
 
   const { isJukugoModalOpen, userInfo } = useGeneralStore();
@@ -63,6 +64,9 @@ const useJukugoSetting = () => {
     level,
     chapter,
     isShowMeaning,
+    n5NoChapters,
+    n4NoChapters,
+    n3NoChapters,
 
     setJukugo,
     setSelectedChapter,
@@ -70,6 +74,7 @@ const useJukugoSetting = () => {
     toggleIsFlippedMode,
     toggleShowMeaning,
     updateQueryParams,
+    setNoChapters
   };
 };
 

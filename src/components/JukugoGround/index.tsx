@@ -14,7 +14,7 @@ export const JukugoGround = () => {
 
   const [jukugoData, setJukugoData] = useState<relatedJukugoItem[] | null>(null)
 
-  const { jukugo, level, chapter, isShowMeaning, setJukugo } = useJukugoSetting()
+  const { jukugo, level, chapter, isShowMeaning, setJukugo, setNoChapters, n5NoChapters, n4NoChapters, n3NoChapters } = useJukugoSetting()
 
   const { data, isLoading, error } = useJukugoByChapterAndLevel(chapter ? parseInt(chapter) : null,
     level ? parseInt(level) : null);
@@ -36,9 +36,31 @@ export const JukugoGround = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (level) {
+      handleLevelSelection(parseInt(level));
+    }
+  }, [level]);
+
+  const handleLevelSelection = (selectedLevel: number) => {
+    switch (selectedLevel) {
+      case 5:
+        setNoChapters(n5NoChapters);
+        break;
+      case 4:
+        setNoChapters(n4NoChapters);
+        break;
+      case 3:
+        setNoChapters(n3NoChapters);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <section className="relative flex min-h-screen flex-col items-center">
-      <JukugoSetting handleShuffle={handleShuffleJukugoData}/>
+      <JukugoSetting handleShuffle={handleShuffleJukugoData} />
       <div className="flex w-full justify-center px-4 lg:px-0 gap-4">
         {jukugoData?.length === 0 ? (
           <LoadingGround mode={2} />
