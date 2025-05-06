@@ -8,9 +8,10 @@ const JukugoPage = () => {
     <>
       <Suspense fallback={<p>Loading...</p>}>
         <JukugoGround />
+        <JukugoDetailModal/>
       </Suspense>
       <JukugoSwiperModal />
-      <JukugoDetailModal/>
+
     </>
   )
 }
