@@ -74,14 +74,14 @@ export const JukugoGround = () => {
           </div>
         )}
       </div>
-      {/* <div className="my-10 p-4">
+      <div className="my-10 p-4">
         <h1 className="font-bold text-orange-500">Jukugo Data :</h1>
         <div className="flex gap-2 my-5 flex-wrap">
           {jukugoData?.map((item, index) => {
             return <p key={index}>{item?.jukugo_char}</p>;
           })}
         </div>
-      </div> */}
+      </div>
       <SpeedDialMenu mode={2} />
     </section>
   );

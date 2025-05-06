@@ -113,8 +113,17 @@ const KanjiGround = () => {
                     {/* <div className="w-[300px] hidden lg:block">
             <AdsComponent isDisplay={true} slotId={"7647610361"} />
           </div> */}
+                    
                     <SpeedDialMenu mode={1} />
                 </div>
+                <div className="my-10 p-4">
+                        <h1 className="font-bold text-orange-500">Kanji Data :</h1>
+                        <div className="flex gap-2 my-5 flex-wrap">
+                            {kanjiData?.map((item, index) => {
+                                return <p key={index}>{item?.kanji_character}</p>;
+                            })}
+                        </div>
+                    </div>
             </div>
 
             {/* <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>

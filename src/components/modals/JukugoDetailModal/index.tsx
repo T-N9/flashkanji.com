@@ -11,19 +11,69 @@ import {
     useDisclosure,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/react";
+import { Envelope } from "@phosphor-icons/react";
+import { useParams, useSearchParams } from "next/navigation";
+import { env } from "process";
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+
+export const GeminiResponse = ({ content }: { content: string }) => {
+    return (
+        <div className="prose prose-sm md:prose-base max-w-none prose-orange">
+            <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
+    );
+};
 
 export const JukugoDetailModal = () => {
 
     const { isJukugoDetailModalOpen, jukugoDetail, toggleJukugoDetailModal, setJukugoDetail } = useGeneralStore();
 
+    const searchParams = useSearchParams();
+    const level = searchParams.get("level");
+    // console.log("level", level);
+
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     const [currentStrokeWord, setCurrentStrokeWord] = useState<string>("");
 
+    const [geminiResponse, setGeminiResponse] = useState<string>("");
+    const [isGeminiLoading, setIsGeminiLoading] = useState<boolean>(false);
+
+    const askGemini = async () => {
+        setIsGeminiLoading(true);
+        if (!jukugoDetail?.character) return;
+
+        const prompt = `Hello Sensei, I am a Japanese language learner, give me N${level} level 5 real-world usage of this word "${jukugoDetail.character}". Also give me hiragana and English translation version of each sentence.`;
+
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: prompt }]
+                    }]
+                }),
+            });
+
+            const data = await res.json();
+
+            const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
+            setGeminiResponse(text);
+            setIsGeminiLoading(false);
+        } catch (error) {
+            setIsGeminiLoading(false);
+            console.error("Error calling Gemini API:", error);
+            setGeminiResponse("An error occurred while contacting the AI.");
+        }
+    };
+
     const handleOpen = (character: string | null) => {
         toggleJukugoDetailModal();
-
+        setGeminiResponse("");
         setJukugoDetail(null);
     };
 
@@ -91,6 +141,29 @@ export const JukugoDetailModal = () => {
 
                             <div className="flex-1">
                                 <KanjiGif kanji={currentStrokeWord} />
+                            </div>
+                        </div>
+                        <div>
+                            {/* AI Component */}
+                            <h1>Ask Samurai Sensei how {jukugoDetail?.character} is used. </h1>
+
+                            {geminiResponse === "" && <Button onClick={askGemini} color="warning">Ask</Button>}
+                            <div>
+                                {/* This will be result got back from Gemini API */}
+                                {isGeminiLoading ? (
+                                    <p>Sensei is thinking...</p>
+                                ) : (
+                                    <div>
+                                        {geminiResponse && (
+                                            <div className="mt-4">
+                                                <h2 className="text-lg font-bold">Sensei Response:</h2>
+                                                <div className="mt-4 bg-white p-4 rounded-lg shadow-md">
+                                                    <GeminiResponse content={geminiResponse} />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </ModalBody>

@@ -292,3 +292,21 @@ button {
 nav header {
   max-width: 1280px !important;
 }
+
+.prose ol>li{
+  margin-bottom: 20px;
+}
+
+.prose ol{
+list-style-type: disc;
+margin-top: 20px;
+padding-left: 20px;
+}
+
+.prose p {
+  margin-bottom: 10px;
+}
+
+.prose ul {
+  margin-bottom: 20px;
+}
