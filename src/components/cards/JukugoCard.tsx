@@ -20,9 +20,9 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
 
   const { isFlippedMode } = useJukugoSetting();
 
-  const handleOpen = (character: string, hiragana: string) => {
+  const handleOpen = (character: string, hiragana: string, english_meaning : string) => {
     toggleJukugoDetailModal()
-    setJukugoDetail({ character, hiragana });
+    setJukugoDetail({ character, hiragana, english_meaning });
   };
 
 
@@ -77,7 +77,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
       {isInfoShow && (
         <div className="absolute -right-2 top-0">
           <Button
-            onClick={() => handleOpen(item.jukugo_char, item.hiragana)}
+            onClick={() => handleOpen(item.jukugo_char, item.hiragana, item.english_meaning)}
             isIconOnly
             className="mt-2 mx-auto shadow-md text-xs flex justify-center items-center rounded-full bg-[#FA8245]"
             size="sm"

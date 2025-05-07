@@ -1,6 +1,7 @@
 'use client'
 import { KanjiGif } from "@/components/KanjiGif";
 import TextSpeech from "@/components/tts/TextSpeech";
+import { hiragana_katakana } from "@/constants/static";
 import { useGeneralStore } from "@/store/generalState";
 import {
     Modal,
@@ -112,8 +113,8 @@ export const JukugoDetailModal = () => {
                                     jukugoDetail?.hiragana &&
                                     <TextSpeech japaneseText={jukugoDetail?.hiragana} />
                                 }
-
-
+                                <hr />
+                                <p>{jukugoDetail?.english_meaning}</p>
 
                                 <div>
                                     <p className="mt-5 font-english-text text-info">Stroke Information</p>
@@ -123,12 +124,23 @@ export const JukugoDetailModal = () => {
                                                 <div key={index}>
                                                     {item !== "～" && (
                                                         <div className="flex gap-3 items-center">
-                                                            <h3
-                                                                className={`${currentStrokeWord === item && 'text-orange-500 border-orange-300'} p-2 border-2 text-2xl text-deep-orange-700 cursor-pointer`}
-                                                                onClick={() => setCurrentStrokeWord(item)}
-                                                            >
-                                                                {item}
-                                                            </h3>
+                                                            {
+                                                                hiragana_katakana.includes(item) ?
+                                                                    <h3
+                                                                        className={`${currentStrokeWord === item && 'text-orange-500 '} p-2 text-2xl text-deep-orange-700 `}
+
+                                                                    >
+                                                                        {item}
+                                                                    </h3>
+                                                                    :
+                                                                    <h3
+                                                                        className={`${currentStrokeWord === item && 'text-orange-500 border-orange-300'} p-2 border-2 text-2xl text-deep-orange-700 cursor-pointer`}
+                                                                        onClick={() => setCurrentStrokeWord(item)}
+                                                                    >
+                                                                        {item}
+                                                                    </h3>
+                                                            }
+
                                                             {jukugoDetail?.character?.split("").length - 1 !== index && "+"}
                                                         </div>
                                                     )}
@@ -143,20 +155,21 @@ export const JukugoDetailModal = () => {
                                 <KanjiGif kanji={currentStrokeWord} />
                             </div>
                         </div>
+                        <hr className="my-4" />
                         <div>
                             {/* AI Component */}
-                            <h1>Ask Samurai Sensei how {jukugoDetail?.character} is used. </h1>
+                            <h1 className="text-center">Ask Samurai Sensei how {jukugoDetail?.character} is used. </h1>
 
-                            {geminiResponse === "" && <Button onClick={askGemini} color="warning">Ask</Button>}
+                            {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
                             <div>
                                 {/* This will be result got back from Gemini API */}
                                 {isGeminiLoading ? (
-                                    <p>Sensei is thinking...</p>
+                                    <p className="text-center animate-pulse">Sensei is thinking...</p>
                                 ) : (
                                     <div>
                                         {geminiResponse && (
                                             <div className="mt-4">
-                                                <h2 className="text-lg font-bold">Sensei Response:</h2>
+                                                <h2 className="text-lg font-bold text-center">Sensei Response:</h2>
                                                 <div className="mt-4 bg-white p-4 rounded-lg shadow-md">
                                                     <GeminiResponse content={geminiResponse} />
                                                 </div>
