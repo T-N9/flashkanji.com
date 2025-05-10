@@ -5,6 +5,7 @@ import Providers from "./Providers";
 import { poppins } from "@/fonts";
 import HeadingBar from "@/components/Navigation/Header";
 import Footer from "@/components/footer/Footer";
+import AuthListener from "@/components/auth/AuthListener";
 
 export const metadata: Metadata = {
   title: "Flash Kanji | Your Kanji Learning Companion",
@@ -23,6 +24,7 @@ export default function RootLayout({
       >
         <Providers>
           <HeadingBar/>
+          <AuthListener/>
           {children}
           <Footer/>
         </Providers>

@@ -4,6 +4,17 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
 
+  if (url.pathname === "/login") return NextResponse.next();
+
+  // Get Supabase token from cookie
+  const token = request.cookies.get("sb-access-token")?.value;
+
+  // If not authenticated, redirect to login
+  if (!token) {
+    const loginUrl = new URL("/login", request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
   // Check if pathname is "/kanji"
   if (
     url.pathname === "/study/kanji/cards" ||
@@ -45,10 +56,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/study/kanji/cards",
-    "/study/kanji/repetition",
-    "/study/jukugo/cards",
-    "/study/jukugo/repetition",
-    "/study/kanji/quiz"
+    "/((?!login|callback|_next|favicon.ico).*)", 
   ],
 };
