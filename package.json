@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@nextui-org/react": "^2.4.8",
     "@phosphor-icons/react": "^2.1.7",
     "@supabase/supabase-js": "^2.49.4",
@@ -19,9 +20,11 @@
     "next": "15.0.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.56.3",
     "react-markdown": "^10.1.0",
     "react-query": "^3.39.3",
     "swiper": "^11.2.4",
+    "zod": "^3.24.4",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

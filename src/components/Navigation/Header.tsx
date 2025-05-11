@@ -15,6 +15,7 @@ import {
 import { Logo } from "../common/Logo";
 import Image from "next/image";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { User } from "@phosphor-icons/react";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
@@ -72,6 +73,13 @@ export function HeadingBar() {
           <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
         </DropdownMenu>
       </Dropdown>
+
+      <NavbarItem
+        isActive={path === "/profile"}
+        onClick={() => delayedSetIsMenuOpen(false)}
+      >
+        <Link href="/profile"><User className="mx-auto" size={32} /></Link>
+      </NavbarItem>
     </>
   );
 

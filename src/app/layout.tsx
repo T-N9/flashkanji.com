@@ -23,10 +23,10 @@ export default function RootLayout({
         className={`${poppins.className} antialiased text-dark`}
       >
         <Providers>
-          <HeadingBar/>
+
           <AuthListener/>
           {children}
-          <Footer/>
+
         </Providers>
       </body>
     </html>
