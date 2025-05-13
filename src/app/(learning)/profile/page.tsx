@@ -1,10 +1,12 @@
 import LogOutButton from '@/components/auth/LogOutButton'
+import UserProfileSection from '@/components/user-profile'
 import React from 'react'
 
 const ProfilePage = () => {
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
-        <LogOutButton/>
+    <div className='flex flex-col gap-5 items-center justify-center h-screen'>
+      <UserProfileSection />
+      <LogOutButton />
     </div>
   )
 }

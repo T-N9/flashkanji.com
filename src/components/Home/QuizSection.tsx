@@ -31,7 +31,7 @@ const QuizSection = () => {
             engaging, fun-filled learning experience! 🀄🤔
           </p>
           <div className="space-x-4">
-            <Link className="" href="/quiz">
+            <Link className="" href="/flashmap">
               <Button className='btn-primary' size='lg'>Start Quiz</Button>
             </Link>
           </div>

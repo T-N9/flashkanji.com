@@ -6,9 +6,12 @@ import { supabase } from '@/lib/supabaseClient'
 import Cookies from 'js-cookie'
 import { checkUserExists } from '@/api/usersRoute'
 import { CircleNotch } from '@phosphor-icons/react'
+import { useUserStore } from '@/store/userState'
 
 export default function AuthCallback() {
   const router = useRouter()
+
+  const { setUser} = useUserStore()
 
   useEffect(() => {
     const handleSession = async () => {
@@ -22,12 +25,26 @@ export default function AuthCallback() {
         return
       }
 
+      if(user) {
+        setUser({
+          email: user.email,
+          avatarUrl: user.user_metadata.avatar_url,
+        })
+      }
+
       Cookies.set('sb-access-token', accessToken, { expires: 1 })
+      console.log({user})
 
       try {
         const result = await checkUserExists(user.id)
         if (result.exists) {
-          router.push('/')
+          setUser({
+            userId: user.id,
+            username: result?.user?.username,
+            japanese_level: result?.user?.japanese_level,
+            created_at: result?.user?.created_at
+          })
+          router.push('/flashmap')
         } else {
           router.push('/create-profile')
         }

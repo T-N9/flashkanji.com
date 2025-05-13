@@ -1,11 +1,46 @@
 'use client'
-import { useRandomKanji } from "@/services/kanji";
 import KanjiCard from "../cards/KanjiCard";
-import LoadingKanjiCard from "../cards/LoadingKanjiCard";
+const staticKanjiData = [
+    {
+        id: 1,
+        kanji_character: "日",
+        onyomi: "ニチ, ジツ",
+        kunyomi: "ひ, -び, -か",
+        meaning: "Day, Sun",
+        chapter: 1,
+        level: 5
+    },
+    {
+        id: 2,
+        kanji_character: "本",
+        onyomi: "ホン",
+        kunyomi: "もと",
+        meaning: "Book, Origin",
+        chapter: 1,
+        level: 5
+    },
+    {
+        id: 3,
+        kanji_character: "漢",
+        onyomi: "カン",
+        kunyomi: "-",
+        meaning: "China",
+        chapter: 7,
+        level: 4
+    },
+    {
+        id: 4,
+        kanji_character: "字",
+        onyomi: "ジ",
+        kunyomi: "あざ, あざな, -な",
+        meaning: "Character, Letter",
+        chapter: 3,
+        level: 5
+    }
+];
+
 
 const ExampleSection = () => {
-
-    const { data, isLoading } = useRandomKanji(4);
 
     return (
         <section className="w-full py-12 md:py-14 lg:py-16">
@@ -64,21 +99,11 @@ const ExampleSection = () => {
                     </div>
                     <div className="mx-auto grid items-start gap-4 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-4 grid-cols-2">
                         {
-                            isLoading ? (
-                                <>
-                                    <LoadingKanjiCard />
-                                    <LoadingKanjiCard />
-                                    <LoadingKanjiCard />
-                                    <LoadingKanjiCard />
-                                </>
-                            )
-                                :
-                                data?.map((kanji, index) => {
-                                    return <KanjiCard key={index} item={kanji} />;
-                                })
+                            staticKanjiData?.map((kanji, index) => {
+                                return <KanjiCard key={index} item={kanji} isInfoShow={false} />;
+                            })
+
                         }
-
-
                     </div>
                 </div>
             </div>

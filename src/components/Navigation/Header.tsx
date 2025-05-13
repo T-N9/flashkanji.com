@@ -16,10 +16,13 @@ import { Logo } from "../common/Logo";
 import Image from "next/image";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { User } from "@phosphor-icons/react";
+import { useUserStore } from "@/store/userState";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { userId } = useUserStore()
 
   const delayedSetIsMenuOpen = (val: boolean) => {
     setTimeout(() => {
@@ -73,13 +76,22 @@ export function HeadingBar() {
           <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
         </DropdownMenu>
       </Dropdown> */}
+      {
+        userId !== '' ?
+          <NavbarItem
+            isActive={path === "/profile"}
+            onClick={() => delayedSetIsMenuOpen(false)}
+          >
+            <Link href="/profile"><User className="mx-auto" size={32} /></Link>
+          </NavbarItem>
+          :
+          <NavbarItem
+            onClick={() => delayedSetIsMenuOpen(false)}
+          >
+            <Link href="/login"><Button>Log In</Button></Link>
+          </NavbarItem>
+      }
 
-      <NavbarItem
-        isActive={path === "/profile"}
-        onClick={() => delayedSetIsMenuOpen(false)}
-      >
-        <Link href="/profile"><User className="mx-auto" size={32} /></Link>
-      </NavbarItem>
     </>
   );
 

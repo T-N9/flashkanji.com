@@ -22,7 +22,7 @@ const JukugoSection = () => {
                             efficient. 🀄🎓
                         </p>
                         <div className="space-x-4">
-                            <Link className="" href="/jukugo">
+                            <Link className="" href="/flashmap">
                                 <Button className='btn-primary' size='lg'>Start Learning</Button>
                             </Link>
                         </div>

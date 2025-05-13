@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
 
-  if (url.pathname === "/login") return NextResponse.next();
+  if (url.pathname === "/login" || url.pathname === '/') return NextResponse.next();
 
   // Get Supabase token from cookie
   const token = request.cookies.get("sb-access-token")?.value;

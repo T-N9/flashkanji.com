@@ -1,16 +1,20 @@
 'use client'
 
 import { supabase } from '@/lib/supabaseClient'
+import { useUserStore } from '@/store/userState'
 import { Button } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 
 export default function LogOutButton() {
+
+  const { resetUser } = useUserStore()
   const handleLogout = async () => {
     // Sign out from Supabase
     await supabase.auth.signOut()
 
     // Remove access token cookie
     Cookies.remove('sb-access-token')
+    resetUser();
 
     // Clear localStorage (optional: only clear relevant items)
     localStorage.clear()
