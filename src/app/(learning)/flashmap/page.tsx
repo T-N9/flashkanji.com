@@ -19,11 +19,11 @@ const roadmapData = [
       ["Learn New Kanji Characters", "cards", "Take your time to learn the new kanji characters.", "kanji"],
       ["Spaced Repetition of newly learnt Kanji", "repetition", "Start repeating the kanji you just learnt.", "kanji"],
       ["Mini Quiz (Kunyomi)", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
-      ["Spaced Repetition Again", "repetition", "Reinforce your memory with another review round." ,"kanji"],
+      ["Spaced Repetition Again", "repetition", "Reinforce your memory with another review round.", "kanji"],
       ["Mini Quiz (Onyomi)", "quiz", "Test your understanding of Onyomi readings.", "kanji"],
       ["Learn Jukugo", "cards", "Learn the compound words using recent kanji.", "jukugo"],
-      ["Spaced Repetition of Jukugo", "repetition", "Reinforce your memory of the compound words." , "jukugo"],
-      ["Mini Quiz for Jukugo meaning", "quiz", "Test your understanding of the meanings of the compound words." , "jukugo"],
+      ["Spaced Repetition of Jukugo", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
+      ["Mini Quiz for Jukugo meaning", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
     ],
   },
   {
@@ -31,12 +31,12 @@ const roadmapData = [
     steps: [
       ["Learn Another Kanji", "cards", "Learn another kanji characters.", "kanji"],
       ["Spaced Repetition of Kanji", "repetition", "Reinforce your memory of the new kanji.", "kanji"],
-      ["Quiz (Onyomi Focused) for Kanji", "quiz" , "Test your understanding of Onyomi readings.", "kanji"],
+      ["Quiz (Onyomi Focused) for Kanji", "quiz", "Test your understanding of Onyomi readings.", "kanji"],
       ["Spaced Repetition of All Kanji", "repetition", "Reinforce your memory of all kanji.", "kanji"],
       ["Quiz (Kunyomi Focused) for All Kanji", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Learn Jukugo Using Kanji", "cards", "Learn the compound words using recent kanji.", "jukugo"],
-      ["Spaced Repetition of Jukugo from A5 Kanji", "repetition", "Reinforce your memory of the compound words." , "jukugo"],
-      ["Meaning Quiz for Jukugo", "quiz", "Test your understanding of the meanings of the compound words." , "jukugo"],
+      ["Spaced Repetition of Jukugo from A5 Kanji", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
+      ["Meaning Quiz for Jukugo", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
     ],
   },
   {
@@ -95,35 +95,29 @@ const RoadmapItem = ({
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo } = useJukugoGroundState();
 
   const handleClickRoadmapItem = () => {
-    if(route === 'kanji' && phase === 1 && type === "cards") {
-      setSelectedChapter(demoChapter);
-      setSelectedLevel("N" + demoLevel);
-      setLevel(demoLevel);
-      setPart("0");
-      setIsParted(true);
-    } else {
-      setSelectedChapter(demoChapter);
-      setSelectedLevel("N" + demoLevel);
-      setLevel(demoLevel);
-      setPart("1");
-      setIsParted(true);
-    }
 
-    if(route === 'jukugo' && phase === 1 && type === "cards") {
+    if (route === 'kanji') {
+      setSelectedChapter(demoChapter);
+      setSelectedLevel("N" + demoLevel);
+      setLevel(demoLevel);
+      setIsParted(true);
+      if (phase === 1 && type === "cards") {
+        setPart("0");
+      } else {
+        setPart("1");
+      }
+    } else if (route === 'jukugo') {
       setSelectedChapterJukugo(demoChapter);
       setSelectedLevelJukugo("N" + demoLevel);
       setLevelJukugo(demoLevel);
-      setPartJukugo("0");
       setIsPartedJukugo(true);
+      if (phase === 1 && type === "cards") {
+        setPartJukugo("0");
+      } else {
+        setPartJukugo("1");
+      }
     }
-    else {
-      setSelectedChapterJukugo(demoChapter);
-      setSelectedLevelJukugo("N" + demoLevel);
-      setLevelJukugo(demoLevel);
-      setPartJukugo("1");
-      setIsPartedJukugo(true);
-    }
-  } 
+  }
 
   return (
     <Link className="block" onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
@@ -162,7 +156,7 @@ export default function ChapterRoadmap() {
           <h2 className="text-xl font-semibold text-gray-400">{phase.title}</h2>
           <div className="space-y-3">
             {phase.steps.map(([label, type, description, route], i) => (
-              <RoadmapItem phase={idx+1} key={i} label={label} route={route} type={type as any} description={description} />
+              <RoadmapItem phase={idx + 1} key={i} label={label} route={route} type={type as any} description={description} />
             ))}
           </div>
         </div>

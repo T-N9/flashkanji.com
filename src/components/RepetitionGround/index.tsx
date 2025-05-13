@@ -13,21 +13,25 @@ import { Button } from "@nextui-org/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import Image from "next/image";
 import Avatar from "../common/avatar/Avatar";
+import useKanjiGroundState from "@/store/kanjiGroundState";
+import useJukugoGroundState from "@/store/jukugoGroundState";
 
 type RepetitionType = Kanji[] | relatedJukugoItem[];
 
 const SpacedRepetition = () => {
   const pathname = usePathname();
 
-  const { chapter, level } = useRepetitionGround();
+  // const { chapter, level } = useRepetitionGround();
+
+  const { selectedChapter, level, part } = useKanjiGroundState();
+  const { selectedChapter: selectedJukugoChapter, level: selectedJukugoLevel, part: jukugoPart } = useJukugoGroundState();
+
   const kanjiData = useKanjiByChapterAndLevel(
-    chapter ? parseInt(chapter) : null,
-    level ? parseInt(level) : null
+    selectedChapter, level, part
   )?.data;
 
   const jukugoData = useJukugoByChapterAndLevel(
-    chapter ? parseInt(chapter) : null,
-    level ? parseInt(level) : null
+    selectedJukugoChapter, selectedJukugoLevel, jukugoPart
   )?.data;
 
   const rawData =
@@ -59,7 +63,8 @@ const SpacedRepetition = () => {
   };
 
   const handlePrepareRepetitionData = () => {
-    console.log("Restarting");
+    console.log({data, selectedChapter, level, part});
+    console.log("Restarting", {rawData, kanjiData, jukugoData});
 
     if (data && data?.length > 0 && !isInitialized.current) {
       const shuffledData = handleShuffleRepetitionData(data);
@@ -153,7 +158,7 @@ const SpacedRepetition = () => {
   const router = useRouter();
   const handleEndSRSession = () => {
     localStorage.removeItem("spacedRepetitionData");
-    router.push("/");
+    router.push("/flashmap");
   }
 
   return (
@@ -210,7 +215,7 @@ const SpacedRepetition = () => {
                 <p className="text-center">
                   Flash Repetition Session Completed.
                 </p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
                 <Button
                   isIconOnly
                   onClick={() => handleRestartRepetitionSession()}
@@ -226,7 +231,7 @@ const SpacedRepetition = () => {
               <React.Fragment key={index}>
                 {activeItem === jukugo.id && (
                   <div key={index}>
-                   {/* <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/> */}
+                    {/* <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/> */}
                     {/* <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p>
                     <p className=" text-gray-600 table mx-auto text-base text-center">
                       {clickedRepetitionData.length} cards left
@@ -262,7 +267,7 @@ const SpacedRepetition = () => {
           ) : (
             <div className="flex flex-col gap-5 items-center">
               <p className="text-center">Flash Repetition Session Completed.</p>
-              <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+              <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
               <Button
                 isIconOnly
                 onClick={() => handleRestartRepetitionSession()}

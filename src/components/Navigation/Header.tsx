@@ -29,12 +29,12 @@ export function HeadingBar() {
 
   const navList = (
     <>
-      <NavbarItem
+      {/* <NavbarItem
         isActive={path === "/"}
         onClick={() => delayedSetIsMenuOpen(false)}
       >
         <Link href="/">Home</Link>
-      </NavbarItem>
+      </NavbarItem> */}
 
       {/* <NavbarItem
         isActive={path === "/kanji"}
@@ -42,7 +42,7 @@ export function HeadingBar() {
       >
         <Link href="/kanji">Kanji</Link>
       </NavbarItem> */}
-      <Dropdown>
+      {/* <Dropdown>
         <DropdownTrigger>
           <Button variant="bordered">Kanji</Button>
         </DropdownTrigger>
@@ -72,7 +72,7 @@ export function HeadingBar() {
           <DropdownItem key="cards" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/cards'}>Flash Cards</Link></DropdownItem>
           <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
         </DropdownMenu>
-      </Dropdown>
+      </Dropdown> */}
 
       <NavbarItem
         isActive={path === "/profile"}
