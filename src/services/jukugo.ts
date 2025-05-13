@@ -10,10 +10,10 @@ export const useRelatedJukugo = (kanjis: string) => {
   });
 };
 
-export const useJukugoByChapterAndLevel = (chapter: number | null, level: number | null) => {
+export const useJukugoByChapterAndLevel = (chapter: number | null, level: number | null, part ?: "0" | "1" | null) => {
   return useQuery({
-    queryKey: ["jukugoByChapterAndLevel", chapter, level],
-    queryFn: () => fetchJukugoByChapterAndLevel(chapter!, level!),
+    queryKey: ["jukugoByChapterAndLevel", chapter, level, part],
+    queryFn: () => fetchJukugoByChapterAndLevel(chapter!, level!, part!),
     enabled: !!chapter && !!level, 
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000, 

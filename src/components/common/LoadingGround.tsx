@@ -9,8 +9,8 @@ export const LoadingGround = ({ mode } : {mode : number}) => {
   return (
     <>
       {mode === 1 && (
-        <div className="grid lg:max-w-[1280px] w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {Array.from({ length: 10 }, (_, index) => index + 1).map(
+        <div className=" lg:max-w-[1280px] w-full flex justify-center items-center flex-wrap  gap-6">
+          {Array.from({ length: 4 }, (_, index) => index + 1).map(
             (item, index) => {
               return (
                 <LoadingKanjiCard key={index}/>
@@ -21,7 +21,7 @@ export const LoadingGround = ({ mode } : {mode : number}) => {
       )}
       {mode === 2 && (
         <div className="grid lg:max-w-[1280px] w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }, (_, index) => index + 1).map(
+          {Array.from({ length: 4 }, (_, index) => index + 1).map(
             (item, index) => {
               return (
                 <LoadingJukugoCard key={index}/>

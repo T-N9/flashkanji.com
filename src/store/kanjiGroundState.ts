@@ -15,6 +15,10 @@ type FlashGroundState = {
   isShuffledMode: boolean;
   shuffledData: string[];
   kanjiPracticeData: string[];
+  isParted: boolean;
+  setIsParted: (isParted: boolean) => void;
+  setPart: (part: string) => void;
+  part: "0" | "1" | null;
 };
 
 type FlashGroundActions = {
@@ -49,6 +53,8 @@ const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>((set) 
   isShuffledMode: false,
   shuffledData: [],
   kanjiPracticeData: [],
+  isParted: false,
+  part: "0",
 
   // Actions
   setStartLoading: () => set({ isLoading: true }),
@@ -68,6 +74,8 @@ const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>((set) 
   setShuffledData: (shuffledData) => set({ shuffledData }),
   setKanjiPracticeData: (kanjiPracticeData) =>
     set({ kanjiPracticeData }),
+  setIsParted: (isParted) => set({ isParted }),
+  setPart: (part) => set(part === "0" ? { part: "0" } : { part: "1"})
 }));
 
 export default useKanjiGroundState;

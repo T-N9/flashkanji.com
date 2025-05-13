@@ -4,8 +4,9 @@ import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, To
 
 /* Hook */
 import { useKanjiSetting } from "./useKanjiSetting";
-import { ArrowsClockwise, Brain, DiamondsFour, Shuffle } from "@phosphor-icons/react";
+import { ArrowsClockwise, Brain, DiamondsFour, Shuffle, Slideshow } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useGeneralStore } from "@/store/generalState";
 
 interface KanjiSettingProps {
   handleShuffle: () => void; // Add this prop type
@@ -23,16 +24,23 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
     toggleIsFlippedMode
   } = useKanjiSetting();
 
+  const { toggleFlashModal, toggleSetting, toggleJukugoModal } =
+    useGeneralStore();
+
+  const pathname = window.location.pathname;
+
+  const mode = pathname.includes('kanji') ? 1 : 2;
+
   return (
     <section
-      className={`container mt-5 bg-gray-50 z-10 border-2 border-gray-100 relative flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
-      w-full mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4`}
+      className={`container mt-5 bg-gray-100  z-10 border-2 border-orange-400  flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
+      w-fit fixed bottom-10 left-1/2 -translate-x-1/2 mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4`}
     >
       <div
         className={`w-full flex flex-col lg:flex-row justify-center gap-4 items-center transition-all duration-200 ease-in `}
       >
         <div className="flex gap-4 w-full md:w-fit justify-center items-center flex-wrap">
-          <div className="flex gap-4 w-full md:w-fit">
+          {/* <div className="flex gap-4 w-full md:w-fit">
             <div className="flex w-full md:w-36 min-w-36 select-box flex-col gap-6">
               <Select
                 // @ts-ignore
@@ -141,7 +149,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
               }
 
             </PopoverContent>
-          </Popover>
+          </Popover> */}
 
           <Tooltip className="font-primary-san" content="Shuffle" color="primary" placement="bottom">
             <Button
@@ -149,6 +157,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
               variant="bordered"
               className=" text-info rounded-full"
               title="Shuffle"
+              isIconOnly
             >
               <Shuffle size={32} />
             </Button>
@@ -167,8 +176,31 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
               <ArrowsClockwise size={32} color="#fff" />
             </Button>
           </Tooltip>
+          <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
+          <Button
+            variant="bordered"
+            className="rounded-full"
+            title="Slide View"
+            isIconOnly
+            onClick={() => {
+              switch (mode) {
+                case 1:
+                  toggleFlashModal();
+                  break;
+                case 2:
+                  toggleJukugoModal();
+                  break;
+                default:
+                  break;
+              }
+            }}
+          >
+            <Slideshow size={32} />
+          </Button>
+          </Tooltip>
 
-          <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
+
+          {/* <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
             <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>
               <Button
 
@@ -180,7 +212,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
                 <Brain size={32} color="#fff" />
               </Button>
             </Link>
-          </Tooltip>
+          </Tooltip> */}
         </div>
       </div>
     </section>

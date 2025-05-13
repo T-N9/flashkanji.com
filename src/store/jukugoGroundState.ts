@@ -12,6 +12,10 @@ type JukugoGroundState = {
   level: number;
   isShowMeaning: boolean;
   jukugoPracticeData: any[];
+  isParted: boolean;
+  setIsParted: (isParted: boolean) => void;
+  setPart: (part: string) => void;
+  part: "0" | "1" | null;
 };
 
 type JukugoGroundActions = {
@@ -40,6 +44,8 @@ const useJukugoGroundState = create<JukugoGroundState & JukugoGroundActions>((se
   level: 3,
   isShowMeaning: true,
   jukugoPracticeData: [],
+  isParted: false,
+  part: "0",
 
   // Actions
   setStartLoading: () => set({ isLoading: true }),
@@ -53,6 +59,8 @@ const useJukugoGroundState = create<JukugoGroundState & JukugoGroundActions>((se
   setLevel: (level) => set({ level }),
   toggleShowMeaning: () => set((state) => ({ isShowMeaning: !state.isShowMeaning })),
   setJukugoPracticeData: (jukugoPracticeData) => set({ jukugoPracticeData }),
+  setIsParted: (isParted) => set({ isParted }),
+  setPart: (part) => set(part === "0" ? { part: "0" } : { part: "1"})
 }));
 
 export default useJukugoGroundState;

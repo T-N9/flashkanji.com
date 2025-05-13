@@ -9,10 +9,11 @@ export const fetchRandomKanji = async (random: number): Promise<Kanji[]> => {
 
 export const fetchKanjiByChapterAndLevel = async (
   chapter: number,
-  level: number
+  level: number,
+  part ?: "0" | "1" | null 
 ): Promise<Kanji[]> => {
   const response = await apiClient.get("/kanji", {
-    params: { chapter, level },
+    params: { chapter, level, part },
   });
   return response.data;
 };

@@ -10,10 +10,11 @@ export const fetchRelatedJukugo = async (
 
 export const fetchJukugoByChapterAndLevel = async (
   chapter: number,
-  level: number
+  level: number,
+  part ?: "0" | "1" | null
 ): Promise<relatedJukugoItem[]> => {
   const response = await apiClient.get("/jukugo", {
-    params: { chapter, level },
+    params: { chapter, level, part },
   });
   return response.data;
 };

@@ -18,13 +18,11 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
     isLoading,
     isFlippedMode,
     isShuffledMode,
-    selectedChapter,
     selectedLevel,
     noChapters,
-    chapter,
+
     level,
     isShowMeaning,
-    updateQueryParams,
 
     setSelectedChapter,
     setSelectedLevel,
@@ -34,13 +32,13 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
 
   return (
     <section
-      className={`container mt-5 bg-gray-50 z-10 border-2 border-gray-100 relative flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
-      w-full mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4 ${isLoading && 'select-none pointer-events-none'}`}
+      className={`container mt-5 bg-gray-50 z-10 border-2 border-gray-100 flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
+     w-fit fixed bottom-10 left-1/2 -translate-x-1/2 mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4 ${isLoading && 'select-none pointer-events-none'}`}
     >
       <div
         className={`flex w-full lg:w-auto mx-auto flex-col lg:flex-row justify-center gap-4 items-center transition-all duration-200 ease-in `}
       >
-        <div className="flex gap-4 w-full md:w-fit">
+        {/* <div className="flex gap-4 w-full md:w-fit">
           <div className="flex w-full md:w-36 min-w-36 select-box flex-col gap-6">
             <Select
               // @ts-ignore
@@ -96,7 +94,7 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
               ))}
             </Select>
           </div>
-        </div>
+        </div> */}
         <div className="flex-1 flex justify-center items-center gap-2">
 
         </div>
@@ -143,7 +141,7 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
             </NextButton>
           </Tooltip>
 
-          <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
+          {/* <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
             <Link href={`/study/jukugo/repetition?chapter=${chapter}&level=${level}`}>
               <Button
 
@@ -155,7 +153,7 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
                 <Brain size={32} color="#fff" />
               </Button>
             </Link>
-          </Tooltip>
+          </Tooltip> */}
         </div>
       </div>
     </section>

@@ -23,10 +23,10 @@ export const useKanjiDetail = (kanji: string) => {
   });
 };
 
-export const useKanjiByChapterAndLevel = (chapter: number | null, level: number | null) => {
+export const useKanjiByChapterAndLevel = (chapter: number | null, level: number | null, part ?: "0" | "1" | null) => {
   return useQuery({
-    queryKey: ["kanjiByChapterAndLevel", chapter, level],
-    queryFn: () => fetchKanjiByChapterAndLevel(chapter!, level!),
+    queryKey: ["kanjiByChapterAndLevel", chapter, level, part],
+    queryFn: () => fetchKanjiByChapterAndLevel(chapter!, level! , part!),
     enabled: !!chapter && !!level, 
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000, 
