@@ -12,9 +12,8 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
 } from "@nextui-org/navbar";
-import { Logo } from "../common/Logo";
 import Image from "next/image";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { Button} from "@nextui-org/react";
 import { User } from "@phosphor-icons/react";
 import { useUserStore } from "@/store/userState";
 
@@ -32,50 +31,6 @@ export function HeadingBar() {
 
   const navList = (
     <>
-      {/* <NavbarItem
-        isActive={path === "/"}
-        onClick={() => delayedSetIsMenuOpen(false)}
-      >
-        <Link href="/">Home</Link>
-      </NavbarItem> */}
-
-      {/* <NavbarItem
-        isActive={path === "/kanji"}
-        onClick={() => delayedSetIsMenuOpen(false)}
-      >
-        <Link href="/kanji">Kanji</Link>
-      </NavbarItem> */}
-      {/* <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered">Kanji</Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="cards" onClick={() => delayedSetIsMenuOpen(false)}>
-            <Link href={'/study/kanji/cards'}>
-              Flash Cards
-            </Link>
-          </DropdownItem>
-          <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/kanji/repetition'}>Flash Repetition</Link> </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-
-
-      <NavbarItem
-        isActive={path === "/quiz"}
-        onClick={() => delayedSetIsMenuOpen(false)}
-      >
-        <Link href="/quiz">Quiz</Link>
-      </NavbarItem>
-
-      <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered">Jukugo</Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="cards" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/cards'}>Flash Cards</Link></DropdownItem>
-          <DropdownItem key="repetition" onClick={() => delayedSetIsMenuOpen(false)}><Link href={'/study/jukugo/repetition'}>Flash Repetition</Link> </DropdownItem>
-        </DropdownMenu>
-      </Dropdown> */}
       {
         userId !== '' ?
           <NavbarItem

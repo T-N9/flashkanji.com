@@ -33,7 +33,6 @@ export default function AuthCallback() {
       }
 
       Cookies.set('sb-access-token', accessToken, { expires: 1 })
-      console.log({user})
 
       try {
         const result = await checkUserExists(user.id)

@@ -6,6 +6,7 @@ import { poppins } from "@/fonts";
 import HeadingBar from "@/components/Navigation/Header";
 import Footer from "@/components/footer/Footer";
 import AuthListener from "@/components/auth/AuthListener";
+import SessionSync from "@/components/session-sync";
 
 export const metadata: Metadata = {
   title: "Flash Kanji | Your Kanji Learning Companion",
@@ -23,8 +24,8 @@ export default function RootLayout({
         className={`${poppins.className} antialiased text-dark`}
       >
         <Providers>
-
-          <AuthListener/>
+          <SessionSync />
+          <AuthListener />
           {children}
 
         </Providers>

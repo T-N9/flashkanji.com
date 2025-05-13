@@ -23,11 +23,9 @@ const HeroSection = () => {
             adventure now! 🀄🖌️
           </p>
           <div className="space-x-4">
-            <Link className="" href="/flashmap">
-              <Button className="btn-primary" size="lg">Start Learning</Button>
-            </Link>
+              <Button as={Link} href="/flashmap" className="btn-primary" size="lg">Start Learning</Button>
           </div>
-        </div>
+        </div> 
         <div className="flex justify-center lg:justify-end">
           <Image
             alt="jukugo"

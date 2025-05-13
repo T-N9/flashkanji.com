@@ -7,6 +7,7 @@ import { useKanjiSetting } from "./useKanjiSetting";
 import { ArrowsClockwise, Brain, DiamondsFour, Shuffle, Slideshow } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useGeneralStore } from "@/store/generalState";
+import { usePathname } from "next/navigation";
 
 interface KanjiSettingProps {
   handleShuffle: () => void; // Add this prop type
@@ -27,9 +28,9 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
   const { toggleFlashModal, toggleSetting, toggleJukugoModal } =
     useGeneralStore();
 
-  const pathname = window.location.pathname;
+  const pathname = usePathname()
 
-  const mode = pathname.includes('kanji') ? 1 : 2;
+  const mode = pathname.includes('kanji') ? 1 : 2
 
   return (
     <section
@@ -177,26 +178,26 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
             </Button>
           </Tooltip>
           <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
-          <Button
-            variant="bordered"
-            className="rounded-full"
-            title="Slide View"
-            isIconOnly
-            onClick={() => {
-              switch (mode) {
-                case 1:
-                  toggleFlashModal();
-                  break;
-                case 2:
-                  toggleJukugoModal();
-                  break;
-                default:
-                  break;
-              }
-            }}
-          >
-            <Slideshow size={32} />
-          </Button>
+            <Button
+              variant="bordered"
+              className="rounded-full"
+              title="Slide View"
+              isIconOnly
+              onClick={() => {
+                switch (mode) {
+                  case 1:
+                    toggleFlashModal();
+                    break;
+                  case 2:
+                    toggleJukugoModal();
+                    break;
+                  default:
+                    break;
+                }
+              }}
+            >
+              <Slideshow size={32} />
+            </Button>
           </Tooltip>
 
 

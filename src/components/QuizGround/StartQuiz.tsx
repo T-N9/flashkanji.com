@@ -63,14 +63,13 @@ const StartQuiz = () => {
                             </div>
                         )}
                         <div className="my-5 flex gap-4 justify-center items-center">
-                            <Link href="/quiz">
-                                <Button
-                                    // onClick={() => handleQuizQuit()}
-                                    className=""
-                                >
-                                    Quit
-                                </Button>
-                            </Link>
+                            <Button
+                                // onClick={() => handleQuizQuit()}
+                                className=""
+                                as={Link} href="/quiz"
+                            >
+                                Quit
+                            </Button>
                             <Button
                                 // @ts-ignore
                                 disable={answeredCount !== data?.length || isQuizSubmit}

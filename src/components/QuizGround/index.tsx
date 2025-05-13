@@ -153,14 +153,15 @@ export const Quiz_Ground = () => {
                             </Select>
                         </div>
                     </div>
-                    <Link href={`/study/kanji/quiz?chapter=${chapter}&level=${level}&mode=${mode}`}>
-                        <Button
-                            className={`${level === null && 'cursor-not-allowed'}` + " mt-5 mx-auto bg-gradient-radial text-2xl text-white table"}
-                            disabled={level === null}
-                        >
-                            Start
-                        </Button>
-                    </Link>
+
+                    <Button
+                        className={`${level === null && 'cursor-not-allowed'}` + " mt-5 mx-auto bg-gradient-radial text-2xl text-white table"}
+                        disabled={level === null}
+                        as={Link} href={`/study/kanji/quiz?chapter=${chapter}&level=${level}&mode=${mode}`}
+                    >
+                        Start
+                    </Button>
+
                 </div>
             </>
 
