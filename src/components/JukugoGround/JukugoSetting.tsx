@@ -6,8 +6,10 @@
 import { Button, Select, SelectItem, Switch, Tooltip } from "@nextui-org/react";
 import { Button as NextButton } from "@nextui-org/react";
 import useJukugoSetting from "./useJukugoSetting";
-import { ArrowsClockwise, Brain, Shuffle } from "@phosphor-icons/react";
+import { ArrowsClockwise, Brain, Shuffle, Slideshow } from "@phosphor-icons/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useGeneralStore } from "@/store/generalState";
 
 interface JukugoSettingProps {
   handleShuffle: () => void; // Add this prop type
@@ -29,6 +31,13 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
     toggleIsFlippedMode,
     toggleShowMeaning,
   } = useJukugoSetting();
+
+    const { toggleFlashModal, toggleSetting, toggleJukugoModal } =
+      useGeneralStore();
+
+    const pathname = usePathname()
+  
+    const mode = pathname.includes('kanji') ? 1 : 2
 
   return (
     <section
@@ -139,6 +148,29 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
             >
               <ArrowsClockwise size={32} color="#fff" />
             </NextButton>
+          </Tooltip>
+
+          <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
+            <Button
+              variant="bordered"
+              className="rounded-full"
+              title="Slide View"
+              isIconOnly
+              onClick={() => {
+                switch (mode) {
+                  case 1:
+                    toggleFlashModal();
+                    break;
+                  case 2:
+                    toggleJukugoModal();
+                    break;
+                  default:
+                    break;
+                }
+              }}
+            >
+              <Slideshow size={32} />
+            </Button>
           </Tooltip>
 
           {/* <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">

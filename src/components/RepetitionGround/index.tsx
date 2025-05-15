@@ -21,21 +21,31 @@ type RepetitionType = Kanji[] | relatedJukugoItem[];
 const SpacedRepetition = () => {
   const pathname = usePathname();
 
-  // const { chapter, level } = useRepetitionGround();
-
   const { selectedChapter, level, part } = useKanjiGroundState();
   const { selectedChapter: selectedJukugoChapter, level: selectedJukugoLevel, part: jukugoPart } = useJukugoGroundState();
 
-  const kanjiData = useKanjiByChapterAndLevel(
-    selectedChapter, level, part
-  )?.data;
+  function useStudyData(
+    pathname: string,
+    kanjiParams: [number, number, "0" | "1" | null],
+    jukugoParams: [number, number, "0" | "1" | null]
+  ) {
+    const [selectedChapter, level, part] = kanjiParams;
+    const [selectedJukugoChapter, selectedJukugoLevel, jukugoPart] = jukugoParams;
 
-  const jukugoData = useJukugoByChapterAndLevel(
-    selectedJukugoChapter, selectedJukugoLevel, jukugoPart
-  )?.data;
+    const isKanji = pathname === "/study/kanji/repetition";
 
-  const rawData =
-    pathname === "/study/kanji/repetition" ? kanjiData : jukugoData;
+    const kanji = isKanji && useKanjiByChapterAndLevel(selectedChapter, level, part);
+    const jukugo = !isKanji && useJukugoByChapterAndLevel(selectedJukugoChapter, selectedJukugoLevel, jukugoPart);
+
+    // @ts-ignore
+    return isKanji ? kanji.data : jukugo.data;
+  }
+
+  const rawData = useStudyData(
+    pathname,
+    [selectedChapter, level, part],
+    [selectedJukugoChapter, selectedJukugoLevel, jukugoPart]
+  );
 
   const data = useMemo(() => rawData, [rawData]); // Memoize data
   const [spacedRepetitionData, setSpacedRepetitionData] = useState<
@@ -63,8 +73,7 @@ const SpacedRepetition = () => {
   };
 
   const handlePrepareRepetitionData = () => {
-    console.log({data, selectedChapter, level, part});
-    console.log("Restarting", {rawData, kanjiData, jukugoData});
+    console.log({ data, selectedChapter, level, part });
 
     if (data && data?.length > 0 && !isInitialized.current) {
       const shuffledData = handleShuffleRepetitionData(data);
@@ -171,11 +180,12 @@ const SpacedRepetition = () => {
         <div className="mt-5">
           {pathname === "/study/kanji/repetition" ? (
             clickedRepetitionData.length !== 0 ? (
+              // @ts-ignore
               data?.map((kanji, index) => (
                 <React.Fragment key={index}>
                   {activeItem === kanji.id && (
                     <div key={index}>
-                      <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)}/>
+                      <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
                       {/* <p className="text-center text-4xl">{satisfactionPoint.toFixed(2)}</p> */}
                       <p className=" text-gray-600 table mx-auto text-base text-center">
                         {clickedRepetitionData.length} cards left
@@ -227,6 +237,7 @@ const SpacedRepetition = () => {
               </div>
             )
           ) : clickedRepetitionData.length !== 0 ? (
+            // @ts-ignore
             data?.map((jukugo, index) => (
               <React.Fragment key={index}>
                 {activeItem === jukugo.id && (

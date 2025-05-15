@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Cookies from 'js-cookie';
 
 import {
   Navbar,
@@ -13,15 +14,18 @@ import {
   NavbarMenu,
 } from "@nextui-org/navbar";
 import Image from "next/image";
-import { Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { User } from "@phosphor-icons/react";
-import { useUserStore } from "@/store/userState";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [authCookie, setAuthCookie] = useState<string | undefined>(undefined);
 
-  const { userId } = useUserStore()
+  useEffect(() => {
+    const cookie = Cookies.get('sb-access-token');
+    setAuthCookie(cookie);
+  }, []);
 
   const delayedSetIsMenuOpen = (val: boolean) => {
     setTimeout(() => {
@@ -32,7 +36,7 @@ export function HeadingBar() {
   const navList = (
     <>
       {
-        userId !== '' ?
+        authCookie !== undefined ?
           <NavbarItem
             isActive={path === "/profile"}
             onClick={() => delayedSetIsMenuOpen(false)}

@@ -50,7 +50,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
             <rect className='w-full h-full' filter="url(#noise)" opacity="0.5"/>
           </svg>
           {/* Front Side */}
-          {!isSwiped && <span className="front text-gray-100">{item.id}</span>}
+          {/* {!isSwiped && <span className="front text-gray-100">{item.id}</span>} */}
           <p
               className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-7xl"
               } front text-white absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}

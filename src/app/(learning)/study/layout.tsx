@@ -1,15 +1,17 @@
+import BackToMap from '@/components/Navigation/BackToMap';
 import React from 'react'
 
-const LearnLayout = ({
+const StudyLayout = ({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
     return (
         <>
+            <BackToMap />
             {children}
         </>
     )
 }
 
-export default LearnLayout
+export default StudyLayout

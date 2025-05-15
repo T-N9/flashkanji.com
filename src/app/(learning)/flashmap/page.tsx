@@ -101,7 +101,7 @@ const RoadmapItem = ({
       setSelectedLevel("N" + demoLevel);
       setLevel(demoLevel);
       setIsParted(true);
-      if (phase === 1 && type === "cards") {
+      if (phase === 1) {
         setPart("0");
       } else {
         setPart("1");
@@ -111,7 +111,7 @@ const RoadmapItem = ({
       setSelectedLevelJukugo("N" + demoLevel);
       setLevelJukugo(demoLevel);
       setIsPartedJukugo(true);
-      if (phase === 1 && type === "cards") {
+      if (phase === 1) {
         setPartJukugo("0");
       } else {
         setPartJukugo("1");

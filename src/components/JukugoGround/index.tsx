@@ -62,7 +62,7 @@ export const JukugoGround = () => {
     <section className="relative flex min-h-screen flex-col items-center">
       <JukugoSetting handleShuffle={handleShuffleJukugoData} />
 
-      <div className='mt-4'>
+      <div className='mt-10'>
         <div className="flex justify-center items-center gap-2">
           <h1 className="text-2xl font-bold text-orange-500">Jukugo Ground</h1>
           <span className="text-sm text-gray-500">({jukugoData?.length === 0 ? '?' : jukugoData?.length} jukugo)</span>
@@ -73,7 +73,7 @@ export const JukugoGround = () => {
           Click on the jukugo to flip the card and see its meaning.
         </p>
       </div>
-      <div className="flex w-full justify-center px-4 lg:px-0 gap-4 mt-5">
+      <div className="flex w-full justify-center px-4 lg:px-0 gap-4 mt-20 mb-40">
         {jukugoData?.length === 0 ? (
           <LoadingGround mode={2} />
         ) : (
@@ -94,7 +94,7 @@ export const JukugoGround = () => {
           })}
         </div>
       </div> */}
-      <SpeedDialMenu mode={2} />
+      {/* <SpeedDialMenu mode={2} /> */}
     </section>
   );
 };
