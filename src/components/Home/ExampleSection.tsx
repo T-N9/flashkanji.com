@@ -97,7 +97,7 @@ const ExampleSection = () => {
                     <div className="table mb-4 mx-auto rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">
                         Example kanjis
                     </div>
-                    <div className="mx-auto grid items-start gap-4 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-4 grid-cols-2">
+                    <div className="mx-auto grid items-start gap-4 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-4 grid-cols-1">
                         {
                             staticKanjiData?.map((kanji, index) => {
                                 return <KanjiCard key={index} item={kanji} isInfoShow={false} />;

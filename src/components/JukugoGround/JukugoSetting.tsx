@@ -41,8 +41,8 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
 
   return (
     <section
-      className={`container mt-5 bg-gray-50 z-10 border-2 border-gray-100 flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
-     w-fit fixed bottom-10 left-1/2 -translate-x-1/2 mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4 ${isLoading && 'select-none pointer-events-none'}`}
+      className={`container mt-5 bg-gray-50 border-orange-400 z-10 border-2  flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
+     lg:w-fit w-[90%] fixed bottom-10 left-1/2 -translate-x-1/2 mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4 ${isLoading && 'select-none pointer-events-none'}`}
     >
       <div
         className={`flex w-full lg:w-auto mx-auto flex-col lg:flex-row justify-center gap-4 items-center transition-all duration-200 ease-in `}

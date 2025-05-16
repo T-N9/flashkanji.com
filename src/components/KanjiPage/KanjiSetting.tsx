@@ -34,8 +34,8 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
 
   return (
     <section
-      className={`container mt-5 bg-gray-100  z-10 border-2 border-orange-400  flex flex-col gap-3 justify-center items-center  rounded-md shadow-md transform duration-300 
-      w-fit fixed bottom-10 left-1/2 -translate-x-1/2 mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4`}
+      className={`container mt-5 bg-gray-100  z-10 border-2 border-orange-400  flex flex-col gap-3 justify-center items-center  rounded-md transform duration-300 
+      w-[90%] shadow-lg lg:w-fit fixed bottom-10 left-1/2 -translate-x-1/2 mx-auto max-w-screen-xl px-4 py-4 lg:px-8 lg:py-4 mb-4`}
     >
       <div
         className={`w-full flex flex-col lg:flex-row justify-center gap-4 items-center transition-all duration-200 ease-in `}
