@@ -6,7 +6,7 @@ export const checkUserExists = async (
   id: string
 ): Promise<{ exists: boolean, user : {
   id: string;
-  japanese_level: string;
+  japanese_level: "N3" | "N4" | "N5";
   username: string;
   created_at: string;
 } }> => {

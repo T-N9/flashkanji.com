@@ -4,13 +4,12 @@
 
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import useKanjiGroundState from "@/store/kanjiGroundState";
-import { Checkbox } from "@nextui-org/react";
+import { useUserStore } from "@/store/userState";
+import { Checkbox, Select, SelectItem } from "@nextui-org/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 // import { BookOpen, Flashcard, RefreshCw, FileQuestion } from "lucide-react";
-
-const demoLevel = 3;
-const demoChapter = 5;
 
 const roadmapData = [
   {
@@ -42,7 +41,7 @@ const roadmapData = [
   {
     title: "Compound Word Focus",
     steps: [
-      ["Revise All Jukugo of this chapter", "cards"],
+      ["Revise All Jukugo of this japanese_chapter", "cards"],
       ["Spaced Repetition of all jukugo", "repetition"],
       ["Kanji to Hiragana matching quiz", "quiz"],
       ["Hiragana to Kanji matching quiz", "quiz"],
@@ -57,6 +56,11 @@ const roadmapData = [
     ],
   },
 ];
+const levelChapterMap = {
+  N5: 11,
+  N4: 20,
+  N3: 42,
+};
 
 const typeStyles = {
   cards: {
@@ -82,12 +86,16 @@ const RoadmapItem = ({
   type,
   description,
   route,
+  japanese_level,
+  japanese_chapter,
 }: {
   phase: number;
   label: string;
   type: "cards" | "repetition" | "quiz";
   description?: string;
   route?: string;
+  japanese_level: number;
+  japanese_chapter: number;
 }) => {
   const { bg, border, icon } = typeStyles[type];
 
@@ -97,9 +105,9 @@ const RoadmapItem = ({
   const handleClickRoadmapItem = () => {
 
     if (route === 'kanji') {
-      setSelectedChapter(demoChapter);
-      setSelectedLevel("N" + demoLevel);
-      setLevel(demoLevel);
+      setSelectedChapter(japanese_chapter);
+      setSelectedLevel("N" + japanese_level);
+      setLevel(japanese_level);
       setIsParted(true);
       if (phase === 1) {
         setPart("0");
@@ -107,9 +115,9 @@ const RoadmapItem = ({
         setPart("1");
       }
     } else if (route === 'jukugo') {
-      setSelectedChapterJukugo(demoChapter);
-      setSelectedLevelJukugo("N" + demoLevel);
-      setLevelJukugo(demoLevel);
+      setSelectedChapterJukugo(japanese_chapter);
+      setSelectedLevelJukugo("N" + japanese_level);
+      setLevelJukugo(japanese_level);
       setIsPartedJukugo(true);
       if (phase === 1) {
         setPartJukugo("0");
@@ -144,11 +152,35 @@ const RoadmapItem = ({
 };
 
 export default function ChapterRoadmap() {
+
+  const { japanese_chapter, japanese_level, setUser } = useUserStore()
+  const chapters = Array.from({ length: levelChapterMap[japanese_level] }, (_, i) => i + 1);
+
   return (
     <div className="space-y-12 max-w-3xl mx-auto px-4 py-8">
       <div className="flex items-center gap-4">
         <CompassRose size={32} />
-        <h1 className="text-3xl font-bold text-dark"> Chapter {demoChapter} Roadmap</h1>
+        <h1 className="text-3xl font-bold text-dark"> Chapter {japanese_chapter} Roadmap – {japanese_level}</h1>
+      </div>
+
+      <div className="flex gap-4">
+        <Select label="Select Level" selectedKeys={[japanese_level]} onChange={(e) => setUser({ 
+          // @ts-ignore
+          japanese_level: e.target.value, japanese_chapter : 1 })}>
+          {["N5", "N4", "N3"].map((lvl) => (
+            <SelectItem key={lvl} value={lvl}>
+              {lvl}
+            </SelectItem>
+          ))}
+        </Select>
+
+        <Select label="Select Chapter" selectedKeys={[String(japanese_chapter)]} onChange={(e) => setUser({ japanese_chapter: parseInt(e.target.value) })}>
+          {chapters.map((ch) => (
+            <SelectItem key={ch} value={ch}>
+              Chapter {ch}
+            </SelectItem>
+          ))}
+        </Select>
       </div>
 
       {roadmapData.map((phase, idx) => (
@@ -156,7 +188,7 @@ export default function ChapterRoadmap() {
           <h2 className="text-xl font-semibold text-gray-400">{phase.title}</h2>
           <div className="space-y-3">
             {phase.steps.map(([label, type, description, route], i) => (
-              <RoadmapItem phase={idx + 1} key={i} label={label} route={route} type={type as any} description={description} />
+              <RoadmapItem phase={idx + 1} key={i} label={label} route={route} type={type as any} description={description} japanese_chapter={japanese_chapter} japanese_level={parseInt(japanese_level.split('')[1])} />
             ))}
           </div>
         </div>

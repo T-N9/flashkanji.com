@@ -4,7 +4,8 @@ import { create } from "zustand";
 interface UserState {
   username: string;
   userId: string;
-  japanese_level: string;
+  japanese_level: "N3" | "N4" | "N5";
+  japanese_chapter : number;
   email: string;
   created_at: string | undefined;
   setUser: (user: Partial<UserState>) => void;
@@ -15,7 +16,8 @@ interface UserState {
 export const useUserStore = create<UserState>((set) => ({
   username: "",
   userId: "",
-  japanese_level: "",
+  japanese_level: "N3",
+  japanese_chapter: 1,
   email: "",
   avatarUrl: "",
   setUser: (user) =>
@@ -28,7 +30,8 @@ export const useUserStore = create<UserState>((set) => ({
     set({
       username: "",
       userId: "",
-      japanese_level: "",
+      japanese_level: "N3",
+      japanese_chapter: 1,
       email: "",
       created_at: undefined,
       avatarUrl: "",
