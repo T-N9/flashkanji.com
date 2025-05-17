@@ -3,6 +3,7 @@ import { KanjiGif } from "@/components/KanjiGif";
 import TextSpeech from "@/components/tts/TextSpeech";
 import { hiragana_katakana } from "@/constants/static";
 import { useGeneralStore } from "@/store/generalState";
+import useJukugoGroundState from "@/store/jukugoGroundState";
 import {
     Modal,
     ModalContent,
@@ -29,9 +30,9 @@ export const GeminiResponse = ({ content }: { content: string }) => {
 export const JukugoDetailModal = () => {
 
     const { isJukugoDetailModalOpen, jukugoDetail, toggleJukugoDetailModal, setJukugoDetail } = useGeneralStore();
+    const { level } = useJukugoGroundState();
 
     const searchParams = useSearchParams();
-    const level = searchParams.get("level");
     // console.log("level", level);
 
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
