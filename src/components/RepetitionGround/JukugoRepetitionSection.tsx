@@ -8,6 +8,7 @@ import Avatar from "../common/avatar/Avatar";
 import { Button } from "@nextui-org/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
+import Image from "next/image";
 
 const JukugoRepetitionSection = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -30,7 +31,9 @@ const JukugoRepetitionSection = () => {
 
 
     if (!data || data.length === 0) {
-        return <div className="w-full h-80 flex justify-center items-center"><p>Preparing Session...</p></div>;
+        return (<div className="w-full h-80 flex justify-center items-center">
+            <Image className="tilt-animation drop-shadow-lg scale-50" src={'/assets/ramen.png'} width={200} height={200} alt="Loading Session" />
+            </div>);
     }
 
     if (clickedRepetitionData.length === 0) {
