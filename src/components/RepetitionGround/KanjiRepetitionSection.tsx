@@ -12,8 +12,8 @@ import useRepetitionCore from "./useRepetitionCore";
 
 const KanjiRepetitionSection = () => {
 
-    const { selectedChapter, level, part } = useKanjiGroundState();
-    const { data } = useKanjiByChapterAndLevel(selectedChapter, level, part);
+    const { selectedChapter, level, part, isParted } = useKanjiGroundState();
+    const { data } = useKanjiByChapterAndLevel(selectedChapter, level, isParted ? part : null);
 
     const {
         shuffledData,
@@ -52,7 +52,7 @@ const KanjiRepetitionSection = () => {
             {shuffledData.map((kanji) => (
                 activeItem === kanji.id && (
                     <div key={kanji.id}>
-                        <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                        <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} />
                         <p className="text-gray-600 table mx-auto text-base text-center">
                             {clickedRepetitionData.length} cards left
                         </p>
@@ -65,7 +65,7 @@ const KanjiRepetitionSection = () => {
                                 nextReviewDate: new Date(),
                                 previousClick: null,
                             }}
-                            handleClickLevel={(level) => handleClickLevel(kanji.id, level)}
+                            handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
                             character={kanji.kanji_character}

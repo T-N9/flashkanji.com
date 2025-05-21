@@ -90,7 +90,7 @@ const KanjiGround = () => {
         <div>
             <KanjiSetting handleShuffle={handleShuffleKanjiData} />
 
-            <div className='mt-10'>
+            <div className=''>
                 <div className="flex justify-center items-center gap-2">
                     <h1 className="text-2xl font-bold text-orange-500">Kanji Ground</h1>
                     <span className="text-sm text-gray-500">({kanjiData?.length === 0 ? '?' : kanjiData?.length} kanji)</span>

@@ -31,7 +31,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
   }, [isFlippedMode]);
 
   return (
-      <div className="relative">
+      <div className={`relative ${isSwiped ? 'w-[500px]' : 'w-[200px]'}`}>
 
 
         <div
@@ -39,7 +39,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
             className={`${isSwiped
                 ? "bg-gradient-to-br from-black via-slate-800 to-orange-700"
                 : "bg-gradient-to-br from-black via-slate-800 to-orange-700"
-            } relative card-shadow mx-auto font-writing-1 text-white p-5 rounded-md card min-w-[200px] max-w-[200px] border-4 ${isFlipped && "flipped"
+            } relative card-shadow mx-auto font-writing-1 text-white p-5 rounded-md card  border-4 ${isFlipped && "flipped"
             }`}
         >
           <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">

@@ -50,8 +50,10 @@ const roadmapData = [
   {
     title: "Deep Reinforcement",
     steps: [
-      ["Spaced Repetition of All 10 Kanji", "repetition"],
-      ["Spaced Repetition of all jukugo", "repetition"],
+      ["Review Kanji Characters", "cards", "Review all kanji characters for this chapter.", "kanji"],
+      ["Final Spaced Repetition", 'repetition', "All Kanji for this Chapter", "kanji"],
+      ["Review Jukugo Words", "cards", "Review all compound words for this chapter.", "jukugo"],
+      ["Final Spaced Repetition", 'repetition', "All Jukugo for this Chapter", "jukugo"],
       ["Final Challenge: Kunyomi + Onyomi + Meaning Quiz", "quiz"],
     ],
   },
@@ -111,8 +113,10 @@ const RoadmapItem = ({
       setIsParted(true);
       if (phase === 1) {
         setPart("0");
-      } else {
+      } else if (phase === 2) {
         setPart("1");
+      } else {
+        setIsParted(false);
       }
     } else if (route === 'jukugo') {
       setSelectedChapterJukugo(japanese_chapter);
@@ -121,8 +125,10 @@ const RoadmapItem = ({
       setIsPartedJukugo(true);
       if (phase === 1) {
         setPartJukugo("0");
+      } else if (phase === 2) {
+        setPart("1");
       } else {
-        setPartJukugo("1");
+        setIsPartedJukugo(false);
       }
     }
   }
@@ -164,9 +170,10 @@ export default function ChapterRoadmap() {
       </div>
 
       <div className="flex gap-4">
-        <Select label="Select Level" selectedKeys={[japanese_level]} onChange={(e) => setUser({ 
+        <Select label="Select Level" selectedKeys={[japanese_level]} onChange={(e) => setUser({
           // @ts-ignore
-          japanese_level: e.target.value, japanese_chapter : 1 })}>
+          japanese_level: e.target.value, japanese_chapter: 1
+        })}>
           {["N5", "N4", "N3"].map((lvl) => (
             <SelectItem key={lvl} value={lvl}>
               {lvl}

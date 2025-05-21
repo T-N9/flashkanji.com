@@ -3,9 +3,9 @@ import React from "react";
 const LoadingKanjiCard: React.FC = () => {
 
   return (
-    <div className="relative">
+    <div className="relative w-[200px] mx-auto">
         <div
-            className={`bg-gradient-to-br from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card min-w-[150px] border-4 lg:min-w-[200px] shadow-md !cursor-progress`}
+            className={`bg-gradient-to-br from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card  border-4 shadow-md !cursor-progress`}
         >
             <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
                 <filter id="noise" x="0" y="0">

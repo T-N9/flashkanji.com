@@ -51,7 +51,7 @@ const JukugoRepetitionSection = () => {
             {shuffledData.map((jukugo) => (
                 activeItem === jukugo.id && (
                     <div key={jukugo.id}>
-                        <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                        <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} />
                         <p className="text-gray-600 table mx-auto text-base text-center">
                             {clickedRepetitionData.length} cards left
                         </p>
