@@ -146,7 +146,7 @@ export const KanjiRepetitionItem = ({
 
                     {/* Rating Buttons */}
                     {isAnswerShown ? (
-                        <div className="grid grid-cols-2 lg:grid-cols-4 mt-10 gap-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 mt-2 gap-x-4">
                             {ratingButtons.map((rating, index) => (
                                 <div key={index} className="gap-3 flex flex-col items-center">
                                     <Button

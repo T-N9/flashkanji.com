@@ -1,5 +1,3 @@
-// components/ChapterRoadmap.tsx
-
 "use client";
 
 import useJukugoGroundState from "@/store/jukugoGroundState";
@@ -8,8 +6,6 @@ import { useUserStore } from "@/store/userState";
 import { Checkbox, Select, SelectItem } from "@nextui-org/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-// import { BookOpen, Flashcard, RefreshCw, FileQuestion } from "lucide-react";
 
 const roadmapData = [
   {
@@ -41,8 +37,8 @@ const roadmapData = [
   {
     title: "Compound Word Focus",
     steps: [
-      ["Revise All Jukugo of this japanese_chapter", "cards"],
-      ["Spaced Repetition of all jukugo", "repetition"],
+      ["Revise Jukugo", "cards", "Review all words of this Chapter","jukugo"],
+      ["Spaced Repetition of all jukugo", "repetition", "Reinforce your memory of all jukugo", "jukugo"],
       ["Kanji to Hiragana matching quiz", "quiz"],
       ["Hiragana to Kanji matching quiz", "quiz"],
     ],
@@ -134,7 +130,7 @@ const RoadmapItem = ({
   }
 
   return (
-    <Link className="block" onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
+    <Link className={`block ${type === 'quiz' && 'grayscale select-none pointer-events-none opacity-40'}`} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
       <div className={`bg-slate-50 ${border} border-2 gap-4 p-2 rounded-full w-full flex items-center shadow-xl`}>
         <div className={`${bg} relative inline-block p-2 rounded-full shadow-md`}>
           <div className="border-dashed animate-slow-spin border-white border-2 rounded-full p-2">

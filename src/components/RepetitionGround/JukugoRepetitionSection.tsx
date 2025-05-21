@@ -51,9 +51,9 @@ const JukugoRepetitionSection = () => {
             {shuffledData.map((jukugo) => (
                 activeItem === jukugo.id && (
                     <div key={jukugo.id}>
-                        <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} />
-                        <p className="text-gray-600 table mx-auto text-base text-center">
-                            {clickedRepetitionData.length} cards left
+                        {/* <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} /> */}
+                        <p className="text-gray-600 table mx-auto text-center p-2 rounded-full text-xs bg-gray-200">
+                            {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <JukugoRepetitionItem
                             sr_data={spacedRepetitionData.find((item) => item.id === jukugo.id) || {
@@ -64,7 +64,7 @@ const JukugoRepetitionSection = () => {
                                 nextReviewDate: new Date(),
                                 previousClick: null,
                             }}
-                            handleClickLevel={(level) => handleClickLevel(jukugo.id, level)}
+                            handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
                             character={jukugo.jukugo_char}
