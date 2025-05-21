@@ -31,7 +31,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
   }, [isFlippedMode]);
 
   return (
-      <div className={`relative ${isSwiped ? 'w-[500px]' : 'w-[200px]'}`}>
+      <div className={`relative mx-auto ${isSwiped ? 'w-[500px]' : 'w-[200px]'}`}>
 
 
         <div
