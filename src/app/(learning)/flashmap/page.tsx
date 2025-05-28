@@ -2,6 +2,7 @@
 
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import useKanjiGroundState from "@/store/kanjiGroundState";
+import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
 import { Checkbox, Select, SelectItem } from "@nextui-org/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
@@ -99,6 +100,7 @@ const RoadmapItem = ({
 
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo } = useJukugoGroundState();
+  const { setSelectedChapter : setSelectedChapterQuiz, setSelectedLevel : setSelectedLevelQuiz, setQuizMode } = useQuizGroundStore();
 
   const handleClickRoadmapItem = () => {
 
@@ -122,11 +124,11 @@ const RoadmapItem = ({
       if (phase === 1) {
         setPartJukugo("0");
       } else if (phase === 2) {
-        setPart("1");
+        setPartJukugo("1");
       } else {
         setIsPartedJukugo(false);
       }
-    }
+    } 
   }
 
   return (

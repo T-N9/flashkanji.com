@@ -1,4 +1,4 @@
-import StartQuiz from '@/components/QuizGround/StartQuiz';
+import StartQuiz from '@/components/QuizGround';
 import React, { Suspense } from 'react'
 
 const StartQuizPage = () => {

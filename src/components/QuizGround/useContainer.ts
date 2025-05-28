@@ -14,13 +14,13 @@ const useContainer = () => {
   const [isQuizSubmit, setIsQuizSubmit] = useState(false);
 
   const {
-    selectedChapter,
-    selectedLevel,
+    selectedChapter : chapter,
+    selectedLevel : level,
 
     selectedMultiChapters,
     answeredCount,
     currentMark,
-    selectedMode,
+    selectedMode : mode,
 
     setLevel,
     setSelectedChapter,
@@ -33,11 +33,6 @@ const useContainer = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  // Extracting queries
-  const chapter = searchParams.get("chapter");
-  const level = searchParams.get("level");
-  const mode = searchParams.get("mode");
 
   const handleChapterData = (level: number) => {
     switch (level) {
@@ -98,8 +93,6 @@ const useContainer = () => {
     level,
     chapter,
     mode,
-    selectedChapter,
-    selectedLevel,
 
     selectedMultiChapters,
     noChapters,
@@ -108,7 +101,6 @@ const useContainer = () => {
     answeredCount,
     currentMark,
     isQuizSubmit,
-    selectedMode,
 
     /* action */
     setSelectedChapter,

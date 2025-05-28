@@ -1,13 +1,13 @@
-import { Quiz_Ground } from '@/components/QuizGround'
+import StartQuiz from '@/components/QuizGround';
 import React, { Suspense } from 'react'
 
-const QuizPage = () => {
+const StartQuizPage = () => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <Quiz_Ground />
+      <StartQuiz />
     </Suspense>
 
   )
 }
 
-export default QuizPage
+export default StartQuizPage;
