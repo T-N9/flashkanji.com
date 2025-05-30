@@ -38,7 +38,7 @@ const roadmapData = [
   {
     title: "Compound Word Focus",
     steps: [
-      ["Revise Jukugo", "cards", "Review all words of this Chapter","jukugo"],
+      ["Revise Jukugo", "cards", "Review all words of this Chapter", "jukugo"],
       ["Spaced Repetition of all jukugo", "repetition", "Reinforce your memory of all jukugo", "jukugo"],
       ["Kanji to Hiragana matching quiz", "quiz"],
       ["Hiragana to Kanji matching quiz", "quiz"],
@@ -87,6 +87,7 @@ const RoadmapItem = ({
   route,
   japanese_level,
   japanese_chapter,
+  step_i,
 }: {
   phase: number;
   label: string;
@@ -95,12 +96,13 @@ const RoadmapItem = ({
   route?: string;
   japanese_level: number;
   japanese_chapter: number;
+  step_i: number;
 }) => {
   const { bg, border, icon } = typeStyles[type];
 
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo } = useJukugoGroundState();
-  const { setSelectedChapter : setSelectedChapterQuiz, setSelectedLevel : setSelectedLevelQuiz, setQuizMode } = useQuizGroundStore();
+  const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode } = useQuizGroundStore();
 
   const handleClickRoadmapItem = () => {
 
@@ -112,7 +114,8 @@ const RoadmapItem = ({
       if (phase === 1) {
         setPart("0");
       } else if (phase === 2) {
-        setPart("1");
+        step_i > 3 ? setPart(null) : setPart("1");
+        console.log("Setting part to 1 for phase 2, step", step_i);
       } else {
         setIsParted(false);
       }
@@ -127,8 +130,9 @@ const RoadmapItem = ({
         setPartJukugo("1");
       } else {
         setIsPartedJukugo(false);
+        setPartJukugo(null)
       }
-    } 
+    }
   }
 
   return (
@@ -193,7 +197,7 @@ export default function ChapterRoadmap() {
           <h2 className="text-xl font-semibold text-gray-400">{phase.title}</h2>
           <div className="space-y-3">
             {phase.steps.map(([label, type, description, route], i) => (
-              <RoadmapItem phase={idx + 1} key={i} label={label} route={route} type={type as any} description={description} japanese_chapter={japanese_chapter} japanese_level={parseInt(japanese_level.split('')[1])} />
+              <RoadmapItem phase={idx + 1} step_i={i + 1} key={i} label={label} route={route} type={type as any} description={description} japanese_chapter={japanese_chapter} japanese_level={parseInt(japanese_level.split('')[1])} />
             ))}
           </div>
         </div>

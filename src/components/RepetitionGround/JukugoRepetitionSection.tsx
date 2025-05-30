@@ -12,7 +12,7 @@ import Image from "next/image";
 
 const JukugoRepetitionSection = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
-    const { data } = useJukugoByChapterAndLevel(selectedChapter, level, part);
+    const { data } = useJukugoByChapterAndLevel(selectedChapter, level,  part);
 
     const {
         shuffledData,

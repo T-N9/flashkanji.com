@@ -8,7 +8,7 @@ const BackToMap = () => {
     return (
         <div className='max-w-screen-xl mx-auto'>
             <div className=" bg-white p-2">
-                <Button as={Link} href="/flashmap" isIconOnly className="text-gray-500 hover:underline">
+                <Button scroll={false} as={Link} href="/flashmap" isIconOnly className="text-gray-500 hover:underline">
                     <ArrowBendUpLeft size={32} />
                 </Button>
             </div>

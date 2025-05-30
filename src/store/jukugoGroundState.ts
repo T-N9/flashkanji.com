@@ -14,7 +14,7 @@ type JukugoGroundState = {
   jukugoPracticeData: any[];
   isParted: boolean;
   setIsParted: (isParted: boolean) => void;
-  setPart: (part: string) => void;
+  setPart: (part: "0" | "1" | null) => void;
   part: "0" | "1" | null;
 };
 
@@ -60,7 +60,7 @@ const useJukugoGroundState = create<JukugoGroundState & JukugoGroundActions>((se
   toggleShowMeaning: () => set((state) => ({ isShowMeaning: !state.isShowMeaning })),
   setJukugoPracticeData: (jukugoPracticeData) => set({ jukugoPracticeData }),
   setIsParted: (isParted) => set({ isParted }),
-  setPart: (part) => set(part === "0" ? { part: "0" } : { part: "1"})
+  setPart: (part) => set(part === null ? { part : null} : part === "0" ? { part: "0" } : { part: "1"})
 }));
 
 export default useJukugoGroundState;
