@@ -115,7 +115,7 @@ const KanjiGround = () => {
                         <>
 
                             <div
-                                className={`max-w-[1280px] flex justify-center items-center flex-wrap  gap-6`}
+                                className={`max-w-[1280px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full`}
                             >
                                 {kanjiData?.map((item, index) => (
                                     <KanjiCard key={index} item={item} />

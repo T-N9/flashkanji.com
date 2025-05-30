@@ -31,7 +31,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
   }, [isFlippedMode]);
 
   return (
-      <div className={`relative mx-auto ${isSwiped ? 'w-[500px]' : 'w-[200px]'}`}>
+      <div className={`relative mx-auto ${isSwiped ? 'w-full h-[300px] lg:w-[500px] lg:h-[500px]' : 'w-[300px] h-[300px]'}`}>
 
 
         <div
@@ -39,7 +39,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
             className={`${isSwiped
                 ? "bg-gradient-to-br from-black via-slate-800 to-orange-700"
                 : "bg-gradient-to-br from-black via-slate-800 to-orange-700"
-            } relative card-shadow mx-auto font-writing-1 text-white p-5 rounded-md card  border-4 ${isFlipped && "flipped"
+            } relative card-shadow mx-auto !h-full font-writing-1 text-white p-5 rounded-md card  border-4 ${isFlipped && "flipped"
             }`}
         >
           <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +52,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
           {/* Front Side */}
           {/* {!isSwiped && <span className="front text-gray-100">{item.id}</span>} */}
           <p
-              className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-7xl"
+              className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-9xl"
               } front text-white absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
           >
             {item.kanji_character}
@@ -60,7 +60,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
 
           {/* Back Side */}
           <div
-              className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col gap-5 bg-slate-900  px-2 py-4 p-2 ${isSwiped ? "text-2xl md:text-[3rem]" : "text-base md:text-lg"
+              className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col  bg-slate-900  px-2 py-6 p-2 ${isSwiped ? "text-xl md:text-[2rem] space-y-0 lg:space-y-0" : " space-y-4 text-lg md:text-xl"
               }`}
           >
             {/* Kunyomi */}

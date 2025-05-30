@@ -131,7 +131,7 @@ export const KanjiRepetitionItem = ({
                                 />
                             </svg>
                             {/* Front Side */}
-                            <p className="text-8xl z-20 front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <p className="text-[8rem] z-20 front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                 {character}
                             </p>
 

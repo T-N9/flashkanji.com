@@ -1,154 +1,154 @@
 /* This class is used to notify of undocumented segments on the
    documentation pages. */
 
-   .undocumented {
-    background-color: #d2ffbf;
-  }
-  
-  /* Italicise romaji. */
-  
-  .romaji {
-    font-style: italic;
-  }
-  
-  /* Radical used. */
-  
-  .used {
-    background: pink;
-  }
-  
-  code {
-    color: black;
-  }
-  
-  #kanji-image svg {
-    /* display: block; */
-    width: 327px;
-    height: 327px;
-    background-color: white;
-    border-radius: 20px;
-  }
-  
-  #kanji-visuals {
-    min-height: 330px;
-    min-width: 330px;
-  }
-  
-  @media screen and (min-width: 600px) {
-    #kanji-etc {
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 1;
-      grid-row-end: 2;
-    }
-  
-    #kanji-options {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      grid-row-start: 1;
-      grid-row-end: 2;
-    }
-  
-    #kanji-image {
-      grid-column-start: 1;
-      grid-column-end: 2;
-    }
-  
-    #sub-images {
-      grid-column-start: 2;
-      grid-column-end: 3;
-    }
-  }
-  
-  @media screen and (min-width: 800px) {
-    #kanji-etc {
-      grid-column-start: 1;
-      grid-column-end: 2;
-    }
-  
-    #kanji-options {
-      grid-column-start: 2;
-      grid-column-end: 3;
-    }
-  }
-  
-  .control-label {
-    width: unset;
-  }
-  
-  label {
-    display: unset;
-  }
-  
-  .sub-image {
-    display: inline;
+.undocumented {
+  background-color: #d2ffbf;
+}
+
+/* Italicise romaji. */
+
+.romaji {
+  font-style: italic;
+}
+
+/* Radical used. */
+
+.used {
+  background: pink;
+}
+
+code {
+  color: black;
+}
+
+#kanji-image svg {
+  /* display: block; */
+  width: 327px;
+  height: 327px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+#kanji-visuals {
+  min-height: 330px;
+  min-width: 330px;
+}
+
+@media screen and (min-width: 600px) {
+  #kanji-etc {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
   }
 
-  
-  #radical-images figure {
-    border: 1px solid orange;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
-    margin-bottom: 2rem;
-    background-image: linear-gradient(142deg, #f9efe3 8.29%, #fce2c9 88.99%);
+  #kanji-options {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
   }
-  
-  #radical-images figure svg {
-    margin-bottom: 2rem;
+
+  #kanji-image {
+    grid-column-start: 1;
+    grid-column-end: 2;
   }
-  
-  #radical-images figcaption {
-    margin-top: -2rem;
-  }
-  
-  .group-image {
-    display: inline;
-  }
-  
-  #group-images .group-image {
-    border: 1px solid orange;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
-    background-color: white;
-  }
-  
+
   #sub-images {
-    display: inline;
+    grid-column-start: 2;
+    grid-column-end: 3;
   }
-  
-  svg.group-svg {
-    display: block;
-    width: 145px;
-    height: 145px;
-    margin: 0px;
-    padding: 0px;
+}
+
+@media screen and (min-width: 800px) {
+  #kanji-etc {
+    grid-column-start: 1;
+    grid-column-end: 2;
   }
-  
-  .sidebar-nav {
-    padding: 9px 0;
+
+  #kanji-options {
+    grid-column-start: 2;
+    grid-column-end: 3;
   }
-  
-  figcaption {
-    display: table-caption;
-    caption-side: bottom;
-    text-align: center;
-    font-size: 1.25em;
-  }
-  
-  figure {
-    display: inline-table;
-    padding: 0px;
-    margin: 0px;
-    margin-inline: 0px;
-    margin-block: 0px;
-  }
-  
-  .radical-explanation {
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .radical-stroke {
-    stroke: #c586d7;
-    stroke-width: 4px;
-  }
+}
+
+.control-label {
+  width: unset;
+}
+
+label {
+  display: unset;
+}
+
+.sub-image {
+  display: inline;
+}
+
+
+#radical-images figure {
+  border: 1px solid orange;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+  margin-bottom: 2rem;
+  background-image: linear-gradient(142deg, #f9efe3 8.29%, #fce2c9 88.99%);
+}
+
+#radical-images figure svg {
+  margin-bottom: 2rem;
+}
+
+#radical-images figcaption {
+  margin-top: -2rem;
+}
+
+.group-image {
+  display: inline;
+}
+
+#group-images .group-image {
+  border: 1px solid orange;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+  background-color: white;
+}
+
+#sub-images {
+  display: inline;
+}
+
+svg.group-svg {
+  display: block;
+  width: 145px;
+  height: 145px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.sidebar-nav {
+  padding: 9px 0;
+}
+
+figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  text-align: center;
+  font-size: 1.25em;
+}
+
+figure {
+  display: inline-table;
+  padding: 0px;
+  margin: 0px;
+  margin-inline: 0px;
+  margin-block: 0px;
+}
+
+.radical-explanation {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.radical-stroke {
+  stroke: #c586d7;
+  stroke-width: 4px;
+}

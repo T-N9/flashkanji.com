@@ -9,8 +9,8 @@ export const LoadingGround = ({ mode } : {mode : number}) => {
   return (
     <>
       {mode === 1 && (
-        <div className=" max-w-[1280px] flex justify-center items-center flex-wrap  gap-6">
-          {Array.from({ length: 5 }, (_, index) => index + 1).map(
+        <div className=" max-w-[1280px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full ">
+          {Array.from({ length: 4 }, (_, index) => index + 1).map(
             (item, index) => {
               return (
                 <LoadingKanjiCard key={index}/>

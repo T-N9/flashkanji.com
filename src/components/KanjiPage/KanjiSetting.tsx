@@ -164,20 +164,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
             </Button>
           </Tooltip>
 
-          <Tooltip className="font-primary-san" content="Flip All" color="primary" placement="bottom">
-            <Button
-              onClick={() => {
-                toggleIsFlippedMode();
-              }}
-              isIconOnly
-              // variant="gradient"
-              className="bg-dark rounded-full"
-              title="Flip All"
-            >
-              <ArrowsClockwise size={32} color="#fff" />
-            </Button>
-          </Tooltip>
-          <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
+                    <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
             <Button
               variant="bordered"
               className="rounded-full"
@@ -199,6 +186,21 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
               <Slideshow size={32} />
             </Button>
           </Tooltip>
+
+          <Tooltip className="font-primary-san" content="Flip All" color="primary" placement="bottom">
+            <Button
+              onClick={() => {
+                toggleIsFlippedMode();
+              }}
+              isIconOnly
+              // variant="gradient"
+              className="bg-dark rounded-full"
+              title="Flip All"
+            >
+              <ArrowsClockwise size={32} color="#fff" />
+            </Button>
+          </Tooltip>
+
 
 
           {/* <Tooltip className="font-primary-san" content="Spaced Repetition" color="primary" placement="bottom">
