@@ -17,6 +17,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!login|callback|_next|favicon.ico).*)", 
+    "/((?!login|callback|_next|favicon.ico|assets).*)", 
   ],
 };

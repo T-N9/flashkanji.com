@@ -21,7 +21,7 @@ export default function AuthCallback() {
       const user = session?.user
 
       if (!user || !accessToken) {
-        router.push('/login')
+        // router.push('/login')
         return
       }
 
@@ -49,7 +49,7 @@ export default function AuthCallback() {
         }
       } catch (error) {
         console.error("User check failed", error)
-        router.push('/login')
+        // router.push('/login')
       }
     }
 
