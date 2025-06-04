@@ -8,18 +8,22 @@ import Link from 'next/link';
 
 const QuizGround = () => {
 
-    const { level, chapter, mode, isQuizSubmit, currentMark, answeredCount, handleQuizQuit, handleQuizSubmit, setQuizData, quizData } = useContainer();
+    const { level, chapter, mode, isQuizSubmit, currentMark, answeredCount, handleQuizQuit, handleQuizSubmit, setQuizData, quizData, part, isParted, resetQuizState } = useContainer();
+    console.log({level, chapter, mode, part})
 
-    const { data, isLoading, isError } = useKanjiQuiz(chapter ? parseInt(chapter) : null,
-        level ? parseInt(level) : null, mode ? mode : null,);
+    const { data, isLoading, isError } = useKanjiQuiz(chapter ? chapter : null,
+        level ? level : null, mode ? mode : null,  isParted ? part : null);
 
     useEffect(() => {
         if (data && JSON.stringify(data) !== JSON.stringify(quizData)) {
             console.log({ data });
             setQuizData(data)
+            resetQuizState(); // Reset quiz state when new data is fetched
             // @ts-ignore
         }
     }, [data]);
+
+    console.log({answeredCount, length: data?.length, isQuizSubmit})
 
     return (
         <div className="max-w-[1280px] min-w-[70%] mx-auto p-4">
@@ -64,9 +68,9 @@ const QuizGround = () => {
                         )}
                         <div className="my-5 flex gap-4 justify-center items-center">
                             <Button
-                                // onClick={() => handleQuizQuit()}
+                                onClick={() => handleQuizQuit()}
                                 className=""
-                                as={Link} href="/quiz"
+                                as={Link} href="/flashmap"
                             >
                                 Quit
                             </Button>

@@ -7,6 +7,7 @@ import { useState } from "react";
 const useContainer = () => {
   const n5NoChapters = Array.from({ length: 11 }, (_, index) => index + 1);
   const n4NoChapters = Array.from({ length: 20 }, (_, index) => index + 1);
+  const n3NoChapters = Array.from({ length: 42 }, (_, index) => index + 1);
 
   const [noChapters, setNoChapters] = useState(n5NoChapters);
   const [quizData, setQuizData] = useState<KanjiQuizItem[]>([]);
@@ -14,13 +15,14 @@ const useContainer = () => {
   const [isQuizSubmit, setIsQuizSubmit] = useState(false);
 
   const {
-    selectedChapter : chapter,
-    selectedLevel : level,
+    selectedChapter: chapter,
+    level,
+
 
     selectedMultiChapters,
     answeredCount,
     currentMark,
-    selectedMode : mode,
+    selectedMode: mode,
 
     setLevel,
     setSelectedChapter,
@@ -29,10 +31,11 @@ const useContainer = () => {
     setSelectedMultiChapters,
     resetQuizState,
     setQuizMode,
+    part,
+    setPart,
+    setIsParted,
+    isParted,
   } = useQuizGroundStore();
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleChapterData = (level: number) => {
     switch (level) {
@@ -47,22 +50,6 @@ const useContainer = () => {
       default:
         break;
     }
-  };
-
-  const updateQueryParams = (key: string, value: string) => {
-    const currentParams = new URLSearchParams(
-      Array.from(searchParams.entries())
-    );
-
-    // Update or set the parameter and reset incompatible values
-    currentParams.set(key, value);
-    if (key === "level") {
-      currentParams.set("chapter", "1");
-      currentParams.set("mode", "2");
-    } // Reset chapter for level
-
-    // Push updated query string to the URL
-    router.push(`?${currentParams.toString()}`);
   };
 
   const handleQuizStart = async () => {
@@ -101,11 +88,12 @@ const useContainer = () => {
     answeredCount,
     currentMark,
     isQuizSubmit,
+    part,
+    isParted,
 
     /* action */
     setSelectedChapter,
     setSelectedLevel,
-    updateQueryParams,
     setLevel,
     setQuizData,
 
@@ -115,6 +103,9 @@ const useContainer = () => {
     handleQuizSubmit,
     handleQuizQuit,
     setQuizMode,
+    setPart,
+    setIsParted,
+    resetQuizState
   };
 };
 

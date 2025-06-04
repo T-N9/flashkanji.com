@@ -102,7 +102,7 @@ const RoadmapItem = ({
 
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo } = useJukugoGroundState();
-  const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode } = useQuizGroundStore();
+  const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode, setPart: setPartQuiz, setIsParted: setIsPartedQuiz, setLevel: setLevelQuiz } = useQuizGroundStore();
 
   const handleClickRoadmapItem = () => {
 
@@ -133,10 +133,36 @@ const RoadmapItem = ({
         setPartJukugo(null)
       }
     }
+
+    if (type === 'quiz') {
+      setSelectedChapterQuiz(japanese_chapter);
+      setSelectedLevelQuiz("N" + japanese_level);
+      setQuizMode(1); // Assuming 1 is the default mode
+      setIsPartedQuiz(true);
+      setLevelQuiz(japanese_level);
+      if (phase === 1) {
+        if (step_i === 3) {
+          setQuizMode(2)
+        } else if (step_i === 5) {
+          setQuizMode(1)
+        }
+        setPartQuiz("0");
+      } else if (phase === 2) {
+        if (step_i === 3) {
+          setQuizMode(2)
+        } else if (step_i === 5) {
+          setQuizMode(1)
+        }
+        setPartQuiz("1");
+      } else {
+        setIsPartedQuiz(false);
+        setPartQuiz(null)
+      }
+    }
   }
 
   return (
-    <Link className={`block ${type === 'quiz' && 'grayscale select-none pointer-events-none opacity-40'}`} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
+    <Link className={`block`} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
       <div className={`bg-slate-50 ${border} border-2 gap-4 p-2 rounded-full w-full flex items-center shadow-xl`}>
         <div className={`${bg} relative inline-block p-2 rounded-full shadow-md`}>
           <div className="border-dashed animate-slow-spin border-white border-2 rounded-full p-2">
