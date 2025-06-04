@@ -8,7 +8,7 @@ import { Checkbox, Select, SelectItem } from "@nextui-org/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 
-const roadmapData = [
+ const roadmapData = [
   {
     title: "Introduction",
     steps: [
@@ -19,7 +19,7 @@ const roadmapData = [
       ["Mini Quiz (Onyomi)", "quiz", "Test your understanding of Onyomi readings.", "kanji"],
       ["Learn Jukugo", "cards", "Learn the compound words using recent kanji.", "jukugo"],
       ["Spaced Repetition of Jukugo", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
-      ["Mini Quiz for Jukugo meaning", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
+      // ["Mini Quiz for Jukugo meaning", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
     ],
   },
   {
@@ -32,7 +32,7 @@ const roadmapData = [
       ["Quiz (Kunyomi Focused) for All Kanji", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Learn Jukugo Using Kanji", "cards", "Learn the compound words using recent kanji.", "jukugo"],
       ["Spaced Repetition of Jukugo from A5 Kanji", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
-      ["Meaning Quiz for Jukugo", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
+      // ["Meaning Quiz for Jukugo", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
     ],
   },
   {
@@ -40,8 +40,8 @@ const roadmapData = [
     steps: [
       ["Revise Jukugo", "cards", "Review all words of this Chapter", "jukugo"],
       ["Spaced Repetition of all jukugo", "repetition", "Reinforce your memory of all jukugo", "jukugo"],
-      ["Kanji to Hiragana matching quiz", "quiz"],
-      ["Hiragana to Kanji matching quiz", "quiz"],
+      // ["Kanji to Hiragana matching quiz", "quiz"],
+      // ["Hiragana to Kanji matching quiz", "quiz"],
     ],
   },
   {
@@ -51,7 +51,7 @@ const roadmapData = [
       ["Final Spaced Repetition", 'repetition', "All Kanji for this Chapter", "kanji"],
       ["Review Jukugo Words", "cards", "Review all compound words for this chapter.", "jukugo"],
       ["Final Spaced Repetition", 'repetition', "All Jukugo for this Chapter", "jukugo"],
-      ["Final Challenge: Kunyomi + Onyomi + Meaning Quiz", "quiz"],
+      // ["Final Challenge: Kunyomi + Onyomi + Meaning Quiz", "quiz"],
     ],
   },
 ];
@@ -173,7 +173,7 @@ const RoadmapItem = ({
           </div>
         </div>
 
-        <div className="flex justify-between items-center w-full gap-1">
+        <div className="hidden justify-between items-center w-full gap-1">
           <div>
             <h3 className="font-bold">{label}</h3>
             <p className="text-xs text-gray-600">{description}</p>
@@ -220,8 +220,8 @@ export default function ChapterRoadmap() {
 
       {roadmapData.map((phase, idx) => (
         <div key={idx} className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-400">{phase.title}</h2>
-          <div className="space-y-3">
+          <h2 className="text-xl font-semibold text-gray-400 text-center">{phase.title}</h2>
+          <div className="flex gap-2 flex-wrap justify-center">
             {phase.steps.map(([label, type, description, route], i) => (
               <RoadmapItem phase={idx + 1} step_i={i + 1} key={i} label={label} route={route} type={type as any} description={description} japanese_chapter={japanese_chapter} japanese_level={parseInt(japanese_level.split('')[1])} />
             ))}
