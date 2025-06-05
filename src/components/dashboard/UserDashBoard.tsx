@@ -138,7 +138,7 @@ export default function UserDashBoard() {
 
                                 <div className="pt-4">
                                     <div className="flex justify-between text-sm text-gray-600 mb-2">
-                                        <span>Today's Progress</span>
+                                        <span>Today&apos;s Progress</span>
                                         <span>{studyStats.studyTime} min studied</span>
                                     </div>
                                     <Progress value={65} className="h-2" />
