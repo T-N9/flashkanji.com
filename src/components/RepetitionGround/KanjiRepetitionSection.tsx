@@ -30,6 +30,8 @@ const KanjiRepetitionSection = () => {
         getConfidenceEmoji
     } = useRepetitionCore<Kanji>(data || []);
 
+    console.log({spacedRepetitionData})
+
 
     if (!data || data.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">

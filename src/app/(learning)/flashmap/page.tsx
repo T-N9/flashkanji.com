@@ -63,18 +63,18 @@ const levelChapterMap = {
 
 const typeStyles = {
   cards: {
-    bg: "bg-orange-600",
-    border: "border-orange-600",
+    bg: "bg-gray-600",
+    border: "border-orange-400",
     icon: <Stack size={32} color="#fff" />,
   },
   repetition: {
-    bg: "bg-green-600",
-    border: "border-green-600",
+    bg: "bg-gray-600",
+    border: "border-green-400",
     icon: <Brain size={32} color="#fff" />,
   },
   quiz: {
-    bg: "bg-purple-600",
-    border: "border-purple-600",
+    bg: "bg-gray-600",
+    border: "border-purple-400",
     icon: <SealQuestion size={32} color="#fff" />,
   },
 };
@@ -163,7 +163,7 @@ const RoadmapItem = ({
 
   return (
     <Link className={`block`} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
-      <div className={`bg-slate-50 ${border} border-2 gap-4 p-2 rounded-full w-full flex items-center shadow-xl`}>
+      <div className={`bg-slate-50 ${border} border-4 gap-4 p-2 rounded-full w-full flex items-center shadow-xl`}>
         <div className={`${bg} relative inline-block p-2 rounded-full shadow-md`}>
           <div className="border-dashed animate-slow-spin border-white border-2 rounded-full p-2">
             <div className="opacity-0">{icon}</div>
