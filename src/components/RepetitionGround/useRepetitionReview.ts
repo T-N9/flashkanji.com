@@ -1,18 +1,16 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Clicked_Item, SR_KanjiCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 
-export default function useRepetitionCore<T extends { id: number }>(rawData: T[]) {
-  const router = useRouter();
-
+export default function useRepetitionReview<T extends { id: number }>(rawData: T[], fetchedRepetitionData?: SR_KanjiCard[]) {
   const [spacedRepetitionData, setSpacedRepetitionData] = useState<SR_KanjiCard[]>([]);
   const [clickedRepetitionData, setClickedRepetitionData] = useState<Clicked_Item[]>([]);
   const [activeItem, setActiveItem] = useState<number | null>(null);
   const [satisfactionPoint, setSatisfactionPoint] = useState<number>(0);
   const isInitialized = useRef(false);
-    const { level } = useKanjiGroundState();
+
+  const { level } = useKanjiGroundState();
 
   const shuffledData = useMemo(() => {
     if (!rawData || !Array.isArray(rawData)) return [];
@@ -29,11 +27,12 @@ export default function useRepetitionCore<T extends { id: number }>(rawData: T[]
       setActiveItem(shuffledData[0].id);
       setClickedRepetitionData(shuffledData.map((item) => ({ id: item.id, clickedLevel: 0 })));
 
-      const stored = localStorage.getItem("spacedRepetitionData");
       
-      if (stored) {
-        setSpacedRepetitionData(JSON.parse(stored));
+      if (fetchedRepetitionData && fetchedRepetitionData.length > 0) {
+        console.log({fetchedRepetitionData})
+        setSpacedRepetitionData(fetchedRepetitionData);
       } else {
+        console.log( "No stored repetition data found, initializing new data.");
         const initial = shuffledData.map((item) => ({
           id: item.id,
           interval: 1,
@@ -44,7 +43,6 @@ export default function useRepetitionCore<T extends { id: number }>(rawData: T[]
           level : level
         }));
         setSpacedRepetitionData(initial);
-        localStorage.setItem("spacedRepetitionData", JSON.stringify(initial));
       }
 
       isInitialized.current = true;
@@ -53,7 +51,7 @@ export default function useRepetitionCore<T extends { id: number }>(rawData: T[]
 
   useEffect(() => {
     handlePrepareRepetitionData();
-  }, [shuffledData]);
+  }, [shuffledData, fetchedRepetitionData]);
 
   const handleClickLevel = (id: number, level: number) => {
     const temp = [...clickedRepetitionData];
@@ -77,8 +75,6 @@ export default function useRepetitionCore<T extends { id: number }>(rawData: T[]
     isInitialized.current = false;
     handlePrepareRepetitionData();
   };
-
-
 
   const getConfidenceEmoji = (confidence: number) => {
     if (confidence <= -10) return "😵";

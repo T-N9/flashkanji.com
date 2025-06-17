@@ -14,6 +14,7 @@ export type SR_KanjiCard = {
   easeFactor: number;
   nextReviewDate: Date;
   previousClick: number | null;
+  level : number | null
 };
 
 export type Clicked_Item = {

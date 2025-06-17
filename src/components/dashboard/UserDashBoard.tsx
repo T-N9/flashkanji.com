@@ -1,9 +1,21 @@
 "use client"
 
+import useKanjiGroundState from "@/store/kanjiGroundState";
 import { Badge, Button, Card, CardBody, CardHeader, Progress } from "@nextui-org/react"
 import { AirplaneTakeoff, ArrowElbowRightUp, BookOpen, BookOpenText, Brain, Calendar, Clock, Fire, Target } from "@phosphor-icons/react"
+import { useRouter } from "next/navigation";
+import ReviewSchedule from "../review-schedule/ReviewSchedule";
 
 export default function UserDashBoard() {
+
+    const { setIsReviewMode } = useKanjiGroundState();
+    const router = useRouter();
+
+    const handleStartReview = () => {
+        setIsReviewMode(true);
+        router.push('/study/kanji/repetition');
+    }
+
     const currentStreak = 12;
 
     // Sample data for the dashboard
@@ -103,6 +115,8 @@ export default function UserDashBoard() {
                     </Card>
                 </div>
 
+                <ReviewSchedule/>
+
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Study Session */}
                     <div className="lg:col-span-2 space-y-6">
@@ -120,7 +134,7 @@ export default function UserDashBoard() {
                                         <h3 className="font-semibold text-blue-900">Reviews Available</h3>
                                         <p className="text-sm text-blue-700">{studyStats.reviewCards} cards ready for review</p>
                                     </div>
-                                    <Button className="bg-blue-600 hover:bg-blue-700">Start Reviews</Button>
+                                    <Button onClick={handleStartReview} className="bg-blue-600 hover:bg-blue-700">Start Reviews</Button>
                                 </div>
 
                                 <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">

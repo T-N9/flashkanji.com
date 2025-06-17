@@ -16,6 +16,8 @@ type FlashGroundState = {
   shuffledData: string[];
   kanjiPracticeData: string[];
   isParted: boolean;
+  isReviewMode: boolean;
+  setIsReviewMode: (isReviewMode: boolean) => void;
   setIsParted: (isParted: boolean) => void;
   setPart: (part: "0" | "1" | null) => void;
   part: "0" | "1" | null;
@@ -56,6 +58,7 @@ const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>(
     kanjiPracticeData: [],
     isParted: false,
     part: "0",
+    isReviewMode: false,
 
     // Actions
     setStartLoading: () => set({ isLoading: true }),
@@ -83,6 +86,7 @@ const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>(
           ? { part: "0" }
           : { part: "1" }
       ),
+    setIsReviewMode: (isReviewMode) => set({ isReviewMode }),
   })
 );
 

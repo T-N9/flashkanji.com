@@ -35,6 +35,12 @@ export function HeadingBar() {
 
   const navList = (
     <>
+      <NavbarItem
+        isActive={path === "/dashboard"}
+        onClick={() => delayedSetIsMenuOpen(false)}
+      >
+        <Link href="/dashboard">Dashboard</Link>
+      </NavbarItem>
       {
         authCookie !== undefined ?
           <NavbarItem
