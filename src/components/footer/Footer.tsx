@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link"
-import { Button, Input } from "@nextui-org/react"
+import { Button, Input } from "@heroui/react"
 import { BookOpen, GraduationCap, MessengerLogo, Users } from "@phosphor-icons/react"
 
 export default function Footer() {

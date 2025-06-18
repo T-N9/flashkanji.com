@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { Input, Button, Select, SelectItem } from "@nextui-org/react";
+import { Input, Button, Select, SelectItem } from "@heroui/react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -115,7 +115,7 @@ export default function CreateProfileForm() {
                          "Unemployed",
                          "Other",
                      ].map((job) => (
-                         <SelectItem key={job} value={job}>
+                         <SelectItem key={job}>
                              {job}
                          </SelectItem>
                      ))}
@@ -134,7 +134,7 @@ export default function CreateProfileForm() {
                         placeholder="Select level"
                     >
                         {["N5", "N4", "N3"].map((level) => (
-                            <SelectItem key={level} value={level}>
+                            <SelectItem key={level}>
                                 {level}
                             </SelectItem>
                         ))}

@@ -1,5 +1,5 @@
 import { calculateNextReview, SR_KanjiCard } from "@/util";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import Avatar from "../common/avatar/Avatar";
 

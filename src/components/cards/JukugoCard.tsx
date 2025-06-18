@@ -1,6 +1,6 @@
 import { useGeneralStore } from "@/store/generalState";
 import { Kanji } from "@/types/kanji";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { Info } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
 import { useKanjiSetting } from "../KanjiPage/useKanjiSetting";

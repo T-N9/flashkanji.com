@@ -1,5 +1,5 @@
 'use client'
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 
@@ -12,9 +12,9 @@ const Providers = ({
 }>) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <NextUIProvider>
+      <HeroUIProvider>
         {children}
-      </NextUIProvider>
+      </HeroUIProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
 

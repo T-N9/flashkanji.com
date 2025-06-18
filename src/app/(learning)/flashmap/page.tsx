@@ -4,7 +4,7 @@ import useJukugoGroundState from "@/store/jukugoGroundState";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
-import { Checkbox, Select, SelectItem } from "@nextui-org/react";
+import { Checkbox, Select, SelectItem } from "@heroui/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -203,7 +203,7 @@ export default function ChapterRoadmap() {
           japanese_level: e.target.value, japanese_chapter: 1
         })}>
           {["N5", "N4", "N3"].map((lvl) => (
-            <SelectItem key={lvl} value={lvl}>
+            <SelectItem key={lvl}>
               {lvl}
             </SelectItem>
           ))}
@@ -211,7 +211,7 @@ export default function ChapterRoadmap() {
 
         <Select label="Select Chapter" selectedKeys={[String(japanese_chapter)]} onChange={(e) => setUser({ japanese_chapter: parseInt(e.target.value) })}>
           {chapters.map((ch) => (
-            <SelectItem key={ch} value={ch}>
+            <SelectItem key={ch}>
               Chapter {ch}
             </SelectItem>
           ))}

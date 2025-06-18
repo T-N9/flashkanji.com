@@ -1,7 +1,7 @@
 import React from "react";
 
 /* Components */
-import { Checkbox, Card, CardBody, cn } from "@nextui-org/react";
+import { Checkbox, Card, CardBody, cn } from "@heroui/react";
 
 /* Hook */
 import useContainer from "./useContainer";

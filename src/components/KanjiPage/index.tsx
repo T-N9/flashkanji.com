@@ -8,7 +8,7 @@ import { LoadingGround } from '../common/LoadingGround';
 import { Kanji } from '@/types/kanji';
 import { shuffleArray } from '@/util';
 import { SpeedDialMenu } from '../common/SpeedDailMenu';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 import Link from 'next/link';
 
 const KanjiGround = () => {

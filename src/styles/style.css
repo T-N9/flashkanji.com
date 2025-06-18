@@ -331,3 +331,7 @@ padding-left: 20px;
 .swiper-button-next {
   color: orange !important;
 }
+
+.rdp-selected .rdp-day_button {
+  border-color: #333 !important;
+}

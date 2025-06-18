@@ -2,7 +2,7 @@
 
 import { supabase } from '@/lib/supabaseClient'
 import { useUserStore } from '@/store/userState'
-import { Button } from '@nextui-org/react'
+import { Button } from '@heroui/react'
 import Cookies from 'js-cookie'
 
 export default function LogOutButton() {

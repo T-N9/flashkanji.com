@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 import useContainer from './useContainer';
 import { useKanjiQuiz } from '@/services/quiz';
 import { QuizItem } from '../common/quiz-item';

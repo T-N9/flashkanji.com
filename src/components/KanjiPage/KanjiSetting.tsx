@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, Tooltip } from "@nextui-org/react";
+import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, Tooltip } from "@heroui/react";
 
 /* Hook */
 import { useKanjiSetting } from "./useKanjiSetting";

@@ -14,7 +14,7 @@ export type SR_KanjiCard = {
   easeFactor: number;
   nextReviewDate: Date;
   previousClick: number | null;
-  level : number | null
+  level: number | null;
 };
 
 export type Clicked_Item = {
@@ -26,7 +26,7 @@ export function calculateNextReview(
   card: SR_KanjiCard,
   quality: number, // User rating (0-3)
   satisfaction: number,
-  stopSecond : number,
+  stopSecond: number
 ): { updatedCard: SR_KanjiCard; satisfaction: number } {
   console.log({ card });
 
@@ -46,19 +46,19 @@ export function calculateNextReview(
       currentDate.getTime() + 10 * 60 * 1000
     ); // +10 min
 
- 
-    if(updatedCard.previousClick !== null) {
+    if (updatedCard.previousClick !== null) {
       if (updatedCard.previousClick !== quality) {
         const changePoint = quality - updatedCard.previousClick;
         satisfaction = satisfaction + changePoint;
       } else {
         satisfaction = satisfaction - 3;
-      }      
+      }
     }
-   
+
     updatedCard.previousClick = quality;
 
-    satisfaction = satisfaction - (stopSecond > 10 ? 10 * 0.1 :  stopSecond * 0.1);
+    satisfaction =
+      satisfaction - (stopSecond > 10 ? 10 * 0.1 : stopSecond * 0.1);
 
     return { updatedCard, satisfaction };
   }
@@ -99,21 +99,21 @@ export function calculateNextReview(
       console.log("Comparing to prev " + quality, changePoint, satisfaction);
     }
 
-    if(updatedCard.previousClick === quality && quality === 3) {
+    if (updatedCard.previousClick === quality && quality === 3) {
       satisfaction = satisfaction + 3;
-    } else{
-      if(updatedCard.previousClick === quality && quality === 2) {
+    } else {
+      if (updatedCard.previousClick === quality && quality === 2) {
         satisfaction = satisfaction - 1;
       }
 
-      if(updatedCard.previousClick === quality && quality === 1) {
+      if (updatedCard.previousClick === quality && quality === 1) {
         satisfaction = satisfaction - 2;
       }
     }
   }
 
   updatedCard.previousClick = quality;
-  satisfaction = satisfaction - (stopSecond > 10 ? 10 * 0.1 :  stopSecond * 0.1);
+  satisfaction = satisfaction - (stopSecond > 10 ? 10 * 0.1 : stopSecond * 0.1);
   console.log({ updatedCard });
   return { updatedCard, satisfaction };
 }
@@ -131,4 +131,15 @@ export const speakJapaneseText = (text: string) => {
 
 export function removeDots(str: string) {
   return str.replace(/\./g, ""); // Replace all dots with an empty string
+}
+
+export function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function normalizeDate(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }

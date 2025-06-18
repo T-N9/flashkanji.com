@@ -1,5 +1,6 @@
 import {
   fetchKanjiRepetitionData_ByDate,
+  fetchReviewCalendarData,
   saveKanjiRepetitionData,
   saveKanjiRepetitionData_Review,
 } from "@/api/repetitionRoute";
@@ -34,12 +35,25 @@ export const useSaveKanjiRepetitionData = () => {
     mutationFn: ({
       user_id,
       repetitionData,
+      type,
       level,
     }: {
       user_id: string;
       repetitionData: SR_KanjiCard[];
+      type: number;
       level?: number;
-    }) => saveKanjiRepetitionData(user_id, repetitionData, level),
+    }) => saveKanjiRepetitionData(user_id, repetitionData, type, level),
+  });
+};
+
+export const useFetchReviewCalendarData = (user_id: string) => {
+  return useQuery({
+    queryKey: ["reviewCalendarData", user_id],
+    queryFn: () => fetchReviewCalendarData(user_id),
+    enabled: !!user_id,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
+    placeholderData: [],
   });
 };
 

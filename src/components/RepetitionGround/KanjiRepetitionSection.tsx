@@ -6,7 +6,7 @@ import { useKanjiByChapterAndLevel } from "@/services/kanji";
 import { KanjiRepetitionItem } from "./KanjiRepetitionItem";
 import Avatar from "../common/avatar/Avatar";
 import { Kanji } from "@/types/kanji";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
@@ -43,6 +43,7 @@ const KanjiRepetitionNormalMode = () => {
             {
                 user_id: userId,
                 repetitionData: spacedRepetitionData,
+                type: 1, 
                 level: level,
             },
             {
@@ -115,9 +116,9 @@ const KanjiRepetitionNormalMode = () => {
 }
 
 const KanjiRepetitionReviewMode = () => {
-    const { selectedChapter, level, part, isParted } = useKanjiGroundState();
+    const { selectedChapter, level, selectedReviewDate } = useKanjiGroundState();
     const { userId } = useUserStore();
-    const { data } = useKanjiRepetitionData_ByDate('2025-06-16', userId);
+    const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId);
 
     const {
         shuffledData,

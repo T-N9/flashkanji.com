@@ -25,25 +25,36 @@ export const fetchKanjiRepetitionData_ByDate = async (
       easeFactor: item.ease_factor,
       nextReviewDate: new Date(item.next_review_date),
       previousClick: item.previous_click,
-      level: item.level                                                          
+      level: item.level,
     })),
   };
+};
+
+export const fetchReviewCalendarData = async (
+  user_id: string
+): Promise<{ date: string; kanji_count: number }[]> => {
+  const response = await apiClient.get("/repetition/calendar", {
+    params: { user_id },
+  });
+  return response.data;
 };
 
 export const saveKanjiRepetitionData = async (
   user_id: string,
   repetitionData: SR_KanjiCard[],
+  type: number,
   level?: number
 ): Promise<void> => {
-  console.log("Attempting to send POST to /repetition/save", {
-    user_id,
-    repetitionData,
-    level,
-  });
+  // console.log("Attempting to send POST to /repetition/save", {
+  //   user_id,
+  //   repetitionData,
+  //   level,
+  // });
   await apiClient.post("/repetition/save", {
     user_id,
     repetitionData,
     level,
+    type,
   });
   console.log("POST request sent");
 };
@@ -54,7 +65,7 @@ export const saveKanjiRepetitionData_Review = async (
 ): Promise<void> => {
   await apiClient.post("/repetition/save_review", {
     user_id,
-    repetitionData
+    repetitionData,
   });
   console.log("POST request sent");
-}
+};

@@ -1,7 +1,7 @@
 "use client"
 
 import useKanjiGroundState from "@/store/kanjiGroundState";
-import { Badge, Button, Card, CardBody, CardHeader, Progress } from "@nextui-org/react"
+import { Badge, Button, Card, CardBody, CardHeader, Progress } from "@heroui/react"
 import { AirplaneTakeoff, ArrowElbowRightUp, BookOpen, BookOpenText, Brain, Calendar, Clock, Fire, Target } from "@phosphor-icons/react"
 import { useRouter } from "next/navigation";
 import ReviewSchedule from "../review-schedule/ReviewSchedule";
@@ -41,13 +41,6 @@ export default function UserDashBoard() {
         { level: "Burned", count: 872, color: "bg-gray-600" },
     ]
 
-    const recentActivity = [
-        { kanji: "学", reading: "がく", meaning: "study", result: "correct", time: "2 min ago" },
-        { kanji: "生", reading: "せい", meaning: "life", result: "correct", time: "3 min ago" },
-        { kanji: "時", reading: "じ", meaning: "time", result: "incorrect", time: "5 min ago" },
-        { kanji: "人", reading: "じん", meaning: "person", result: "correct", time: "7 min ago" },
-    ]
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
 
@@ -59,11 +52,6 @@ export default function UserDashBoard() {
                     <p className="text-gray-600 mb-3">
                         Ready to continue your Kanji journey? You have {studyStats.dueToday} cards due today.
                     </p>
-
-                    <Button variant="bordered" size="sm">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        Schedule
-                    </Button>
                 </div>
 
                 {/* Quick Stats */}

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { Input } from "@nextui-org/react";
+import { Input } from "@heroui/react";
 import KanjiViewer from '@/lib/kanjiViewer'
 import { getUrlVars } from "@/lib/kanjivg";
 import {

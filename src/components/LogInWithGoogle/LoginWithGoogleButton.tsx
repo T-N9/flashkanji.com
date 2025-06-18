@@ -1,7 +1,7 @@
 'use client'
 
 import { supabase } from '@/lib/supabaseClient'
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 
 export default function LoginWithGoogleButton() {
   const handleLogin = async () => {

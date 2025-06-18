@@ -5,7 +5,7 @@ import KanjiViewer, {
   getShowGroups,
   getShowRadicals,
 } from "@/lib/kanjiViewer";
-import { Input } from "@nextui-org/react";
+import { Input } from "@heroui/react";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";

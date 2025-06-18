@@ -5,14 +5,15 @@ import { useJukugoByChapterAndLevel } from "@/services/jukugo";
 import { JukugoRepetitionItem } from "./JukugoRepetitionItem";
 import { relatedJukugoItem } from "@/types/jukugo";
 import Avatar from "../common/avatar/Avatar";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const JukugoRepetitionSection = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
-    const { data } = useJukugoByChapterAndLevel(selectedChapter, level,  part);
+    const { data } = useJukugoByChapterAndLevel(selectedChapter, level, part);
 
     const {
         shuffledData,
@@ -24,16 +25,21 @@ const JukugoRepetitionSection = () => {
         setSatisfactionPoint,
         handleClickLevel,
         handleRestart,
-        handleEnd,
+        // handleEnd,
         getConfidenceEmoji
     } = useRepetitionCore<relatedJukugoItem>(data || []);
 
-
+    const router = useRouter();
+    const handleEnd = () => {
+        router.push('/study/flashmap'); // Redirect to the Jukugo study page or any other page
+        // Logic to end the session, e.g., save progress, reset states, etc.
+        // Reset other states if necessary
+    };
 
     if (!data || data.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
             <Image className="tilt-animation drop-shadow-lg scale-50" src={'/assets/ramen.png'} width={200} height={200} alt="Loading Session" />
-            </div>);
+        </div>);
     }
 
     if (clickedRepetitionData.length === 0) {
@@ -66,6 +72,7 @@ const JukugoRepetitionSection = () => {
                                 easeFactor: 2.5,
                                 nextReviewDate: new Date(),
                                 previousClick: null,
+                                level: null
                             }}
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}

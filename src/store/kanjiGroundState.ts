@@ -1,4 +1,5 @@
 import { Kanji } from "@/types/kanji";
+import { formatDate, normalizeDate } from "@/util";
 import { create } from "zustand";
 
 type FlashGroundState = {
@@ -21,6 +22,7 @@ type FlashGroundState = {
   setIsParted: (isParted: boolean) => void;
   setPart: (part: "0" | "1" | null) => void;
   part: "0" | "1" | null;
+  selectedReviewDate: string;
 };
 
 type FlashGroundActions = {
@@ -38,6 +40,7 @@ type FlashGroundActions = {
   setShuffleMode: (isShuffledMode: boolean) => void;
   setShuffledData: (shuffledData: string[]) => void;
   setKanjiPracticeData: (kanjiPracticeData: string[]) => void;
+  setSelectedReviewDate: (date: string) => void;
 };
 
 const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>(
@@ -59,6 +62,7 @@ const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>(
     isParted: false,
     part: "0",
     isReviewMode: false,
+    selectedReviewDate: formatDate(normalizeDate(new Date())),
 
     // Actions
     setStartLoading: () => set({ isLoading: true }),
@@ -87,6 +91,7 @@ const useKanjiGroundState = create<FlashGroundState & FlashGroundActions>(
           : { part: "1" }
       ),
     setIsReviewMode: (isReviewMode) => set({ isReviewMode }),
+    setSelectedReviewDate: (date) => set({ selectedReviewDate: date }),
   })
 );
 

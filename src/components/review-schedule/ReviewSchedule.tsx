@@ -1,124 +1,96 @@
-import { useState } from "react"
+// Updated component using Next UI (Hero UI) and Phosphor Icons
+"use client"
 
-import { Tabs, Tab, Card, CardBody, CardHeader, Button, Chip, Calendar } from "@nextui-org/react"
-import { Calendar as CalendarIcon, BookOpen, CheckCircle, AlignCenterVertical } from "@phosphor-icons/react"
+import { useMemo, useState } from "react"
+import { DayPicker } from "react-day-picker"
+import { Tabs, Tab, Card, CardBody, CardHeader, Button, Chip } from "@heroui/react"
+import { Calendar as CalendarIcon, BookOpen, Check } from "@phosphor-icons/react"
+import { ja } from "react-day-picker/locale";
 
-interface ReviewItem {
-  id: number
-  subject: keyof typeof subjectColors
-  topic: string
-  difficulty: keyof typeof difficultyColors
-  overdue: boolean
-  deck: string
-}
+import "react-day-picker/dist/style.css"
+import { formatDate, normalizeDate } from "@/util"
+import useKanjiGroundState from "@/store/kanjiGroundState"
+import { useRouter } from "next/navigation"
+import { useFetchReviewCalendarData } from "@/services/repetition"
+import { useUserStore } from "@/store/userState"
 
-const reviewData: Record<string, ReviewItem[]> = {
-  "2024-12-17": [
-    { id: 1, subject: "Spanish", topic: "Irregular Verbs", difficulty: "hard", overdue: false, deck: "Grammar" },
-    { id: 2, subject: "Math", topic: "Calculus Derivatives", difficulty: "medium", overdue: false, deck: "Calculus I" },
-    {
-      id: 3,
-      subject: "History",
-      topic: "World War II Timeline",
-      difficulty: "easy",
-      overdue: true,
-      deck: "Modern History",
-    },
-  ],
-  "2024-12-18": [
-    {
-      id: 4,
-      subject: "Spanish",
-      topic: "Past Tense Conjugation",
-      difficulty: "medium",
-      overdue: false,
-      deck: "Grammar",
-    },
-    { id: 5, subject: "Science", topic: "Photosynthesis Process", difficulty: "easy", overdue: false, deck: "Biology" },
-  ],
-  "2024-12-19": [
-    { id: 6, subject: "Math", topic: "Integration by Parts", difficulty: "hard", overdue: false, deck: "Calculus I" },
-    {
-      id: 7,
-      subject: "Spanish",
-      topic: "Subjunctive Mood",
-      difficulty: "hard",
-      overdue: false,
-      deck: "Advanced Grammar",
-    },
-  ],
-  "2024-12-20": [
-    {
-      id: 8,
-      subject: "History",
-      topic: "Cold War Events",
-      difficulty: "medium",
-      overdue: false,
-      deck: "Modern History",
-    },
-    { id: 9, subject: "Science", topic: "Cell Division", difficulty: "easy", overdue: false, deck: "Biology" },
-  ],
-}
+// const reviewData: { date: string; kanji_count: number }[] = [
+//   { date: "2025-06-16", kanji_count: 5 },
+//   { date: "2025-07-01", kanji_count: 3 },
+//   { date: "2025-06-26", kanji_count: 6 },
+//   { date: "2025-06-20", kanji_count: 1 },
+//   { date: "2025-06-23", kanji_count: 2 },
+//   { date: "2025-07-23", kanji_count: 2 },
+//   { date: "2025-08-25", kanji_count: 1 },
+//   { date: "2025-06-18", kanji_count: 1 },
+//   { date: "2025-07-06", kanji_count: 3 },
+// ]
 
-const subjectColors: Record<string, string> = {
-  Spanish: "bg-red-100 text-red-800",
-  Math: "bg-blue-100 text-blue-800",
-  History: "bg-green-100 text-green-800",
-  Science: "bg-purple-100 text-purple-800",
-}
 
-const difficultyColors: Record<string, string> = {
-  easy: "bg-green-500",
-  medium: "bg-yellow-500",
-  hard: "bg-red-500",
-}
+export default function SpacedLearningCalendar() {
+  // const [selectedReviewDate, setSelectedDate] = useState<Date>(new Date())
+  const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
+  // const [reviewData, setReviewData] = useState<{ date: string; kanji_count: number }[]>([]);
+  const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
+  const { userId } = useUserStore()
 
-export default function ReviewSchedule() {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
-  const [completedItems, setCompletedItems] = useState<Set<number>>(new Set())
+  const { data: reviewData } = useFetchReviewCalendarData(userId)
 
-  const formatDate = (date: Date): string => date.toISOString().split("T")[0]
+  const router = useRouter()
 
-  const getReviewsForDate = (date: Date): ReviewItem[] => reviewData[formatDate(date)] || []
+  const reviewMap = useMemo(() => {
+    const map = new Map<string, number>()
+    reviewData?.forEach((item) => {
+      map.set(item.date, item.kanji_count)
+    })
+    return map
+  }, [reviewData])
 
-  const completeReview = (itemId: number) => {
-    setCompletedItems((prev) => new Set([...prev, itemId]))
+  const handleSelectDate = (date: Date) => {
+    // setSelectedDate(normalizeDate(date))
+    setSelectedReviewDate(formatDate(normalizeDate(date)))
   }
 
-  const selectedDateReviews = getReviewsForDate(selectedDate)
-  const todayReviews = getReviewsForDate(new Date())
+  const handleStartReview = () => {
+    setIsReviewMode(true);
+    router.push('/study/kanji/repetition');
+  }
+
+  const selectedDateKey = selectedReviewDate;
+  const todayKey = formatDate(normalizeDate(new Date()))
+
+  console.log("Today key:", todayKey, "Has review?", reviewMap.has(todayKey))
+  console.log("Selected date key:", selectedDateKey, "Has review?", reviewMap.has(selectedDateKey))
+
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
+    <div className="space-y-6">
       <Tabs aria-label="Views" variant="underlined">
-        <Tab key="calendar" title={<span className="flex items-center gap-2"><CalendarIcon size={18} /> Calendar</span>}>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
-            <Card className="lg:col-span-2">
+        <Tab
+          key="calendar"
+          className="!mt-0"
+          title={
+            <span className="flex items-center gap-2">
+              <CalendarIcon size={18} /> Calendar
+            </span>
+          }
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
               <CardHeader className="font-semibold text-lg flex items-center gap-2">
                 <CalendarIcon size={20} /> Review Schedule
               </CardHeader>
               <CardBody>
-                <Calendar
+                <DayPicker
+                  locale={ja}
                   mode="single"
-                  selected={selectedDate}
-                  onSelect={(date: Date | undefined) => date && setSelectedDate(date)}
-                  className="rounded-md border"
-                  components={{
-                    DayContent: ({ date }: { date: Date }) => {
-                      const reviewCount = getReviewsForDate(date).length
-                      const overdueCount = getReviewsForDate(date).filter(i => i.overdue).length
-                      return (
-                        <div className="w-full h-full flex flex-col items-center justify-center">
-                          <span>{date.getDate()}</span>
-                          {reviewCount > 0 && (
-                            <div className="flex gap-1 mt-1">
-                              <div className={`w-2 h-2 rounded-full ${overdueCount > 0 ? "bg-red-500" : "bg-blue-500"}`} />
-                              {reviewCount > 1 && <span className="text-xs font-medium">{reviewCount}</span>}
-                            </div>
-                          )}
-                        </div>
-                      )
-                    },
+                  selected={new Date(selectedReviewDate)}
+                  onSelect={(date) => date && handleSelectDate(date)}
+                  modifiers={{
+                    hasReviews: (date) => reviewMap.has(formatDate(normalizeDate(date))),
+                  }}
+                  modifiersClassNames={{
+                    hasReviews: "bg-orange-200 text-orange-900 font-semibold rounded-full",
                   }}
                 />
               </CardBody>
@@ -126,79 +98,74 @@ export default function ReviewSchedule() {
 
             <Card>
               <CardHeader className="font-semibold text-lg">
-                {selectedDate.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" })}
+                {new Date(selectedReviewDate).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  month: "short",
+                  day: "numeric",
+                })}
               </CardHeader>
-              <CardBody className="space-y-3">
-                {selectedDateReviews.length === 0 ? (
-                  <p className="text-center text-gray-500">No reviews scheduled</p>
-                ) : (
-                  selectedDateReviews.map((item) => (
-                    <div key={item.id} className="space-y-2">
-                      <div className="flex items-start justify-between">
-                        <div className="space-y-1 flex-1">
-                          <div className="flex items-center gap-2">
-                            <Chip className={subjectColors[item.subject]}>{item.subject}</Chip>
-                            <div className={`w-2 h-2 rounded-full ${difficultyColors[item.difficulty]}`} />
-                            {item.overdue && <AlignCenterVertical size={16} className="text-red-500" />}
-                          </div>
-                          <p className="text-sm font-medium">{item.topic}</p>
-                          <p className="text-xs text-gray-500">{item.deck}</p>
-                        </div>
-                        {!completedItems.has(item.id) ? (
-                          <Button size="sm" variant="bordered" onClick={() => completeReview(item.id)}>
-                            <CheckCircle size={18} />
-                          </Button>
-                        ) : (
-                          <CheckCircle size={20} className="text-green-500" />
-                        )}
+              <CardBody>
+                {reviewMap.has(selectedDateKey) ? (
+                  <div className="flex justify-between items-center space-y-2">
+                    <p className="text-gray-700">
+                      {reviewMap.get(selectedDateKey)} kanji review
+                      {reviewMap.get(selectedDateKey)! > 1 ? "s" : ""} scheduled
+                    </p>
+                    {!completedItems.has(selectedDateKey) ? (
+                      <div className="flex items-center gap-2">
+                        <Button color="primary" onClick={handleStartReview}>
+                          Start Review
+                        </Button>
+                        <Button
+
+                          onClick={() => setCompletedItems((prev) => new Set(prev).add(selectedDateKey))}
+                          isIconOnly
+                        >
+                          <Check size={18} />
+                        </Button>
                       </div>
-                    </div>
-                  ))
+                    ) : (
+                      <p className="text-green-600 font-semibold">Completed</p>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No reviews scheduled</p>
                 )}
               </CardBody>
             </Card>
           </div>
         </Tab>
 
-        <Tab key="reviews" title={<span className="flex items-center gap-2"><BookOpen size={18} /> Today's Reviews</span>}>
+        <Tab
+          key="reviews"
+          title={
+            <span className="flex items-center gap-2">
+              <BookOpen size={18} /> Today&apos;s Reviews
+            </span>
+          }
+        >
           <Card className="mt-4">
-            <CardHeader className="font-semibold text-lg">Today's Reviews</CardHeader>
-            <CardBody className="space-y-4">
-              {todayReviews.length === 0 ? (
-                <p className="text-center text-gray-500">No reviews scheduled for today</p>
+            <CardHeader className="font-semibold text-lg">Today&apos;s Reviews</CardHeader>
+            <CardBody>
+              {reviewMap.has(todayKey) ? (
+                <div className="space-y-3">
+                  <p className="text-gray-700">
+                    You have {reviewMap.get(todayKey)} kanji review
+                    {reviewMap.get(todayKey)! > 1 ? "s" : ""} today.
+                  </p>
+                  {!completedItems.has(todayKey) ? (
+                    <Button
+                      color="primary"
+                      onClick={() => setCompletedItems((prev) => new Set(prev).add(todayKey))}
+                    >
+                      Start Review
+                    </Button>
+                  ) : (
+                    <p className="text-green-600 font-semibold">Completed</p>
+                  )}
+                </div>
               ) : (
-                todayReviews.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`p-4 rounded-lg border ${completedItems.has(item.id) ? "bg-green-50 border-green-200" : item.overdue ? "bg-red-50 border-red-200" : "bg-white"}`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-2">
-                          <Chip className={subjectColors[item.subject]}>{item.subject}</Chip>
-                          <div className={`w-3 h-3 rounded-full ${difficultyColors[item.difficulty]}`} />
-                          {item.overdue && !completedItems.has(item.id) && (
-                            <Chip color="danger" size="sm">Overdue</Chip>
-                          )}
-                          {completedItems.has(item.id) && (
-                            <Chip color="success" size="sm">Completed</Chip>
-                          )}
-                        </div>
-                        <h3 className="font-medium">{item.topic}</h3>
-                        <p className="text-sm text-gray-500">{item.deck}</p>
-                      </div>
-                      <div>
-                        {!completedItems.has(item.id) ? (
-                          <Button color="primary" onClick={() => completeReview(item.id)}>
-                            Start Review
-                          </Button>
-                        ) : (
-                          <CheckCircle size={24} className="text-green-500" />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))
+                <p className="text-gray-500 text-center">No reviews scheduled for today</p>
               )}
             </CardBody>
           </Card>

@@ -12,9 +12,9 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-} from "@nextui-org/navbar";
+} from "@heroui/navbar";
 import Image from "next/image";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { User } from "@phosphor-icons/react";
 
 export function HeadingBar() {
@@ -35,20 +35,29 @@ export function HeadingBar() {
 
   const navList = (
     <>
-      <NavbarItem
-        isActive={path === "/dashboard"}
-        onClick={() => delayedSetIsMenuOpen(false)}
-      >
-        <Link href="/dashboard">Dashboard</Link>
-      </NavbarItem>
+
       {
         authCookie !== undefined ?
-          <NavbarItem
-            isActive={path === "/profile"}
-            onClick={() => delayedSetIsMenuOpen(false)}
-          >
-            <Link href="/profile"><User className="mx-auto" size={32} /></Link>
-          </NavbarItem>
+          <>
+            <NavbarItem
+              isActive={path === "/flashmap"}
+              onClick={() => delayedSetIsMenuOpen(false)}
+            >
+              <Link href="/dashboard">Flashmap</Link>
+            </NavbarItem>
+            <NavbarItem
+              isActive={path === "/dashboard"}
+              onClick={() => delayedSetIsMenuOpen(false)}
+            >
+              <Link href="/dashboard">FLashboard</Link>
+            </NavbarItem>
+            <NavbarItem
+              isActive={path === "/profile"}
+              onClick={() => delayedSetIsMenuOpen(false)}
+            >
+              <Link href="/profile"><User className="mx-auto" size={32} /></Link>
+            </NavbarItem>
+          </>
           :
           <NavbarItem
             onClick={() => delayedSetIsMenuOpen(false)}
