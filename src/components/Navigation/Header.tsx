@@ -43,7 +43,7 @@ export function HeadingBar() {
               isActive={path === "/flashmap"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
-              <Link href="/dashboard">Flashmap</Link>
+              <Link href="/flashmap">Flashmap</Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/dashboard"}
