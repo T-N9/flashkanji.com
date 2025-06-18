@@ -24,12 +24,10 @@ export type Clicked_Item = {
 
 export function calculateNextReview(
   card: SR_KanjiCard,
-  quality: number, // User rating (0-3)
+  quality: number, // 0 (again), 1 (hard), 2 (good), 3 (easy)
   satisfaction: number,
   stopSecond: number
 ): { updatedCard: SR_KanjiCard; satisfaction: number } {
-  console.log({ card });
-
   if (quality < 0 || quality > 3) {
     throw new Error("Quality must be between 0 and 3.");
   }
@@ -37,86 +35,60 @@ export function calculateNextReview(
   const updatedCard = { ...card };
   const currentDate = new Date();
 
-  // **INSANE (Reset Progress)**
-  if (quality === 0) {
+  // ✅ (1) Convert your 0–3 scale to SM-2’s 0–5 scale
+  // SM-2 expects quality 0–5: we'll map 0 → 2, 1 → 3, 2 → 4, 3 → 5
+  const sm2Quality = quality;
+
+  // ✅ (2) Repetition reset on failure (SM-2)
+  if (sm2Quality < 3) {
     updatedCard.repetitions = 0;
-    updatedCard.interval = 1; // Immediate re-review
-    updatedCard.easeFactor = Math.max(updatedCard.easeFactor - 0.2, 1.3); // Reduce EF
-    updatedCard.nextReviewDate = new Date(
-      currentDate.getTime() + 10 * 60 * 1000
-    ); // +10 min
-
-    if (updatedCard.previousClick !== null) {
-      if (updatedCard.previousClick !== quality) {
-        const changePoint = quality - updatedCard.previousClick;
-        satisfaction = satisfaction + changePoint;
-      } else {
-        satisfaction = satisfaction - 3;
-      }
-    }
-
-    updatedCard.previousClick = quality;
-
-    satisfaction =
-      satisfaction - (stopSecond > 10 ? 10 * 0.1 : stopSecond * 0.1);
-
-    return { updatedCard, satisfaction };
-  }
-  if (quality === 3 && updatedCard.repetitions === 0) {
-    updatedCard.interval = 2;
-  }
-  // Increase repetition count
-  updatedCard.repetitions += 1;
-
-  // **Calculate interval for review**
-  // if (updatedCard.repetitions === 1) {
-  //   updatedCard.interval = 1; // First review → 1 day
-  // } else {
-
-  const easeMultiplier = [1.3, 1.8, 2.5]; // Hard, Medium, Easy multipliers
-  const multiplier = easeMultiplier[quality - 1] || 1.3; // Default to "Hard" multiplier
-  updatedCard.interval = Math.round(updatedCard.interval * multiplier);
-  // }
-
-  // **Adjust Ease Factor (EF)**
-  const easeAdjustments = [-0.2, -0.1, 0.1]; // Hard, Medium, Easy
-  updatedCard.easeFactor += easeAdjustments[quality - 1] || 0;
-  updatedCard.easeFactor = Math.max(updatedCard.easeFactor, 1.3); // Min EF
-
-  // **Set next review date**
-  updatedCard.nextReviewDate = new Date();
-  updatedCard.nextReviewDate.setDate(
-    currentDate.getDate() + updatedCard.interval
-  );
-
-  if (updatedCard.previousClick === null) {
-    satisfaction = satisfaction + quality;
-    console.log("Satisfaction is directly added:" + quality);
+    updatedCard.interval = 1;
+    updatedCard.easeFactor = Math.max(updatedCard.easeFactor - 0.2, 1.3);
+    updatedCard.nextReviewDate = new Date(currentDate.getTime() + 10 * 60 * 1000); // +10 min
   } else {
-    const changePoint = quality - updatedCard.previousClick;
-    if (updatedCard.previousClick !== quality) {
-      satisfaction = satisfaction + changePoint;
-      console.log("Comparing to prev " + quality, changePoint, satisfaction);
-    }
-
-    if (updatedCard.previousClick === quality && quality === 3) {
-      satisfaction = satisfaction + 3;
+    // ✅ (3) Interval logic aligned with SM-2
+    if (updatedCard.repetitions === 0) {
+      updatedCard.interval = 1;
+    } else if (updatedCard.repetitions === 1) {
+      updatedCard.interval = 6;
     } else {
-      if (updatedCard.previousClick === quality && quality === 2) {
-        satisfaction = satisfaction - 1;
-      }
-
-      if (updatedCard.previousClick === quality && quality === 1) {
-        satisfaction = satisfaction - 2;
-      }
+      updatedCard.interval = Math.round(updatedCard.interval * updatedCard.easeFactor);
     }
+
+    // ✅ (4) Repetitions only increment on success (SM-2)
+    updatedCard.repetitions += 1;
+
+    // ✅ (5) SM-2 formula for updating easeFactor
+    const ef = updatedCard.easeFactor;
+    const newEF = ef + (0.1 - (5 - sm2Quality) * (0.08 + (5 - sm2Quality) * 0.02));
+    updatedCard.easeFactor = Math.max(newEF, 1.3);
+
+    // ✅ Interval cap to avoid excessive scheduling delay
+    updatedCard.interval = Math.min(updatedCard.interval, 10);
+
+    // ✅ Set next review date based on interval
+    updatedCard.nextReviewDate = new Date();
+    updatedCard.nextReviewDate.setDate(currentDate.getDate() + updatedCard.interval);
+  }
+
+  // === Existing satisfaction logic ===
+  if (updatedCard.previousClick === null) {
+    satisfaction += quality;
+  } else {
+    const delta = quality - updatedCard.previousClick;
+    satisfaction += delta;
+
+    if (quality === updatedCard.previousClick && quality === 3) satisfaction += 3;
+    else if (quality === 2) satisfaction -= 1;
+    else if (quality === 1) satisfaction -= 2;
   }
 
   updatedCard.previousClick = quality;
-  satisfaction = satisfaction - (stopSecond > 10 ? 10 * 0.1 : stopSecond * 0.1);
-  console.log({ updatedCard });
+  satisfaction -= stopSecond > 10 ? 10 * 0.1 : stopSecond * 0.1;
+
   return { updatedCard, satisfaction };
 }
+
 
 /* Speech Function (Browswer api) */
 export const speakJapaneseText = (text: string) => {

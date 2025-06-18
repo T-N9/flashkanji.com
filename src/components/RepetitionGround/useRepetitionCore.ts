@@ -29,11 +29,6 @@ export default function useRepetitionCore<T extends { id: number }>(rawData: T[]
       setActiveItem(shuffledData[0].id);
       setClickedRepetitionData(shuffledData.map((item) => ({ id: item.id, clickedLevel: 0 })));
 
-      const stored = localStorage.getItem("spacedRepetitionData");
-      
-      if (stored) {
-        setSpacedRepetitionData(JSON.parse(stored));
-      } else {
         const initial = shuffledData.map((item) => ({
           id: item.id,
           interval: 1,
@@ -44,8 +39,8 @@ export default function useRepetitionCore<T extends { id: number }>(rawData: T[]
           level : level
         }));
         setSpacedRepetitionData(initial);
-        localStorage.setItem("spacedRepetitionData", JSON.stringify(initial));
-      }
+        // localStorage.setItem("spacedRepetitionData", JSON.stringify(initial));
+      
 
       isInitialized.current = true;
     }

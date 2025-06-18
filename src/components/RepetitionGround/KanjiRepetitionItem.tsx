@@ -85,13 +85,13 @@ export const KanjiRepetitionItem = ({
         );
 
         setSpacedRepetitionData(updatedStoredData);
-        localStorage.setItem(
-            "spacedRepetitionData",
-            JSON.stringify(updatedStoredData)
-        );
+        // localStorage.setItem(
+        //     "spacedRepetitionData",
+        //     JSON.stringify(updatedStoredData)
+        // );
         handleClickLevel(updatedCard.updatedCard.id, index);
         setSatisfaction(updatedCard.satisfaction);
-        console.log({ satisfaction: updatedCard.satisfaction });
+        // console.log({ satisfaction: updatedCard.satisfaction });
     };
 
     const handleShowAnswer = () => {

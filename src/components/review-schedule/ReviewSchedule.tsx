@@ -1,7 +1,7 @@
 // Updated component using Next UI (Hero UI) and Phosphor Icons
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { DayPicker } from "react-day-picker"
 import { Tabs, Tab, Card, CardBody, CardHeader, Button, Chip } from "@heroui/react"
 import { Calendar as CalendarIcon, BookOpen, Check } from "@phosphor-icons/react"
@@ -14,19 +14,6 @@ import { useRouter } from "next/navigation"
 import { useFetchReviewCalendarData } from "@/services/repetition"
 import { useUserStore } from "@/store/userState"
 
-// const reviewData: { date: string; kanji_count: number }[] = [
-//   { date: "2025-06-16", kanji_count: 5 },
-//   { date: "2025-07-01", kanji_count: 3 },
-//   { date: "2025-06-26", kanji_count: 6 },
-//   { date: "2025-06-20", kanji_count: 1 },
-//   { date: "2025-06-23", kanji_count: 2 },
-//   { date: "2025-07-23", kanji_count: 2 },
-//   { date: "2025-08-25", kanji_count: 1 },
-//   { date: "2025-06-18", kanji_count: 1 },
-//   { date: "2025-07-06", kanji_count: 3 },
-// ]
-
-
 export default function SpacedLearningCalendar() {
   // const [selectedReviewDate, setSelectedDate] = useState<Date>(new Date())
   const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
@@ -34,9 +21,13 @@ export default function SpacedLearningCalendar() {
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
   const { userId } = useUserStore()
 
-  const { data: reviewData } = useFetchReviewCalendarData(userId)
+  const { data: reviewData, refetch } = useFetchReviewCalendarData(userId)
 
   const router = useRouter()
+
+  useEffect(() => {
+    if (userId) refetch()
+  }, [userId])
 
   const reviewMap = useMemo(() => {
     const map = new Map<string, number>()
@@ -59,8 +50,8 @@ export default function SpacedLearningCalendar() {
   const selectedDateKey = selectedReviewDate;
   const todayKey = formatDate(normalizeDate(new Date()))
 
-  console.log("Today key:", todayKey, "Has review?", reviewMap.has(todayKey))
-  console.log("Selected date key:", selectedDateKey, "Has review?", reviewMap.has(selectedDateKey))
+  // console.log("Today key:", todayKey, "Has review?", reviewMap.has(todayKey))
+  // console.log("Selected date key:", selectedDateKey, "Has review?", reviewMap.has(selectedDateKey))
 
 
   return (
@@ -106,15 +97,15 @@ export default function SpacedLearningCalendar() {
               </CardHeader>
               <CardBody>
                 {reviewMap.has(selectedDateKey) ? (
-                  <div className="flex justify-between items-center space-y-2">
+                  <div className="flex bg-gray-100 justify-between items-center p-2 rounded">
                     <p className="text-gray-700">
-                      {reviewMap.get(selectedDateKey)} kanji review
-                      {reviewMap.get(selectedDateKey)! > 1 ? "s" : ""} scheduled
+                      {reviewMap.get(selectedDateKey)} review
+                      {reviewMap.get(selectedDateKey)! > 1 ? "s" : ""}
                     </p>
                     {!completedItems.has(selectedDateKey) ? (
                       <div className="flex items-center gap-2">
                         <Button color="primary" onClick={handleStartReview}>
-                          Start Review
+                          Review
                         </Button>
                         <Button
 

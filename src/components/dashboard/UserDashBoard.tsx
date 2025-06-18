@@ -45,7 +45,7 @@ export default function UserDashBoard() {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
 
 
-            <main className="max-w-7xl mx-auto px-6 py-8">
+            <main className="max-w-7xl mx-auto px-2 py-8">
                 {/* Welcome Section */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Student!</h1>
@@ -109,7 +109,7 @@ export default function UserDashBoard() {
                     {/* Study Session */}
                     <div className="lg:col-span-2 space-y-6">
                         <Card>
-                            <CardHeader>
+                            <CardHeader className="justify-between">
                                 <h1 className="flex items-center">
                                     <AirplaneTakeoff className="w-5 h-5 mr-2 text-yellow-500" />
                                     Start Study Session
@@ -149,7 +149,7 @@ export default function UserDashBoard() {
                         </Card>
 
                         {/* SRS Level Distribution */}
-                        <Card>
+                        <Card className="hidden">
                             <CardHeader>
                                 <h1 className="flex items-center">
                                     <ArrowElbowRightUp className="w-5 h-5 mr-2 text-purple-500" />
