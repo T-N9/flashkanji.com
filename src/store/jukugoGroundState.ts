@@ -16,6 +16,7 @@ type JukugoGroundState = {
   setIsParted: (isParted: boolean) => void;
   setPart: (part: "0" | "1" | null) => void;
   part: "0" | "1" | null;
+  isReviewMode?: boolean;
 };
 
 type JukugoGroundActions = {
@@ -30,6 +31,7 @@ type JukugoGroundActions = {
   setLevel: (level: number) => void;
   toggleShowMeaning: () => void;
   setJukugoPracticeData: (jukugoPracticeData: any[]) => void;
+  setIsReviewMode: (isReviewMode: boolean) => void;
 };
 
 const useJukugoGroundState = create<JukugoGroundState & JukugoGroundActions>((set) => ({
@@ -46,6 +48,7 @@ const useJukugoGroundState = create<JukugoGroundState & JukugoGroundActions>((se
   jukugoPracticeData: [],
   isParted: false,
   part: "0",
+  isReviewMode: false,
 
   // Actions
   setStartLoading: () => set({ isLoading: true }),
@@ -60,7 +63,8 @@ const useJukugoGroundState = create<JukugoGroundState & JukugoGroundActions>((se
   toggleShowMeaning: () => set((state) => ({ isShowMeaning: !state.isShowMeaning })),
   setJukugoPracticeData: (jukugoPracticeData) => set({ jukugoPracticeData }),
   setIsParted: (isParted) => set({ isParted }),
-  setPart: (part) => set(part === null ? { part : null} : part === "0" ? { part: "0" } : { part: "1"})
+  setPart: (part) => set(part === null ? { part : null} : part === "0" ? { part: "0" } : { part: "1"}),
+  setIsReviewMode: (isReviewMode) => set({ isReviewMode }),
 }));
 
 export default useJukugoGroundState;

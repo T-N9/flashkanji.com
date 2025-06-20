@@ -10,7 +10,7 @@ import { Button } from "@heroui/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
-import { useKanjiRepetitionData_ByDate, useSaveKanjiRepetitionData, useSaveKanjiRepetitionData_Review } from "@/services/repetition";
+import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetitionData_Review } from "@/services/repetition";
 import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import { useRouter } from "next/navigation";
@@ -33,10 +33,10 @@ const KanjiRepetitionNormalMode = () => {
         getConfidenceEmoji
     } = useRepetitionCore<Kanji>(data || []);
 
-    const { mutate: saveRepetition, isLoading } = useSaveKanjiRepetitionData();
+    const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const router = useRouter();
 
-    console.log({ spacedRepetitionData, selectedChapter })
+    // console.log({ spacedRepetitionData, selectedChapter })
 
     const handleEnd = () => {
         saveRepetition(
@@ -60,7 +60,7 @@ const KanjiRepetitionNormalMode = () => {
     console.log({ spacedRepetitionData })
 
 
-    if (!data || data.length === 0) {
+    if (!data || data?.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
             <Image className="tilt-animation drop-shadow-lg scale-50" src={'/assets/ramen.png'} width={200} height={200} alt="Loading Session" />
         </div>);
@@ -118,7 +118,7 @@ const KanjiRepetitionNormalMode = () => {
 const KanjiRepetitionReviewMode = () => {
     const { selectedChapter, level, selectedReviewDate } = useKanjiGroundState();
     const { userId } = useUserStore();
-    const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId);
+    const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
 
     const {
         shuffledData,
@@ -131,9 +131,9 @@ const KanjiRepetitionReviewMode = () => {
         handleClickLevel,
         handleRestart,
         getConfidenceEmoji
-    } = useRepetitionReview<Kanji>(data?.kanjiData || [], data?.repetitionData);
+    } = useRepetitionReview<Kanji>(data?.cardData || [], data?.repetitionData);
 
-    const { mutate: saveRepetition, isLoading } = useSaveKanjiRepetitionData_Review();
+    const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
     const router = useRouter();
 
     console.log({ spacedRepetitionData, selectedChapter })
@@ -143,6 +143,7 @@ const KanjiRepetitionReviewMode = () => {
             {
                 user_id: userId,
                 repetitionData: spacedRepetitionData,
+                type: 1,
             },
             {
                 onSuccess: () => {
@@ -157,7 +158,7 @@ const KanjiRepetitionReviewMode = () => {
     };
 
 
-    if (!data || data?.kanjiData?.length === 0) {
+    if (!data || data?.cardData?.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
             <Image className="tilt-animation drop-shadow-lg scale-50" src={'/assets/ramen.png'} width={200} height={200} alt="Loading Session" />
         </div>);

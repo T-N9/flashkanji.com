@@ -30,9 +30,12 @@ export default function SpacedLearningCalendar() {
   }, [userId])
 
   const reviewMap = useMemo(() => {
-    const map = new Map<string, number>()
+    const map = new Map<string, { kanji_count: number, jukugo_count: number }>()
     reviewData?.forEach((item) => {
-      map.set(item.date, item.kanji_count)
+      map.set(item.date, {
+        kanji_count: item.kanji_count,
+        jukugo_count: item.jukugo_count,
+      })
     })
     return map
   }, [reviewData])
@@ -42,126 +45,193 @@ export default function SpacedLearningCalendar() {
     setSelectedReviewDate(formatDate(normalizeDate(date)))
   }
 
-  const handleStartReview = () => {
+  const handleStartReview = (type: 1 | 2) => {
     setIsReviewMode(true);
-    router.push('/study/kanji/repetition');
+
+    if (type === 1) {
+      router.push('/study/kanji/repetition/');
+    } else if (type === 2) {
+      router.push('/study/jukugo/repetition/');
+    }
+
   }
 
-  const selectedDateKey = selectedReviewDate;
-  const todayKey = formatDate(normalizeDate(new Date()))
+    const selectedDateKey = selectedReviewDate;
+    const todayKey = formatDate(normalizeDate(new Date()))
 
-  // console.log("Today key:", todayKey, "Has review?", reviewMap.has(todayKey))
-  // console.log("Selected date key:", selectedDateKey, "Has review?", reviewMap.has(selectedDateKey))
+    // console.log("Today key:", todayKey, "Has review?", reviewMap.has(todayKey))
+    // console.log("Selected date key:", selectedDateKey, "Has review?", reviewMap.has(selectedDateKey))
 
 
-  return (
-    <div className="space-y-6">
-      <Tabs aria-label="Views" variant="underlined">
-        <Tab
-          key="calendar"
-          className="!mt-0"
-          title={
-            <span className="flex items-center gap-2">
-              <CalendarIcon size={18} /> Calendar
-            </span>
-          }
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader className="font-semibold text-lg flex items-center gap-2">
-                <CalendarIcon size={20} /> Review Schedule
-              </CardHeader>
+    return (
+      <div className="space-y-6">
+        <Tabs aria-label="Views" variant="underlined">
+          <Tab
+            key="calendar"
+            className="!mt-0"
+            title={
+              <span className="flex items-center gap-2">
+                <CalendarIcon size={18} /> Calendar
+              </span>
+            }
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader className="font-semibold text-lg flex items-center gap-2">
+                  <CalendarIcon size={20} /> Review Schedule
+                </CardHeader>
+                <CardBody>
+                  <DayPicker
+                    locale={ja}
+                    mode="single"
+                    selected={new Date(selectedReviewDate)}
+                    onSelect={(date) => date && handleSelectDate(date)}
+                    modifiers={{
+                      hasReviews: (date) => reviewMap.has(formatDate(normalizeDate(date))),
+                    }}
+                    modifiersClassNames={{
+                      hasReviews: "bg-orange-200 text-orange-900 font-semibold rounded-full",
+                    }}
+                  />
+                </CardBody>
+              </Card>
+
+              <Card>
+                <CardHeader className="font-semibold text-lg">
+                  {new Date(selectedReviewDate).toLocaleDateString("en-US", {
+                    weekday: "long",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </CardHeader>
+                <CardBody>
+                  {reviewMap.has(selectedDateKey) ? (
+                    <div className="flex bg-gray-100 justify-between items-center p-2 rounded">
+                      {(() => {
+                        const review = reviewMap.get(selectedDateKey);
+                        const kanji = review?.kanji_count || 0;
+                        const jukugo = review?.jukugo_count || 0;
+
+                        return (
+                          <div className="space-y-2 w-full">
+                            {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                              <p className="text-gray-700">
+                                {kanji} kanji review{kanji !== 1 ? "s" : ""}
+                              </p>
+                              {!completedItems.has(`${selectedDateKey}-kanji`) ? (
+                                <div className="flex items-center gap-2">
+                                  <Button color="primary" onClick={() => handleStartReview(1)}>
+                                    Review
+                                  </Button>
+                                  <Button
+
+                                    onClick={() => setCompletedItems((prev) => new Set(prev).add(`${selectedDateKey}-kanji`))}
+                                    isIconOnly
+                                  >
+                                    <Check size={18} />
+                                  </Button>
+                                </div>
+                              ) : (
+                                <p className="text-green-600 font-semibold">Completed</p>
+                              )}
+                            </div>}
+                            {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                              <p className="text-gray-700">
+                                {jukugo} jukugo review{jukugo !== 1 ? "s" : ""}
+                              </p>
+                              {!completedItems.has(`${selectedDateKey}-jukugo`) ? (
+                                <div className="flex items-center gap-2">
+                                  <Button color="primary" onClick={() => handleStartReview(2)}>
+                                    Review
+                                  </Button>
+                                  <Button
+
+                                    onClick={() => setCompletedItems((prev) => new Set(prev).add(`${selectedDateKey}-jukugo`))}
+                                    isIconOnly
+                                  >
+                                    <Check size={18} />
+                                  </Button>
+                                </div>
+                              ) : (
+                                <p className="text-green-600 font-semibold">Completed</p>
+                              )}
+                            </div>}
+
+                          </div>
+                        );
+                      })()}
+
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No reviews scheduled</p>
+                  )}
+                </CardBody>
+              </Card>
+            </div>
+          </Tab>
+
+          <Tab
+            key="reviews"
+            title={
+              <span className="flex items-center gap-2">
+                <BookOpen size={18} /> Today&apos;s Reviews
+              </span>
+            }
+          >
+            <Card className="mt-4">
+              <CardHeader className="font-semibold text-lg">Today&apos;s Reviews</CardHeader>
               <CardBody>
-                <DayPicker
-                  locale={ja}
-                  mode="single"
-                  selected={new Date(selectedReviewDate)}
-                  onSelect={(date) => date && handleSelectDate(date)}
-                  modifiers={{
-                    hasReviews: (date) => reviewMap.has(formatDate(normalizeDate(date))),
-                  }}
-                  modifiersClassNames={{
-                    hasReviews: "bg-orange-200 text-orange-900 font-semibold rounded-full",
-                  }}
-                />
-              </CardBody>
-            </Card>
+                {reviewMap.has(todayKey) ? (
+                  <div className="space-y-3">
+                    {(() => {
+                      const review = reviewMap.get(todayKey);
+                      const kanji = review?.kanji_count || 0;
+                      const jukugo = review?.jukugo_count || 0;
 
-            <Card>
-              <CardHeader className="font-semibold text-lg">
-                {new Date(selectedReviewDate).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </CardHeader>
-              <CardBody>
-                {reviewMap.has(selectedDateKey) ? (
-                  <div className="flex bg-gray-100 justify-between items-center p-2 rounded">
-                    <p className="text-gray-700">
-                      {reviewMap.get(selectedDateKey)} review
-                      {reviewMap.get(selectedDateKey)! > 1 ? "s" : ""}
-                    </p>
-                    {!completedItems.has(selectedDateKey) ? (
-                      <div className="flex items-center gap-2">
-                        <Button color="primary" onClick={handleStartReview}>
-                          Review
-                        </Button>
-                        <Button
+                      return (
+                        <div className="space-y-2">
+                          {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                            <p className="text-gray-700">
+                              {kanji} kanji review{kanji !== 1 ? "s" : ""}
+                            </p>
+                            {!completedItems.has(`${todayKey}-kanji`) ? (
+                              <Button
+                                color="primary"
+                                onClick={() => handleStartReview(1)}
+                              >
+                                Start Review
+                              </Button>
+                            ) : (
+                              <p className="text-green-600 font-semibold">Completed</p>
+                            )}
+                          </div>}
+                          {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                            <p className="text-gray-700">
+                              {jukugo} jukugo review{jukugo !== 1 ? "s" : ""}
+                            </p>
+                            {!completedItems.has(`${todayKey}-jukugo`) ? (
+                              <Button
+                                color="primary"
+                                onClick={() => handleStartReview(2)}
+                              >
+                                Start Review
+                              </Button>
+                            ) : (
+                              <p className="text-green-600 font-semibold">Completed</p>
+                            )}
+                          </div>}
+                        </div>
+                      );
+                    })()}
 
-                          onClick={() => setCompletedItems((prev) => new Set(prev).add(selectedDateKey))}
-                          isIconOnly
-                        >
-                          <Check size={18} />
-                        </Button>
-                      </div>
-                    ) : (
-                      <p className="text-green-600 font-semibold">Completed</p>
-                    )}
                   </div>
                 ) : (
-                  <p className="text-gray-500">No reviews scheduled</p>
+                  <p className="text-gray-500 text-center">No reviews scheduled for today</p>
                 )}
               </CardBody>
             </Card>
-          </div>
-        </Tab>
-
-        <Tab
-          key="reviews"
-          title={
-            <span className="flex items-center gap-2">
-              <BookOpen size={18} /> Today&apos;s Reviews
-            </span>
-          }
-        >
-          <Card className="mt-4">
-            <CardHeader className="font-semibold text-lg">Today&apos;s Reviews</CardHeader>
-            <CardBody>
-              {reviewMap.has(todayKey) ? (
-                <div className="space-y-3">
-                  <p className="text-gray-700">
-                    You have {reviewMap.get(todayKey)} kanji review
-                    {reviewMap.get(todayKey)! > 1 ? "s" : ""} today.
-                  </p>
-                  {!completedItems.has(todayKey) ? (
-                    <Button
-                      color="primary"
-                      onClick={() => setCompletedItems((prev) => new Set(prev).add(todayKey))}
-                    >
-                      Start Review
-                    </Button>
-                  ) : (
-                    <p className="text-green-600 font-semibold">Completed</p>
-                  )}
-                </div>
-              ) : (
-                <p className="text-gray-500 text-center">No reviews scheduled for today</p>
-              )}
-            </CardBody>
-          </Card>
-        </Tab>
-      </Tabs>
-    </div>
-  )
-}
+          </Tab>
+        </Tabs>
+      </div>
+    )
+  }

@@ -105,7 +105,7 @@ export default function UserDashBoard() {
 
                 <ReviewSchedule/>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="hidden grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Study Session */}
                     <div className="lg:col-span-2 space-y-6">
                         <Card>
@@ -175,7 +175,7 @@ export default function UserDashBoard() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="space-y-6">
+                    <div className="space-y-6 hidden">
                         {/* Study Goals */}
                         <Card>
                             <CardHeader>
@@ -207,7 +207,7 @@ export default function UserDashBoard() {
                         </Card>
 
                         {/* Quick Actions */}
-                        <Card>
+                        <Card className="hidden">
                             <CardHeader>
                                 <h1>Quick Actions</h1>
                             </CardHeader>
