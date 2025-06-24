@@ -136,7 +136,7 @@ const KanjiRepetitionReviewMode = () => {
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
     const router = useRouter();
 
-    console.log({ spacedRepetitionData, selectedChapter })
+    // console.log({ spacedRepetitionData, selectedChapter })
 
     const handleEnd = () => {
         saveRepetition(
@@ -148,7 +148,7 @@ const KanjiRepetitionReviewMode = () => {
             {
                 onSuccess: () => {
                     console.log("Repetition data saved successfully.");
-                    router.push("/flashmap");
+                    router.push("/flashboard");
                 },
                 onError: (error) => {
                     console.error("Failed to save repetition data:", error);

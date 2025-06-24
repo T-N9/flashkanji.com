@@ -134,6 +134,8 @@ const JukugoRepetitionReviewMode = () => {
         getConfidenceEmoji
     } =  useRepetitionReview<relatedJukugoItem>(data?.cardData || [], data?.repetitionData);
 
+    console.log({fetchedData : data?.repetitionData})
+
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
     const router = useRouter();
 
@@ -147,7 +149,7 @@ const JukugoRepetitionReviewMode = () => {
             {
                 onSuccess: () => {
                     console.log("Repetition data saved successfully.");
-                    router.push("/flashmap");
+                    router.push("/flashboard");
                 },
                 onError: (error) => {
                     console.error("Failed to save repetition data:", error);

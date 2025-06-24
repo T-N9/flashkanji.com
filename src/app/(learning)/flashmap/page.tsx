@@ -8,7 +8,7 @@ import { Checkbox, Select, SelectItem } from "@heroui/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 
- const roadmapData = [
+const roadmapData = [
   {
     title: "Introduction",
     steps: [
@@ -100,13 +100,14 @@ const RoadmapItem = ({
 }) => {
   const { bg, border, icon } = typeStyles[type];
 
-  const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted } = useKanjiGroundState();
-  const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo } = useJukugoGroundState();
+  const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted, setIsReviewMode } = useKanjiGroundState();
+  const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo, setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode, setPart: setPartQuiz, setIsParted: setIsPartedQuiz, setLevel: setLevelQuiz } = useQuizGroundStore();
 
   const handleClickRoadmapItem = () => {
 
     if (route === 'kanji') {
+      setIsReviewMode(true);
       setSelectedChapter(japanese_chapter);
       setSelectedLevel("N" + japanese_level);
       setLevel(japanese_level);
@@ -120,6 +121,7 @@ const RoadmapItem = ({
         setIsParted(false);
       }
     } else if (route === 'jukugo') {
+      setIsReviewModeJukugo(false);
       setSelectedChapterJukugo(japanese_chapter);
       setSelectedLevelJukugo("N" + japanese_level);
       setLevelJukugo(japanese_level);

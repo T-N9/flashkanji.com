@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { DayPicker } from "react-day-picker"
 import { Tabs, Tab, Card, CardBody, CardHeader, Button, Chip } from "@heroui/react"
-import { Calendar as CalendarIcon, BookOpen, Check } from "@phosphor-icons/react"
+import { Calendar as CalendarIcon, BookOpen, Check, CircleNotchIcon } from "@phosphor-icons/react"
 import { ja } from "react-day-picker/locale";
 
 import "react-day-picker/dist/style.css"
@@ -13,15 +13,17 @@ import useKanjiGroundState from "@/store/kanjiGroundState"
 import { useRouter } from "next/navigation"
 import { useFetchReviewCalendarData } from "@/services/repetition"
 import { useUserStore } from "@/store/userState"
+import useJukugoGroundState from "@/store/jukugoGroundState"
 
 export default function SpacedLearningCalendar() {
   // const [selectedReviewDate, setSelectedDate] = useState<Date>(new Date())
   const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
   // const [reviewData, setReviewData] = useState<{ date: string; kanji_count: number }[]>([]);
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
+  const { setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { userId, setToDayReviewCount } = useUserStore()
 
-  const { data: reviewData, refetch } = useFetchReviewCalendarData(userId)
+  const { data: reviewData, refetch, isFetching } = useFetchReviewCalendarData(userId)
 
   const router = useRouter()
 
@@ -46,11 +48,11 @@ export default function SpacedLearningCalendar() {
   }
 
   const handleStartReview = (type: 1 | 2) => {
-    setIsReviewMode(true);
-
     if (type === 1) {
+      setIsReviewMode(true);
       router.push('/study/kanji/repetition/');
     } else if (type === 2) {
+      setIsReviewModeJukugo(true);
       router.push('/study/jukugo/repetition/');
     }
 
@@ -81,8 +83,16 @@ export default function SpacedLearningCalendar() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
-              <CardHeader className="font-semibold text-lg flex items-center gap-2">
-                <CalendarIcon size={20} /> Review Schedule
+              <CardHeader className="font-semibold text-lg flex justify-between items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <CalendarIcon size={20} /> Review Schedule
+                </div>
+                {
+                  isFetching && <div>
+                    <CircleNotchIcon size={22} className="animate-spin" />
+                  </div>
+                }
+
               </CardHeader>
               <CardBody>
                 <DayPicker
