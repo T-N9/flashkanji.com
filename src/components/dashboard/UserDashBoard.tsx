@@ -5,6 +5,7 @@ import { Badge, Button, Card, CardBody, CardHeader, Progress } from "@heroui/rea
 import { AirplaneTakeoff, ArrowElbowRightUp, BookOpen, BookOpenText, Brain, Calendar, Clock, Fire, Target } from "@phosphor-icons/react"
 import { useRouter } from "next/navigation";
 import ReviewSchedule from "../review-schedule/ReviewSchedule";
+import { useUserStore } from "@/store/userState";
 
 export default function UserDashBoard() {
 
@@ -41,6 +42,8 @@ export default function UserDashBoard() {
         { level: "Burned", count: 872, color: "bg-gray-600" },
     ]
 
+    const { todayReviewCount } = useUserStore()
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
 
@@ -50,7 +53,7 @@ export default function UserDashBoard() {
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Student!</h1>
                     <p className="text-gray-600 mb-3">
-                        Ready to continue your Kanji journey? You have {studyStats.dueToday} cards due today.
+                        Ready to continue your Kanji journey? You have {todayReviewCount} cards due today.
                     </p>
                 </div>
 
@@ -62,9 +65,10 @@ export default function UserDashBoard() {
                             <Clock className="h-4 w-4" />
                         </CardHeader>
                         <CardBody>
-                            <div className="text-2xl font-bold">{studyStats.dueToday}</div>
+                            <div className="text-2xl font-bold">{todayReviewCount}</div>
                             <p className="text-xs opacity-90">
-                                {studyStats.newCards} new • {studyStats.reviewCards} review
+                                {/* {studyStats.newCards} new • {studyStats.reviewCards} review */}
+                                cards to review today
                             </p>
                         </CardBody>
                     </Card>

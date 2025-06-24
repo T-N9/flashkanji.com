@@ -1,3 +1,5 @@
+import { format } from "date-fns"
+
 export const shuffleArray = (array: any[]) => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -115,3 +117,25 @@ export function formatDate(date: Date): string {
 export function normalizeDate(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
+
+
+
+type ReviewData = {
+  kanji_count: number
+  jukugo_count: number
+}
+
+/**
+ * Returns the total number of reviews (kanji + jukugo) scheduled for today.
+ */
+export function getTodayReviewCount(
+  reviewMap: Map<string, ReviewData>
+): number {
+  const today = format(new Date(), "yyyy-MM-dd")
+  const todayData = reviewMap.get(today)
+
+  if (!todayData) return 0
+
+  return (todayData.kanji_count || 0) + (todayData.jukugo_count || 0)
+}
+

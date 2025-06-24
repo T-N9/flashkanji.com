@@ -5,12 +5,14 @@ interface UserState {
   username: string;
   userId: string;
   japanese_level: "N3" | "N4" | "N5";
-  japanese_chapter : number;
+  japanese_chapter: number;
   email: string;
   created_at: string | undefined;
   setUser: (user: Partial<UserState>) => void;
   resetUser: () => void;
   avatarUrl: string;
+  todayReviewCount: number;
+  setToDayReviewCount: (count: number) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -36,4 +38,6 @@ export const useUserStore = create<UserState>((set) => ({
       created_at: undefined,
       avatarUrl: "",
     }),
+  todayReviewCount: 0,
+  setToDayReviewCount: (count) => set({ todayReviewCount: count }),
 }));
