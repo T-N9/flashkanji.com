@@ -17,7 +17,7 @@ import useJukugoGroundState from "@/store/jukugoGroundState"
 
 export default function SpacedLearningCalendar() {
   // const [selectedReviewDate, setSelectedDate] = useState<Date>(new Date())
-  const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
+  // const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
   // const [reviewData, setReviewData] = useState<{ date: string; kanji_count: number }[]>([]);
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
   const { setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
@@ -120,7 +120,7 @@ export default function SpacedLearningCalendar() {
               </CardHeader>
               <CardBody>
                 {reviewMap.has(selectedDateKey) ? (
-                  <div className="flex bg-gray-100 justify-between items-center p-2 rounded">
+                  <div className="flex justify-between items-center rounded">
                     {(() => {
                       const review = reviewMap.get(selectedDateKey);
                       const kanji = review?.kanji_count || 0;
@@ -130,45 +130,29 @@ export default function SpacedLearningCalendar() {
                         <div className="space-y-2 w-full">
                           {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
                             <p className="text-gray-700">
-                              {kanji} kanji review{kanji !== 1 ? "s" : ""}
+                              {kanji} Kanji review{kanji !== 1 ? "s" : ""}
                             </p>
-                            {!completedItems.has(`${selectedDateKey}-kanji`) ? (
-                              <div className="flex items-center gap-2">
-                                <Button color="primary" onClick={() => handleStartReview(1)}>
-                                  Review
-                                </Button>
-                                <Button
 
-                                  onClick={() => setCompletedItems((prev) => new Set(prev).add(`${selectedDateKey}-kanji`))}
-                                  isIconOnly
-                                >
-                                  <Check size={18} />
-                                </Button>
-                              </div>
-                            ) : (
-                              <p className="text-green-600 font-semibold">Completed</p>
-                            )}
+                            <div className="flex items-center gap-2">
+                              <Button color="primary" onClick={() => handleStartReview(1)}>
+                                Review
+                              </Button>
+
+                            </div>
+
                           </div>}
                           {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
                             <p className="text-gray-700">
-                              {jukugo} jukugo review{jukugo !== 1 ? "s" : ""}
+                              {jukugo} Jukugo review{jukugo !== 1 ? "s" : ""}
                             </p>
-                            {!completedItems.has(`${selectedDateKey}-jukugo`) ? (
-                              <div className="flex items-center gap-2">
-                                <Button color="primary" onClick={() => handleStartReview(2)}>
-                                  Review
-                                </Button>
-                                <Button
 
-                                  onClick={() => setCompletedItems((prev) => new Set(prev).add(`${selectedDateKey}-jukugo`))}
-                                  isIconOnly
-                                >
-                                  <Check size={18} />
-                                </Button>
-                              </div>
-                            ) : (
-                              <p className="text-green-600 font-semibold">Completed</p>
-                            )}
+                            <div className="flex items-center gap-2">
+                              <Button color="primary" onClick={() => handleStartReview(2)}>
+                                Review
+                              </Button>
+
+                            </div>
+
                           </div>}
 
                         </div>
@@ -206,33 +190,29 @@ export default function SpacedLearningCalendar() {
                       <div className="space-y-2">
                         {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
                           <p className="text-gray-700">
-                            {kanji} kanji review{kanji !== 1 ? "s" : ""}
+                            {kanji} Kanji review{kanji !== 1 ? "s" : ""}
                           </p>
-                          {!completedItems.has(`${todayKey}-kanji`) ? (
-                            <Button
-                              color="primary"
-                              onClick={() => handleStartReview(1)}
-                            >
-                              Start Review
-                            </Button>
-                          ) : (
-                            <p className="text-green-600 font-semibold">Completed</p>
-                          )}
+
+                          <Button
+                            color="primary"
+                            onClick={() => handleStartReview(1)}
+                          >
+                            Start Review
+                          </Button>
+
                         </div>}
                         {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
                           <p className="text-gray-700">
-                            {jukugo} jukugo review{jukugo !== 1 ? "s" : ""}
+                            {jukugo} Jukugo review{jukugo !== 1 ? "s" : ""}
                           </p>
-                          {!completedItems.has(`${todayKey}-jukugo`) ? (
-                            <Button
-                              color="primary"
-                              onClick={() => handleStartReview(2)}
-                            >
-                              Start Review
-                            </Button>
-                          ) : (
-                            <p className="text-green-600 font-semibold">Completed</p>
-                          )}
+
+                          <Button
+                            color="primary"
+                            onClick={() => handleStartReview(2)}
+                          >
+                            Start Review
+                          </Button>
+
                         </div>}
                       </div>
                     );

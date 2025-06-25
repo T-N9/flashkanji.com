@@ -20,16 +20,29 @@ export default function Settings() {
         </Select>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {(['pomodoro', 'shortBreak', 'longBreak'] as const).map((mode) => (
-            <Input
-              key={mode}
-              type="number"
-              min={1}
-              label={`${mode} (minutes)`}
-              value={durations[mode].toString()}
-              onChange={(e) => setDuration(mode, Number(e.target.value))}
-            />
-          ))}
+
+          <Input
+            type="number"
+            min={1}
+            label={`Pomodoro`}
+            value={durations['pomodoro'].toString()}
+            onChange={(e) => setDuration('pomodoro', Number(e.target.value))}
+          />
+
+          <Input
+            type="number"
+            min={1}
+            label={`Short Break`}
+            value={durations['shortBreak'].toString()}
+            onChange={(e) => setDuration('shortBreak', Number(e.target.value))}
+          />
+          <Input
+            type="number"
+            min={1}
+            label={`Long Break`}
+            value={durations['longBreak'].toString()}
+            onChange={(e) => setDuration('longBreak', Number(e.target.value))}
+          />
         </div>
 
         <Input
