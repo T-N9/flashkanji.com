@@ -335,3 +335,7 @@ padding-left: 20px;
 .rdp-selected .rdp-day_button {
   border-color: #333 !important;
 }
+
+button {
+  letter-spacing: normal !important;
+}

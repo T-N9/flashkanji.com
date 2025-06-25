@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { Button } from "@heroui/react";
 import { User } from "@phosphor-icons/react";
+import Indicator from "../pomodoro/Indicator";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
@@ -50,6 +51,13 @@ export function HeadingBar() {
               onClick={() => delayedSetIsMenuOpen(false)}
             >
               <Link href="/flashboard">Flashboard</Link>
+            </NavbarItem>
+            <NavbarItem
+              isActive={path === "/pomodoro"}
+              onClick={() => delayedSetIsMenuOpen(false)}
+            >
+
+              <Link href="/pomodoro"><Indicator /></Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/profile"}

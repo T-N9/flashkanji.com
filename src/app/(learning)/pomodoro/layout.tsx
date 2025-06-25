@@ -1,17 +1,17 @@
-import TimerController from '@/components/pomodoro/TimerController';
+import HeadingBar from '@/components/Navigation/Header';
 import React from 'react'
 
-const LearnLayout = ({
+const PomoLayout = ({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
     return (
         <>
-            <TimerController />
+            <HeadingBar />
             {children}
         </>
     )
 }
 
-export default LearnLayout
+export default PomoLayout
