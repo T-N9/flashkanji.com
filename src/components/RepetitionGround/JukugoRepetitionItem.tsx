@@ -130,10 +130,11 @@ export const JukugoRepetitionItem = ({
                                 className={`back absolute w-full top-[32%] -left-[0%] space-y-3 bg-gray-800  px-2 py-4 p-2 text-2xl md:text-2xl
                `}
                             >
-                                <div className="">{meaning}</div>
                                 <div className="">
                                     {hiragana}
                                 </div>
+                                <div className="">{meaning}</div>
+
                             </div>
                         </div>
 
@@ -166,7 +167,7 @@ export const JukugoRepetitionItem = ({
                             </div>
                             :
                             <div className="flex flex-col justify-center items-center gap-3">
-                                <Button className="mt-10"  onClick={() => handleShowAnswer()}>
+                                <Button className="mt-10" onClick={() => handleShowAnswer()}>
                                     Show Answer
                                 </Button>
                                 <span className="text-gray-400 text-sm hidden lg:block">Press Enter</span>

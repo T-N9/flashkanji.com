@@ -107,7 +107,7 @@ const RoadmapItem = ({
   const handleClickRoadmapItem = () => {
 
     if (route === 'kanji') {
-      setIsReviewMode(true);
+      setIsReviewMode(false);
       setSelectedChapter(japanese_chapter);
       setSelectedLevel("N" + japanese_level);
       setLevel(japanese_level);

@@ -1,4 +1,4 @@
-import { format } from "date-fns"
+import { format } from "date-fns";
 
 export const shuffleArray = (array: any[]) => {
   const shuffled = [...array];
@@ -35,26 +35,46 @@ export function calculateNextReview(
   }
 
   const updatedCard = { ...card };
-  const currentDate = new Date();
+  const currentDate = new Date(); // Use a fixed date for testing
 
   // ✅ (1) Convert your 0–3 scale to SM-2’s 0–5 scale
   // SM-2 expects quality 0–5: we'll map 0 → 2, 1 → 3, 2 → 4, 3 → 5
   const sm2Quality = quality;
 
   // ✅ (2) Repetition reset on failure (SM-2)
-  if (sm2Quality < 3) {
+
+  if (sm2Quality === 0) {
     updatedCard.repetitions = 0;
-    updatedCard.interval = 1;
+    updatedCard.interval = 0;
     updatedCard.easeFactor = Math.max(updatedCard.easeFactor - 0.2, 1.3);
-    updatedCard.nextReviewDate = new Date(currentDate.getTime() + 10 * 60 * 1000); // +10 min
+    updatedCard.nextReviewDate = new Date(
+      currentDate.getDate() + updatedCard.interval
+    ); // +10 min
+  } else if (sm2Quality === 1) {
+    updatedCard.repetitions = updatedCard.repetitions === 0 ? 0 : updatedCard.repetitions;
+    updatedCard.interval = 1;
+    updatedCard.easeFactor = Math.max(updatedCard.easeFactor - 0.1, 1.3);
+    updatedCard.nextReviewDate = new Date(
+      currentDate.getDate() + updatedCard.interval
+    ); // +24 hours
+  } else if (sm2Quality === 2) {
+    updatedCard.repetitions = updatedCard.repetitions === 0 ? 0 : updatedCard.repetitions;
+    updatedCard.interval = 2;
+    updatedCard.easeFactor = Math.max(updatedCard.easeFactor - 0.05, 1.3);
+    updatedCard.nextReviewDate = new Date(
+      currentDate.getDate() + updatedCard.interval
+    ); // +2 days
   } else {
     // ✅ (3) Interval logic aligned with SM-2
     if (updatedCard.repetitions === 0) {
       updatedCard.interval = 1;
-    } else if (updatedCard.repetitions === 1) {
-      updatedCard.interval = 6;
+      // } else if (updatedCard.repetitions === 1) {
+      //   updatedCard.interval = 3;
+      // } else {
     } else {
-      updatedCard.interval = Math.round(updatedCard.interval * updatedCard.easeFactor);
+      updatedCard.interval = Math.round(
+        updatedCard.interval * updatedCard.easeFactor
+      );
     }
 
     // ✅ (4) Repetitions only increment on success (SM-2)
@@ -62,7 +82,8 @@ export function calculateNextReview(
 
     // ✅ (5) SM-2 formula for updating easeFactor
     const ef = updatedCard.easeFactor;
-    const newEF = ef + (0.1 - (5 - sm2Quality) * (0.08 + (5 - sm2Quality) * 0.02));
+    const newEF =
+      ef + (0.1 - (5 - sm2Quality) * (0.08 + (5 - sm2Quality) * 0.02));
     updatedCard.easeFactor = Math.max(newEF, 1.3);
 
     // ✅ Interval cap to avoid excessive scheduling delay
@@ -70,7 +91,9 @@ export function calculateNextReview(
 
     // ✅ Set next review date based on interval
     updatedCard.nextReviewDate = new Date();
-    updatedCard.nextReviewDate.setDate(currentDate.getDate() + updatedCard.interval);
+    updatedCard.nextReviewDate.setDate(
+      currentDate.getDate() + updatedCard.interval
+    );
   }
 
   // === Existing satisfaction logic ===
@@ -80,17 +103,17 @@ export function calculateNextReview(
     const delta = quality - updatedCard.previousClick;
     satisfaction += delta;
 
-    if (quality === updatedCard.previousClick && quality === 3) satisfaction += 3;
+    if (quality === updatedCard.previousClick && quality === 3)
+      satisfaction += 3;
     else if (quality === 2) satisfaction -= 1;
     else if (quality === 1) satisfaction -= 2;
   }
 
   updatedCard.previousClick = quality;
   satisfaction -= stopSecond > 10 ? 10 * 0.1 : stopSecond * 0.1;
-
+  console.log({ updatedCard, satisfaction });
   return { updatedCard, satisfaction };
 }
-
 
 /* Speech Function (Browswer api) */
 export const speakJapaneseText = (text: string) => {
@@ -118,12 +141,10 @@ export function normalizeDate(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-
-
 type ReviewData = {
-  kanji_count: number
-  jukugo_count: number
-}
+  kanji_count: number;
+  jukugo_count: number;
+};
 
 /**
  * Returns the total number of reviews (kanji + jukugo) scheduled for today.
@@ -131,11 +152,10 @@ type ReviewData = {
 export function getTodayReviewCount(
   reviewMap: Map<string, ReviewData>
 ): number {
-  const today = format(new Date(), "yyyy-MM-dd")
-  const todayData = reviewMap.get(today)
+  const today = format(new Date(), "yyyy-MM-dd");
+  const todayData = reviewMap.get(today);
 
-  if (!todayData) return 0
+  if (!todayData) return 0;
 
-  return (todayData.kanji_count || 0) + (todayData.jukugo_count || 0)
+  return (todayData.kanji_count || 0) + (todayData.jukugo_count || 0);
 }
-
