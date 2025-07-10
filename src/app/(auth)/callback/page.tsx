@@ -7,11 +7,12 @@ import Cookies from 'js-cookie'
 import { checkUserExists } from '@/api/usersRoute'
 import { CircleNotch } from '@phosphor-icons/react'
 import { useUserStore } from '@/store/userState'
+import RamenLoading from '@/components/common/RamenLoading'
 
 export default function AuthCallback() {
   const router = useRouter()
 
-  const { setUser} = useUserStore()
+  const { setUser } = useUserStore()
 
   useEffect(() => {
     const handleSession = async () => {
@@ -25,7 +26,7 @@ export default function AuthCallback() {
         return
       }
 
-      if(user) {
+      if (user) {
         setUser({
           email: user.email,
           avatarUrl: user.user_metadata.avatar_url,
@@ -57,6 +58,6 @@ export default function AuthCallback() {
   }, [router])
 
   return <section className='h-screen flex justify-center items-center'>
-    <CircleNotch className='animate-spin' size={32} />
+    <RamenLoading />
   </section>
 }

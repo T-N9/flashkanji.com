@@ -14,15 +14,15 @@ export const useKanjiRepetitionData_ByDate = (
   level?: string
 ) => {
   return useQuery({
-    queryKey: ["kanjiRepetitionData_byDate", date, user_id],
+    queryKey: ["kanjiRepetitionData_byDate", date, user_id, type],
     queryFn: () =>
       fetchKanjiRepetitionData_ByDate(
         date!,
         user_id!,
-        type,
+        type!,
         level && level.toLowerCase()
       ),
-    enabled: !!date && !!user_id,
+    enabled: !!date && !!user_id && !!type,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     placeholderData: {
