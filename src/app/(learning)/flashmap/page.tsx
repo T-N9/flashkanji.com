@@ -31,7 +31,7 @@ const roadmapData = [
       ["Spaced Repetition of All Kanji", "repetition", "Reinforce your memory of all kanji.", "kanji"],
       ["Quiz (Kunyomi Focused) for All Kanji", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Learn Jukugo Using Kanji", "cards", "Learn the compound words using recent kanji.", "jukugo"],
-      ["Spaced Repetition of Jukugo from A5 Kanji", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
+      ["Spaced Repetition of Jukugo", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
       // ["Meaning Quiz for Jukugo", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
     ],
   },
@@ -175,7 +175,7 @@ const RoadmapItem = ({
           </div>
         </div>
 
-        <div className="hidden justify-between items-center w-full gap-1">
+        <div className="flex justify-between items-center w-full gap-1">
           <div>
             <h3 className="font-bold">{label}</h3>
             <p className="text-xs text-gray-600">{description}</p>
@@ -193,7 +193,7 @@ export default function ChapterRoadmap() {
   const chapters = Array.from({ length: levelChapterMap[japanese_level] }, (_, i) => i + 1);
 
   return (
-    <div className="space-y-12 max-w-3xl mx-auto px-4 py-8">
+    <div className="space-y-12 max-w-screen-md mx-auto px-4 py-8">
       <div className="flex items-center gap-4">
         <CompassRose size={32} />
         <h1 className="text-3xl font-bold text-dark"> Chapter {japanese_chapter} Roadmap – {japanese_level}</h1>
@@ -223,7 +223,7 @@ export default function ChapterRoadmap() {
       {roadmapData.map((phase, idx) => (
         <div key={idx} className="space-y-4">
           <h2 className="text-xl font-semibold text-gray-400 text-center">{phase.title}</h2>
-          <div className="flex gap-2 flex-wrap justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {phase.steps.map(([label, type, description, route], i) => (
               <RoadmapItem phase={idx + 1} step_i={i + 1} key={i} label={label} route={route} type={type as any} description={description} japanese_chapter={japanese_chapter} japanese_level={parseInt(japanese_level.split('')[1])} />
             ))}
