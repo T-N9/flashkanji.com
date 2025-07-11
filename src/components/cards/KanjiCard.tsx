@@ -37,9 +37,9 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
         <div
             onClick={() => setIsFlipped((prev) => !prev)}
             className={`${isSwiped
-                ? "bg-gradient-to-br from-black via-slate-800 to-orange-700"
-                : "bg-gradient-to-br from-black via-slate-800 to-orange-700"
-            } relative card-shadow mx-auto !h-full font-writing-1 text-white p-5 rounded-md card  border-4 ${isFlipped && "flipped"
+                ? "bg-gradient-to-br from-gray-50 via-gray-200 to-gray-400"
+                : "bg-gradient-to-br from-gray-50 via-gray-200 to-gray-400"
+            } relative card-shadow mx-auto !h-full font-writing-1 text-slate-800 p-5 rounded-md card  border-4 ${isFlipped && "flipped"
             }`}
         >
           <svg className='absolute h-full w-full opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
           {/* {!isSwiped && <span className="front text-gray-100">{item.id}</span>} */}
           <p
               className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-9xl"
-              } front text-white absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
+              } front text-slate-800 absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
           >
             {item.character}
           </p>

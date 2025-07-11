@@ -107,7 +107,7 @@ export const JukugoRepetitionItem = ({
                     <div className="relative w-full md:w-[400px] h-[270px]">
                         <div
                             onClick={() => handleShowAnswer()}
-                            className={`bg-gradient-to-br !h-full from-black via-slate-800 to-orange-700 relative font-writing-1 text-white p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
+                            className={`bg-gradient-to-br !h-full from-gray-50 via-gray-200 to-gray-400 relative font-writing-1 text-white p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
                                 }`}
                         >
                             <svg className='absolute w-full md:w-[400px] h-[270px] opacity-50 top-0 left-0' xmlns="http://www.w3.org/2000/svg">
@@ -120,14 +120,14 @@ export const JukugoRepetitionItem = ({
                             {/* Front Side */}
 
                             <p
-                                className={`text-4xl front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
+                                className={`text-4xl front text-slate-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
                             >
                                 {character}
                             </p>
 
                             {/* Back Side */}
                             <div
-                                className={`back absolute w-full top-[32%] -left-[0%] space-y-3 bg-gray-800  px-2 py-4 p-2 text-2xl md:text-2xl
+                                className={`back absolute w-full top-[32%] -left-[0%] space-y-3 bg-gray-800  px-2 py-4 p-2 text-2xl md:text-2xl text-white
                `}
                             >
                                 <div className="">

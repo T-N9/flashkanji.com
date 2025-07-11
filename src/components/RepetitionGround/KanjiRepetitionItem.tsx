@@ -108,7 +108,7 @@ export const KanjiRepetitionItem = ({
                     <div className="relative w-full md:w-[300px] h-[300px]">
                         <div
                             onClick={() => handleShowAnswer()}
-                            className={`bg-gradient-to-br from-black via-slate-800 to-orange-700 !h-full relative font-writing-1 z-20 text-white p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
+                            className={`bg-gradient-to-br from-gray-50 via-gray-200 to-gray-400 !h-full relative font-writing-1 z-20 text-slate-800 p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
                                 }`}
                         >
                             <svg
@@ -131,12 +131,12 @@ export const KanjiRepetitionItem = ({
                                 />
                             </svg>
                             {/* Front Side */}
-                            <p className="text-[8rem] z-20 front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <p className="text-[8rem] z-20 front text-slate-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                 {character}
                             </p>
 
                             {/* Back Side */}
-                            <div className="back absolute w-full top-[27%] left-0 space-y-3 z-20 bg-slate-900 px-2 py-4 p-2 text-2xl md:text-2xl">
+                            <div className="back absolute text-white w-full top-[27%] left-0 space-y-3 z-20 bg-slate-900 px-2 py-4 p-2 text-2xl md:text-2xl">
                                 <div>{kunyomi}</div>
                                 <div>{onyomi}</div>
                                 <div>{meaning}</div>
