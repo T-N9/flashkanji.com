@@ -55,7 +55,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
               className={`${isSwiped ? "text-[9rem] md:text-[18rem]" : "text-9xl"
               } front text-white absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
           >
-            {item.kanji_character}
+            {item.character}
           </p>
 
           {/* Back Side */}
@@ -91,7 +91,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
         {isInfoShow && (
             <div className="absolute -right-2 top-0">
               <Button
-                  onClick={() => handleOpen(item.kanji_character)}
+                  onClick={() => handleOpen(item.character)}
                   isIconOnly
                   className="mt-2 mx-auto shadow-md text-xs flex justify-center items-center rounded-full bg-[#FA8245]"
                   size="sm"

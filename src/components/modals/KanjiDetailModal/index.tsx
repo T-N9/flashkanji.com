@@ -169,10 +169,10 @@ export function KanjiDetailModal() {
                                       </rt>
                                     </ruby>{" "}
                                     <span className="text-2xl">
-                                      <TextSpeech japaneseText={item.jukugo_char}/>{" "}
+                                      <TextSpeech japaneseText={item.character}/>{" "}
                                     </span>
                                     <span className="text-sm font-english-text text-dark">
-                                      {item.english_meaning}
+                                      {item.meaning}
                                     </span>
                                   </p>
                                 </li>

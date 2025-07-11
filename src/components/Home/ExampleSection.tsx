@@ -3,7 +3,7 @@ import KanjiCard from "../cards/KanjiCard";
 const staticKanjiData = [
     {
         id: 1,
-        kanji_character: "日",
+        character: "日",
         onyomi: "ニチ, ジツ",
         kunyomi: "ひ, -び, -か",
         meaning: "Day, Sun",
@@ -12,7 +12,7 @@ const staticKanjiData = [
     },
     {
         id: 2,
-        kanji_character: "本",
+        character: "本",
         onyomi: "ホン",
         kunyomi: "もと",
         meaning: "Book, Origin",
@@ -21,7 +21,7 @@ const staticKanjiData = [
     },
     {
         id: 3,
-        kanji_character: "漢",
+        character: "漢",
         onyomi: "カン",
         kunyomi: "-",
         meaning: "China",
@@ -30,7 +30,7 @@ const staticKanjiData = [
     },
     {
         id: 4,
-        kanji_character: "字",
+        character: "字",
         onyomi: "ジ",
         kunyomi: "あざ, あざな, -な",
         meaning: "Character, Letter",

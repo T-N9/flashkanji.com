@@ -101,7 +101,7 @@ const KanjiRepetitionNormalMode = () => {
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
-                            character={kanji.kanji_character}
+                            character={kanji.character}
                             onyomi={kanji.onyomi}
                             kunyomi={kanji.kunyomi}
                             meaning={kanji.meaning}
@@ -199,7 +199,7 @@ const KanjiRepetitionReviewMode = () => {
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
-                            character={kanji.kanji_character}
+                            character={kanji.character}
                             onyomi={kanji.onyomi}
                             kunyomi={kanji.kunyomi}
                             meaning={kanji.meaning}

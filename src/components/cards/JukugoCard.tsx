@@ -20,9 +20,9 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
 
   const { isFlippedMode } = useJukugoSetting();
 
-  const handleOpen = (character: string, hiragana: string, english_meaning : string) => {
+  const handleOpen = (character: string, hiragana: string, meaning : string) => {
     toggleJukugoDetailModal()
-    setJukugoDetail({ character, hiragana, english_meaning });
+    setJukugoDetail({ character, hiragana, meaning });
   };
 
 
@@ -53,7 +53,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
           className={`${isSwiped ? "text-3xl md:text-[3rem]" : "text-3xl"
             } front text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
         >
-          {item.jukugo_char}
+          {item.character}
         </p>
 
         {/* Back Side */}
@@ -68,7 +68,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
           {/* Meaning */}
           {
             isShowMeanings &&
-            <p className="text-gray-200">{item.english_meaning}</p>
+            <p className="text-gray-200">{item.meaning}</p>
           }
 
         </div>
@@ -77,7 +77,7 @@ const JukugoCard: React.FC<JukugoCardProps> = ({ item, isSwiped = false, isInfoS
       {isInfoShow && (
         <div className="absolute -right-2 top-0">
           <Button
-            onClick={() => handleOpen(item.jukugo_char, item.hiragana, item.english_meaning)}
+            onClick={() => handleOpen(item.character, item.hiragana, item.meaning)}
             isIconOnly
             className="mt-2 mx-auto shadow-md text-xs flex justify-center items-center rounded-full bg-[#FA8245]"
             size="sm"

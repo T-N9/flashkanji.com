@@ -101,8 +101,8 @@ const JukugoRepetitionNormalMode = () => {
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
-                            character={jukugo.jukugo_char}
-                            meaning={jukugo.english_meaning}
+                            character={jukugo.character}
+                            meaning={jukugo.meaning}
                             hiragana={jukugo.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
@@ -201,8 +201,8 @@ const JukugoRepetitionReviewMode = () => {
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
-                            character={jukugo.jukugo_char}
-                            meaning={jukugo.english_meaning}
+                            character={jukugo.character}
+                            meaning={jukugo.meaning}
                             hiragana={jukugo.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}

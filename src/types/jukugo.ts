@@ -1,6 +1,6 @@
 export interface relatedJukugoItem {
     "id": number,
-    "jukugo_char" : string;
-    "english_meaning" : string;
+    "character" : string;
+    "meaning" : string;
     "hiragana" : string
 }

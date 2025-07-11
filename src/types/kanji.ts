@@ -1,6 +1,6 @@
 export interface Kanji {
     id: number;
-    kanji_character: string;
+    character: string;
     onyomi: string;
     kunyomi: string;
     meaning: string;

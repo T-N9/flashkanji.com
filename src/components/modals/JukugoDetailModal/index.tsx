@@ -115,7 +115,7 @@ export const JukugoDetailModal = () => {
                                     <TextSpeech japaneseText={jukugoDetail?.hiragana} />
                                 }
                                 <hr />
-                                <p>{jukugoDetail?.english_meaning}</p>
+                                <p>{jukugoDetail?.meaning}</p>
 
                                 <div>
                                     <p className="mt-5 font-english-text text-info">Stroke Information</p>

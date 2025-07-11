@@ -134,7 +134,7 @@ const KanjiGround = () => {
                     <h1 className="font-bold text-orange-500">Kanji Data :</h1>
                     <div className="flex gap-2 my-5 flex-wrap">
                         {kanjiData?.map((item, index) => {
-                            return <p key={index}>{item?.kanji_character}</p>;
+                            return <p key={index}>{item?.character}</p>;
                         })}
                     </div>
                 </div>
