@@ -19,23 +19,7 @@ const SessionSync = () => {
     }
   }, [userId, router])
 
-  return (
-    <>
-      {
-        email &&
-
-          !userId ? (
-          <div className='h-screen fixed top-0 left-0 right-0 z-50 bg-blue-100 flex justify-center items-center'>
-            <RamenLoading />
-          </div>
-        ) : null
-      }
-
-
-
-
-    </>
-  )
+  return null
 }
 
 export default SessionSync
