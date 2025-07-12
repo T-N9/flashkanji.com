@@ -6,7 +6,6 @@ const StartQuizPage = () => {
     <Suspense fallback={<p>Loading...</p>}>
       <StartQuiz />
     </Suspense>
-
   )
 }
 

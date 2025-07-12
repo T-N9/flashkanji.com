@@ -17,7 +17,7 @@ const QuizGround = () => {
 
     useEffect(() => {
         if (data && JSON.stringify(data) !== JSON.stringify(quizData)) {
-            console.log({ data });
+            // console.log({ data });
             setQuizData(data)
             resetQuizState(); // Reset quiz state when new data is fetched
             // @ts-ignore
@@ -28,10 +28,10 @@ const QuizGround = () => {
 
     return (
         <div className="max-w-[1280px] min-w-[70%] mx-auto p-4">
-            <div className=" w-full flex flex-col my-8 justify-between items-center container font-english">
+            <div className=" w-full flex flex-col my-2 justify-between items-center container font-english">
                 {
                     data?.length !== 0 &&
-                    <div className=''>
+                    <div className='relative z-10'>
                         <h1 className="text-md rounded-full font-medium px-4 py-2 bg-dark text-white">
                             Quiz on {level && level}{" "}
                             {chapter && `Chapter ${chapter}`}

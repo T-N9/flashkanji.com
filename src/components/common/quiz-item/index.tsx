@@ -36,7 +36,7 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
             <h1 className="text-9xl text-dark">{quizItem?.kanji}</h1>
           </div>
 
-          <div className="grid grid-cols-1 gap-10 flex-1 w-full option-item p-4">
+          <div className="grid grid-cols-1 gap-5 flex-1 w-full option-item p-4">
             {quizItem?.options.map((option, index) => {
               const optionItem = option.split(",").map((i, idx) => (
                 <div className="" key={idx}>
@@ -47,7 +47,7 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
               return (
                 <div key={index}>
                   <Checkbox
-                    onClick={() => {
+                    onChange={() => {
                       handleIsAnswered();
                       setCurrentAnswer(option);
                       setIsAnswered(true);
