@@ -163,7 +163,7 @@ const DetailViewer = () => {
         </form>
         <div
           id="kanji-visuals"
-          className=" flex flex-col md:flex-row gap-5 justify-center bg-white border-4 border-orange-400 rounded shadow-lg p-4 bg-gradient-to-br from-black via-gray-900 to-orange-900"
+          className=" flex flex-col md:flex-row gap-5 justify-center bg-gradient-to-br from-gray-200 via-gray-50 to-gray-100 p-4"
         >
           <div id="kanji-image" className="flex-4"></div>
           {(displayOrders || radicals || colorGroups) && (

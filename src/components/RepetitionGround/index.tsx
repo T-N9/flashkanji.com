@@ -10,7 +10,7 @@ const SpacedRepetition = () => {
 
   return (
     <div className="h-screen">
-      <div className="mt-5">
+      <div className="pt-5">
         {pathname === "/study/kanji/repetition" ? (
           <KanjiRepetitionSection />
         ) : (

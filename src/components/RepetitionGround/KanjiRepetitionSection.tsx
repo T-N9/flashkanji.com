@@ -85,7 +85,7 @@ const KanjiRepetitionNormalMode = () => {
                 activeItem === kanji.id && (
                     <div key={kanji.id}>
                         {/* <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} /> */}
-                        <p className="text-gray-600 table mx-auto text-center p-2 rounded-full text-xs bg-gray-200">
+                        <p className="text-gray-600 table mx-auto text-center p-2 rounded-full text-xs bg-gray-200 relative z-20">
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <KanjiRepetitionItem
@@ -183,7 +183,7 @@ const KanjiRepetitionReviewMode = () => {
                 activeItem === kanji.id && (
                     <div key={kanji.id}>
                         {/* <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} /> */}
-                        <p className="text-gray-600 table mx-auto text-center p-2 rounded-full text-xs bg-gray-200">
+                        <p className="text-gray-600 table mx-auto text-center p-2 rounded-full text-xs bg-gray-200 relative z-20">
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <KanjiRepetitionItem
