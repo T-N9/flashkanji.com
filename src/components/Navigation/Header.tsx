@@ -41,6 +41,12 @@ export function HeadingBar() {
         authCookie !== undefined ?
           <>
             <NavbarItem
+              isActive={path === "/flashdecks"}
+              onClick={() => delayedSetIsMenuOpen(false)}
+            >
+              <Link href="/flashdecks">Flashdecks</Link>
+            </NavbarItem>
+            <NavbarItem
               isActive={path === "/flashmap"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
