@@ -181,9 +181,9 @@ const RoadmapItem = ({
           <p className="text-xs text-gray-600">{description}</p>
         </div>
 
-        <Link className={`block`} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`}>
-          <Button variant="solid" color="default">Start</Button>
-        </Link>
+
+        <Button as={Link} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`} variant="solid" color="default">Start</Button>
+
       </div>
     </div>
 
