@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import useBrowseDecks from "./useBrowseDecks";
 import { Card, CardBody, CardHeader, Input, Select, SelectItem } from "@heroui/react";
 import debounce from "lodash/debounce";
+import Link from "next/link";
 
 const LEVEL_OPTIONS = [
   { label: "N5", value: 5 },
@@ -93,20 +94,22 @@ const BrowseDecks = () => {
             <p className="text-center text-gray-400 col-span-full">No decks found.</p>
           ) : (
             data?.decks.map((deck) => (
-              <Card key={deck.id} shadow="sm" className="border border-default-200">
-                <CardHeader className="font-semibold">{deck.name}</CardHeader>
-                <CardBody>
-                  <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
-                  <p className="text-xs text-gray-400">Level: {deck.level}</p>
-                  <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
-                    {deck.categories.map((cat) => (
-                      <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
+              <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
+                <Card shadow="sm" className="border border-default-200">
+                  <CardHeader className="font-semibold">{deck.name}</CardHeader>
+                  <CardBody>
+                    <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
+                    <p className="text-xs text-gray-400">Level: {deck.level}</p>
+                    <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
+                      {deck.categories.map((cat) => (
+                        <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  </CardBody>
+                </Card>
+              </Link>
             ))
           )}
         </div>
