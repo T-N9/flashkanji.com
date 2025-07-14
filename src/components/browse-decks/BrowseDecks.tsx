@@ -5,6 +5,7 @@ import useBrowseDecks from "./useBrowseDecks";
 import { Card, CardBody, CardHeader, Input, Select, SelectItem } from "@heroui/react";
 import debounce from "lodash/debounce";
 import Link from "next/link";
+import useDeckGroundState from "@/store/deckGroundState";
 
 const LEVEL_OPTIONS = [
   { label: "N5", value: 5 },

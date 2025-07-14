@@ -1,3 +1,4 @@
+import { SR_DeckCard } from "@/util";
 import { apiClient } from "./client";
 
 export type DeckCard = {
@@ -42,7 +43,7 @@ export const fetchDeckCards = async (
 
 export const fetchDeckDetail = async (
   deck_id: number,
-  user_id: string,
+  user_id: string
 ): Promise<DeckDetailResponse> => {
   const response = await apiClient.get(`/deck/${deck_id}`, {
     params: {
@@ -50,4 +51,17 @@ export const fetchDeckDetail = async (
     },
   });
   return response.data;
+};
+
+export const saveDeckRepetitionData = async (
+  user_id: string,
+  deck_id: number,
+  repetitionData: SR_DeckCard[]
+): Promise<void> => {
+  await apiClient.post(`/deck/srs`, {
+    userId : user_id,
+    deckId : deck_id,
+    srsData : repetitionData,
+  });
+  console.log("POST request sent");
 };

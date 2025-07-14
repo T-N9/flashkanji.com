@@ -1,16 +1,16 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Clicked_Item, SR_KanjiCard } from "@/util";
+import { Clicked_Item, SR_DeckCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 
-export default function useRepetitionCore<T extends { id: number }>(
+export default function useDeckRepetitionCore<T extends { id: number }>(
   rawData: T[]
 ) {
 
   const [spacedRepetitionData, setSpacedRepetitionData] = useState<
-    SR_KanjiCard[]
+    SR_DeckCard[]
   >([]);
   const [clickedRepetitionData, setClickedRepetitionData] = useState<
     Clicked_Item[]
@@ -19,8 +19,8 @@ export default function useRepetitionCore<T extends { id: number }>(
   const [satisfactionPoint, setSatisfactionPoint] = useState<number>(0);
   const isInitialized = useRef(false);
   const { level } = useKanjiGroundState();
-  const { level : levelJukugo } = useJukugoGroundState();
-  const pathname = usePathname()
+  const { level: levelJukugo } = useJukugoGroundState();
+  const pathname = usePathname();
 
   const shuffledData = useMemo(() => {
     if (!rawData || !Array.isArray(rawData)) return [];
@@ -40,7 +40,7 @@ export default function useRepetitionCore<T extends { id: number }>(
       );
 
       const initial = shuffledData.map((item) => ({
-        id: item.id,
+        id: item.id, /* card_id */
         interval: 1,
         repetitions: 0,
         easeFactor: 2.5,

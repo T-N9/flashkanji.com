@@ -13,6 +13,11 @@ interface GeneralState {
   jukugoDetail: {character : string, hiragana: string, meaning : string} | null;
   userInfo: any;
 
+  /* DeckGround */
+  isDeckModalOpen: boolean;
+  isDeckDetailModalOpen: boolean;
+  deckCardDetail: {character : string, hiragana: string, meaning : string} | null;
+
   /* Actions */
   toggleFlashModal: () => void;
   toggleSetting: () => void;
@@ -23,6 +28,11 @@ interface GeneralState {
   toggleJukugoDetailModal: () => void;
   setJukugoDetail: (detail: {character : string, hiragana: string, meaning : string} | null) => void;
   setUserInfo: (userInfo: any) => void;
+
+  setDeckCardDetail: (detail: {character : string, hiragana: string, meaning : string} | null) => void;
+
+  toggleDeckModal: () => void;
+  toggleDeckDetailModal: () => void;
 }
 
 export const useGeneralStore = create<GeneralState>((set) => ({
@@ -37,6 +47,11 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   isJukugoDetailModalOpen: false,
   jukugoDetail: null,
   userInfo: null,
+
+  /* DeckGround */
+  isDeckModalOpen: false,
+  isDeckDetailModalOpen: false,
+  deckCardDetail: null,
 
   /* Actions */
   toggleFlashModal: () =>
@@ -55,4 +70,10 @@ export const useGeneralStore = create<GeneralState>((set) => ({
     })),
   setJukugoDetail: (detail) => set({ jukugoDetail: detail }),
   setUserInfo: (userInfo) => set({ userInfo }),
+
+  toggleDeckModal: () =>
+    set((state) => ({ isDeckModalOpen: !state.isDeckModalOpen })),
+  toggleDeckDetailModal: () =>
+    set((state) => ({ isDeckDetailModalOpen: !state.isDeckDetailModalOpen })),
+  setDeckCardDetail: (detail) => set({ deckCardDetail: detail }),
 }));
