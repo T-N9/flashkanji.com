@@ -1,7 +1,6 @@
 import DeckGround from '@/components/DeckCardsGround'
 import { DeckSwiperModal } from '@/components/DeckSwiperModal/DeckSwiperModal'
 import { DeckDetailModal } from '@/components/modals/DeckDetailModal'
-import { KanjiDetailModal } from '@/components/modals/KanjiDetailModal'
 import React, { Suspense } from 'react'
 
 const DeckGroundPage = () => {

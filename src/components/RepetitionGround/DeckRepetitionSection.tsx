@@ -2,21 +2,18 @@
 import React from "react";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import { JukugoRepetitionItem } from "./JukugoRepetitionItem";
-import { relatedJukugoItem } from "@/types/jukugo";
 import Avatar from "../common/avatar/Avatar";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetitionData_Review } from "@/services/repetition";
 import { useUserStore } from "@/store/userState";
-import useRepetitionReview from "./useRepetitionReview";
-import useKanjiGroundState from "@/store/kanjiGroundState";
 import useDeckGroundState from "@/store/deckGroundState";
-import { useDeckCards, useSaveDeckRepetitionData } from "@/services/deck";
+import { useDeckCards, useDeckSrsSessionDetail, useSaveDeckRepetitionData, useSaveDeckRepetitionDataReview } from "@/services/deck";
 import { DeckItem } from "@/types/deckItem";
 import { DeckRepetitionItem } from "./DeckRepetitionItem";
 import useDeckRepetitionCore from "./useDeckRepetitionCore";
+import useDeckRepetitionReview from "./useDeckRepetitionReview";
 
 const DeckRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -119,10 +116,9 @@ const DeckRepetitionNormalMode = () => {
 };
 
 const DeckRepetitionReviewMode = () => {
-    const { selectedChapter, level, part } = useJukugoGroundState();
-    const { selectedReviewDate } = useKanjiGroundState();
+    const { deckId, srsId, isReviewMode } = useDeckGroundState();
     const { userId } = useUserStore();
-    const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 2);
+    const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode);
 
     const {
         shuffledData,
@@ -136,19 +132,19 @@ const DeckRepetitionReviewMode = () => {
         handleRestart,
         // handleEnd,
         getConfidenceEmoji
-    } = useRepetitionReview<relatedJukugoItem>(data?.cardData || [], data?.repetitionData);
+    } = useDeckRepetitionReview<DeckItem>(data?.cardData || [], data?.repetitionData);
 
     console.log({ fetchedData: data?.repetitionData })
 
-    const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
+    const { mutate: saveRepetition, isLoading } = useSaveDeckRepetitionDataReview();
     const router = useRouter();
 
     const handleEnd = () => {
         saveRepetition(
             {
                 user_id: userId,
+                deck_id: deckId || 1,
                 repetitionData: spacedRepetitionData,
-                type: 2,
             },
             {
                 onSuccess: () => {
@@ -185,16 +181,16 @@ const DeckRepetitionReviewMode = () => {
 
     return (
         <>
-            {shuffledData.map((jukugo) => (
-                activeItem === jukugo.id && (
-                    <div key={jukugo.id}>
+            {shuffledData.map((card) => (
+                activeItem === card.id && (
+                    <div key={card.id}>
                         {/* <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} /> */}
                         <p className="text-gray-600 table mx-auto relative z-20 text-center p-2 rounded-full text-xs bg-gray-200">
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
-                        <JukugoRepetitionItem
-                            sr_data={spacedRepetitionData.find((item) => item.id === jukugo.id) || {
-                                id: jukugo.id,
+                        <DeckRepetitionItem
+                            sr_data={spacedRepetitionData.find((item) => item.id === card.id) || {
+                                id: card.id,
                                 interval: 1,
                                 repetitions: 0,
                                 easeFactor: 2.5,
@@ -205,9 +201,9 @@ const DeckRepetitionReviewMode = () => {
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
                             setSpacedRepetitionData={setSpacedRepetitionData}
-                            character={jukugo.character}
-                            meaning={jukugo.meaning}
-                            hiragana={jukugo.hiragana}
+                            character={card.character}
+                            meaning={card.meaning}
+                            hiragana={card.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
                         />

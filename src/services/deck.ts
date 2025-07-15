@@ -1,9 +1,13 @@
 import { useMutation, useQuery } from "react-query";
 import {
   DeckCardsResponse,
+  DeckSrsSessionResponse,
   fetchDeckCards,
   fetchDeckDetail,
+  fetchDeckSrsSessionDetail,
+  fetchDeckSrsSessions,
   saveDeckRepetitionData,
+  saveDeckRepetitionData_Review,
 } from "@/api/deckRoute"; // adjust the path as neede
 import { SR_DeckCard } from "@/util";
 
@@ -21,6 +25,16 @@ export const useDeckCards = (
   });
 };
 
+export const useDeckSrsSessions = (deck_id: number, user_id: string) => {
+  return useQuery<DeckSrsSessionResponse>({
+    queryKey: ["deckSrsSession", deck_id, user_id],
+    queryFn: () => fetchDeckSrsSessions(deck_id, user_id),
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
+    enabled: !!deck_id && !!user_id,
+  });
+};
+
 export const useDeckDetail = (deck_id: number, user_id: string) => {
   return useQuery({
     queryKey: ["deckDetail", deck_id, user_id],
@@ -28,6 +42,22 @@ export const useDeckDetail = (deck_id: number, user_id: string) => {
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
+  });
+};
+
+export const useDeckSrsSessionDetail = (
+  deck_id: number,
+  user_id: string,
+  srs_id: number,
+  is_Review: boolean
+) => {
+  return useQuery({
+    queryKey: ["deckSrsSessionDetail", deck_id, user_id, srs_id, is_Review],
+    queryFn: () =>
+      fetchDeckSrsSessionDetail(deck_id, user_id, srs_id, is_Review),
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
+    enabled: !!deck_id && !!user_id && !!srs_id,
   });
 };
 
@@ -42,5 +72,19 @@ export const useSaveDeckRepetitionData = () => {
       deck_id: number;
       repetitionData: SR_DeckCard[];
     }) => saveDeckRepetitionData(user_id, deck_id, repetitionData),
+  });
+};
+
+export const useSaveDeckRepetitionDataReview = () => {
+  return useMutation({
+    mutationFn: ({
+      user_id,
+      deck_id,
+      repetitionData,
+    }: {
+      user_id: string;
+      deck_id: number;
+      repetitionData: SR_DeckCard[];
+    }) => saveDeckRepetitionData_Review(user_id, deck_id, repetitionData),
   });
 };

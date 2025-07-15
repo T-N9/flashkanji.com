@@ -9,6 +9,7 @@ type DeckGroundState = {
   isShuffledMode: boolean;
   shuffledData: string[];
   deckId: number | null;
+  srsId: number | null;
 
   isReviewMode: boolean;
   setIsReviewMode: (isReviewMode: boolean) => void;
@@ -23,6 +24,7 @@ type DeckGroundActions = {
   setShuffledData: (shuffledData: string[]) => void;
   setSelectedReviewDate: (date: string) => void;
   setDeckId: (id: number) => void;
+  setSrsId: (id: number) => void;
 };
 
 const useDeckGroundState = create<DeckGroundState & DeckGroundActions>(
@@ -38,6 +40,7 @@ const useDeckGroundState = create<DeckGroundState & DeckGroundActions>(
     isReviewMode: false,
     selectedReviewDate: formatDate(normalizeDate(new Date())),
     deckId: null,
+    srsId: null,
 
     // Actions
 
@@ -52,6 +55,7 @@ const useDeckGroundState = create<DeckGroundState & DeckGroundActions>(
     setIsReviewMode: (isReviewMode) => set({ isReviewMode }),
     setSelectedReviewDate: (date) => set({ selectedReviewDate: date }),
     setDeckId: (deckId) => set({ deckId }),
+    setSrsId: (srsId) => set({ srsId }),
   })
 );
 

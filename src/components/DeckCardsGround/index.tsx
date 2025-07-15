@@ -4,28 +4,23 @@ import { LoadingGround } from '../common/LoadingGround';
 import { shuffleArray } from '@/util';
 import { DeckSetting } from './DeckSetting';
 import { useDeckSetting } from './useDeckSetting';
-import { useDeckCards } from '@/services/deck';
+import { useDeckSrsSessionDetail } from '@/services/deck';
 import { useUserStore } from '@/store/userState';
 import { DeckItem } from '@/types/deckItem';
 import DeckCard from '../cards/DeckCard';
 import useDeckGroundState from '@/store/deckGroundState';
+import { LoadingDeckGround } from '../common/LoadingDeckGround';
 
 const DeckGround = () => {
 
     const [fetchedDeckData, setFetchedDeckData] = useState<DeckItem[] | null>(null)
-
     const {
-
         setDeckData,
-
     } = useDeckSetting();
 
-
-    const { deckId } = useDeckGroundState();
+    const { deckId, srsId, isReviewMode } = useDeckGroundState();
     const { userId } = useUserStore()
-    const { data, isLoading, error } = useDeckCards(deckId || 1, userId);
-
-
+    const { data, isLoading, error } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode);
 
     const handleShufflefetchedDeckData = () => {
         if (fetchedDeckData) {
@@ -38,9 +33,9 @@ const DeckGround = () => {
     useEffect(() => {
         if (data && JSON.stringify(data) !== JSON.stringify(fetchedDeckData)) {
             console.log({ data });
-            setDeckData(data.cards)
+            setDeckData(data.cardData)
             // @ts-ignore
-            setFetchedDeckData(data.cards);
+            setFetchedDeckData(data.cardData);
         }
     }, [data]);
 
@@ -65,8 +60,8 @@ const DeckGround = () => {
             >
                 <div className="flex w-full justify-center gap-4">
 
-                    {fetchedDeckData?.length === 0 ? (
-                        <LoadingGround mode={1} />
+                    {isLoading ? (
+                        <LoadingDeckGround />
 
                     ) : (
                         <>
