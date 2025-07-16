@@ -1,14 +1,20 @@
 'use client'
 import { Button } from '@heroui/react'
 import { ArrowBendUpLeft } from '@phosphor-icons/react'
-import Link from 'next/link'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const BackToMap = () => {
+    const router = useRouter()
+
     return (
-        <div className='max-w-screen-xl mx-auto'>
-            <div className=" bg-white p-2">
-                <Button scroll={false} as={Link} href="/flashmap" isIconOnly className="text-gray-500 hover:underline">
+        <div className='max-w-screen-sm mx-auto'>
+            <div className="bg-white p-2">
+                <Button
+                    isIconOnly
+                    onClick={() => router.back()}
+                    className="text-gray-500 hover:underline"
+                >
                     <ArrowBendUpLeft size={32} />
                 </Button>
             </div>

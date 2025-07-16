@@ -49,12 +49,13 @@ export const useDeckSrsSessionDetail = (
   deck_id: number,
   user_id: string,
   srs_id: number,
-  is_Review: boolean
+  is_Review: boolean,
+  date ?: string
 ) => {
   return useQuery({
-    queryKey: ["deckSrsSessionDetail", deck_id, user_id, srs_id, is_Review],
+    queryKey: ["deckSrsSessionDetail", deck_id, user_id, srs_id, is_Review, date],
     queryFn: () =>
-      fetchDeckSrsSessionDetail(deck_id, user_id, srs_id, is_Review),
+      fetchDeckSrsSessionDetail(deck_id, user_id, srs_id, is_Review, date),
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id && !!srs_id,

@@ -48,7 +48,7 @@ export default function UserDashBoard() {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
 
 
-            <main className="max-w-7xl mx-auto px-2 py-8">
+            <main className="max-w-screen-md mx-auto px-2 py-8">
                 {/* Welcome Section */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Student!</h1>

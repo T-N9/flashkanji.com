@@ -11,7 +11,7 @@ export type KanjiRepetitionData = {
 export const fetchKanjiRepetitionData_ByDate = async (
   date: string,
   user_id: string,
-  type : number,
+  type: number,
   level?: string
 ): Promise<KanjiRepetitionData> => {
   const response = await apiClient.get("/repetition/fetch", {
@@ -34,7 +34,14 @@ export const fetchKanjiRepetitionData_ByDate = async (
 
 export const fetchReviewCalendarData = async (
   user_id: string
-): Promise<{ date: string; kanji_count: number, jukugo_count:number }[]> => {
+): Promise<
+  {
+    date: string;
+    kanji_count: number;
+    jukugo_count: number;
+    deck: { id: number; name: string; card_count: number, srs_id : number }[];
+  }[]
+> => {
   const response = await apiClient.get("/repetition/calendar", {
     params: { user_id },
   });
@@ -64,7 +71,7 @@ export const saveRepetitionData = async (
 export const saveRepetitionData_Review = async (
   user_id: string,
   repetitionData: SR_KanjiCard[],
-  type : number
+  type: number
 ): Promise<void> => {
   await apiClient.post("/repetition/save_review", {
     user_id,

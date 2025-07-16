@@ -47,7 +47,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ item, isSwiped = false, isInfoShow 
                 </svg>
                 {/* Front Side */}
                 <p
-                    className={`${isSwiped ? "text-3xl md:text-[3rem]" : "text-3xl"
+                    className={`${isSwiped ? "text-3xl md:text-[3rem]" : "text-2xl"
                         } front text-slate-800 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
                 >
                     {item.character}
@@ -55,7 +55,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ item, isSwiped = false, isInfoShow 
 
                 {/* Back Side */}
                 <div
-                    className={`back bg-gray-800 absolute w-full  -left-[0%] flex flex-col gap-2 px-2 py-6  ${isSwiped ? "top-[25%] lg:top-[30%] text-base md:text-[2rem] lg:!leading-8 !leading-6" : "top-[20%] text-base !leading-8"
+                    className={`back bg-gray-800 absolute w-full  -left-[0%] flex flex-col gap-2 px-2 py-6  ${isSwiped ? "top-[25%] lg:top-[30%] text-base md:text-[2rem] lg:!leading-8 !leading-8" : "top-[20%] text-base !leading-8"
                         }`}
                 >
                     {/* Hiragana */}
@@ -64,7 +64,7 @@ const DeckCard: React.FC<DeckCardProps> = ({ item, isSwiped = false, isInfoShow 
 
                     {/* Meaning */}
 
-                    <p className="text-gray-200 text-xs">{item.meaning}</p>
+                    <p className={`text-gray-200 ${isSwiped ? 'text-lg lg:text-2xl' : 'text-xs'}`}>{item.meaning}</p>
 
 
                 </div>

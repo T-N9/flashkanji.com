@@ -112,13 +112,15 @@ export const fetchDeckSrsSessionDetail = async (
   deck_id: number,
   user_id: string,
   srs_id: number,
-  isReview: boolean
+  isReview: boolean,
+  date ?: string
 ): Promise<DeckSrsSessionDetailResponse> => {
   const response = await apiClient.get(
     `/deck/${deck_id}/srs/sessions/${srs_id}?isReview=${isReview}`,
     {
       params: {
         userId: user_id,
+        date: date
       },
     }
   );

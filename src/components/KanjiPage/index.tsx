@@ -7,9 +7,6 @@ import KanjiCard from '../cards/KanjiCard';
 import { LoadingGround } from '../common/LoadingGround';
 import { Kanji } from '@/types/kanji';
 import { shuffleArray } from '@/util';
-import { SpeedDialMenu } from '../common/SpeedDailMenu';
-import { Button } from '@heroui/react';
-import Link from 'next/link';
 
 const KanjiGround = () => {
 

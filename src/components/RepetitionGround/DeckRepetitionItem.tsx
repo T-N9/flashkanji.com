@@ -129,7 +129,7 @@ export const DeckRepetitionItem = ({
                                 <div className="">
                                     {hiragana}
                                 </div>
-                                <div className="">{meaning}</div>
+                                <div className="text-base">{meaning}</div>
 
                             </div>
                         </div>

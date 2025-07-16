@@ -14,14 +14,15 @@ import { useRouter } from "next/navigation"
 import { useFetchReviewCalendarData } from "@/services/repetition"
 import { useUserStore } from "@/store/userState"
 import useJukugoGroundState from "@/store/jukugoGroundState"
+import useDeckGroundState from "@/store/deckGroundState"
+import { useGeneralStore } from "@/store/generalState"
 
 export default function SpacedLearningCalendar() {
-  // const [selectedReviewDate, setSelectedDate] = useState<Date>(new Date())
-  // const [completedItems, setCompletedItems] = useState<Set<string>>(new Set());
-  // const [reviewData, setReviewData] = useState<{ date: string; kanji_count: number }[]>([]);
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
   const { setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
+  const { setIsReviewMode: setIsReviewModeDeck, setDeckId, setIsReviewByDate, setSrsId } = useDeckGroundState();
   const { userId, setToDayReviewCount } = useUserStore()
+  const { setIsInGround } = useGeneralStore();
 
   const { data: reviewData, refetch, isFetching } = useFetchReviewCalendarData(userId)
 
@@ -32,11 +33,12 @@ export default function SpacedLearningCalendar() {
   }, [userId])
 
   const reviewMap = useMemo(() => {
-    const map = new Map<string, { kanji_count: number, jukugo_count: number }>()
+    const map = new Map<string, { kanji_count: number, jukugo_count: number, deck: { id: number; name: string; card_count: number, srs_id: number }[] }>()
     reviewData?.forEach((item) => {
       map.set(item.date, {
         kanji_count: item.kanji_count,
         jukugo_count: item.jukugo_count,
+        deck: item.deck,
       })
     })
     return map
@@ -47,13 +49,20 @@ export default function SpacedLearningCalendar() {
     setSelectedReviewDate(formatDate(normalizeDate(date)))
   }
 
-  const handleStartReview = (type: 1 | 2) => {
+  const handleStartReview = (type: 1 | 2 | 3, deckId?: number, srsId?: number) => {
+    setIsInGround(true);
     if (type === 1) {
       setIsReviewMode(true);
       router.push('/study/kanji/repetition/');
     } else if (type === 2) {
       setIsReviewModeJukugo(true);
       router.push('/study/jukugo/repetition/');
+    } else if (type === 3 && deckId && srsId) {
+      setIsReviewModeDeck(true);
+      setDeckId(deckId);
+      setIsReviewByDate(true);
+      setSrsId(srsId)
+      router.push('/study/deck/repetition/');
     }
 
   }
@@ -125,12 +134,13 @@ export default function SpacedLearningCalendar() {
                       const review = reviewMap.get(selectedDateKey);
                       const kanji = review?.kanji_count || 0;
                       const jukugo = review?.jukugo_count || 0;
+                      const deck = review?.deck;
 
                       return (
                         <div className="space-y-2 w-full">
                           {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                            <p className="text-gray-700">
-                              {kanji} Kanji review{kanji !== 1 ? "s" : ""}
+                            <p className="text-gray-700 text-xs">
+                              <span className="text-orange-500 text-base">{kanji}</span> Kanji review{kanji !== 1 ? "s" : ""}
                             </p>
 
                             <div className="flex items-center gap-2">
@@ -142,8 +152,8 @@ export default function SpacedLearningCalendar() {
 
                           </div>}
                           {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                            <p className="text-gray-700">
-                              {jukugo} Jukugo review{jukugo !== 1 ? "s" : ""}
+                            <p className="text-gray-700 text-xs">
+                              <span className="text-orange-500 text-base">{jukugo}</span> Jukugo review{jukugo !== 1 ? "s" : ""}
                             </p>
 
                             <div className="flex items-center gap-2">
@@ -154,6 +164,28 @@ export default function SpacedLearningCalendar() {
                             </div>
 
                           </div>}
+
+                          {
+
+                            deck?.map((item) => {
+                              return (
+                                <div key={item.srs_id} className="relative flex items-center justify-between bg-gray-100 p-2 rounded">
+                                  <p className="text-gray-700 text-xs">
+                                    <span className="absolute -top-1 px-1 py-0 rounded bg-white border">Session {item.srs_id}</span>
+                                    <span className="text-orange-500 text-base">{item.card_count}</span> cards in <span className="font-bold">{item.name}</span>
+                                  </p>
+
+                                  <Button
+                                    color="primary"
+                                    onClick={() => handleStartReview(3, item.id, item.srs_id)}
+                                  >
+                                    Review
+                                  </Button>
+
+                                </div>
+                              )
+                            })
+                          }
 
                         </div>
                       );
@@ -185,35 +217,58 @@ export default function SpacedLearningCalendar() {
                     const review = reviewMap.get(todayKey);
                     const kanji = review?.kanji_count || 0;
                     const jukugo = review?.jukugo_count || 0;
+                    const deck = review?.deck;
 
                     return (
                       <div className="space-y-2">
                         {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                          <p className="text-gray-700">
-                            {kanji} Kanji review{kanji !== 1 ? "s" : ""}
+                          <p className="text-gray-700 text-xs">
+                            <span className="text-orange-500 text-base">{kanji}</span> Kanji review{kanji !== 1 ? "s" : ""}
                           </p>
 
                           <Button
                             color="primary"
                             onClick={() => handleStartReview(1)}
                           >
-                            Start Review
+                            Review
                           </Button>
 
                         </div>}
                         {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                          <p className="text-gray-700">
-                            {jukugo} Jukugo review{jukugo !== 1 ? "s" : ""}
+                          <p className="text-gray-700 text-xs">
+                            <span className="text-orange-500 text-base">{jukugo}</span> Jukugo review{jukugo !== 1 ? "s" : ""}
                           </p>
 
                           <Button
                             color="primary"
                             onClick={() => handleStartReview(2)}
                           >
-                            Start Review
+                            Review
                           </Button>
 
                         </div>}
+
+                        {
+
+                          deck?.map((item) => {
+                            return (
+                              <div key={item.srs_id} className="relative flex items-center justify-between bg-gray-100 p-2 rounded">
+                                <p className="text-gray-700 text-xs">
+                                  <span className="absolute -top-1 px-1 py-0 rounded bg-white border">Session {item.srs_id}</span>
+                                  <span className="text-orange-500 text-base">{item.card_count}</span> cards in <span className="font-bold">{item.name}</span>
+                                </p>
+
+                                <Button
+                                  color="primary"
+                                  onClick={() => handleStartReview(3, item.id, item.srs_id)}
+                                >
+                                  Review
+                                </Button>
+
+                              </div>
+                            )
+                          })
+                        }
                       </div>
                     );
                   })()}

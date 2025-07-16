@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import useJukugoGroundState from "@/store/jukugoGroundState";
-import { JukugoRepetitionItem } from "./JukugoRepetitionItem";
 import Avatar from "../common/avatar/Avatar";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
@@ -14,9 +13,9 @@ import { DeckItem } from "@/types/deckItem";
 import { DeckRepetitionItem } from "./DeckRepetitionItem";
 import useDeckRepetitionCore from "./useDeckRepetitionCore";
 import useDeckRepetitionReview from "./useDeckRepetitionReview";
+import useKanjiGroundState from "@/store/kanjiGroundState";
 
 const DeckRepetitionNormalMode = () => {
-    const { selectedChapter, level, part } = useJukugoGroundState();
     const { deckId } = useDeckGroundState();
     const { userId } = useUserStore();
     const { data } = useDeckCards(deckId || 1, userId);
@@ -116,9 +115,10 @@ const DeckRepetitionNormalMode = () => {
 };
 
 const DeckRepetitionReviewMode = () => {
-    const { deckId, srsId, isReviewMode } = useDeckGroundState();
+    const { selectedReviewDate } = useKanjiGroundState()
+    const { deckId, srsId, isReviewMode, isReviewByDate } = useDeckGroundState();
     const { userId } = useUserStore();
-    const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode);
+    const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode, isReviewByDate ? selectedReviewDate : undefined);
 
     const {
         shuffledData,

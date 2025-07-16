@@ -1,15 +1,36 @@
+'use client'
+
 import BackToMap from '@/components/Navigation/BackToMap';
-import React from 'react'
+import { useGeneralStore } from '@/store/generalState';
+import { useRouter } from 'next/navigation';
+
+import React, { useEffect } from 'react'
 
 const StudyLayout = ({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
+    const { isInGround } = useGeneralStore();
+    const router = useRouter();
+    useEffect(() => {
+        if (!isInGround) {
+            router.push('/flashboard')
+        }
+    }, []);
+
     return (
         <>
-            <BackToMap />
-            {children}
+            {
+                isInGround ?
+                <>
+                    <BackToMap />
+                    {children}
+                </>
+                :
+                <p className='text-center my-10'>Please select a session.</p>
+            }
+
         </>
     )
 }

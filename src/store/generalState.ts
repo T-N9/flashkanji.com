@@ -18,6 +18,8 @@ interface GeneralState {
   isDeckDetailModalOpen: boolean;
   deckCardDetail: {character : string, hiragana: string, meaning : string} | null;
 
+  isInGround : boolean;
+
   /* Actions */
   toggleFlashModal: () => void;
   toggleSetting: () => void;
@@ -33,6 +35,7 @@ interface GeneralState {
 
   toggleDeckModal: () => void;
   toggleDeckDetailModal: () => void;
+  setIsInGround : (isInGround : boolean) => void;
 }
 
 export const useGeneralStore = create<GeneralState>((set) => ({
@@ -52,6 +55,8 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   isDeckModalOpen: false,
   isDeckDetailModalOpen: false,
   deckCardDetail: null,
+
+  isInGround : false,
 
   /* Actions */
   toggleFlashModal: () =>
@@ -76,4 +81,5 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   toggleDeckDetailModal: () =>
     set((state) => ({ isDeckDetailModalOpen: !state.isDeckDetailModalOpen })),
   setDeckCardDetail: (detail) => set({ deckCardDetail: detail }),
+  setIsInGround : (isInGround) => set({ isInGround})
 }));

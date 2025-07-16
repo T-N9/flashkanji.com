@@ -1,9 +1,10 @@
+import React, { Suspense } from 'react'
 import KanjiGround from '@/components/KanjiPage'
 import { KanjiSwiperModal } from '@/components/KanjiSwiperModal/KanjiSwiperModal'
 import { KanjiDetailModal } from '@/components/modals/KanjiDetailModal'
-import React, { Suspense } from 'react'
 
 const KanjiPage = () => {
+
   return (
     <>
       <div className="min-h-screen w-full bg-[#f8fafc] relative">
@@ -22,13 +23,12 @@ const KanjiPage = () => {
               "radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%)",
           }}
         />
-        <Suspense fallback={<p>Loading...</p>}>
-          <KanjiGround />
-        </Suspense>
-        <KanjiSwiperModal />
-        <KanjiDetailModal />
+            <Suspense fallback={<p>Loading...</p>}>
+              <KanjiGround />
+            </Suspense>
+            <KanjiSwiperModal />
+            <KanjiDetailModal />
       </div>
-
     </>
   )
 }

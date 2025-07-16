@@ -12,8 +12,9 @@ type DeckGroundState = {
   srsId: number | null;
 
   isReviewMode: boolean;
-  setIsReviewMode: (isReviewMode: boolean) => void;
+
   selectedReviewDate: string;
+  isReviewByDate: boolean;
 };
 
 type DeckGroundActions = {
@@ -25,6 +26,8 @@ type DeckGroundActions = {
   setSelectedReviewDate: (date: string) => void;
   setDeckId: (id: number) => void;
   setSrsId: (id: number) => void;
+  setIsReviewMode: (isReviewMode: boolean) => void;
+  setIsReviewByDate: (isReviewByDate: boolean) => void;
 };
 
 const useDeckGroundState = create<DeckGroundState & DeckGroundActions>(
@@ -41,6 +44,7 @@ const useDeckGroundState = create<DeckGroundState & DeckGroundActions>(
     selectedReviewDate: formatDate(normalizeDate(new Date())),
     deckId: null,
     srsId: null,
+    isReviewByDate: false,
 
     // Actions
 
@@ -56,6 +60,7 @@ const useDeckGroundState = create<DeckGroundState & DeckGroundActions>(
     setSelectedReviewDate: (date) => set({ selectedReviewDate: date }),
     setDeckId: (deckId) => set({ deckId }),
     setSrsId: (srsId) => set({ srsId }),
+    setIsReviewByDate: (isReviewByDate) => set({ isReviewByDate }),
   })
 );
 

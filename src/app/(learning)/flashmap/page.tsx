@@ -1,10 +1,11 @@
 "use client";
 
+import { useGeneralStore } from "@/store/generalState";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
-import { Button, Checkbox, Select, SelectItem } from "@heroui/react";
+import { Button, Select, SelectItem } from "@heroui/react";
 import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -103,9 +104,10 @@ const RoadmapItem = ({
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted, setIsReviewMode } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo, setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode, setPart: setPartQuiz, setIsParted: setIsPartedQuiz, setLevel: setLevelQuiz } = useQuizGroundStore();
+  const { setIsInGround } = useGeneralStore();
 
   const handleClickRoadmapItem = () => {
-
+    setIsInGround(true);
     if (route === 'kanji') {
       setIsReviewMode(false);
       setSelectedChapter(japanese_chapter);
