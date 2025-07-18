@@ -10,6 +10,7 @@ import useDeckGroundState from "@/store/deckGroundState";
 import { Globe, Lock } from "@phosphor-icons/react";
 import moment from "moment";
 import { useGeneralStore } from "@/store/generalState";
+import RamenLoading from "../common/RamenLoading";
 
 const DeckDetail: React.FC = () => {
   const params = useParams();
@@ -19,12 +20,12 @@ const DeckDetail: React.FC = () => {
   const router = useRouter();
 
   const { data, isLoading, error } = useDeckDetail(deck_id, userId);
-  const { setIsInGround } = useGeneralStore();
+  const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
   const { data: sessionData, isLoading: isSessionLoading, error: sessionError } = useDeckSrsSessions(deck_id, userId)
   const { setDeckId, setSrsId, setIsReviewMode, setIsReviewByDate } = useDeckGroundState();
 
   if (isLoading) {
-    return <p className="text-center text-gray-500">Loading deck details...</p>;
+    return <div className=""><RamenLoading/></div>;
   }
 
   if (error || !data) {
@@ -45,9 +46,14 @@ const DeckDetail: React.FC = () => {
     setIsReviewMode(true)
     setIsReviewByDate(false)
     setIsInGround(true)
+    setIsSaveRepetition(false);
 
     router.push('/study/deck/repetition')
   }
+
+  const hasTodaySession = sessionData?.sessions?.some((session) =>
+    moment(session.created_at).isSame(moment(), 'day')
+  );
 
   return (
     <div className="max-w-3xl mx-auto py-6 px-2 lg:px-6 space-y-10">
@@ -70,16 +76,29 @@ const DeckDetail: React.FC = () => {
         </CardBody>
       </Card>
 
-      <div className="text-center space-y-4">
-        <h1>Learn new cards today</h1>
-        <Button onClick={() => {
-          setDeckId(deck_id);
-          setIsInGround(true)
-        }} as={Link} href="/study/deck/repetition">Start</Button>
-      </div>
+      {!hasTodaySession ? (
+        <div className="text-center space-y-4">
+          <h1>Learn new cards today</h1>
+          <Button
+            onClick={() => {
+              setDeckId(deck_id);
+              setIsInGround(true);
+            }}
+            color="primary"
+            as={Link}
+            href="/study/deck/repetition"
+          >
+            Start
+          </Button>
+        </div>
+      ) : (
+        <div className="text-center space-y-4">
+          <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br/>You’ve already studied new cards today.<br/> Come back tomorrow!</p>
+        </div>
+      )}
 
       <div className="space-y-2">
-        <h1>Previous Sessions</h1>
+        <h1 className="font-bold text-xl">Previous Sessions</h1>
         {
           sessionData?.sessions?.length && sessionData?.sessions?.length >= 0 ?
 
@@ -87,8 +106,8 @@ const DeckDetail: React.FC = () => {
               return (
                 <div key={idx} className=" p-2 border rounded-md space-y-2">
                   <div className="flex justify-between">
-                    <p> <span className="text-orange-500">Session {session.id}</span> | {session.card_count} cards</p>
-                    <p className="text-sm"> {new Date(session.created_at).toLocaleString()}</p>
+                    <p className="text-sm">Reviewed <span className="text-orange-500"> {moment(session.created_at).fromNow()}</span> | {moment(session.created_at).format('MMMM Do YYYY, h:mm a')}</p>
+                    <p className="text-sm">{session.card_count} cards </p>
                   </div>
                   <div className="space-x-2">
                     <Button size="sm" onClick={() => handleClickReview(session.id)}>Review</Button>
@@ -100,7 +119,7 @@ const DeckDetail: React.FC = () => {
             })
 
             :
-            <div>
+            <div className="text-center">
               No previous sessions
             </div>
         }

@@ -14,6 +14,7 @@ import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetition
 import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import useKanjiGroundState from "@/store/kanjiGroundState";
+import { useGeneralStore } from "@/store/generalState";
 
 const JukugoRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -35,30 +36,37 @@ const JukugoRepetitionNormalMode = () => {
 
     const router = useRouter();
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
+    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
     const { userId } = useUserStore();
 
     const handleEnd = () => {
-        saveRepetition(
-            {
-                user_id: userId,
-                repetitionData: spacedRepetitionData,
-                type: 2,
-                level: level,
-            },
-            {
-                onSuccess: () => {
-                    console.log("Repetition data saved successfully.");
-                    router.push("/flashmap");
+        if (isSaveRepetition) {
+            saveRepetition(
+                {
+                    user_id: userId,
+                    repetitionData: spacedRepetitionData,
+                    type: 2,
+                    level: level,
                 },
-                onError: (error) => {
-                    console.error("Failed to save repetition data:", error);
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        console.log("Repetition data saved successfully.");
+                        router.push("/flashmap");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save repetition data:", error);
+                    },
+                }
+            );
+        } else {
+            setIsSaveRepetition(true)
+            router.push('/flashmap')
+        }
+
     };
 
 
-     console.log({ spacedRepetitionData })
+    console.log({ spacedRepetitionData })
 
     if (!data || data.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
@@ -74,7 +82,7 @@ const JukugoRepetitionNormalMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>End Session</Button>
+                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
             </div>
         );
     }
@@ -132,35 +140,42 @@ const JukugoRepetitionReviewMode = () => {
         handleRestart,
         // handleEnd,
         getConfidenceEmoji
-    } =  useRepetitionReview<relatedJukugoItem>(data?.cardData || [], data?.repetitionData);
+    } = useRepetitionReview<relatedJukugoItem>(data?.cardData || [], data?.repetitionData);
 
-    console.log({fetchedData : data?.repetitionData})
+    console.log({ fetchedData: data?.repetitionData })
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
+    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
     const router = useRouter();
 
     const handleEnd = () => {
-        saveRepetition(
-            {
-                user_id: userId,
-                repetitionData: spacedRepetitionData,
-                type: 2,
-            },
-            {
-                onSuccess: () => {
-                    console.log("Repetition data saved successfully.");
-                    router.push("/flashboard");
+        if (isSaveRepetition) {
+            saveRepetition(
+                {
+                    user_id: userId,
+                    repetitionData: spacedRepetitionData,
+                    type: 2,
                 },
-                onError: (error) => {
-                    console.error("Failed to save repetition data:", error);
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        console.log("Repetition data saved successfully.");
+                        router.push("/flashboard");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save repetition data:", error);
+                    },
+                }
+            );
+        } else {
+            setIsSaveRepetition(true)
+            router.push('/flashmap')
+        }
+
     };
 
-     console.log({ spacedRepetitionData })
+    console.log({ spacedRepetitionData })
 
-    if (!data ||  data?.cardData?.length === 0) {
+    if (!data || data?.cardData?.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
             <Image className="tilt-animation drop-shadow-lg scale-50" src={'/assets/ramen.png'} width={200} height={200} alt="Loading Session" />
         </div>);
@@ -174,7 +189,7 @@ const JukugoRepetitionReviewMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>End Session</Button>
+                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
             </div>
         );
     }

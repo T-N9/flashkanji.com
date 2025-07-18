@@ -10,15 +10,21 @@ interface GeneralState {
   /* JukugoGround */
   isJukugoModalOpen: boolean;
   isJukugoDetailModalOpen: boolean;
-  jukugoDetail: {character : string, hiragana: string, meaning : string} | null;
+  jukugoDetail: { character: string; hiragana: string; meaning: string } | null;
   userInfo: any;
 
   /* DeckGround */
   isDeckModalOpen: boolean;
   isDeckDetailModalOpen: boolean;
-  deckCardDetail: {character : string, hiragana: string, meaning : string} | null;
+  deckCardDetail: {
+    character: string;
+    hiragana: string;
+    meaning: string;
+  } | null;
 
-  isInGround : boolean;
+  isInGround: boolean;
+
+  isSaveRepetition: boolean;
 
   /* Actions */
   toggleFlashModal: () => void;
@@ -28,14 +34,19 @@ interface GeneralState {
 
   toggleJukugoModal: () => void;
   toggleJukugoDetailModal: () => void;
-  setJukugoDetail: (detail: {character : string, hiragana: string, meaning : string} | null) => void;
+  setJukugoDetail: (
+    detail: { character: string; hiragana: string; meaning: string } | null
+  ) => void;
   setUserInfo: (userInfo: any) => void;
 
-  setDeckCardDetail: (detail: {character : string, hiragana: string, meaning : string} | null) => void;
+  setDeckCardDetail: (
+    detail: { character: string; hiragana: string; meaning: string } | null
+  ) => void;
 
   toggleDeckModal: () => void;
   toggleDeckDetailModal: () => void;
-  setIsInGround : (isInGround : boolean) => void;
+  setIsInGround: (isInGround: boolean) => void;
+  setIsSaveRepetition: (isSaveRepetition: boolean) => void;
 }
 
 export const useGeneralStore = create<GeneralState>((set) => ({
@@ -56,7 +67,8 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   isDeckDetailModalOpen: false,
   deckCardDetail: null,
 
-  isInGround : false,
+  isInGround: false,
+  isSaveRepetition: true,
 
   /* Actions */
   toggleFlashModal: () =>
@@ -81,5 +93,6 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   toggleDeckDetailModal: () =>
     set((state) => ({ isDeckDetailModalOpen: !state.isDeckDetailModalOpen })),
   setDeckCardDetail: (detail) => set({ deckCardDetail: detail }),
-  setIsInGround : (isInGround) => set({ isInGround})
+  setIsInGround: (isInGround) => set({ isInGround }),
+  setIsSaveRepetition: (isSaveRepetition) => set({ isSaveRepetition }),
 }));

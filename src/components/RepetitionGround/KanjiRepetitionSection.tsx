@@ -14,6 +14,7 @@ import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetition
 import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import { useRouter } from "next/navigation";
+import { useGeneralStore } from "@/store/generalState";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -34,28 +35,33 @@ const KanjiRepetitionNormalMode = () => {
     } = useRepetitionCore<Kanji>(data || []);
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
+    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
     const router = useRouter();
 
-    // console.log({ spacedRepetitionData, selectedChapter })
-
     const handleEnd = () => {
-        saveRepetition(
-            {
-                user_id: userId,
-                repetitionData: spacedRepetitionData,
-                type: 1, 
-                level: level,
-            },
-            {
-                onSuccess: () => {
-                    console.log("Repetition data saved successfully.");
-                    router.push("/flashmap");
+        if (isSaveRepetition) {
+            saveRepetition(
+                {
+                    user_id: userId,
+                    repetitionData: spacedRepetitionData,
+                    type: 1,
+                    level: level,
                 },
-                onError: (error) => {
-                    console.error("Failed to save repetition data:", error);
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        console.log("Repetition data saved successfully.");
+                        router.push("/flashmap");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save repetition data:", error);
+                    },
+                }
+            );
+        } else {
+            setIsSaveRepetition(true)
+            router.push("/flashmap");
+        }
+
     };
     console.log({ spacedRepetitionData })
 
@@ -74,7 +80,7 @@ const KanjiRepetitionNormalMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>End Session</Button>
+                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
             </div>
         );
     }
@@ -116,9 +122,10 @@ const KanjiRepetitionNormalMode = () => {
 }
 
 const KanjiRepetitionReviewMode = () => {
-    const { selectedChapter, level, selectedReviewDate } = useKanjiGroundState();
+    const { level, selectedReviewDate } = useKanjiGroundState();
     const { userId } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
+    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
 
     const {
         shuffledData,
@@ -139,22 +146,27 @@ const KanjiRepetitionReviewMode = () => {
     // console.log({ spacedRepetitionData, selectedChapter })
 
     const handleEnd = () => {
-        saveRepetition(
-            {
-                user_id: userId,
-                repetitionData: spacedRepetitionData,
-                type: 1,
-            },
-            {
-                onSuccess: () => {
-                    console.log("Repetition data saved successfully.");
-                    router.push("/flashboard");
+        if (isSaveRepetition) {
+            saveRepetition(
+                {
+                    user_id: userId,
+                    repetitionData: spacedRepetitionData,
+                    type: 1,
                 },
-                onError: (error) => {
-                    console.error("Failed to save repetition data:", error);
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        console.log("Repetition data saved successfully.");
+                        router.push("/flashboard");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save repetition data:", error);
+                    },
+                }
+            );
+        } else {
+            setIsSaveRepetition(true)
+            router.push("/flashboard");
+        }
     };
 
 
@@ -172,7 +184,7 @@ const KanjiRepetitionReviewMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>End Session</Button>
+                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
             </div>
         );
     }

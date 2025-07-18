@@ -28,7 +28,7 @@ const StudyLayout = ({
                     {children}
                 </>
                 :
-                <p className='text-center my-10'>Please select a session.</p>
+                <p className='text-center my-10'>Invalid session or Please select a session.</p>
             }
 
         </>

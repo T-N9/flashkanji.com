@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import useJukugoGroundState from "@/store/jukugoGroundState";
 import Avatar from "../common/avatar/Avatar";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
@@ -14,6 +13,7 @@ import { DeckRepetitionItem } from "./DeckRepetitionItem";
 import useDeckRepetitionCore from "./useDeckRepetitionCore";
 import useDeckRepetitionReview from "./useDeckRepetitionReview";
 import useKanjiGroundState from "@/store/kanjiGroundState";
+import { useGeneralStore } from "@/store/generalState";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId } = useDeckGroundState();
@@ -36,25 +36,32 @@ const DeckRepetitionNormalMode = () => {
 
     const router = useRouter();
     const { mutate: saveRepetition, isLoading } = useSaveDeckRepetitionData();
+    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
 
 
     const handleEnd = () => {
-        saveRepetition(
-            {
-                user_id: userId,
-                deck_id: deckId || 1,
-                repetitionData: spacedRepetitionData,
-            },
-            {
-                onSuccess: () => {
-                    console.log("Repetition data saved successfully.");
-                    router.push("/flashmap");
+        if (isSaveRepetition) {
+            saveRepetition(
+                {
+                    user_id: userId,
+                    deck_id: deckId || 1,
+                    repetitionData: spacedRepetitionData,
                 },
-                onError: (error) => {
-                    console.error("Failed to save repetition data:", error);
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        console.log("Repetition data saved successfully.");
+                        router.push("/flashmap");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save repetition data:", error);
+                    },
+                }
+            );
+        } else {
+            setIsSaveRepetition(true)
+            router.push('/flashmap')
+        }
+
     };
 
 
@@ -74,7 +81,7 @@ const DeckRepetitionNormalMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>End Session</Button>
+                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
             </div>
         );
     }
@@ -119,6 +126,7 @@ const DeckRepetitionReviewMode = () => {
     const { deckId, srsId, isReviewMode, isReviewByDate } = useDeckGroundState();
     const { userId } = useUserStore();
     const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode, isReviewByDate ? selectedReviewDate : undefined);
+    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
 
     const {
         shuffledData,
@@ -140,22 +148,28 @@ const DeckRepetitionReviewMode = () => {
     const router = useRouter();
 
     const handleEnd = () => {
-        saveRepetition(
-            {
-                user_id: userId,
-                deck_id: deckId || 1,
-                repetitionData: spacedRepetitionData,
-            },
-            {
-                onSuccess: () => {
-                    console.log("Repetition data saved successfully.");
-                    router.push("/flashboard");
+        if (isSaveRepetition) {
+            saveRepetition(
+                {
+                    user_id: userId,
+                    deck_id: deckId || 1,
+                    repetitionData: spacedRepetitionData,
                 },
-                onError: (error) => {
-                    console.error("Failed to save repetition data:", error);
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        console.log("Repetition data saved successfully.");
+                        router.push("/flashboard");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save repetition data:", error);
+                    },
+                }
+            );
+        } else {
+            setIsSaveRepetition(true)
+            router.push("/flashboard")
+        }
+
     };
 
     console.log({ spacedRepetitionData })
@@ -174,7 +188,7 @@ const DeckRepetitionReviewMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>End Session</Button>
+                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
             </div>
         );
     }
