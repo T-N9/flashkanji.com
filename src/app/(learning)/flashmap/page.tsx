@@ -195,7 +195,7 @@ const RoadmapItem = ({
 export default function ChapterRoadmap() {
 
   const { japanese_chapter, japanese_level, setUser } = useUserStore()
-  const chapters = Array.from({ length: levelChapterMap[japanese_level] }, (_, i) => i + 1);
+  const chapters = Array.from({ length: levelChapterMap[japanese_level] }, (_, i) => (i + 1).toString());
 
   return (
     <div className="space-y-12 max-w-screen-md mx-auto mb-10">
@@ -220,7 +220,7 @@ export default function ChapterRoadmap() {
           <Select label="Select Chapter" selectedKeys={[String(japanese_chapter)]} onChange={(e) => setUser({ japanese_chapter: parseInt(e.target.value) })}>
             {chapters.map((ch) => (
               <SelectItem key={ch}>
-                Chapter {ch}
+                {ch}
               </SelectItem>
             ))}
           </Select>
@@ -228,7 +228,7 @@ export default function ChapterRoadmap() {
       </div>
 
       {roadmapData.map((phase, idx) => (
-        <div key={idx} className="space-y-4 bg-blue-100  border rounded-md overflow-hidden">
+        <div key={idx} className="space-y-4 bg-blue-50  border rounded-md overflow-hidden">
           <div className="bg-slate-600  p-5 ">
             <h2 className="text-xl font-semibold text-white">{phase.title}</h2>
           </div>

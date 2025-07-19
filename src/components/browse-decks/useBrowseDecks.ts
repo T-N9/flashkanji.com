@@ -8,7 +8,7 @@ const useBrowseDecks = () => {
   const [page, setPage] = useState<number>(1);
   const limit = 6;
 
-  const { data, isLoading } = useDecks({
+  const { data, isLoading , isFetching } = useDecks({
     search,
     level,
     category,
@@ -27,6 +27,7 @@ const useBrowseDecks = () => {
     setPage,
     data,
     isLoading,
+    isFetching
   };
 };
 

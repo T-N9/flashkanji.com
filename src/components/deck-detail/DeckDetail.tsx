@@ -11,6 +11,7 @@ import { Globe, Lock } from "@phosphor-icons/react";
 import moment from "moment";
 import { useGeneralStore } from "@/store/generalState";
 import RamenLoading from "../common/RamenLoading";
+import Image from "next/image";
 
 const DeckDetail: React.FC = () => {
   const params = useParams();
@@ -25,7 +26,7 @@ const DeckDetail: React.FC = () => {
   const { setDeckId, setSrsId, setIsReviewMode, setIsReviewByDate } = useDeckGroundState();
 
   if (isLoading) {
-    return <div className=""><RamenLoading/></div>;
+    return <div className=""><RamenLoading /></div>;
   }
 
   if (error || !data) {
@@ -78,7 +79,10 @@ const DeckDetail: React.FC = () => {
 
       {!hasTodaySession ? (
         <div className="text-center space-y-4">
-          <h1>Learn new cards today</h1>
+          <div>
+            <Image className="mx-auto" src={`/assets/character/kiss.png`} width={100} height={100} alt="Learn new cards today" />
+            <p className="text-2xl font-bold">Learn new cards today!</p>
+          </div>
           <Button
             onClick={() => {
               setDeckId(deck_id);
@@ -92,10 +96,13 @@ const DeckDetail: React.FC = () => {
           </Button>
         </div>
       ) : (
-        <div className="text-center space-y-4">
-          <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br/>You’ve already studied new cards today.<br/> Come back tomorrow!</p>
+        <div className="text-center">
+          <Image className="mx-auto" src={`/assets/character/happy.png`} width={100} height={100} alt="Great Job" />
+          <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br />You’ve already studied new cards today.<br /> Come back tomorrow!</p>
         </div>
       )}
+
+      <hr />
 
       <div className="space-y-2">
         <h1 className="font-bold text-xl">Previous Sessions</h1>
@@ -120,6 +127,7 @@ const DeckDetail: React.FC = () => {
 
             :
             <div className="text-center">
+              <Image className="mx-auto" src={`/assets/character/hmm.png`} width={100} height={100} alt="No sessions" />
               No previous sessions
             </div>
         }

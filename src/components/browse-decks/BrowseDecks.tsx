@@ -2,10 +2,10 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import useBrowseDecks from "./useBrowseDecks";
-import { Card, CardBody, CardHeader, Input, Select, SelectItem } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Input, Select, SelectItem } from "@heroui/react";
 import debounce from "lodash/debounce";
 import Link from "next/link";
-import useDeckGroundState from "@/store/deckGroundState";
+import Image from "next/image";
 
 const LEVEL_OPTIONS = [
   { label: "N5", value: 5 },
@@ -25,6 +25,7 @@ const BrowseDecks = () => {
     setCategory,
     data,
     isLoading,
+    isFetching
   } = useBrowseDecks();
 
   const [searchInput, setSearchInput] = useState<string>(search);
@@ -85,33 +86,113 @@ const BrowseDecks = () => {
           ))}
         </Select>
       </div>
+      {(searchInput || level !== undefined || category !== undefined) && (
+        <div className="mb-6">
+          <Button
+            variant="light"
+            size="sm"
+            onClick={() => {
+              setSearchInput("");
+              setSearch("");
+              setLevel(undefined);
+              setCategory(undefined);
+            }}
+            className="text-orange-500"
+          >
+            Clear Filters
+          </Button>
+        </div>
+      )}
+
 
       {/* Deck Results */}
-      {isLoading ? (
-        <p className="text-center text-gray-500">Loading...</p>
-      ) : (
+      {isFetching ? (
         <div className="grid md:grid-cols-2 gap-4">
+          <Card shadow="sm" className="border border-default-200 animate-pulse">
+            <CardHeader className="font-semibold">
+              <div className="h-5 w-3/4 bg-gray-200 rounded" />
+            </CardHeader>
+            <CardBody>
+              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+              <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                <span className="h-5 w-16 bg-orange-200 rounded" />
+                <span className="h-5 w-20 bg-orange-200 rounded" />
+                <span className="h-5 w-12 bg-orange-200 rounded" />
+              </div>
+            </CardBody>
+          </Card>
+          <Card shadow="sm" className="border border-default-200 animate-pulse">
+            <CardHeader className="font-semibold">
+              <div className="h-5 w-3/4 bg-gray-200 rounded" />
+            </CardHeader>
+            <CardBody>
+              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+              <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                <span className="h-5 w-16 bg-orange-200 rounded" />
+                <span className="h-5 w-20 bg-orange-200 rounded" />
+                <span className="h-5 w-12 bg-orange-200 rounded" />
+              </div>
+            </CardBody>
+          </Card>
+          <Card shadow="sm" className="border border-default-200 animate-pulse">
+            <CardHeader className="font-semibold">
+              <div className="h-5 w-3/4 bg-gray-200 rounded" />
+            </CardHeader>
+            <CardBody>
+              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+              <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                <span className="h-5 w-16 bg-orange-200 rounded" />
+                <span className="h-5 w-20 bg-orange-200 rounded" />
+                <span className="h-5 w-12 bg-orange-200 rounded" />
+              </div>
+            </CardBody>
+          </Card>
+          <Card shadow="sm" className="border border-default-200 animate-pulse">
+            <CardHeader className="font-semibold">
+              <div className="h-5 w-3/4 bg-gray-200 rounded" />
+            </CardHeader>
+            <CardBody>
+              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+              <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                <span className="h-5 w-16 bg-orange-200 rounded" />
+                <span className="h-5 w-20 bg-orange-200 rounded" />
+                <span className="h-5 w-12 bg-orange-200 rounded" />
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+      ) : (
+        <div className="">
           {data?.decks.length === 0 ? (
-            <p className="text-center text-gray-400 col-span-full">No decks found.</p>
+            <div>
+              <Image className="mx-auto" src={`/assets/character/hmm.png`} width={100} height={100} alt="No sessions" />
+              <p className="text-center text-gray-400 col-span-full">No decks found.</p>
+            </div>
           ) : (
-            data?.decks.map((deck) => (
-              <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
-                <Card shadow="sm" className="border border-default-200">
-                  <CardHeader className="font-semibold">{deck.name}</CardHeader>
-                  <CardBody>
-                    <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
-                    <p className="text-xs text-gray-400">Level: {deck.level}</p>
-                    <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
-                      {deck.categories.map((cat) => (
-                        <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
-                          {cat}
-                        </span>
-                      ))}
-                    </div>
-                  </CardBody>
-                </Card>
-              </Link>
-            ))
+            <div className="grid md:grid-cols-2 gap-4">{
+              data?.decks.map((deck) => (
+                <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
+                  <Card shadow="sm" className="border border-default-200">
+                    <CardHeader className="font-semibold">{deck.name}</CardHeader>
+                    <CardBody>
+                      <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
+                      <p className="text-xs text-gray-400">Level: {deck.level}</p>
+                      <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
+                        {deck.categories.map((cat) => (
+                          <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
+                            {cat}
+                          </span>
+                        ))}
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Link>
+              ))}
+            </div>
           )}
         </div>
       )}

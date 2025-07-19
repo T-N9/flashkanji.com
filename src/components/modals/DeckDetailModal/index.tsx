@@ -157,7 +157,7 @@ export const DeckDetailModal = () => {
                         <hr className="my-4" />
                         <div>
                             {/* AI Component */}
-                            <h1 className="text-center">Ask Samurai Sensei how {deckCardDetail?.character} is used. </h1>
+                            <p className="text-center">Ask Samurai Sensei how {deckCardDetail?.character} is used. </p>
 
                             {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
                             <div>

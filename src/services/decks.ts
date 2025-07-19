@@ -30,5 +30,6 @@ export const useDecks = ({
       }),
     enabled,
     keepPreviousData: true,
+    staleTime: 10 * 60 * 1000,
   });
 };

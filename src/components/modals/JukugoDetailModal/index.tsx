@@ -14,6 +14,7 @@ import {
 } from "@heroui/modal";
 import { Button } from "@heroui/react";
 import { Envelope } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
 import { env } from "process";
 import { useEffect, useState } from "react";
@@ -106,7 +107,7 @@ export const JukugoDetailModal = () => {
                     <ModalHeader className="flex justify-between font-english-text text-orange-500 items-center shadow">
                         <p>Jukugo information</p>
                     </ModalHeader>
-                    <ModalBody className=" bg-gradient-orange-card overflow-y-auto">
+                    <ModalBody className="bg-gray-100 overflow-y-auto">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1">
                                 <h1 className="text-4xl text-dark">{jukugoDetail?.character}</h1>
@@ -159,7 +160,9 @@ export const JukugoDetailModal = () => {
                         <hr className="my-4" />
                         <div>
                             {/* AI Component */}
-                            <h1 className="text-center">Ask Samurai Sensei how {jukugoDetail?.character} is used. </h1>
+                            <p className="text-center">Ask Samurai Sensei how <span className="text-orange-500">{jukugoDetail?.character}</span> is used. </p>
+                            <Image className="mx-auto" src={`/assets/character/kiss.png`} width={100} height={100} alt="ask samurai sensei" />
+                            
 
                             {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
                             <div>

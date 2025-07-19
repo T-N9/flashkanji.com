@@ -165,3 +165,30 @@ export const hiragana_katakana = [
   "ッ",
   "ー",
 ];
+
+export const ratingButtons = [
+  {
+    reaction: "🤯",
+    text: "ဟာ သွားပါပြီ",
+    color: "border-red-400",
+    img: "crying.png",
+  },
+  {
+    reaction: "🤔",
+    text: "ခက်တယ်ဟ",
+    color: "border-yellow-400",
+    img: "surprised.png",
+  },
+  {
+    reaction: "😎",
+    text: "ရပါတယ်",
+    color: "border-violet-400 ",
+    img: "thinking.png",
+  },
+  {
+    reaction: "😴",
+    text: "အေးဆေးပဲ",
+    color: "border-green-400",
+    img: "happy.png",
+  },
+];

@@ -2,6 +2,8 @@ import { calculateDeckNextReview, calculateNextReview, SR_DeckCard } from "@/uti
 import { Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import Avatar from "../common/avatar/Avatar";
+import Image from "next/image";
+import { ratingButtons } from "@/constants/static";
 
 export const DeckRepetitionItem = ({
     sr_data,
@@ -45,13 +47,6 @@ export const DeckRepetitionItem = ({
             if (interval) clearInterval(interval);
         };
     }, [isRunning]);
-
-    const ratingButtons = [
-        { reaction: "🤯", text: "ဟာ သွားပါပြီ", color: "border-red-400" },
-        { reaction: "🤔", text: "ခက်တယ်ဟ", color: "border-yellow-400" },
-        { reaction: "😎", text: "ရပါတယ်", color: "border-violet-400 " },
-        { reaction: "😴", text: "အေးဆေးပဲ", color: "border-green-400" },
-    ];
 
     // Handle keyboard shortcuts
     useEffect(() => {
@@ -143,7 +138,7 @@ export const DeckRepetitionItem = ({
          Difficult 🤯 */}
                     {
                         isAnswerShown ?
-                            <div className="grid grid-cols-2 lg:grid-cols-4 mt-2 gap-4">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 mt-2 gap-1 lg:gap-4">
                                 {ratingButtons.map((rating, index) => (
                                     /* [I, H, M , E] */
                                     <div key={index} className="gap-3 flex flex-col items-center">
@@ -152,7 +147,7 @@ export const DeckRepetitionItem = ({
                                             className={`${rating.color} text-3xl text-gray-800 font-semibold w-28 h-28 bg-transparent rounded-full hover:bg-gray-300`}
                                             onClick={() => handleButtonClick(index)}
                                         >
-                                            <Avatar emoji={rating.reaction} />
+                                            <Image src={`/assets/character/${rating.img}`} width={100} height={100} alt={rating.text}/>
                                         </Button>
                                         <p className="text-sm mt-2 hidden">{rating.text}</p>
                                         <span className="text-gray-400 text-sm text-center hidden lg:block">
