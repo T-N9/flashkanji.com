@@ -1,6 +1,7 @@
 'use client'
 import { useUserStore } from '@/store/userState';
 import { Avatar, Card, CardBody, CardHeader } from '@heroui/react';
+import moment from 'moment';
 import React from 'react'
 
 const UserProfileSection = () => {
@@ -28,7 +29,7 @@ const UserProfileSection = () => {
                     </div>
                     <div>
                         <span className="font-medium">Joined: </span>
-                        {created_at ? new Date(created_at).toLocaleDateString() : 'N/A'}
+                        {created_at ? moment(created_at).format('MMMM Do YYYY') : 'N/A'}
                     </div>
                 </CardBody>
             </Card>

@@ -95,7 +95,7 @@ export function HeadingBar() {
       <NavbarBrand>
         <Link href="/">
           {/* <Logo/> */}
-          <Image className="w-28" src={'/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
+          <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
 

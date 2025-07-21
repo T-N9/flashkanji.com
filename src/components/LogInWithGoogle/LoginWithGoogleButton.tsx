@@ -13,5 +13,5 @@ export default function LoginWithGoogleButton() {
     });
   }
 
-  return <Button onClick={handleLogin}>Log In with Google</Button>;
+  return <Button variant='bordered' onClick={handleLogin}><img src="/assets/Google.svg"/> Continue with Google</Button>;
 }

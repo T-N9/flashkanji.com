@@ -24,7 +24,7 @@ export default function LogOutButton() {
   }
 
   return (
-    <Button onClick={handleLogout}>
+    <Button color='danger' onClick={handleLogout}>
       Log Out
     </Button>
   )
