@@ -7,6 +7,11 @@ import KanjiCard from '../cards/KanjiCard';
 import { LoadingGround } from '../common/LoadingGround';
 import { Kanji } from '@/types/kanji';
 import { shuffleArray } from '@/util';
+import { Button } from '@heroui/react';
+import { useGeneralStore } from '@/store/generalState';
+import { useSaveEndSection } from '@/services/progress';
+import { useRouter } from 'next/navigation';
+import { useUserStore } from '@/store/userState';
 
 const KanjiGround = () => {
 
@@ -41,6 +46,8 @@ const KanjiGround = () => {
         Array.isArray(selectedMultiChapters) && selectedMultiChapters.length > 0
             ? multipleChaptersData
             : singleChapterData;
+
+    const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
 
     // Update the number of chapters based on the selected level
     useEffect(() => {
@@ -82,6 +89,37 @@ const KanjiGround = () => {
         }
     }, [data]);
 
+    const { userId } = useUserStore();
+
+    const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+    const router = useRouter();
+
+    const handleFinishSection = () => {
+        if (mapItemData?.isCurrent) {
+            saveSection(
+                {
+                    user_id: userId,
+                    chapter: mapItemData?.chapter,
+                    level: mapItemData?.level,
+                    phase: mapItemData?.phase,
+                    stepIndex: mapItemData?.stepIndex -1
+                },
+                {
+                    onSuccess: () => {
+                        console.log("Section saved successfully.");
+                        setShouldRefetchChapter(true);
+                        router.push("/flashmap");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save section:", error);
+                    },
+                }
+            );
+        } else {
+            router.push('/flashmap')
+        }
+    }
+
 
     return (
         <div>
@@ -97,14 +135,24 @@ const KanjiGround = () => {
                     You may write them down on your physical book.
                     Click on the kanji to flip the card and see the readings.
                 </p>
+
+                {
+                    mapItemData && mapItemData.isCurrent ?
+                        <Button onClick={handleFinishSection} variant='bordered' color='primary' className='table mx-auto mt-2'>
+                            {saveLoading ? 'Saving...' : 'Mark as Done'}
+                        </Button> :
+
+                        <Button variant='faded' color='default' className='table mx-auto mt-2'>
+                            Completed
+                        </Button>
+                }
+
             </div>
+
             <div
-                className={`relative transition-all main-container duration-200 ease-out container w-full flex flex-col items-center p-3 justify-center mt-20 mb-40`}
+                className={`relative transition-all main-container duration-200 ease-out container w-full flex flex-col items-center p-3 justify-center mt-10 mb-40`}
             >
                 <div className="flex w-full justify-center gap-4">
-                    {/* <div className="w-[300px] hidden lg:block">
-            <AdsComponent isDisplay={true} slotId={"7647610361"} />
-          </div> */}
                     {kanjiData?.length === 0 ? (
                         <LoadingGround mode={1} />
 
@@ -118,32 +166,11 @@ const KanjiGround = () => {
                                     <KanjiCard key={index} item={item} />
                                 ))}
                             </div>
-
                         </>
                     )}
-                    {/* <div className="w-[300px] hidden lg:block">
-            <AdsComponent isDisplay={true} slotId={"7647610361"} />
-          </div> */}
-
-                    {/* <SpeedDialMenu mode={1} /> */}
-                </div>
-                <div className="my-10 p-4 hidden">
-                    <h1 className="font-bold text-orange-500">Kanji Data :</h1>
-                    <div className="flex gap-2 my-5 flex-wrap">
-                        {kanjiData?.map((item, index) => {
-                            return <p key={index}>{item?.character}</p>;
-                        })}
-                    </div>
                 </div>
             </div>
 
-
-
-            {/* <Link href={`/study/kanji/repetition?chapter=${chapter}&level=${level}`}>
-                <Button variant='bordered' className='table mx-auto mt-10'>
-                    Enter Flash Repetition
-                </Button>
-            </Link> */}
         </div>
     )
 }

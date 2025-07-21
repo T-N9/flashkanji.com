@@ -10,6 +10,7 @@ import { useUserStore } from "@/store/userState";
 import { Button, Select, SelectItem } from "@heroui/react";
 import { Brain, CompassRose, Lock, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const roadmapData = [
   {
@@ -134,7 +135,6 @@ const RoadmapItem = ({
   progress,
   completed,
   isCurrent
-
 }: {
   phase: number;
   label: string;
@@ -153,7 +153,7 @@ const RoadmapItem = ({
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted, setIsReviewMode } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo, setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode, setPart: setPartQuiz, setIsParted: setIsPartedQuiz, setLevel: setLevelQuiz } = useQuizGroundStore();
-  const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
+  const { setIsInGround, setIsSaveRepetition, setMapItemData, shouldRefetchChapter, setShouldRefetchChapter } = useGeneralStore();
 
   const levelStr = String(japanese_level);
   const chapterStr = String(japanese_chapter);
@@ -164,9 +164,17 @@ const RoadmapItem = ({
 
   const handleClickRoadmapItem = () => {
 
+    shouldRefetchChapter && setShouldRefetchChapter(false)
+
+    setMapItemData({
+      chapter: japanese_chapter,
+      level: japanese_level,
+      stepIndex: step_i,
+      phase: phase,
+      isCurrent: isCurrent
+    })
+
     if (!unlocked) return;
-
-
 
     setIsInGround(true);
     if (route === 'kanji') {
@@ -240,7 +248,7 @@ const RoadmapItem = ({
 
   return (
 
-    <div className={`${isCurrent ? 'bg-slate-50' : 'bg-blue-100'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+    <div id={isCurrent ? 'resume' : `${japanese_chapter + phase +stepIndex}`} className={`${isCurrent ? 'bg-slate-50' : 'bg-blue-100'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
       <div className={`${bg} relative inline-block p-2 rounded-full shadow-md opacity-${unlocked ? "100" : "50"}`}>
         <div className={`border-dashed ${isCurrent && 'animate-slow-spin'} border-white border-2 rounded-full p-2`}>
           <div className="opacity-0">{icon}</div>
@@ -283,13 +291,18 @@ const RoadmapItem = ({
 export default function ChapterRoadmap() {
 
   const { japanese_chapter, japanese_level, setUser, userId } = useUserStore()
+  const { shouldRefetchChapter } = useGeneralStore();
   const chapters = Array.from({ length: levelChapterMap[japanese_level] }, (_, i) => (i + 1).toString());
 
   let foundCurrent = false;
 
-  const { data: chapter_progress, isFetching } = useFetchChapterProgress(userId, parseInt(japanese_level.split('')[1]), japanese_chapter)
+  const { data: chapter_progress, isFetching, refetch: refetchProgress } = useFetchChapterProgress(userId, parseInt(japanese_level.split('')[1]), japanese_chapter);
 
-  console.log("userId", userId, "level", japanese_level, "chapter", japanese_chapter);
+  useEffect(() => {
+    if (shouldRefetchChapter) {
+      refetchProgress();
+    }
+  }, [shouldRefetchChapter]);
 
 
   return (

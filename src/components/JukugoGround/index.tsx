@@ -4,11 +4,15 @@ import { JukugoSetting } from "./JukugoSetting";
 import { LoadingGround } from "../common/LoadingGround";
 import { useJukugoByChapterAndLevel } from "@/services/jukugo";
 import useJukugoSetting from "./useJukugoSetting";
-import { SpeedDialMenu } from "../common/SpeedDailMenu";
 import JukugoCard from "../cards/JukugoCard";
 import { useEffect, useState } from "react";
 import { relatedJukugoItem } from "@/types/jukugo";
 import { shuffleArray } from "@/util";
+import { useGeneralStore } from "@/store/generalState";
+import { Button } from "@heroui/react";
+import { useUserStore } from "@/store/userState";
+import { useSaveEndSection } from "@/services/progress";
+import { useRouter } from "next/navigation";
 
 export const JukugoGround = () => {
 
@@ -58,6 +62,40 @@ export const JukugoGround = () => {
     }
   };
 
+  const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+
+  const { userId } = useUserStore();
+
+  const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+  const router = useRouter();
+
+  const handleFinishSection = () => {
+    if (mapItemData?.isCurrent) {
+      saveSection(
+        {
+          user_id: userId,
+          chapter: mapItemData?.chapter,
+          level: mapItemData?.level,
+          phase: mapItemData?.phase,
+          stepIndex: mapItemData?.stepIndex - 1
+        },
+        {
+          onSuccess: () => {
+            console.log("Section saved successfully.");
+            setShouldRefetchChapter(true);
+            router.push("/flashmap");
+          },
+          onError: (error) => {
+            console.error("Failed to save section:", error);
+          },
+        }
+      );
+    } else {
+      router.push('/flashmap')
+    }
+  }
+
+
   return (
     <section className="relative flex min-h-screen flex-col items-center">
       <JukugoSetting handleShuffle={handleShuffleJukugoData} />
@@ -72,8 +110,18 @@ export const JukugoGround = () => {
           You may write them down on your physical book.
           Click on the jukugo to flip the card and see its meaning.
         </p>
+        {
+          mapItemData && mapItemData.isCurrent ?
+            <Button onClick={handleFinishSection} variant='bordered' color='primary' className='table mx-auto mt-2'>
+              {saveLoading ? 'Saving...' : 'Mark as Done'} 
+            </Button> :
+
+            <Button variant='faded' color='default' className='table mx-auto mt-2'>
+              Completed
+            </Button>
+        }
       </div>
-      <div className="flex w-full justify-center px-4 lg:px-0 gap-4 mt-20 mb-40">
+      <div className="flex w-full justify-center px-4 lg:px-0 gap-4 mt-10 mb-40">
         {jukugoData?.length === 0 ? (
           <LoadingGround mode={2} />
         ) : (
@@ -86,15 +134,6 @@ export const JukugoGround = () => {
           </div>
         )}
       </div>
-      {/* <div className="my-10 p-4">
-        <h1 className="font-bold text-orange-500">Jukugo Data :</h1>
-        <div className="flex gap-2 my-5 flex-wrap">
-          {jukugoData?.map((item, index) => {
-            return <p key={index}>{item?.character}</p>;
-          })}
-        </div>
-      </div> */}
-      {/* <SpeedDialMenu mode={2} /> */}
     </section>
   );
 };

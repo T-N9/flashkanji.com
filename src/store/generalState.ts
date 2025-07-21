@@ -25,6 +25,15 @@ interface GeneralState {
   isInGround: boolean;
 
   isSaveRepetition: boolean;
+  mapItemData: {
+    level: number;
+    chapter: number;
+    phase: number;
+    stepIndex: number;
+    isCurrent: boolean;
+  } | null;
+
+  shouldRefetchChapter : boolean;
 
   /* Actions */
   toggleFlashModal: () => void;
@@ -47,6 +56,17 @@ interface GeneralState {
   toggleDeckDetailModal: () => void;
   setIsInGround: (isInGround: boolean) => void;
   setIsSaveRepetition: (isSaveRepetition: boolean) => void;
+
+  setMapItemData: (
+    data: {
+      level: number;
+      chapter: number;
+      phase: number;
+      stepIndex: number;
+      isCurrent: boolean;
+    } | null
+  ) => void;
+  setShouldRefetchChapter : (shouldRefetchChapter : boolean) => void;
 }
 
 export const useGeneralStore = create<GeneralState>((set) => ({
@@ -69,6 +89,8 @@ export const useGeneralStore = create<GeneralState>((set) => ({
 
   isInGround: false,
   isSaveRepetition: true,
+  mapItemData: null,
+  shouldRefetchChapter : false,
 
   /* Actions */
   toggleFlashModal: () =>
@@ -95,4 +117,6 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   setDeckCardDetail: (detail) => set({ deckCardDetail: detail }),
   setIsInGround: (isInGround) => set({ isInGround }),
   setIsSaveRepetition: (isSaveRepetition) => set({ isSaveRepetition }),
+  setMapItemData: (data) => set({ mapItemData: data }),
+  setShouldRefetchChapter : (shouldRefetchChapter) => set({ shouldRefetchChapter })
 }));

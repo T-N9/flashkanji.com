@@ -5,7 +5,7 @@ import {
 } from "@/api/progressRoute";
 import { useMutation, useQuery } from "react-query";
 
-export const useSaveEndSection = async () => {
+export const useSaveEndSection = () => {
   return useMutation({
     mutationFn: ({
       user_id,
@@ -23,7 +23,7 @@ export const useSaveEndSection = async () => {
   });
 };
 
-export const useSaveInitChapter = async () => {
+export const useSaveInitChapter =  () => {
   return useMutation({
     mutationFn: ({
       user_id,

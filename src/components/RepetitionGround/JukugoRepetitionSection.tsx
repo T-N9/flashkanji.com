@@ -15,6 +15,7 @@ import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useGeneralStore } from "@/store/generalState";
+import { useSaveEndSection } from "@/services/progress";
 
 const JukugoRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -36,7 +37,8 @@ const JukugoRepetitionNormalMode = () => {
 
     const router = useRouter();
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
-    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
+    const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter } = useGeneralStore();
     const { userId } = useUserStore();
 
     const handleEnd = () => {
@@ -51,7 +53,27 @@ const JukugoRepetitionNormalMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
-                        router.push("/flashmap");
+                        if (mapItemData?.isCurrent) {
+                            saveSection(
+                                {
+                                    user_id: userId,
+                                    chapter: mapItemData?.chapter,
+                                    level: mapItemData?.level,
+                                    phase: mapItemData?.phase,
+                                    stepIndex: mapItemData?.stepIndex - 1
+                                },
+                                {
+                                    onSuccess: () => {
+                                        console.log("Section saved successfully.");
+                                        setShouldRefetchChapter(true);
+                                        router.push("/flashmap");
+                                    },
+                                    onError: (error) => {
+                                        console.error("Failed to save section:", error);
+                                    },
+                                }
+                            );
+                        }
                     },
                     onError: (error) => {
                         console.error("Failed to save repetition data:", error);
