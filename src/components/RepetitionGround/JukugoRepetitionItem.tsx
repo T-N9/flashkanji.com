@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Avatar from "../common/avatar/Avatar";
 import Image from "next/image";
 import { ratingButtons } from "@/constants/static";
+import CharacterImage from "../common/character";
 
 export const JukugoRepetitionItem = ({
     sr_data,
@@ -151,7 +152,7 @@ export const JukugoRepetitionItem = ({
                                             className={`${rating.color} text-3xl text-gray-800 font-semibold w-28 h-28 bg-transparent rounded-full hover:bg-gray-300`}
                                             onClick={() => handleButtonClick(index)}
                                         >
-                                            <Image src={`/assets/character/${rating.img}`} width={100} height={100} alt={rating.text} />
+                                            <CharacterImage src={rating.img} alt={rating.text} />
                                         </Button>
                                         <p className="text-sm mt-2 hidden">{rating.text}</p>
                                         <span className="text-gray-400 text-sm text-center hidden lg:block">

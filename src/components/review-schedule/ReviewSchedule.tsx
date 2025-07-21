@@ -17,6 +17,7 @@ import useJukugoGroundState from "@/store/jukugoGroundState"
 import useDeckGroundState from "@/store/deckGroundState"
 import { useGeneralStore } from "@/store/generalState"
 import Image from "next/image"
+import CharacterImage from "../common/character"
 
 export default function SpacedLearningCalendar() {
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
@@ -195,7 +196,7 @@ export default function SpacedLearningCalendar() {
                   </div>
                 ) : (
                   <div className="text-center">
-                    <Image className="mx-auto" src={`/assets/character/happy.png`} width={100} height={100} alt="Great Job" />
+                    <CharacterImage src={'happy.png'} alt={"Great Job"} />
                     <p className="text-gray-500">No reviews scheduled</p>
                   </div>
                 )}
@@ -279,10 +280,10 @@ export default function SpacedLearningCalendar() {
 
                 </div>
               ) : (
-               <div className="text-center">
-                 <Image className="mx-auto" src={`/assets/character/happy.png`} width={100} height={100} alt="Great Job" />
-                 <p className="text-gray-500 text-center">No reviews scheduled for today</p>
-               </div>
+                <div className="text-center">
+                  <CharacterImage src={'happy.png'} alt={"Great Job"} />
+                  <p className="text-gray-500 text-center">No reviews scheduled for today</p>
+                </div>
               )}
             </CardBody>
           </Card>

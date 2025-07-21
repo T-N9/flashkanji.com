@@ -7,6 +7,7 @@ import debounce from "lodash/debounce";
 import Link from "next/link";
 import Image from "next/image";
 import { Funnel } from "@phosphor-icons/react";
+import CharacterImage from "../common/character";
 
 const LEVEL_OPTIONS = [
   { label: "N5", value: 5 },
@@ -183,7 +184,7 @@ const BrowseDecks = () => {
         <div className="">
           {data?.decks.length === 0 ? (
             <div>
-              <Image className="mx-auto" src={`/assets/character/hmm.png`} width={100} height={100} alt="No sessions" />
+              <CharacterImage src="hmm.png" alt="No Sessions"/>
               <p className="text-center text-gray-400 col-span-full">No decks found.</p>
             </div>
           ) : (

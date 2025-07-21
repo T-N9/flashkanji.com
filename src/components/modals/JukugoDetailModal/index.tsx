@@ -1,4 +1,5 @@
 'use client'
+import CharacterImage from "@/components/common/character";
 import { KanjiGif } from "@/components/KanjiGif";
 import TextSpeech from "@/components/tts/TextSpeech";
 import { hiragana_katakana } from "@/constants/static";
@@ -161,8 +162,8 @@ export const JukugoDetailModal = () => {
                         <div>
                             {/* AI Component */}
                             <p className="text-center">Ask Samurai Sensei how <span className="text-orange-500">{jukugoDetail?.character}</span> is used. </p>
-                            <Image className="mx-auto" src={`/assets/character/kiss.png`} width={100} height={100} alt="ask samurai sensei" />
-                            
+                            <CharacterImage src="kiss.png" alt="ask samurai sensei" />
+
 
                             {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
                             <div>
