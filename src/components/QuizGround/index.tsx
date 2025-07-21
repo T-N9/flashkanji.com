@@ -6,7 +6,42 @@ import { QuizItem } from '../common/quiz-item';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import RamenLoading from '../common/RamenLoading';
+import CharacterImage from '../common/character';
+import { useGeneralStore } from '@/store/generalState';
+import { useUserStore } from '@/store/userState';
+import { useSaveEndSection } from '@/services/progress';
+import { useRouter } from 'next/navigation';
 
+
+
+type QuizResultReactionProps = {
+    score: number;
+    total: number;
+    className?: string
+};
+
+const getReactionImage = (percentage: number): string => {
+    if (percentage < 20) return "crying.png";
+    if (percentage < 40) return "annoyed.png";
+    if (percentage < 60) return "annoyed.png";
+    if (percentage < 80) return "good.png";
+    return "star.png";
+};
+
+function QuizResultReaction({ score, total, className }: QuizResultReactionProps) {
+    const percentage = (score / total) * 100;
+    const imageSrc = getReactionImage(percentage);
+
+    return (
+        <div className={`text-center space-y-4 my-6 ${className}`}>
+            <CharacterImage src={imageSrc} alt={`percentage mark`} />
+            <div className="text-xl text-gray-500">
+                Score :{" "}
+                <span className="font-medium text-info">{score}</span> / {total}
+            </div>
+        </div>
+    );
+}
 const QuizGround = () => {
 
     const { level, chapter, mode, isQuizSubmit, currentMark, answeredCount, handleQuizQuit, handleQuizSubmit, setQuizData, quizData, part, isParted, resetQuizState } = useContainer();
@@ -24,6 +59,37 @@ const QuizGround = () => {
         }
     }, [data]);
 
+    const { userId } = useUserStore();
+    const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+    const router = useRouter();
+    const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+
+    const handleFinishSection = () => {
+        if (mapItemData?.isCurrent) {
+            saveSection(
+                {
+                    user_id: userId,
+                    chapter: mapItemData?.chapter,
+                    level: mapItemData?.level,
+                    phase: mapItemData?.phase,
+                    stepIndex: mapItemData?.stepIndex - 1
+                },
+                {
+                    onSuccess: () => {
+                        console.log("Section saved successfully.");
+                        setShouldRefetchChapter(true);
+                        router.push("/flashmap");
+                    },
+                    onError: (error) => {
+                        console.error("Failed to save section:", error);
+                    },
+                }
+            );
+        } else {
+            router.push('/flashmap')
+        }
+    }
+
     // console.log({ answeredCount, length: data?.length, isQuizSubmit })
 
     return (
@@ -40,12 +106,8 @@ const QuizGround = () => {
                 }
 
 
-                {isQuizSubmit && (
-                    <div className="text-xl text-gray-500">
-                        Score :{" "}
-                        <span className="font-medium text-info">{currentMark}</span> /{" "}
-                        {data?.length}
-                    </div>
+                {isQuizSubmit && data && (
+                    <QuizResultReaction className='relative z-20' score={currentMark} total={data?.length} />
                 )}
             </div>
             {
@@ -64,29 +126,54 @@ const QuizGround = () => {
                             })}
                         </div>
 
-                        {isQuizSubmit && (
-                            <div className="text-xl text-center font-english mt-5 text-gray-500">
-                                Score :{" "}
-                                <span className="font-medium text-info">{currentMark}</span> /{" "}
-                                {data?.length}
-                            </div>
+                        {isQuizSubmit && data && (
+                            <QuizResultReaction score={currentMark} total={data?.length} />
                         )}
-                        <div className="my-5 flex gap-4 justify-center items-center">
-                            <Button
-                                onClick={() => handleQuizQuit()}
-                                className=""
-                                as={Link} href="/flashmap"
-                            >
-                                Quit
-                            </Button>
-                            <Button
-                                // @ts-ignore
-                                disable={answeredCount !== data?.length || isQuizSubmit}
-                                className={`bg-gradient-radial text-white ${answeredCount !== data?.length || isQuizSubmit ? "cursor-not-allowed" : ""}`}
-                                onClick={() => handleQuizSubmit()}
-                            >
-                                Submit
-                            </Button>
+                        <div className='flex justify-center space-y-2 flex-col mb-10'>
+                            <div className="my-5 flex gap-4 justify-center items-center">
+                                <Button
+                                    onClick={() => handleQuizQuit()}
+                                    className=""
+                                    as={Link} href="/flashmap#resume"
+                                >
+                                    Quit
+                                </Button>
+
+                                {
+                                    !isQuizSubmit &&
+
+                                    <Button
+                                        // @ts-ignore
+                                        disable={answeredCount !== data?.length || isQuizSubmit}
+                                        className={`bg-gradient-radial text-white ${answeredCount !== data?.length || isQuizSubmit ? "cursor-not-allowed opacity-55" : ""}`}
+                                        onClick={() => handleQuizSubmit()}
+                                    >
+                                        Submit
+                                    </Button>
+                                }
+
+                            </div>
+
+                            {
+                                isQuizSubmit &&
+                                <>
+                                    {
+                                        mapItemData?.isCurrent ?
+                                            <Button onClick={handleFinishSection} variant='bordered' color='primary' className='table mx-auto mt-2'>
+                                                {saveLoading ? 'Saving...' : 'Mark as Done'}
+                                            </Button> :
+
+                                            <div className='flex flex-col items-center gap-2 mt-4'>
+
+                                                <Button as={Link} href='/flashmap' variant='faded' size='sm' color='default'>
+                                                    Completed
+                                                </Button>
+                                               
+                                            </div>
+                                    }
+                                </>
+                            }
+
                         </div>
                     </div>
                     :

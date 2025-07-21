@@ -13,6 +13,7 @@ import { Button } from "@heroui/react";
 import { useUserStore } from "@/store/userState";
 import { useSaveEndSection } from "@/services/progress";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const JukugoGround = () => {
 
@@ -116,7 +117,7 @@ export const JukugoGround = () => {
               {saveLoading ? 'Saving...' : 'Mark as Done'} 
             </Button> :
 
-            <Button variant='faded' color='default' className='table mx-auto mt-2'>
+            <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className='table mx-auto mt-2'>
               Completed
             </Button>
         }

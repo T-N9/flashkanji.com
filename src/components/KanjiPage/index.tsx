@@ -12,6 +12,7 @@ import { useGeneralStore } from '@/store/generalState';
 import { useSaveEndSection } from '@/services/progress';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/userState';
+import Link from 'next/link';
 
 const KanjiGround = () => {
 
@@ -142,7 +143,7 @@ const KanjiGround = () => {
                             {saveLoading ? 'Saving...' : 'Mark as Done'}
                         </Button> :
 
-                        <Button variant='faded' color='default' className='table mx-auto mt-2'>
+                        <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className='table mx-auto mt-2'>
                             Completed
                         </Button>
                 }
