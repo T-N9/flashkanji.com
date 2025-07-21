@@ -45,10 +45,10 @@ export default function UserDashBoard() {
     const { todayReviewCount } = useUserStore()
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="min-h-screen ">
 
 
-            <main className="max-w-screen-md mx-auto px-2 py-8">
+            <main className="max-w-screen-md mx-auto px-6 py-8">
                 {/* Welcome Section */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Student!</h1>
@@ -58,7 +58,7 @@ export default function UserDashBoard() {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-8">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-8">
                     <Card className="bg-gradient-to-r from-red-500 to-pink-500 text-white">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <h1 className="text-sm font-medium">Due Today</h1>

@@ -1,12 +1,14 @@
 "use client";
 
+import RamenLoading from "@/components/common/RamenLoading";
+import { useFetchChapterProgress } from "@/services/progress";
 import { useGeneralStore } from "@/store/generalState";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
 import { Button, Select, SelectItem } from "@heroui/react";
-import { Brain, CompassRose, SealQuestion, Stack } from "@phosphor-icons/react";
+import { Brain, CompassRose, Lock, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 
 const roadmapData = [
@@ -80,6 +82,46 @@ const typeStyles = {
   },
 };
 
+function isStepUnlocked(
+  progress: any,
+  level: string,
+  chapter: string,
+  phase: string,
+  stepIndex: number
+): boolean {
+  const PHASE_STRUCTURE = {
+    "1": 7,
+    "2": 7,
+    "3": 2,
+    "4": 4
+  };
+
+  const currentPhase = parseInt(phase);
+
+  // ✅ Prevent access to this phase if earlier phases aren't fully complete
+  for (let p = 1; p < currentPhase; p++) {
+    //@ts-ignore
+    const totalSteps = PHASE_STRUCTURE[p.toString()];
+    const completedSteps = progress?.[level]?.[chapter]?.[p.toString()] || [];
+    if (completedSteps.length < totalSteps) {
+      return false; // Previous phase not finished
+    }
+  }
+
+  // ✅ Now validate within this phase
+  const steps = progress?.[level]?.[chapter]?.[phase] || [];
+
+  if (stepIndex === 0) return true;
+
+  for (let i = 0; i < stepIndex; i++) {
+    if (!steps.includes(i)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 const RoadmapItem = ({
   phase,
   label,
@@ -89,6 +131,10 @@ const RoadmapItem = ({
   japanese_level,
   japanese_chapter,
   step_i,
+  progress,
+  completed,
+  isCurrent
+
 }: {
   phase: number;
   label: string;
@@ -98,15 +144,30 @@ const RoadmapItem = ({
   japanese_level: number;
   japanese_chapter: number;
   step_i: number;
+  progress: any;
+  completed: boolean;
+  isCurrent: boolean;
 }) => {
   const { bg, border, icon } = typeStyles[type];
 
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted, setIsReviewMode } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo, setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode, setPart: setPartQuiz, setIsParted: setIsPartedQuiz, setLevel: setLevelQuiz } = useQuizGroundStore();
-  const { setIsInGround } = useGeneralStore();
+  const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
+
+  const levelStr = String(japanese_level);
+  const chapterStr = String(japanese_chapter);
+  const phaseStr = String(phase);
+  const stepIndex = step_i - 1;
+
+  const unlocked = isStepUnlocked(progress, levelStr, chapterStr, phaseStr, stepIndex);
 
   const handleClickRoadmapItem = () => {
+
+    if (!unlocked) return;
+
+
+
     setIsInGround(true);
     if (route === 'kanji') {
       setIsReviewMode(false);
@@ -114,6 +175,11 @@ const RoadmapItem = ({
       setSelectedLevel("N" + japanese_level);
       setLevel(japanese_level);
       setIsParted(true);
+
+      if (completed) {
+        setIsSaveRepetition(false);
+      }
+
       if (phase === 1) {
         setPart("0");
       } else if (phase === 2) {
@@ -128,6 +194,11 @@ const RoadmapItem = ({
       setSelectedLevelJukugo("N" + japanese_level);
       setLevelJukugo(japanese_level);
       setIsPartedJukugo(true);
+
+      if (completed) {
+        setIsSaveRepetition(false);
+      }
+
       if (phase === 1) {
         setPartJukugo("0");
       } else if (phase === 2) {
@@ -165,11 +236,13 @@ const RoadmapItem = ({
     }
   }
 
+
+
   return (
 
-    <div className={`bg-slate-50 ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow`}>
-      <div className={`${bg} relative inline-block p-2 rounded-full shadow-md`}>
-        <div className="border-dashed animate-slow-spin border-white border-2 rounded-full p-2">
+    <div className={`${isCurrent ? 'bg-slate-50' : 'bg-blue-100'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+      <div className={`${bg} relative inline-block p-2 rounded-full shadow-md opacity-${unlocked ? "100" : "50"}`}>
+        <div className={`border-dashed ${isCurrent && 'animate-slow-spin'} border-white border-2 rounded-full p-2`}>
           <div className="opacity-0">{icon}</div>
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -179,12 +252,27 @@ const RoadmapItem = ({
 
       <div className="flex flex-col lg:flex-row justify-between items-start w-full gap-2">
         <div>
-          <h3 className="font-bold">{label}</h3>
+          <h3 className={`font-bold ${!unlocked ? "opacity-50" : ""}`}>{label}</h3>
           <p className="text-xs text-gray-600">{description}</p>
         </div>
 
-
-        <Button as={Link} onClick={handleClickRoadmapItem} href={`/study/${route}/${type}`} variant="solid" color="default">Start</Button>
+        {
+          unlocked ? (
+            <Button
+              as={Link}
+              onClick={handleClickRoadmapItem}
+              href={`/study/${route}/${type}`}
+              variant={completed ? 'bordered' : 'solid'}
+              color={completed ? 'primary' : 'primary'}
+            >
+              {completed ? 'Completed' : 'Start'}
+            </Button>
+          ) : (
+            <Button disabled variant="solid" color="default">
+              <Lock size={23} />
+            </Button>
+          )
+        }
 
       </div>
     </div>
@@ -194,12 +282,19 @@ const RoadmapItem = ({
 
 export default function ChapterRoadmap() {
 
-  const { japanese_chapter, japanese_level, setUser } = useUserStore()
+  const { japanese_chapter, japanese_level, setUser, userId } = useUserStore()
   const chapters = Array.from({ length: levelChapterMap[japanese_level] }, (_, i) => (i + 1).toString());
+
+  let foundCurrent = false;
+
+  const { data: chapter_progress, isFetching } = useFetchChapterProgress(userId, parseInt(japanese_level.split('')[1]), japanese_chapter)
+
+  console.log("userId", userId, "level", japanese_level, "chapter", japanese_chapter);
+
 
   return (
     <div className="space-y-12 max-w-screen-md mx-auto mb-10">
-      <div className=" px-4 pt-8 space-y-5 lg:space-y-12">
+      <div className=" px-6 pt-8 space-y-5 lg:space-y-12">
         <div className="flex items-center gap-4">
           <CompassRose size={32} />
           <h1 className="text-lg lg:text-3xl font-bold text-dark">Roadmap for Chapter {japanese_chapter}  – {japanese_level}</h1>
@@ -227,18 +322,60 @@ export default function ChapterRoadmap() {
         </div>
       </div>
 
-      {roadmapData.map((phase, idx) => (
-        <div key={idx} className="space-y-4 bg-blue-50  border rounded-md overflow-hidden">
-          <div className="bg-slate-600  p-5 ">
-            <h2 className="text-xl font-semibold text-white">{phase.title}</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 px-2 py-5 lg:p-5 ">
-            {phase.steps.map(([label, type, description, route], i) => (
-              <RoadmapItem phase={idx + 1} step_i={i + 1} key={i} label={label} route={route} type={type as any} description={description} japanese_chapter={japanese_chapter} japanese_level={parseInt(japanese_level.split('')[1])} />
-            ))}
-          </div>
-        </div>
-      ))}
+      {
+        isFetching ?
+          <RamenLoading />
+          :
+          <>
+            {roadmapData.map((phase, idx) => {
+              const phaseIndex = idx + 1;
+              const phaseStr = String(phaseIndex);
+              const levelStr = String(parseInt(japanese_level.split('')[1]));
+              const chapterStr = String(japanese_chapter);
+              //@ts-ignore
+              const completedSteps = chapter_progress?.[levelStr]?.[chapterStr]?.[phaseStr] || [];
+
+              return (
+                <div key={idx} className="space-y-4 bg-blue-50 border rounded-none md:rounded-md overflow-hidden">
+                  <div className="bg-slate-600 p-5">
+                    <h2 className="text-xl font-semibold text-white">{phase.title}</h2>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 px-6 py-5 lg:p-5">
+                    {phase.steps.map(([label, type, description, route], i) => {
+                      const stepIndex = i;
+                      const isUnlocked = isStepUnlocked(chapter_progress, levelStr, chapterStr, phaseStr, stepIndex);
+                      const completed = completedSteps.includes(stepIndex);
+
+                      let isCurrent = false;
+                      if (isUnlocked && !completed && !foundCurrent) {
+                        isCurrent = true;
+                        foundCurrent = true;
+                      }
+
+                      return (
+                        <RoadmapItem
+                          key={i}
+                          phase={phaseIndex}
+                          step_i={i + 1}
+                          label={label}
+                          type={type as any}
+                          description={description}
+                          route={route}
+                          japanese_chapter={japanese_chapter}
+                          japanese_level={parseInt(japanese_level.split('')[1])}
+                          progress={chapter_progress}
+                          completed={completed}
+                          isCurrent={isCurrent}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </>
+      }
+
     </div>
   );
 }

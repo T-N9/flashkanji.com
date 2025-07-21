@@ -1,7 +1,5 @@
-import { Kanji } from "@/types/kanji";
 import { apiClient } from "./client";
 import { SR_KanjiCard } from "@/util";
-import { relatedJukugoItem } from "@/types/jukugo";
 
 export type KanjiRepetitionData = {
   cardData: any;

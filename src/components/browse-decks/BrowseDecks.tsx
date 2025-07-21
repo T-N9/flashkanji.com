@@ -6,6 +6,7 @@ import { Button, Card, CardBody, CardHeader, Input, Select, SelectItem } from "@
 import debounce from "lodash/debounce";
 import Link from "next/link";
 import Image from "next/image";
+import { Funnel } from "@phosphor-icons/react";
 
 const LEVEL_OPTIONS = [
   { label: "N5", value: 5 },
@@ -41,68 +42,81 @@ const BrowseDecks = () => {
     return () => debouncedSetSearch.cancel();
   }, [searchInput, debouncedSetSearch]);
 
+  const [isFilterBar, setIsFilterBar] = useState(false);
+
   return (
     <div className="max-w-screen-md mx-auto p-6">
-      <h2 className="text-2xl font-semibold mb-4">Browse Decks</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold mb-4">Browse Decks</h2>
 
-      {/* Filters */}
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
-        <Input
-          label="Search by name"
-          placeholder="e.g. Collection 5"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-
-        <Select
-          label="Level"
-          selectedKeys={level !== undefined ? [String(level)] : []}
-          onChange={(e) => {
-            const val = parseInt(e.target.value);
-            setLevel(isNaN(val) ? undefined : val);
-          }}
-          placeholder="Select Level"
-        >
-          {LEVEL_OPTIONS.map((option) => (
-            <SelectItem key={option.value} >
-              {option.label}
-            </SelectItem>
-          ))}
-        </Select>
-
-        <Select
-          label="Category"
-          selectedKeys={category ? [category] : []}
-          onChange={(e) => {
-            const val = e.target.value;
-            setCategory(val || undefined);
-          }}
-          placeholder="Select Category"
-        >
-          {CATEGORY_OPTIONS.map((cat) => (
-            <SelectItem key={cat} >
-              {cat}
-            </SelectItem>
-          ))}
-        </Select>
+        <Funnel className="cursor-pointer" onClick={()=> setIsFilterBar(!isFilterBar)} size={28} />
       </div>
-      {(searchInput || level !== undefined || category !== undefined) && (
-        <div className="mb-6">
-          <Button
-            variant="light"
-            size="sm"
-            onClick={() => {
-              setSearchInput("");
-              setSearch("");
-              setLevel(undefined);
-              setCategory(undefined);
-            }}
-            className="text-orange-500"
-          >
-            Clear Filters
-          </Button>
-        </div>
-      )}
+
+      {
+        isFilterBar &&
+
+        <>
+          {/* Filters */}
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <Input
+              label="Search by name"
+              placeholder="e.g. Collection 5"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+
+            <Select
+              label="Level"
+              selectedKeys={level !== undefined ? [String(level)] : []}
+              onChange={(e) => {
+                const val = parseInt(e.target.value);
+                setLevel(isNaN(val) ? undefined : val);
+              }}
+              placeholder="Select Level"
+            >
+              {LEVEL_OPTIONS.map((option) => (
+                <SelectItem key={option.value} >
+                  {option.label}
+                </SelectItem>
+              ))}
+            </Select>
+
+            <Select
+              label="Category"
+              selectedKeys={category ? [category] : []}
+              onChange={(e) => {
+                const val = e.target.value;
+                setCategory(val || undefined);
+              }}
+              placeholder="Select Category"
+            >
+              {CATEGORY_OPTIONS.map((cat) => (
+                <SelectItem key={cat} >
+                  {cat}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
+          {(searchInput || level !== undefined || category !== undefined) && (
+            <div className="mb-6">
+              <Button
+                variant="light"
+                size="sm"
+                onClick={() => {
+                  setSearchInput("");
+                  setSearch("");
+                  setLevel(undefined);
+                  setCategory(undefined);
+                }}
+                className="text-orange-500"
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
+        </>
+      }
+
 
 
       {/* Deck Results */}
