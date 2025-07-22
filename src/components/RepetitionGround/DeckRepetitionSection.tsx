@@ -216,14 +216,14 @@ const DeckRepetitionReviewMode = () => {
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <DeckRepetitionItem
-                            sr_data={spacedRepetitionData.find((item) => item.id === card.id) || {
+                            sr_data={spacedRepetitionData.find((item) => item.card_id === card.id) || {
                                 id: card.id,
                                 interval: 1,
                                 repetitions: 0,
                                 easeFactor: 2.5,
                                 nextReviewDate: new Date(),
                                 previousClick: null,
-                                level: null
+                                level: null,
                             }}
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}

@@ -17,7 +17,7 @@ export type SR_KanjiCard = {
   nextReviewDate: Date;
   previousClick: number | null;
   level: number | null;
-  card_id ?: number;
+  card_id?: number;
 };
 
 export type SR_DeckCard = {
@@ -28,6 +28,7 @@ export type SR_DeckCard = {
   nextReviewDate: Date;
   previousClick: number | null;
   level: number | null;
+  card_id?: number;
 };
 
 export type Clicked_Item = {
@@ -44,7 +45,7 @@ export function calculateNextReview(
   if (quality < 0 || quality > 3) {
     throw new Error("Quality must be between 0 and 3.");
   }
-
+  console.log({ card });
   const updatedCard = { ...card };
   const currentDate = new Date(); // Use a fixed date for testing
 
@@ -137,6 +138,8 @@ export function calculateDeckNextReview(
   if (quality < 0 || quality > 3) {
     throw new Error("Quality must be between 0 and 3.");
   }
+
+  console.log({ card });
 
   const updatedCard = { ...card };
   const currentDate = new Date(); // Use a fixed date for testing

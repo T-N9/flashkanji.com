@@ -75,13 +75,18 @@ export const DeckRepetitionItem = ({
     }, [isFlipped]);
 
     const handleButtonClick = (index: number) => {
+        console.log({sr_data})
         const updatedCard = calculateDeckNextReview(sr_data, index, satisfaction, seconds);
-        const updatedStoredData = spacedRepetitionData.map((item) =>
-            item.id === updatedCard.updatedCard.id ? updatedCard.updatedCard : item
+        const updatedStoredData = spacedRepetitionData.map((item) => {
+            console.log(item.id, updatedCard.updatedCard.id, item.card_id);
+            return item.id === updatedCard.updatedCard.id ? updatedCard.updatedCard : item
+        }
+
         );
 
         setSpacedRepetitionData(updatedStoredData);
-        handleClickLevel(updatedCard.updatedCard.id, index);
+        updatedCard.updatedCard.card_id ? handleClickLevel(updatedCard.updatedCard.card_id, index) :
+            handleClickLevel(updatedCard.updatedCard.id, index);
         setSatisfaction(updatedCard.satisfaction);
         console.log({ satisfaction: updatedStoredData });
     };

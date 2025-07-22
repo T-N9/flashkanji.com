@@ -4,7 +4,6 @@ import React from "react";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useKanjiByChapterAndLevel } from "@/services/kanji";
 import { KanjiRepetitionItem } from "./KanjiRepetitionItem";
-import Avatar from "../common/avatar/Avatar";
 import { Kanji } from "@/types/kanji";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
@@ -18,7 +17,6 @@ import { useGeneralStore } from "@/store/generalState";
 import { useSaveEndSection } from "@/services/progress";
 import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
-import Link from "next/link";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -36,6 +34,7 @@ const KanjiRepetitionNormalMode = () => {
         handleClickLevel,
         handleRestart,
     } = useRepetitionCore<Kanji>(data || []);
+
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
@@ -167,6 +166,8 @@ const KanjiRepetitionReviewMode = () => {
     const { userId } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
     const { isSaveRepetition, setIsSaveRepetition, mapItemData } = useGeneralStore();
+
+    console.log({ fetchedData: data?.repetitionData })
 
     const {
         shuffledData,

@@ -8,6 +8,7 @@ export type DeckCard = {
   meaning: string;
   character: string;
   deck_id: number;
+  card_id ?: number;
 };
 
 export type DeckCardsResponse = {
@@ -113,14 +114,14 @@ export const fetchDeckSrsSessionDetail = async (
   user_id: string,
   srs_id: number,
   isReview: boolean,
-  date ?: string
+  date?: string
 ): Promise<DeckSrsSessionDetailResponse> => {
   const response = await apiClient.get(
     `/deck/${deck_id}/srs/sessions/${srs_id}?isReview=${isReview}`,
     {
       params: {
         userId: user_id,
-        date: date
+        date: date,
       },
     }
   );
