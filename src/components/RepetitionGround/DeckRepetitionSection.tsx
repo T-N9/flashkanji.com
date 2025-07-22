@@ -2,7 +2,7 @@
 import React from "react";
 import Avatar from "../common/avatar/Avatar";
 import { Button } from "@heroui/react";
-import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userState";
@@ -82,7 +82,7 @@ const DeckRepetitionNormalMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-               <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+                <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
             </div>
         );
     }
@@ -188,7 +188,20 @@ const DeckRepetitionReviewMode = () => {
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-               <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+
+                {
+                    isSaveRepetition ?
+                        <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+                        :
+                        <div className='flex gap-2 justify-center items-center mt-2'>
+                            <CheckCircle className='text-green-500' size={32} />
+                            <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
+                                Flashboard
+                            </Button>
+                        </div>
+                }
+
+
             </div>
         );
     }

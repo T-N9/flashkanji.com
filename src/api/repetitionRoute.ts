@@ -26,6 +26,7 @@ export const fetchKanjiRepetitionData_ByDate = async (
       nextReviewDate: new Date(item.next_review_date),
       previousClick: item.previous_click,
       level: item.level,
+      card_id: item.card_id
     })),
   };
 };

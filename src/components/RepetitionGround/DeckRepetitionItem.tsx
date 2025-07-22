@@ -33,6 +33,8 @@ export const DeckRepetitionItem = ({
     const [seconds, setSeconds] = useState<number>(0);
     const [isRunning, setIsRunning] = useState<boolean>(true);
 
+    // console.log({sr_data})
+
     useEffect(() => {
         let interval: NodeJS.Timeout | undefined;
 
@@ -81,7 +83,7 @@ export const DeckRepetitionItem = ({
         setSpacedRepetitionData(updatedStoredData);
         handleClickLevel(updatedCard.updatedCard.id, index);
         setSatisfaction(updatedCard.satisfaction);
-        console.log({ satisfaction: updatedCard.satisfaction });
+        console.log({ satisfaction: updatedStoredData });
     };
 
     const handleShowAnswer = () => {

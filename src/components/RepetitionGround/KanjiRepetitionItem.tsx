@@ -17,6 +17,7 @@ export const KanjiRepetitionItem = ({
     kunyomi,
     satisfaction,
     setSatisfaction,
+    isReview = false,
 }: {
     sr_data: SR_KanjiCard;
     spacedRepetitionData: SR_KanjiCard[];
@@ -28,6 +29,7 @@ export const KanjiRepetitionItem = ({
     kunyomi: string;
     satisfaction: number;
     setSatisfaction: React.Dispatch<React.SetStateAction<number>>;
+    isReview?: boolean;
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isAnswerShown, setIsAnswerShown] = useState(false);
@@ -76,8 +78,15 @@ export const KanjiRepetitionItem = ({
 
     const handleButtonClick = (index: number) => {
         const updatedCard = calculateNextReview(sr_data, index, satisfaction, seconds);
-        const updatedStoredData = spacedRepetitionData.map((item) =>
-            item.id === updatedCard.updatedCard.id ? updatedCard.updatedCard : item
+        const updatedStoredData = spacedRepetitionData.map((item) => {
+            console.log(item.id, updatedCard.updatedCard.card_id, item.card_id);
+            if (isReview) {
+                return item.card_id === updatedCard.updatedCard.card_id ? updatedCard.updatedCard : item
+            } else {
+                return item.id === updatedCard.updatedCard.card_id ? updatedCard.updatedCard : item
+            }
+        }
+
         );
 
         setSpacedRepetitionData(updatedStoredData);
@@ -85,9 +94,9 @@ export const KanjiRepetitionItem = ({
         //     "spacedRepetitionData",
         //     JSON.stringify(updatedStoredData)
         // );
-        handleClickLevel(updatedCard.updatedCard.id, index);
+        updatedCard.updatedCard.card_id && handleClickLevel(updatedCard.updatedCard.card_id, index);
         setSatisfaction(updatedCard.satisfaction);
-        // console.log({ satisfaction: updatedCard.satisfaction });
+        console.log({ updatedCard, updatedStoredData, sr_data, spacedRepetitionData });
     };
 
     const handleShowAnswer = () => {

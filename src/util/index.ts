@@ -17,6 +17,7 @@ export type SR_KanjiCard = {
   nextReviewDate: Date;
   previousClick: number | null;
   level: number | null;
+  card_id ?: number;
 };
 
 export type SR_DeckCard = {

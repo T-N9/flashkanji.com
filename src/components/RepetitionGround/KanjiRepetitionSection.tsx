@@ -135,14 +135,15 @@ const KanjiRepetitionNormalMode = () => {
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <KanjiRepetitionItem
-                            sr_data={spacedRepetitionData.find((item) => item.id === kanji.id) || {
+                            sr_data={spacedRepetitionData.find((item) => item.card_id === kanji.id) || {
                                 id: kanji.id,
                                 interval: 1,
                                 repetitions: 0,
                                 easeFactor: 2.5,
                                 nextReviewDate: new Date(),
                                 previousClick: null,
-                                level: level
+                                level: level,
+                                card_id: kanji.id
                             }}
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
@@ -182,7 +183,7 @@ const KanjiRepetitionReviewMode = () => {
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
     const router = useRouter();
 
-    // console.log({ spacedRepetitionData, selectedChapter })
+    console.log({ spacedRepetitionData, shuffledData })
 
     const handleEnd = () => {
         if (isSaveRepetition) {
@@ -245,14 +246,14 @@ const KanjiRepetitionReviewMode = () => {
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <KanjiRepetitionItem
-                            sr_data={spacedRepetitionData.find((item) => item.id === kanji.id) || {
+                            sr_data={spacedRepetitionData.find((item) => item.card_id === kanji.id) || {
                                 id: kanji.id,
                                 interval: 1,
                                 repetitions: 0,
                                 easeFactor: 2.5,
                                 nextReviewDate: new Date(),
                                 previousClick: null,
-                                level: level
+                                level: level,
                             }}
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
@@ -263,6 +264,7 @@ const KanjiRepetitionReviewMode = () => {
                             meaning={kanji.meaning}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isReview={true}
                         />
                     </div>
                 )
