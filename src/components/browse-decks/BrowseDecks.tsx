@@ -45,6 +45,10 @@ const BrowseDecks = () => {
 
   const [isFilterBar, setIsFilterBar] = useState(false);
 
+  const getBackgroundImage = (index : number) => {
+  return `/assets/bg/bg-${(index % 3) + 1}.png`;
+};
+
   return (
     <div className="max-w-screen-md mx-auto p-6">
       <div className="flex justify-between items-center">
@@ -189,11 +193,13 @@ const BrowseDecks = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-4">{
-              data?.decks.map((deck) => (
+              data?.decks.map((deck, i) => (
                 <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
                   <Card shadow="sm" className="border border-default-200">
-                    <CardHeader className="font-semibold">{deck.name}</CardHeader>
-                    <CardBody>
+                    <CardHeader className="font-semibold text-dark">{deck.name}</CardHeader>
+                    <CardBody style={{ backgroundImage : `url('${getBackgroundImage(i)}')`,
+                      backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
+                    }} className=" bg-right-bottom bg-no-repeat">
                       <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
                       <p className="text-xs text-gray-400">Level: {deck.level}</p>
                       <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
