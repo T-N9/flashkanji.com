@@ -20,7 +20,7 @@ export type SR_KanjiCard = {
 };
 
 export type SR_DeckCard = {
-  id: number; /* card_id */
+  id: number /* card_id */;
   interval: number;
   repetitions: number;
   easeFactor: number;
@@ -35,7 +35,7 @@ export type Clicked_Item = {
 };
 
 export function calculateNextReview(
-  card: SR_KanjiCard ,
+  card: SR_KanjiCard,
   quality: number, // 0 (again), 1 (hard), 2 (good), 3 (easy)
   satisfaction: number,
   stopSecond: number
@@ -128,7 +128,7 @@ export function calculateNextReview(
 }
 
 export function calculateDeckNextReview(
-  card: SR_DeckCard ,
+  card: SR_DeckCard,
   quality: number, // 0 (again), 1 (hard), 2 (good), 3 (easy)
   satisfaction: number,
   stopSecond: number
@@ -264,3 +264,15 @@ export function getTodayReviewCount(
 
   return (todayData.kanji_count || 0) + (todayData.jukugo_count || 0);
 }
+
+export const getConfidenceEmoji = (confidence: number) => {
+  if (confidence <= -10) return "dizzy.png";
+  if (confidence < 0) return "crying.png";
+  if (confidence === 0) return "annoyed.png";
+  if (confidence <= 4) return "notbad.png";
+  if (confidence <= 9) return "good.png";
+  if (confidence <= 14) return "grin.png";
+  if (confidence <= 19) return "happy.png";
+  if (confidence <= 24) return "cheerful.png";
+  return "star.png";
+};

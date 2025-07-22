@@ -7,7 +7,7 @@ import { KanjiRepetitionItem } from "./KanjiRepetitionItem";
 import Avatar from "../common/avatar/Avatar";
 import { Kanji } from "@/types/kanji";
 import { Button } from "@heroui/react";
-import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
 import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetitionData_Review } from "@/services/repetition";
@@ -16,6 +16,9 @@ import useRepetitionReview from "./useRepetitionReview";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { useSaveEndSection } from "@/services/progress";
+import { getConfidenceEmoji } from "@/util";
+import CharacterImage from "../common/character";
+import Link from "next/link";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -32,12 +35,11 @@ const KanjiRepetitionNormalMode = () => {
         setSatisfactionPoint,
         handleClickLevel,
         handleRestart,
-        getConfidenceEmoji
     } = useRepetitionCore<Kanji>(data || []);
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
-    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, } = useGeneralStore();
 
     const router = useRouter();
 
@@ -74,7 +76,7 @@ const KanjiRepetitionNormalMode = () => {
                                     },
                                 }
                             );
-                        } 
+                        }
                     },
                     onError: (error) => {
                         console.error("Failed to save repetition data:", error);
@@ -98,13 +100,27 @@ const KanjiRepetitionNormalMode = () => {
 
     if (clickedRepetitionData.length === 0) {
         return (
-            <div className="flex flex-col gap-5 items-center">
+            <div className="flex flex-col gap-5 items-center  relative z-20">
                 <p className="text-center">Flash Repetition Session Completed.</p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                <CharacterImage src={getConfidenceEmoji(satisfactionPoint)} />
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
+
+
+
+                {
+                    mapItemData?.isCurrent ?
+                        <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+                        :
+                        <div className='flex gap-2 justify-center items-center mt-2'>
+                            <CheckCircle className='text-green-500' size={32} />
+                            <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
+                                Flashmap
+                            </Button>
+                        </div>
+                }
+
             </div>
         );
     }
@@ -149,7 +165,7 @@ const KanjiRepetitionReviewMode = () => {
     const { level, selectedReviewDate } = useKanjiGroundState();
     const { userId } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
-    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData } = useGeneralStore();
 
     const {
         shuffledData,
@@ -161,7 +177,6 @@ const KanjiRepetitionReviewMode = () => {
         setSatisfactionPoint,
         handleClickLevel,
         handleRestart,
-        getConfidenceEmoji
     } = useRepetitionReview<Kanji>(data?.cardData || [], data?.repetitionData);
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
@@ -200,15 +215,22 @@ const KanjiRepetitionReviewMode = () => {
         </div>);
     }
 
+
+
     if (clickedRepetitionData.length === 0) {
         return (
-            <div className="flex flex-col gap-5 items-center">
+            <div className="flex flex-col gap-5 items-center relative z-20">
                 <p className="text-center">Flash Repetition Session Completed.</p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                <CharacterImage src={getConfidenceEmoji(satisfactionPoint)} />
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
+
+                <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+
+
+
+
             </div>
         );
     }

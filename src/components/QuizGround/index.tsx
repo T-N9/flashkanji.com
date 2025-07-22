@@ -11,6 +11,7 @@ import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
 import { useSaveEndSection } from '@/services/progress';
 import { useRouter } from 'next/navigation';
+import { CheckCircle } from '@phosphor-icons/react';
 
 
 
@@ -163,12 +164,11 @@ const QuizGround = () => {
                                                 {saveLoading ? 'Saving...' : 'Mark as Done'}
                                             </Button> :
 
-                                            <div className='flex flex-col items-center gap-2 mt-4'>
-
-                                                <Button as={Link} href='/flashmap' variant='faded' size='sm' color='default'>
-                                                    Completed
+                                            <div className='flex gap-2 justify-center items-center mt-2'>
+                                                <CheckCircle className='text-green-500' size={32} />
+                                                <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className=''>
+                                                    Flashmap
                                                 </Button>
-                                               
                                             </div>
                                     }
                                 </>

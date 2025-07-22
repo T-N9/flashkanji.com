@@ -14,6 +14,7 @@ import { useUserStore } from "@/store/userState";
 import { useSaveEndSection } from "@/services/progress";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { CheckCircle } from "@phosphor-icons/react";
 
 export const JukugoGround = () => {
 
@@ -114,12 +115,15 @@ export const JukugoGround = () => {
         {
           mapItemData && mapItemData.isCurrent ?
             <Button onClick={handleFinishSection} variant='bordered' color='primary' className='table mx-auto mt-2'>
-              {saveLoading ? 'Saving...' : 'Mark as Done'} 
+              {saveLoading ? 'Saving...' : 'Mark as Done'}
             </Button> :
 
-            <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className='table mx-auto mt-2'>
-              Completed
-            </Button>
+            <div className='flex gap-2 justify-center items-center mt-2'>
+              <CheckCircle className='text-green-500' size={32} />
+              <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className=''>
+                Flashmap
+              </Button>
+            </div>
         }
       </div>
       <div className="flex w-full justify-center px-4 lg:px-0 gap-4 mt-10 mb-40">

@@ -13,6 +13,7 @@ import { useSaveEndSection } from '@/services/progress';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/userState';
 import Link from 'next/link';
+import { CheckCircle } from '@phosphor-icons/react';
 
 const KanjiGround = () => {
 
@@ -103,7 +104,7 @@ const KanjiGround = () => {
                     chapter: mapItemData?.chapter,
                     level: mapItemData?.level,
                     phase: mapItemData?.phase,
-                    stepIndex: mapItemData?.stepIndex -1
+                    stepIndex: mapItemData?.stepIndex - 1
                 },
                 {
                     onSuccess: () => {
@@ -143,9 +144,12 @@ const KanjiGround = () => {
                             {saveLoading ? 'Saving...' : 'Mark as Done'}
                         </Button> :
 
-                        <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className='table mx-auto mt-2'>
-                            Completed
-                        </Button>
+                        <div className='flex gap-2 justify-center items-center mt-2'>
+                            <CheckCircle className='text-green-500' size={32} />
+                            <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className=''>
+                                Flashmap
+                            </Button>
+                        </div>
                 }
 
             </div>

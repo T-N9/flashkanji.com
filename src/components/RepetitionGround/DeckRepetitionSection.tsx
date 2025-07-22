@@ -14,6 +14,8 @@ import useDeckRepetitionCore from "./useDeckRepetitionCore";
 import useDeckRepetitionReview from "./useDeckRepetitionReview";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useGeneralStore } from "@/store/generalState";
+import CharacterImage from "../common/character";
+import { getConfidenceEmoji } from "@/util";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId } = useDeckGroundState();
@@ -31,7 +33,6 @@ const DeckRepetitionNormalMode = () => {
         handleClickLevel,
         handleRestart,
         // handleEnd,
-        getConfidenceEmoji
     } = useDeckRepetitionCore<DeckItem>(data?.cards || []);
 
     const router = useRouter();
@@ -75,13 +76,13 @@ const DeckRepetitionNormalMode = () => {
 
     if (clickedRepetitionData.length === 0) {
         return (
-            <div className="flex flex-col gap-5 items-center">
+            <div className="flex flex-col gap-5 items-center relative z-20">
                 <p className="text-center">Flash Repetition Session Completed.</p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                <CharacterImage src={getConfidenceEmoji(satisfactionPoint)} />
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
+               <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
             </div>
         );
     }
@@ -139,7 +140,6 @@ const DeckRepetitionReviewMode = () => {
         handleClickLevel,
         handleRestart,
         // handleEnd,
-        getConfidenceEmoji
     } = useDeckRepetitionReview<DeckItem>(data?.cardData || [], data?.repetitionData);
 
     console.log({ fetchedData: data?.repetitionData })
@@ -182,13 +182,13 @@ const DeckRepetitionReviewMode = () => {
 
     if (clickedRepetitionData.length === 0) {
         return (
-            <div className="flex flex-col gap-5 items-center">
+            <div className="flex flex-col gap-5 items-center relative z-20">
                 <p className="text-center">Flash Repetition Session Completed.</p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                <CharacterImage src={getConfidenceEmoji(satisfactionPoint)} />
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
+               <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
             </div>
         );
     }

@@ -6,7 +6,7 @@ import { JukugoRepetitionItem } from "./JukugoRepetitionItem";
 import { relatedJukugoItem } from "@/types/jukugo";
 import Avatar from "../common/avatar/Avatar";
 import { Button } from "@heroui/react";
-import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,8 @@ import useRepetitionReview from "./useRepetitionReview";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useGeneralStore } from "@/store/generalState";
 import { useSaveEndSection } from "@/services/progress";
+import CharacterImage from "../common/character";
+import { getConfidenceEmoji } from "@/util";
 
 const JukugoRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -31,8 +33,6 @@ const JukugoRepetitionNormalMode = () => {
         setSatisfactionPoint,
         handleClickLevel,
         handleRestart,
-        // handleEnd,
-        getConfidenceEmoji
     } = useRepetitionCore<relatedJukugoItem>(data || []);
 
     const router = useRouter();
@@ -98,13 +98,24 @@ const JukugoRepetitionNormalMode = () => {
 
     if (clickedRepetitionData.length === 0) {
         return (
-            <div className="flex flex-col gap-5 items-center">
+            <div className="flex flex-col gap-5 items-center relative z-20">
                 <p className="text-center">Flash Repetition Session Completed.</p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                <CharacterImage src={getConfidenceEmoji(satisfactionPoint)} />
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
+
+                {
+                    mapItemData?.isCurrent ?
+                        <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+                        :
+                        <div className='flex gap-2 justify-center items-center mt-2'>
+                            <CheckCircle className='text-green-500' size={32} />
+                            <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
+                                Flashmap
+                            </Button>
+                        </div>
+                }
             </div>
         );
     }
@@ -161,7 +172,6 @@ const JukugoRepetitionReviewMode = () => {
         handleClickLevel,
         handleRestart,
         // handleEnd,
-        getConfidenceEmoji
     } = useRepetitionReview<relatedJukugoItem>(data?.cardData || [], data?.repetitionData);
 
     console.log({ fetchedData: data?.repetitionData })
@@ -205,13 +215,13 @@ const JukugoRepetitionReviewMode = () => {
 
     if (clickedRepetitionData.length === 0) {
         return (
-            <div className="flex flex-col gap-5 items-center">
+            <div className="flex flex-col gap-5 items-center relative z-20">
                 <p className="text-center">Flash Repetition Session Completed.</p>
-                <Avatar className="table mx-auto" emoji={getConfidenceEmoji(satisfactionPoint)} />
+                <CharacterImage src={getConfidenceEmoji(satisfactionPoint)} />
                 <Button isIconOnly onClick={handleRestart} className="w-20 h-20 rounded-full">
                     <ArrowCounterClockwise size={52} />
                 </Button>
-                <Button variant="solid" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'End Session'} </Button>
+                <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
             </div>
         );
     }

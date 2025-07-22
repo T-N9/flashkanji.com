@@ -76,17 +76,7 @@ export default function useRepetitionReview<T extends { id: number }>(rawData: T
     handlePrepareRepetitionData();
   };
 
-  const getConfidenceEmoji = (confidence: number) => {
-    if (confidence <= -10) return "😵";
-    if (confidence < 0) return "😖";
-    if (confidence === 0) return "😕";
-    if (confidence <= 4) return "😐";
-    if (confidence <= 9) return "🙂";
-    if (confidence <= 14) return "😊";
-    if (confidence <= 19) return "😁";
-    if (confidence <= 24) return "😃";
-    return "🤩";
-  };
+
 
   return {
     shuffledData,
@@ -100,6 +90,5 @@ export default function useRepetitionReview<T extends { id: number }>(rawData: T
     setSatisfactionPoint,
     handleClickLevel,
     handleRestart,
-    getConfidenceEmoji,
   };
 }
