@@ -130,14 +130,15 @@ const JukugoRepetitionNormalMode = () => {
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <JukugoRepetitionItem
-                            sr_data={spacedRepetitionData.find((item) => item.id === jukugo.id) || {
+                            sr_data={spacedRepetitionData.find((item) => item.card_id === jukugo.id) || {
                                 id: jukugo.id,
                                 interval: 1,
                                 repetitions: 0,
                                 easeFactor: 2.5,
                                 nextReviewDate: new Date(),
                                 previousClick: null,
-                                level: null
+                                level: level,
+                                card_id : jukugo.id
                             }}
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
@@ -236,14 +237,14 @@ const JukugoRepetitionReviewMode = () => {
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <JukugoRepetitionItem
-                            sr_data={spacedRepetitionData.find((item) => item.id === jukugo.id) || {
+                            sr_data={spacedRepetitionData.find((item) => item.card_id === jukugo.id) || {
                                 id: jukugo.id,
                                 interval: 1,
                                 repetitions: 0,
                                 easeFactor: 2.5,
                                 nextReviewDate: new Date(),
                                 previousClick: null,
-                                level: null
+                                level: level
                             }}
                             handleClickLevel={handleClickLevel}
                             spacedRepetitionData={spacedRepetitionData}
@@ -253,6 +254,7 @@ const JukugoRepetitionReviewMode = () => {
                             hiragana={jukugo.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isReview={true}
                         />
                     </div>
                 )
