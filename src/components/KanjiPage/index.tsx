@@ -110,7 +110,7 @@ const KanjiGround = () => {
                     onSuccess: () => {
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
-                        router.push("/flashmap");
+                        router.push("/flashmap#resume");
                     },
                     onError: (error) => {
                         console.error("Failed to save section:", error);
@@ -118,7 +118,7 @@ const KanjiGround = () => {
                 }
             );
         } else {
-            router.push('/flashmap')
+            router.push('/flashmap#resume')
         }
     }
 
@@ -146,7 +146,7 @@ const KanjiGround = () => {
 
                         <div className='flex gap-2 justify-center items-center mt-2'>
                             <CheckCircle className='text-green-500' size={32} />
-                            <Button as={Link} href="/flashmap" size="sm" variant='faded' color='default' className=''>
+                            <Button as={Link} href="/flashmap#resume" size="sm" variant='faded' color='default' className=''>
                                 Flashmap
                             </Button>
                         </div>

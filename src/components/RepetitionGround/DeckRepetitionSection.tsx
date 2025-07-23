@@ -51,7 +51,7 @@ const DeckRepetitionNormalMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
-                        router.push("/flashmap");
+                        router.push("/flashboard");
                     },
                     onError: (error) => {
                         console.error("Failed to save repetition data:", error);
@@ -60,7 +60,7 @@ const DeckRepetitionNormalMode = () => {
             );
         } else {
             setIsSaveRepetition(true)
-            router.push('/flashmap')
+            router.push('/flashboard')
         }
 
     };

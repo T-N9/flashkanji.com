@@ -71,7 +71,7 @@ export default function CreateProfileForm() {
             const res = await createUser(payload);
             console.log({res})
             if (res.success) {
-                router.push("/"); // or /dashboard
+                router.push("/callback"); // or /dashboard
             } else {
                 alert("Something went wrong.");
             }

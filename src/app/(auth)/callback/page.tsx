@@ -44,7 +44,7 @@ export default function AuthCallback() {
             japanese_level: result?.user?.japanese_level,
             created_at: result?.user?.created_at
           })
-          router.push('/flashmap')
+          router.push('/profile')
         } else {
           router.push('/create-profile')
         }

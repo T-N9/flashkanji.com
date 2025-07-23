@@ -68,7 +68,7 @@ const KanjiRepetitionNormalMode = () => {
                                     onSuccess: () => {
                                         console.log("Section saved successfully.");
                                         setShouldRefetchChapter(true);
-                                        router.push("/flashmap");
+                                        router.push("/flashmap#resume");
                                     },
                                     onError: (error) => {
                                         console.error("Failed to save section:", error);
@@ -84,7 +84,7 @@ const KanjiRepetitionNormalMode = () => {
             );
         } else {
             setIsSaveRepetition(true)
-            router.push("/flashmap");
+            router.push("/flashmap#resume");
         }
 
     };

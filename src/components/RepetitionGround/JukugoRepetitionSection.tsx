@@ -66,7 +66,7 @@ const JukugoRepetitionNormalMode = () => {
                                     onSuccess: () => {
                                         console.log("Section saved successfully.");
                                         setShouldRefetchChapter(true);
-                                        router.push("/flashmap");
+                                        router.push("/flashmap#resume");
                                     },
                                     onError: (error) => {
                                         console.error("Failed to save section:", error);
@@ -82,7 +82,7 @@ const JukugoRepetitionNormalMode = () => {
             );
         } else {
             setIsSaveRepetition(true)
-            router.push('/flashmap')
+            router.push('/flashmap#resume')
         }
 
     };
@@ -201,7 +201,7 @@ const JukugoRepetitionReviewMode = () => {
             );
         } else {
             setIsSaveRepetition(true)
-            router.push('/flashmap')
+            router.push('/flashboard')
         }
 
     };
