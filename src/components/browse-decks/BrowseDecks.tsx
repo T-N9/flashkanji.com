@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Funnel } from "@phosphor-icons/react";
 import CharacterImage from "../common/character";
+import { getBackgroundImage } from "@/util";
 
 const LEVEL_OPTIONS = [
   { label: "N5", value: 5 },
@@ -45,16 +46,14 @@ const BrowseDecks = () => {
 
   const [isFilterBar, setIsFilterBar] = useState(false);
 
-  const getBackgroundImage = (index : number) => {
-  return `/assets/bg/bg-${(index % 3) + 1}.png`;
-};
+
 
   return (
     <div className="max-w-screen-md mx-auto p-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold mb-4">Browse Decks</h2>
 
-        <Funnel className="cursor-pointer" onClick={()=> setIsFilterBar(!isFilterBar)} size={28} />
+        <Funnel className="cursor-pointer" onClick={() => setIsFilterBar(!isFilterBar)} size={28} />
       </div>
 
       {
@@ -188,7 +187,7 @@ const BrowseDecks = () => {
         <div className="">
           {data?.decks.length === 0 ? (
             <div>
-              <CharacterImage src="hmm.png" alt="No Sessions"/>
+              <CharacterImage src="hmm.png" alt="No Sessions" />
               <p className="text-center text-gray-400 col-span-full">No decks found.</p>
             </div>
           ) : (
@@ -197,7 +196,8 @@ const BrowseDecks = () => {
                 <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
                   <Card shadow="sm" className="border border-default-200">
                     <CardHeader className="font-semibold text-dark">{deck.name}</CardHeader>
-                    <CardBody style={{ backgroundImage : `url('${getBackgroundImage(i)}')`,
+                    <CardBody style={{
+                      backgroundImage: `url('${getBackgroundImage(i)}')`,
                       backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
                     }} className=" bg-right-bottom bg-no-repeat">
                       <p className="text-sm text-gray-600 mb-2">{deck.description}</p>

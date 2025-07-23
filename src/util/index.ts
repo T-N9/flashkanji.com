@@ -49,6 +49,7 @@ export function calculateNextReview(
   const updatedCard = { ...card };
   const currentDate = new Date(); // Use a fixed date for testing
 
+
   // ✅ (1) Convert your 0–3 scale to SM-2’s 0–5 scale
   // SM-2 expects quality 0–5: we'll map 0 → 2, 1 → 3, 2 → 4, 3 → 5
   const sm2Quality = quality;
@@ -279,4 +280,8 @@ export const getConfidenceEmoji = (confidence: number) => {
   if (confidence <= 19) return "happy.png";
   if (confidence <= 24) return "cheerful.png";
   return "star.png";
+};
+
+export const getBackgroundImage = (index: number) => {
+  return `/assets/bg/bg-${(index % 3) + 1}.png`;
 };

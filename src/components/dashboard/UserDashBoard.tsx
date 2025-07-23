@@ -51,7 +51,7 @@ export default function UserDashBoard() {
             <main className="max-w-screen-md mx-auto px-6 py-8">
                 {/* Welcome Section */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Student!</h1>
+                    <h1 className="text-3xl font-bold text-dark mb-2">Welcome back, Student!</h1>
                     <p className="text-gray-600 mb-3">
                         Ready to continue your Kanji journey? You have {todayReviewCount} cards due today.
                     </p>

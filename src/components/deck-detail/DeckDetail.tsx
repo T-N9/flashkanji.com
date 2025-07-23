@@ -11,7 +11,6 @@ import { Globe, Lock } from "@phosphor-icons/react";
 import moment from "moment";
 import { useGeneralStore } from "@/store/generalState";
 import RamenLoading from "../common/RamenLoading";
-import Image from "next/image";
 import CharacterImage from "../common/character";
 
 const DeckDetail: React.FC = () => {
@@ -61,7 +60,7 @@ const DeckDetail: React.FC = () => {
     <div className="max-w-3xl mx-auto py-6 px-2 lg:px-6 space-y-10">
       <Card className="border border-default-200">
         <CardHeader className="flex flex-col items-start gap-2 lg:flex-row justify-between lg:items-center">
-          <h1 className="text-xl font-bold">{data.name}</h1>
+          <h1 className="text-xl font-bold text-dark">{data.name}</h1>
           <div className="flex gap-1 justify-center items-center ">
             <p className="text-sm !text-gray-500">{moment(data.updated_at).format('MMMM Do YYYY')}</p>
             <div className="text-gray-500">
@@ -106,7 +105,7 @@ const DeckDetail: React.FC = () => {
       <hr />
 
       <div className="space-y-2">
-        <h1 className="font-bold text-xl">Previous Sessions</h1>
+        <h1 className="font-bold text-xl text-center">Previous Sessions</h1>
         {
           sessionData?.sessions?.length && sessionData?.sessions?.length >= 0 ?
 

@@ -95,7 +95,7 @@ export default function SpacedLearningCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader className="font-semibold text-lg flex justify-between items-center gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-dark">
                   <CalendarIcon size={20} /> Review Schedule
                 </div>
                 {
@@ -122,7 +122,7 @@ export default function SpacedLearningCalendar() {
             </Card>
 
             <Card>
-              <CardHeader className="font-semibold text-lg">
+              <CardHeader className="font-semibold text-lg text-dark">
                 {new Date(selectedReviewDate).toLocaleDateString("en-US", {
                   weekday: "long",
                   month: "short",
@@ -173,7 +173,7 @@ export default function SpacedLearningCalendar() {
                               return (
                                 <div key={item.srs_id} className="relative flex items-center justify-between bg-gray-100 p-2 rounded">
                                   <p className="text-gray-700 text-xs">
-                                    <span className="absolute -top-1 px-1 py-0 rounded bg-white border">Session {item.srs_id}</span>
+                                    <span className="absolute -top-1 px-1 py-0 rounded bg-white border">Session</span>
                                     <span className="text-orange-500 text-base">{item.card_count}</span> cards in <span className="font-bold">{item.name}</span>
                                   </p>
 

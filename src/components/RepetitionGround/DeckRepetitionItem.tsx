@@ -78,7 +78,7 @@ export const DeckRepetitionItem = ({
         console.log({sr_data})
         const updatedCard = calculateDeckNextReview(sr_data, index, satisfaction, seconds);
         const updatedStoredData = spacedRepetitionData.map((item) => {
-            console.log(item.id, updatedCard.updatedCard.id, item.card_id);
+            // console.log(item.id, updatedCard.updatedCard.id, item.card_id);
             return item.id === updatedCard.updatedCard.id ? updatedCard.updatedCard : item
         }
 

@@ -310,7 +310,7 @@ export default function ChapterRoadmap() {
       <div className=" px-6 pt-8 space-y-5 lg:space-y-12">
         <div className="flex items-center gap-4">
           <CompassRose size={32} />
-          <h1 className="text-lg lg:text-3xl font-bold text-dark">Roadmap for Chapter {japanese_chapter}  – {japanese_level}</h1>
+          <h1 className="text-lg lg:text-3xl font-bold text-dark">Roadmap for Chapter <span className="text-orange-500">{japanese_chapter}</span>  – {japanese_level}</h1>
         </div>
 
         <div className="flex gap-4">
