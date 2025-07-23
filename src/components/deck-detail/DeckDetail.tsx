@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation"; // if you're using App Router
 import { Card, CardHeader, CardBody, Button } from "@heroui/react";
 import { useDeckDetail, useDeckSrsSessions } from "@/services/deck";
@@ -22,8 +22,12 @@ const DeckDetail: React.FC = () => {
 
   const { data, isLoading, error } = useDeckDetail(deck_id, userId);
   const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
-  const { data: sessionData, isLoading: isSessionLoading, error: sessionError } = useDeckSrsSessions(deck_id, userId)
+  const { data: sessionData, isLoading: isSessionLoading, error: sessionError, refetch } = useDeckSrsSessions(deck_id, userId)
   const { setDeckId, setSrsId, setIsReviewMode, setIsReviewByDate } = useDeckGroundState();
+
+  useEffect(() => {
+    refetch(); 
+  }, []);
 
   if (isLoading) {
     return <div className=""><RamenLoading /></div>;
