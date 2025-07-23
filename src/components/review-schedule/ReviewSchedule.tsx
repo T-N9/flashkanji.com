@@ -16,14 +16,13 @@ import { useUserStore } from "@/store/userState"
 import useJukugoGroundState from "@/store/jukugoGroundState"
 import useDeckGroundState from "@/store/deckGroundState"
 import { useGeneralStore } from "@/store/generalState"
-import Image from "next/image"
 import CharacterImage from "../common/character"
 
 export default function SpacedLearningCalendar() {
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
   const { setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setIsReviewMode: setIsReviewModeDeck, setDeckId, setIsReviewByDate, setSrsId } = useDeckGroundState();
-  const { userId, setToDayReviewCount } = useUserStore()
+  const { userId, setToDayReviewCount, setExpiredReviewCount } = useUserStore()
   const { setIsInGround } = useGeneralStore();
 
   const { data: reviewData, refetch, isFetching } = useFetchReviewCalendarData(userId)
@@ -73,7 +72,10 @@ export default function SpacedLearningCalendar() {
   const todayKey = formatDate(normalizeDate(new Date()))
 
   useEffect(() => {
-    reviewMap.size > 0 && setToDayReviewCount(getTodayReviewCount(reviewMap))
+    if (reviewMap.size > 0) {
+      setToDayReviewCount(getTodayReviewCount(reviewMap).today_count);
+      setExpiredReviewCount(getTodayReviewCount(reviewMap).expired_count);
+    }
   }, [reviewMap]);
 
   console.log({ reviewMap })

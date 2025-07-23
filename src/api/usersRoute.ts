@@ -9,6 +9,10 @@ export const checkUserExists = async (
   japanese_level: "N3" | "N4" | "N5";
   username: string;
   created_at: string;
+  longest_streak: number;
+  current_streak: number;
+  total_learned: number;
+  total_hours: number;
 } }> => {
   const response = await apiClient.post("/users/check-or-create", {
     id,

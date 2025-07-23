@@ -13,6 +13,12 @@ interface UserState {
   avatarUrl: string;
   todayReviewCount: number;
   setToDayReviewCount: (count: number) => void;
+  expiredReviewCount: number;
+  setExpiredReviewCount: (count: number) => void;
+  totalLearned: number;
+  totalHours: number;
+  currentStreak: number;
+  longestStreak: number;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -28,6 +34,10 @@ export const useUserStore = create<UserState>((set) => ({
       ...user,
     })),
   created_at: undefined,
+  totalLearned: 0,
+  totalHours: 0,
+  currentStreak: 0,
+  longestStreak: 0,
   resetUser: () =>
     set({
       username: "",
@@ -37,7 +47,13 @@ export const useUserStore = create<UserState>((set) => ({
       email: "",
       created_at: undefined,
       avatarUrl: "",
+      totalLearned: 0,
+      totalHours: 0,
+      currentStreak: 0,
+      longestStreak: 0,
     }),
   todayReviewCount: 0,
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),
+  expiredReviewCount: 0,
+  setExpiredReviewCount: (count) => set({ todayReviewCount: count }),
 }));

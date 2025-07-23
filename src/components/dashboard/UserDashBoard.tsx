@@ -10,14 +10,13 @@ import { useUserStore } from "@/store/userState";
 export default function UserDashBoard() {
 
     const { setIsReviewMode } = useKanjiGroundState();
+    const { longestStreak, currentStreak, totalLearned, totalHours } = useUserStore();
     const router = useRouter();
 
     const handleStartReview = () => {
         setIsReviewMode(true);
         router.push('/study/kanji/repetition');
     }
-
-    const currentStreak = 12;
 
     // Sample data for the dashboard
     const studyStats = {
@@ -42,7 +41,7 @@ export default function UserDashBoard() {
         { level: "Burned", count: 872, color: "bg-gray-600" },
     ]
 
-    const { todayReviewCount } = useUserStore()
+    const { todayReviewCount, expiredReviewCount } = useUserStore()
 
     return (
         <div className="min-h-screen ">
@@ -53,7 +52,7 @@ export default function UserDashBoard() {
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-dark mb-2">Welcome back, Student!</h1>
                     <p className="text-gray-600 mb-3">
-                        Ready to continue your Kanji journey? You have {todayReviewCount} cards due today.
+                        Ready to continue your Kanji journey? You have {todayReviewCount} cards due today. {expiredReviewCount > 0 && <span className="text-red-500">You have {expiredReviewCount} expired reviews!</span>}
                     </p>
                 </div>
 
@@ -67,8 +66,7 @@ export default function UserDashBoard() {
                         <CardBody>
                             <div className="text-2xl font-bold">{todayReviewCount}</div>
                             <p className="text-xs opacity-90">
-                                {/* {studyStats.newCards} new • {studyStats.reviewCards} review */}
-                                cards to review today
+                                cards to review today. {expiredReviewCount > 0 && `${expiredReviewCount} cards expired.`}
                             </p>
                         </CardBody>
                     </Card>
@@ -79,19 +77,19 @@ export default function UserDashBoard() {
                             <BookOpenText className="h-4 w-4" />
                         </CardHeader>
                         <CardBody>
-                            <div className="text-2xl font-bold">{studyStats.totalLearned.toLocaleString()}</div>
+                            <div className="text-2xl font-bold">{totalLearned}</div>
                             <p className="text-xs opacity-90">Kanji mastered</p>
                         </CardBody>
                     </Card>
 
                     <Card className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <h1 className="text-sm font-medium">Accuracy</h1>
+                            <h1 className="text-sm font-medium">Study Hours</h1>
                             <Target className="h-4 w-4" />
                         </CardHeader>
                         <CardBody>
-                            <div className="text-2xl font-bold">{studyStats.accuracy}%</div>
-                            <p className="text-xs opacity-90">Last 100 reviews</p>
+                            <div className="text-2xl font-bold">{totalHours}</div>
+                            <p className="text-xs opacity-90">Last Pomodoro Sessions</p>
                         </CardBody>
                     </Card>
 
@@ -101,13 +99,13 @@ export default function UserDashBoard() {
                             <Fire className="h-4 w-4" />
                         </CardHeader>
                         <CardBody>
-                            <div className="text-2xl font-bold">{studyStats.streak}</div>
-                            <p className="text-xs opacity-90">days in a row</p>
+                            <div className="text-2xl font-bold">{currentStreak}</div>
+                            <p className="text-xs opacity-90">{longestStreak} days in a row</p>
                         </CardBody>
                     </Card>
                 </div>
 
-                <ReviewSchedule/>
+                <ReviewSchedule />
 
                 <div className="hidden grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Study Session */}

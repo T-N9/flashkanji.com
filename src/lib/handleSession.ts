@@ -31,6 +31,10 @@ export const handleSession = async (router?: any) => {
         username: result.user?.username,
         japanese_level: result.user?.japanese_level,
         created_at: result.user?.created_at,
+        currentStreak: result?.user?.current_streak,
+        longestStreak: result?.user?.longest_streak,
+        totalLearned: result?.user?.total_learned,
+        totalHours: result?.user?.total_hours,
       });
       // router?.push?.('/flashmap')
     } else {

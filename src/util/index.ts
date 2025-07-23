@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isBefore, parseISO } from "date-fns";
 
 export const shuffleArray = (array: any[]) => {
   const shuffled = [...array];
@@ -254,6 +254,7 @@ export function normalizeDate(date: Date): Date {
 type ReviewData = {
   kanji_count: number;
   jukugo_count: number;
+  deck?: { card_count?: number }[];
 };
 
 /**
@@ -261,13 +262,24 @@ type ReviewData = {
  */
 export function getTodayReviewCount(
   reviewMap: Map<string, ReviewData>
-): number {
+): { today_count: number; expired_count: number } {
   const today = format(new Date(), "yyyy-MM-dd");
-  const todayData = reviewMap.get(today);
+  let todayCount = 0;
+  let expiredCount = 0;
 
-  if (!todayData) return 0;
+  for (const [date, data] of reviewMap.entries()) {
+    if (date === today) {
+      const kanjiCount = data.kanji_count || 0;
+      const jukugoCount = data.jukugo_count || 0;
+      const deckCount = data.deck?.reduce((sum, deck) => sum + (deck.card_count || 0), 0) || 0;
+      todayCount = kanjiCount + jukugoCount + deckCount;
+    } else if (isBefore(parseISO(date), parseISO(today))) {
+      const deckCount = data.deck?.reduce((sum, deck) => sum + (deck.card_count || 0), 0) || 0;
+      expiredCount += deckCount;
+    }
+  }
 
-  return (todayData.kanji_count || 0) + (todayData.jukugo_count || 0);
+  return { today_count: todayCount, expired_count: expiredCount };
 }
 
 export const getConfidenceEmoji = (confidence: number) => {
