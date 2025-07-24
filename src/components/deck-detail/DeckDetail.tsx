@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation"; // if you're using App Router
-import { Card, CardHeader, CardBody, Button } from "@heroui/react";
+import { Card, CardHeader, CardBody, Button, Select, SelectItem } from "@heroui/react";
 import { useDeckDetail, useDeckSrsSessions } from "@/services/deck";
 import { useUserStore } from "@/store/userState";
 import Link from "next/link";
@@ -12,6 +12,8 @@ import moment from "moment";
 import { useGeneralStore } from "@/store/generalState";
 import RamenLoading from "../common/RamenLoading";
 import CharacterImage from "../common/character";
+
+
 
 const DeckDetail: React.FC = () => {
   const params = useParams();
@@ -23,10 +25,10 @@ const DeckDetail: React.FC = () => {
   const { data, isLoading, error } = useDeckDetail(deck_id, userId);
   const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
   const { data: sessionData, isLoading: isSessionLoading, error: sessionError, refetch } = useDeckSrsSessions(deck_id, userId)
-  const { setDeckId, setSrsId, setIsReviewMode, setIsReviewByDate } = useDeckGroundState();
+  const { setDeckId, setSrsId, setIsReviewMode, setIsReviewByDate, noOfCards, setNoOfCards } = useDeckGroundState();
 
   useEffect(() => {
-    refetch(); 
+    userId && refetch();
   }, []);
 
   if (isLoading) {
@@ -60,6 +62,23 @@ const DeckDetail: React.FC = () => {
     moment(session.created_at).isSame(moment(), 'day')
   );
 
+  console.log({ noOfCards })
+
+  const fullOptions = [10, 20, 30, 40, 50];
+
+  function getNoOfCardsOptions(totalCardsLeft: number): number[] {
+    if (totalCardsLeft >= 50) return fullOptions;
+
+    const options: number[] = [];
+    for (const option of fullOptions) {
+      if (option < totalCardsLeft) {
+        options.push(option);
+      }
+    }
+    options.push(totalCardsLeft); // last item is always totalCardsLeft
+    return options;
+  }
+
   return (
     <div className="max-w-3xl mx-auto py-6 px-2 lg:px-6 space-y-10">
       <Card className="border border-default-200">
@@ -87,6 +106,29 @@ const DeckDetail: React.FC = () => {
             <CharacterImage src="kiss.png" alt="Learn new cards today" />
             <p className="text-2xl font-bold">Learn new cards today!</p>
           </div>
+
+          <div className="max-w-[300px] mx-auto space-y-2">
+            <Select
+              label="Number of cards to review"
+              value={noOfCards}
+              onChange={(e) => {
+                const val = e.target.value;
+                console.log({ val })
+                setNoOfCards(val.toString());
+              }}
+              placeholder="Select number"
+            >
+              {getNoOfCardsOptions(data.totalCards - data.learnedCards).map((cat) => (
+                <SelectItem key={cat} >
+                  {cat.toString()}
+                </SelectItem>
+              ))}
+            </Select>
+            <div>
+              <p>You are going to review <span className="text-orange-500">{noOfCards === (data.totalCards - data.learnedCards).toString() ? 'All' : noOfCards}</span> cards.</p>
+            </div>
+          </div>
+
           <Button
             onClick={() => {
               setDeckId(deck_id);

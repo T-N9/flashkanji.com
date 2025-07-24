@@ -19,9 +19,9 @@ import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useSaveStreak } from "@/services/progress";
 
 const DeckRepetitionNormalMode = () => {
-    const { deckId } = useDeckGroundState();
+    const { deckId, noOfCards } = useDeckGroundState();
     const { userId } = useUserStore();
-    const { data } = useDeckCards(deckId || 1, userId);
+    const { data } = useDeckCards(deckId || 1, userId, parseInt(noOfCards));
 
     const {
         shuffledData,
