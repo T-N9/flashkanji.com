@@ -41,7 +41,7 @@ export const saveTimer = async (
   user_id: string,
   duration_minutes ?: number
 ): Promise<void> => {
-  await apiClient.post("/progress/streak", {
+  await apiClient.post("/progress/time", {
     user_id,
     duration_minutes,
   });
