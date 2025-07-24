@@ -9,9 +9,10 @@ import RamenLoading from '../common/RamenLoading';
 import CharacterImage from '../common/character';
 import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
-import { useSaveEndSection } from '@/services/progress';
+import { useSaveEndSection, useSaveStreak } from '@/services/progress';
 import { useRouter } from 'next/navigation';
 import { CheckCircle } from '@phosphor-icons/react';
+import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
 
 
 
@@ -62,36 +63,74 @@ const QuizGround = () => {
 
     const { userId } = useUserStore();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+    const { mutate: saveStreak } = useSaveStreak()
     const router = useRouter();
     const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
 
-    const handleFinishSection = () => {
-        if (mapItemData?.isCurrent) {
-            saveSection(
-                {
-                    user_id: userId,
-                    chapter: mapItemData?.chapter,
-                    level: mapItemData?.level,
-                    phase: mapItemData?.phase,
-                    stepIndex: mapItemData?.stepIndex - 1
-                },
+    const saveSectionWithPayload = (
+        onSuccess: () => void,
+        onError?: (error: any) => void
+    ) => {
+        if (!mapItemData?.isCurrent) {
+            router.push('/flashmap#resume');
+            return;
+        }
+
+        const payload = {
+            user_id: userId,
+            chapter: mapItemData.chapter,
+            level: mapItemData.level,
+            phase: mapItemData.phase,
+            stepIndex: (mapItemData.stepIndex || 1) - 1,
+        };
+
+        saveSection(payload, {
+            onSuccess,
+            onError: (error) => {
+                console.error("Failed to save section:", error);
+                onError?.(error);
+            },
+        });
+    };
+
+    const handleSaveSectionOnly = () => {
+        saveSectionWithPayload(() => {
+            setShouldRefetchChapter(true);
+            console.log("Section saved successfully.");
+            router.push("/flashmap#resume");
+        });
+    };
+
+    const handleSaveSectionAndStreak = () => {
+        saveSectionWithPayload(() => {
+            setShouldRefetchChapter(true);
+            console.log("Section saved successfully.");
+
+            saveStreak(
+                { user_id: userId },
                 {
                     onSuccess: () => {
-                        console.log("Section saved successfully.");
-                        setShouldRefetchChapter(true);
+                        saveStreakToLocalStorage();
+                        console.log("Streak saved successfully.");
                         router.push("/flashmap#resume");
                     },
                     onError: (error) => {
-                        console.error("Failed to save section:", error);
+                        console.error("Failed to save streak:", error);
                     },
                 }
             );
-        } else {
-            router.push('/flashmap#resume')
-        }
-    }
+        });
+    };
 
-    // console.log({ answeredCount, length: data?.length, isQuizSubmit })
+    const handleFinishSection = () => {
+        const isAlreadySaved = hasSavedStreakToday();
+        if (isAlreadySaved) {
+            handleSaveSectionOnly();
+        } else {
+            handleSaveSectionAndStreak();
+        }
+    };
+
 
     return (
         <div className="max-w-[1280px] min-w-[70%] mx-auto p-4">

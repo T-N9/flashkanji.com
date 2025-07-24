@@ -55,5 +55,5 @@ export const useUserStore = create<UserState>((set) => ({
   todayReviewCount: 0,
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),
   expiredReviewCount: 0,
-  setExpiredReviewCount: (count) => set({ todayReviewCount: count }),
+  setExpiredReviewCount: (count) => set({ expiredReviewCount: count }),
 }));

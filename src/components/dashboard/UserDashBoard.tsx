@@ -78,7 +78,7 @@ export default function UserDashBoard() {
                         </CardHeader>
                         <CardBody>
                             <div className="text-2xl font-bold">{totalLearned}</div>
-                            <p className="text-xs opacity-90">Kanji mastered</p>
+                            <p className="text-xs opacity-90">cards mastered</p>
                         </CardBody>
                     </Card>
 

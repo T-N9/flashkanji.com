@@ -267,6 +267,8 @@ export function getTodayReviewCount(
   let todayCount = 0;
   let expiredCount = 0;
 
+  console.log({reviewMap})
+
   for (const [date, data] of reviewMap.entries()) {
     if (date === today) {
       const kanjiCount = data.kanji_count || 0;
@@ -278,7 +280,7 @@ export function getTodayReviewCount(
       expiredCount += deckCount;
     }
   }
-
+  console.log({ todayCount, expiredCount });
   return { today_count: todayCount, expired_count: expiredCount };
 }
 

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Avatar from "../common/avatar/Avatar";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -16,6 +15,8 @@ import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useGeneralStore } from "@/store/generalState";
 import CharacterImage from "../common/character";
 import { getConfidenceEmoji } from "@/util";
+import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
+import { useSaveStreak } from "@/services/progress";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId } = useDeckGroundState();
@@ -37,10 +38,13 @@ const DeckRepetitionNormalMode = () => {
 
     const router = useRouter();
     const { mutate: saveRepetition, isLoading } = useSaveDeckRepetitionData();
+    const { mutate: saveStreak } = useSaveStreak();
     const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
 
 
     const handleEnd = () => {
+        const alreadySaved = hasSavedStreakToday();
+
         if (isSaveRepetition) {
             saveRepetition(
                 {
@@ -51,7 +55,25 @@ const DeckRepetitionNormalMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
-                        router.push("/flashboard");
+
+                        if (!alreadySaved) {
+                            saveStreak(
+                                { user_id: userId },
+                                {
+                                    onSuccess: () => {
+                                        console.log("Streak saved successfully.");
+                                        saveStreakToLocalStorage();
+                                        router.push("/flashboard");
+                                    },
+                                    onError: (error) => {
+                                        console.error("Failed to save streak:", error);
+                                        router.push("/flashboard");
+                                    },
+                                }
+                            );
+                        } else {
+                            router.push("/flashboard");
+                        }
                     },
                     onError: (error) => {
                         console.error("Failed to save repetition data:", error);
@@ -59,11 +81,11 @@ const DeckRepetitionNormalMode = () => {
                 }
             );
         } else {
-            setIsSaveRepetition(true)
-            router.push('/flashboard')
+            setIsSaveRepetition(true);
+            router.push("/flashboard");
         }
-
     };
+
 
 
     console.log({ spacedRepetitionData })
@@ -145,9 +167,12 @@ const DeckRepetitionReviewMode = () => {
     console.log({ fetchedData: data?.repetitionData })
 
     const { mutate: saveRepetition, isLoading } = useSaveDeckRepetitionDataReview();
+    const { mutate: saveStreak } = useSaveStreak();
     const router = useRouter();
 
     const handleEnd = () => {
+        const alreadySaved = hasSavedStreakToday();
+
         if (isSaveRepetition) {
             saveRepetition(
                 {
@@ -158,7 +183,25 @@ const DeckRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
-                        router.push("/flashboard");
+
+                        if (!alreadySaved) {
+                            saveStreak(
+                                { user_id: userId },
+                                {
+                                    onSuccess: () => {
+                                        console.log("Streak saved successfully.");
+                                        saveStreakToLocalStorage();
+                                        router.push("/flashboard");
+                                    },
+                                    onError: (error) => {
+                                        console.error("Failed to save streak:", error);
+                                        router.push("/flashboard");
+                                    },
+                                }
+                            );
+                        } else {
+                            router.push("/flashboard");
+                        }
                     },
                     onError: (error) => {
                         console.error("Failed to save repetition data:", error);
@@ -166,11 +209,28 @@ const DeckRepetitionReviewMode = () => {
                 }
             );
         } else {
-            setIsSaveRepetition(true)
-            router.push("/flashboard")
+            setIsSaveRepetition(true);
+            if (!alreadySaved) {
+                saveStreak(
+                    { user_id: userId },
+                    {
+                        onSuccess: () => {
+                            console.log("Streak saved successfully.");
+                            saveStreakToLocalStorage();
+                            router.push("/flashboard");
+                        },
+                        onError: (error) => {
+                            console.error("Failed to save streak:", error);
+                            router.push("/flashboard");
+                        },
+                    }
+                );
+            } else {
+                router.push("/flashboard");
+            }
         }
-
     };
+
 
     console.log({ spacedRepetitionData })
 

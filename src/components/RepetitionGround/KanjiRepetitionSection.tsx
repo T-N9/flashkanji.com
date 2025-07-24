@@ -14,9 +14,10 @@ import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
-import { useSaveEndSection } from "@/services/progress";
+import { useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
+import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -38,55 +39,105 @@ const KanjiRepetitionNormalMode = () => {
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+    const { mutate: saveStreak } = useSaveStreak();
     const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, } = useGeneralStore();
 
     const router = useRouter();
 
-    const handleEnd = () => {
-        if (isSaveRepetition) {
-            saveRepetition(
+    const saveSectionIfNeeded = async () => {
+        if (!mapItemData?.isCurrent) return;
+
+        return new Promise<void>((resolve, reject) => {
+            saveSection(
                 {
                     user_id: userId,
-                    repetitionData: spacedRepetitionData,
-                    type: 1,
-                    level: level,
+                    chapter: mapItemData.chapter,
+                    level: mapItemData.level,
+                    phase: mapItemData.phase,
+                    stepIndex: (mapItemData.stepIndex || 1) - 1,
                 },
                 {
                     onSuccess: () => {
-                        console.log("Repetition data saved successfully.");
-
-                        if (mapItemData?.isCurrent) {
-                            saveSection(
-                                {
-                                    user_id: userId,
-                                    chapter: mapItemData?.chapter,
-                                    level: mapItemData?.level,
-                                    phase: mapItemData?.phase,
-                                    stepIndex: mapItemData?.stepIndex - 1
-                                },
-                                {
-                                    onSuccess: () => {
-                                        console.log("Section saved successfully.");
-                                        setShouldRefetchChapter(true);
-                                        router.push("/flashmap#resume");
-                                    },
-                                    onError: (error) => {
-                                        console.error("Failed to save section:", error);
-                                    },
-                                }
-                            );
-                        }
+                        console.log("Section saved successfully.");
+                        setShouldRefetchChapter(true);
+                        resolve();
                     },
-                    onError: (error) => {
-                        console.error("Failed to save repetition data:", error);
+                    onError: (err) => {
+                        console.error("Failed to save section:", err);
+                        reject(err);
                     },
                 }
             );
-        } else {
-            setIsSaveRepetition(true)
-            router.push("/flashmap#resume");
+        });
+    };
+
+    const saveStreakIfNeeded = async () => {
+        return new Promise<void>((resolve, reject) => {
+            saveStreak(
+                { user_id: userId },
+                {
+                    onSuccess: () => {
+                        console.log("Streak saved successfully.");
+                        saveStreakToLocalStorage();
+                        resolve();
+                    },
+                    onError: (err) => {
+                        console.error("Failed to save streak:", err);
+                        reject(err);
+                    },
+                }
+            );
+        });
+    };
+
+    const handleEnd = async () => {
+        const isAlreadySaved = hasSavedStreakToday();
+        if (!isSaveRepetition) {
+            setIsSaveRepetition(true);
+            if (!isAlreadySaved) {
+                saveStreak(
+                    { user_id: userId },
+                    {
+                        onSuccess: () => {
+                            console.log("Streak saved successfully.");
+                            saveStreakToLocalStorage();
+                            router.push("/flashmap#resume");
+                        },
+                        onError: (error) => {
+                            console.error("Failed to save streak:", error);
+                            router.push("/flashmap#resume"); // Still redirect even if streak save fails
+                        },
+                    }
+                );
+            } else {
+                router.push("/flashmap#resume");
+            }
+            return;
         }
 
+        saveRepetition(
+            {
+                user_id: userId,
+                repetitionData: spacedRepetitionData,
+                type: 2,
+                level: level,
+            },
+            {
+                onSuccess: async () => {
+                    console.log("Repetition data saved successfully.");
+                    try {
+                        await saveSectionIfNeeded();
+                        !isAlreadySaved && await saveStreakIfNeeded(); // optional: conditionally add logic if needed
+                        router.push("/flashmap#resume");
+                    } catch (err) {
+                        console.error("Error during save chain:", err);
+                    }
+                },
+                onError: (err) => {
+                    console.error("Failed to save repetition data:", err);
+                },
+            }
+        );
     };
     console.log({ spacedRepetitionData })
 
@@ -182,11 +233,14 @@ const KanjiRepetitionReviewMode = () => {
     } = useRepetitionReview<Kanji>(data?.cardData || [], data?.repetitionData);
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
+    const { mutate: saveStreak } = useSaveStreak();
     const router = useRouter();
 
     console.log({ spacedRepetitionData, shuffledData })
 
     const handleEnd = () => {
+        const alreadySaved = hasSavedStreakToday();
+
         if (isSaveRepetition) {
             saveRepetition(
                 {
@@ -197,7 +251,25 @@ const KanjiRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
-                        router.push("/flashboard");
+
+                        if (!alreadySaved) {
+                            saveStreak(
+                                { user_id: userId },
+                                {
+                                    onSuccess: () => {
+                                        console.log("Streak saved successfully.");
+                                        saveStreakToLocalStorage();
+                                        router.push("/flashboard");
+                                    },
+                                    onError: (error) => {
+                                        console.error("Failed to save streak:", error);
+                                        router.push("/flashboard"); // Still redirect even if streak save fails
+                                    },
+                                }
+                            );
+                        } else {
+                            router.push("/flashboard");
+                        }
                     },
                     onError: (error) => {
                         console.error("Failed to save repetition data:", error);
@@ -205,10 +277,11 @@ const KanjiRepetitionReviewMode = () => {
                 }
             );
         } else {
-            setIsSaveRepetition(true)
+            setIsSaveRepetition(true);
             router.push("/flashboard");
         }
     };
+
 
 
     if (!data || data?.cardData?.length === 0) {

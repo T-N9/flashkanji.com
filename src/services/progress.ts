@@ -2,6 +2,8 @@ import {
   fetchChapterProgress,
   saveEndSection,
   saveInitChapter,
+  saveStreak,
+  saveTimer,
 } from "@/api/progressRoute";
 import { useMutation, useQuery } from "react-query";
 
@@ -23,7 +25,7 @@ export const useSaveEndSection = () => {
   });
 };
 
-export const useSaveInitChapter =  () => {
+export const useSaveInitChapter = () => {
   return useMutation({
     mutationFn: ({
       user_id,
@@ -34,6 +36,24 @@ export const useSaveInitChapter =  () => {
       level: number;
       chapter: number;
     }) => saveInitChapter(user_id, level, chapter),
+  });
+};
+
+export const useSaveStreak = () => {
+  return useMutation({
+    mutationFn: ({ user_id }: { user_id: string }) => saveStreak(user_id),
+  });
+};
+
+export const useSaveTimer = () => {
+  return useMutation({
+    mutationFn: ({
+      user_id,
+      duration_minutes,
+    }: {
+      user_id: string;
+      duration_minutes ?: number;
+    }) => saveTimer(user_id, duration_minutes || 25),
   });
 };
 
