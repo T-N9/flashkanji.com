@@ -43,6 +43,7 @@ export type DeckDetailResponse = {
   learnedCards: number;
   is_public: boolean;
   level: number;
+  categories: string[];
 };
 
 export const fetchDeckCards = async (

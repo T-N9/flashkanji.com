@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import useBrowseDecks from "./useBrowseDecks";
-import { Button, Card, CardBody, CardHeader, Input, Select, SelectItem } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Input, Pagination, Select, SelectItem } from "@heroui/react";
 import debounce from "lodash/debounce";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,7 +28,10 @@ const BrowseDecks = () => {
     setCategory,
     data,
     isLoading,
-    isFetching
+    isFetching,
+    page,
+    handleChange,
+    totalPages
   } = useBrowseDecks();
 
   const [searchInput, setSearchInput] = useState<string>(search);
@@ -184,40 +187,58 @@ const BrowseDecks = () => {
           </Card>
         </div>
       ) : (
-        <div className="">
-          {data?.decks.length === 0 ? (
-            <div>
-              <CharacterImage src="hmm.png" alt="No Sessions" />
-              <p className="text-center text-gray-400 col-span-full">No decks found.</p>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 gap-4">{
-              data?.decks.map((deck, i) => (
-                <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
-                  <Card shadow="sm" className="border border-default-200">
-                    <CardHeader className="font-semibold text-dark">{deck.name}</CardHeader>
-                    <CardBody style={{
-                      backgroundImage: `url('${getBackgroundImage(i)}')`,
-                      backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
-                    }} className=" bg-right-bottom bg-no-repeat">
-                      <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
-                      <p className="text-xs text-gray-400">Level: {deck.level}</p>
-                      <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
-                        {deck.categories.map((cat) => (
-                          <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
-                            {cat}
-                          </span>
-                        ))}
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          )}
+        <div>
+          <div className="">
+            {data?.decks.length === 0 ? (
+              <div>
+                <CharacterImage src="hmm.png" alt="No Sessions" />
+                <p className="text-center text-gray-400 col-span-full">No decks found.</p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-4">{
+                data?.decks.map((deck, i) => (
+                  <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
+                    <Card shadow="sm" className="border border-default-200">
+                      <CardHeader className="font-semibold text-dark">{deck.name}</CardHeader>
+                      <CardBody style={{
+                        backgroundImage: `url('${getBackgroundImage(i)}')`,
+                        backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
+                      }} className=" bg-right-bottom bg-no-repeat">
+                        <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
+                        <p className="text-xs text-gray-400">Level: {deck.level}</p>
+                        <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
+                          {deck.categories.map((cat) => (
+                            <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
+                              {cat}
+                            </span>
+                          ))}
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center py-4">
+
+            {
+              totalPages &&
+              <Pagination
+                total={totalPages}
+                page={page}
+                onChange={handleChange}
+                showControls
+                variant="flat"
+                color="primary"
+              />
+            }
+
+          </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 

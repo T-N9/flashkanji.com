@@ -13,8 +13,6 @@ import { useGeneralStore } from "@/store/generalState";
 import RamenLoading from "../common/RamenLoading";
 import CharacterImage from "../common/character";
 
-
-
 const DeckDetail: React.FC = () => {
   const params = useParams();
   const deck_id = Number(params?.deck_id); // assumes URL like /deck/[deck_id]
@@ -96,57 +94,84 @@ const DeckDetail: React.FC = () => {
           <div className="text-sm text-gray-500 space-y-1">
             <p><strong>Level:</strong> N{data.level}</p>
             <p><strong>Learned </strong> {data.learnedCards} / {data.totalCards} cards</p>
+
+            <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
+              {data.categories.map((cat) => (
+                <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
+                  {cat}
+                </span>
+              ))}
+
+
+            </div>
+
           </div>
         </CardBody>
       </Card>
 
-      {!hasTodaySession ? (
-        <div className="text-center space-y-4">
-          <div>
-            <CharacterImage src="kiss.png" alt="Learn new cards today" />
-            <p className="text-2xl font-bold">Learn new cards today!</p>
-          </div>
 
-          <div className="max-w-[300px] mx-auto space-y-2">
-            <Select
-              label="Number of cards to review"
-              value={noOfCards}
-              onChange={(e) => {
-                const val = e.target.value;
-                console.log({ val })
-                setNoOfCards(val.toString());
-              }}
-              placeholder="Select number"
-            >
-              {getNoOfCardsOptions(data.totalCards - data.learnedCards).map((cat) => (
-                <SelectItem key={cat} >
-                  {cat.toString()}
-                </SelectItem>
-              ))}
-            </Select>
+      <>
+        {
+          data.totalCards - data.learnedCards > 0 ?
             <div>
-              <p>You are going to review <span className="text-orange-500">{noOfCards === (data.totalCards - data.learnedCards).toString() ? 'All' : noOfCards}</span> cards.</p>
-            </div>
-          </div>
+              {!hasTodaySession ? (
+                <div className="text-center space-y-4">
+                  <div>
+                    <CharacterImage src="kiss.png" alt="Learn new cards today" />
+                    <p className="text-2xl font-bold">Learn new cards today!</p>
+                  </div>
 
-          <Button
-            onClick={() => {
-              setDeckId(deck_id);
-              setIsInGround(true);
-            }}
-            color="primary"
-            as={Link}
-            href="/study/deck/repetition"
-          >
-            Start
-          </Button>
-        </div>
-      ) : (
-        <div className="text-center">
-          <CharacterImage src="happy.png" alt="Great Job" />
-          <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br />You’ve already studied new cards today.<br /> Come back tomorrow!</p>
-        </div>
-      )}
+                  <div className="max-w-[300px] mx-auto space-y-2">
+                    <Select
+                      label="Number of cards to review"
+                      value={noOfCards}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        console.log({ val })
+                        setNoOfCards(val.toString());
+                      }}
+                      placeholder="Select number"
+                    >
+                      {getNoOfCardsOptions(data.totalCards - data.learnedCards).map((cat) => (
+                        <SelectItem key={cat} >
+                          {cat.toString()}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                    <div>
+                      <p>You are going to review <span className="text-orange-500">{noOfCards === (data.totalCards - data.learnedCards).toString() ? 'All' : data.totalCards - data.learnedCards < 10 ? data.totalCards - data.learnedCards : noOfCards}</span> cards.</p>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      setDeckId(deck_id);
+                      setIsInGround(true);
+                    }}
+                    color="primary"
+                    as={Link}
+                    href="/study/deck/repetition"
+                  >
+                    Start
+                  </Button>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <CharacterImage src="happy.png" alt="Great Job" />
+                  <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br />You’ve already studied new cards today.<br /> Come back tomorrow!</p>
+                </div>
+              )}
+            </div>
+
+            :
+            <div className="text-center space-y-4">
+              <CharacterImage src="kiss.png" alt="Learn new cards today" />
+              <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Congratulations!</span><br />You’ve learned all cards in this deck.<br /> Review them accordingly!</p>
+            </div>
+        }
+
+      </>
+
 
       <hr />
 

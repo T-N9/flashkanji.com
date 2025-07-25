@@ -1,4 +1,5 @@
 'use client'
+import CharacterImage from "@/components/common/character";
 import { KanjiGif } from "@/components/KanjiGif";
 import TextSpeech from "@/components/tts/TextSpeech";
 import { hiragana_katakana } from "@/constants/static";
@@ -104,7 +105,7 @@ export const DeckDetailModal = () => {
                     <ModalHeader className="flex justify-between font-english-text text-orange-500 items-center shadow">
                         <p>Jukugo information</p>
                     </ModalHeader>
-                    <ModalBody className=" bg-gradient-orange-card overflow-y-auto">
+                    <ModalBody className=" bg-gray-100 overflow-y-auto">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1">
                                 <h1 className="text-4xl text-dark">{deckCardDetail?.character}</h1>
@@ -157,7 +158,15 @@ export const DeckDetailModal = () => {
                         <hr className="my-4" />
                         <div>
                             {/* AI Component */}
-                            <p className="text-center">Ask Samurai Sensei how {deckCardDetail?.character} is used. </p>
+                            <p className="text-center">Ask Samurai Sensei how <span className="text-orange-500">{deckCardDetail?.character}</span> is used. </p>
+                            {
+                                isGeminiLoading ?
+                                 <CharacterImage src="thinking.png" alt="ask samurai sensei" />
+                                :
+                                 <CharacterImage src="kiss.png" alt="ask samurai sensei" />
+                            }
+                           
+
 
                             {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
                             <div>

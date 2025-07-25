@@ -1,5 +1,5 @@
 import { useDecks } from "@/services/decks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useBrowseDecks = () => {
   const [search, setSearch] = useState<string>("");
@@ -8,13 +8,23 @@ const useBrowseDecks = () => {
   const [page, setPage] = useState<number>(1);
   const limit = 6;
 
-  const { data, isLoading , isFetching } = useDecks({
+  const { data, isLoading, isFetching, refetch } = useDecks({
     search,
     level,
     category,
     page,
     limit,
   });
+
+  useEffect(() => {
+    refetch();
+  }, [page]);
+
+  const totalPages = data && Math.ceil(data.total / data.limit);
+
+  const handleChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return {
     search,
@@ -27,7 +37,9 @@ const useBrowseDecks = () => {
     setPage,
     data,
     isLoading,
-    isFetching
+    isFetching,
+    handleChange,
+    totalPages
   };
 };
 

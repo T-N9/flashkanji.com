@@ -162,7 +162,12 @@ export const JukugoDetailModal = () => {
                         <div>
                             {/* AI Component */}
                             <p className="text-center">Ask Samurai Sensei how <span className="text-orange-500">{jukugoDetail?.character}</span> is used. </p>
-                            <CharacterImage src="kiss.png" alt="ask samurai sensei" />
+                            {
+                                isGeminiLoading ?
+                                    <CharacterImage src="thinking.png" alt="ask samurai sensei" />
+                                    :
+                                    <CharacterImage src="kiss.png" alt="ask samurai sensei" />
+                            }
 
 
                             {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
