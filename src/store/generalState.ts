@@ -87,7 +87,7 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   isDeckDetailModalOpen: false,
   deckCardDetail: null,
 
-  isInGround: false,
+  isInGround: true,
   isSaveRepetition: true,
   mapItemData: null,
   shouldRefetchChapter : false,
