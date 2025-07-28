@@ -33,6 +33,7 @@ export const saveInitChapter = async (
 export const saveStreak = async (user_id: string): Promise<void> => {
   await apiClient.post("/progress/streak", {
     user_id,
+    reviewed_today : true
   });
   console.log("POST request sent");
 };
