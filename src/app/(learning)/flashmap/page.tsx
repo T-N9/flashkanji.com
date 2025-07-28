@@ -8,7 +8,7 @@ import useKanjiGroundState from "@/store/kanjiGroundState";
 import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
 import { Button, Select, SelectItem } from "@heroui/react";
-import { Brain, CompassRose, Lock, SealQuestion, Stack } from "@phosphor-icons/react";
+import { ApproximateEquals, Brain, CompassRose, Lock, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -19,6 +19,7 @@ const roadmapData = [
       ["Learn New Kanji", "cards", "Take your time to learn the new kanji characters.", "kanji"],
       ["Spaced Repetition", "repetition", "Start repeating the kanji you just learnt.", "kanji"],
       ["Mini Quiz (Kun)", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
+      ["Match Kanji", "match", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Spaced Repetition Again", "repetition", "Reinforce your memory with another review round.", "kanji"],
       ["Mini Quiz (On)", "quiz", "Test your understanding of Onyomi readings.", "kanji"],
       ["Learn Jukugo", "cards", "Learn the compound words using recent kanji.", "jukugo"],
@@ -32,6 +33,7 @@ const roadmapData = [
       ["Learn Another Kanji", "cards", "Learn another kanji characters.", "kanji"],
       ["Spaced Repetition of Kanji", "repetition", "Reinforce your memory of the new kanji.", "kanji"],
       ["Quiz (On-Focused)", "quiz", "Test your understanding of Onyomi readings.", "kanji"],
+      ["Match Kanji", "match", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Spaced Repetition", "repetition", "Reinforce your memory of all kanji.", "kanji"],
       ["Quiz (Kun-Focused)", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Learn Jukugo", "cards", "Learn the compound words using recent kanji.", "jukugo"],
@@ -82,6 +84,12 @@ const typeStyles = {
     border: "border-gray-200",
     icon: <SealQuestion size={32} color="#fff" />,
   },
+
+  match: {
+    bg: "bg-lime-400",
+    border: "border-gray-200",
+    icon: <ApproximateEquals size={32} color="#fff" />,
+  },
 };
 
 function isStepUnlocked(
@@ -92,8 +100,8 @@ function isStepUnlocked(
   stepIndex: number
 ): boolean {
   const PHASE_STRUCTURE = {
-    "1": 8,
-    "2": 8,
+    "1": 9,
+    "2": 9,
     "3": 2,
     "4": 4
   };
@@ -139,7 +147,7 @@ const RoadmapItem = ({
 }: {
   phase: number;
   label: string;
-  type: "cards" | "repetition" | "quiz";
+  type: "cards" | "repetition" | "quiz" | "match";
   description?: string;
   route?: string;
   japanese_level: number;
@@ -178,7 +186,7 @@ const RoadmapItem = ({
     if (!unlocked) return;
 
     setIsInGround(true);
-    if (route === 'kanji') {
+    if (route === 'kanji' || route === 'match') {
       setIsReviewMode(false);
       setSelectedChapter(japanese_chapter);
       setSelectedLevel("N" + japanese_level);
@@ -243,6 +251,8 @@ const RoadmapItem = ({
         setPartQuiz(null)
       }
     }
+
+    
   }
 
 

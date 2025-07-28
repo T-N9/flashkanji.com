@@ -3,8 +3,8 @@ import "./globals.css";
 import "@/styles/style.css"
 import Providers from "./Providers";
 import { poppins } from "@/fonts";
-import HeadingBar from "@/components/Navigation/Header";
-import Footer from "@/components/footer/Footer";
+import { Toaster } from 'sonner'
+
 import AuthListener from "@/components/auth/AuthListener";
 import SessionSync from "@/components/session-sync";
 
@@ -40,6 +40,7 @@ export default function RootLayout({
         <Providers>
           <SessionSync />
           <AuthListener />
+          <Toaster position="top-center" richColors/>
           {children}
 
         </Providers>
