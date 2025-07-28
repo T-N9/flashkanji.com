@@ -6,6 +6,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const text = searchParams.get("text") || "";
 
+  //@ts-ignore
   const tokenizer = await new Promise<kuromoji.Tokenizer>((resolve, reject) => {
     const builder = kuromoji.builder({
       dicPath: path.join(process.cwd(), "node_modules/kuromoji/dict"),
@@ -19,13 +20,17 @@ export async function GET(req: NextRequest) {
 
   const tokens = tokenizer.tokenize(text);
 
+  //@ts-ignore
   const tokenData = tokens.map((t) => ({
     surface_form: t.surface_form,
     reading: t.reading ? katakanaToHiragana(t.reading) : t.surface_form,
-    pronunciation: t.pronunciation ? katakanaToHiragana(t.pronunciation) : t.surface_form,
+    pronunciation: t.pronunciation
+      ? katakanaToHiragana(t.pronunciation)
+      : t.surface_form,
     pos: t.pos,
   }));
 
+  //@ts-ignore
   const readingText = tokenData.map((t) => t.reading).join(" ");
 
   return NextResponse.json({
