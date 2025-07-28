@@ -97,7 +97,7 @@ const swapMap: SwapMap = {
 
 export function generateHiraganaVariants(input: string): string[] {
   const results: Set<string> = new Set();
-  let chars = input.split("");
+  const chars = input.split("");
   let stopIndex = Math.min(
     ...[chars.indexOf("一"), chars.indexOf(".")].filter((i) => i !== -1)
   );
@@ -105,22 +105,22 @@ export function generateHiraganaVariants(input: string): string[] {
 
   function swapAndGenerate(chars: string[], index: number): void {
     if (index >= stopIndex) {
-      let variant = chars.join("");
+      const variant = chars.join("");
       if (variant !== input) {
         results.add(variant);
       }
       return;
     }
 
-    let char = chars[index];
+    const char = chars[index];
     swapAndGenerate(chars, index + 1);
 
     if (swapMap[char]) {
-      let swaps = Array.isArray(swapMap[char])
+      const swaps = Array.isArray(swapMap[char])
         ? swapMap[char]
         : [swapMap[char]];
       swaps.forEach((swap) => {
-        let newChars = [...chars];
+        const newChars = [...chars];
         newChars[index] = swap;
         swapAndGenerate(newChars, index + 1);
       });
