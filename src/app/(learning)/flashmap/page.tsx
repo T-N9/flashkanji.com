@@ -23,7 +23,7 @@ const roadmapData = [
       ["Mini Quiz (On)", "quiz", "Test your understanding of Onyomi readings.", "kanji"],
       ["Learn Jukugo", "cards", "Learn the compound words using recent kanji.", "jukugo"],
       ["Spaced Repetition of Jukugo", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
-      // ["Mini Quiz for Jukugo meaning", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
+      ["Build Jukugo", "quiz", "Test your reading of jukugo", "jukugo"],
     ],
   },
   {
@@ -36,7 +36,7 @@ const roadmapData = [
       ["Quiz (Kun-Focused)", "quiz", "Test your understanding of Kunyomi readings.", "kanji"],
       ["Learn Jukugo", "cards", "Learn the compound words using recent kanji.", "jukugo"],
       ["Spaced Repetition", "repetition", "Reinforce your memory of the compound words.", "jukugo"],
-      // ["Meaning Quiz for Jukugo", "quiz", "Test your understanding of the meanings of the compound words.", "jukugo"],
+      ["Build Jukugo", "quiz", "Test your reading of jukugo", "jukugo"],
     ],
   },
   {
@@ -44,6 +44,7 @@ const roadmapData = [
     steps: [
       ["Revise Jukugo", "cards", "Review all words of this Chapter", "jukugo"],
       ["Spaced Repetition", "repetition", "Reinforce your memory of all jukugo", "jukugo"],
+
       // ["Kanji to Hiragana matching quiz", "quiz"],
       // ["Hiragana to Kanji matching quiz", "quiz"],
     ],
@@ -91,8 +92,8 @@ function isStepUnlocked(
   stepIndex: number
 ): boolean {
   const PHASE_STRUCTURE = {
-    "1": 7,
-    "2": 7,
+    "1": 8,
+    "2": 8,
     "3": 2,
     "4": 4
   };
@@ -248,7 +249,7 @@ const RoadmapItem = ({
 
   return (
 
-    <div id={isCurrent ? 'resume' : `${japanese_chapter + phase +stepIndex}`} className={`${isCurrent ? 'bg-slate-50' : 'bg-blue-100'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+    <div id={isCurrent ? 'resume' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-slate-50' : 'bg-blue-100'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
       <div className={`${bg} relative inline-block p-2 rounded-full shadow-md opacity-${unlocked ? "100" : "50"}`}>
         <div className={`border-dashed ${isCurrent && 'animate-slow-spin'} border-white border-2 rounded-full p-2`}>
           <div className="opacity-0">{icon}</div>
