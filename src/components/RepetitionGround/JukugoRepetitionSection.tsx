@@ -41,7 +41,7 @@ const JukugoRepetitionNormalMode = () => {
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
     const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter } = useGeneralStore();
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
 
     const saveSectionIfNeeded = async () => {
         if (!mapItemData?.isCurrent) return;
@@ -54,12 +54,13 @@ const JukugoRepetitionNormalMode = () => {
                     level: mapItemData.level,
                     phase: mapItemData.phase,
                     stepIndex: (mapItemData.stepIndex || 1) - 1,
-                    xp_points: 5,
+                    xp_points: satisfactionPoint,
                     isToDecrease: false,
                 },
                 {
                     onSuccess: () => {
-                        toast.success("5 XP points increased.")
+                        setXpPoints(xp_points + satisfactionPoint)
+                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
                         resolve();
@@ -213,7 +214,7 @@ const JukugoRepetitionNormalMode = () => {
 const JukugoRepetitionReviewMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
     const { selectedReviewDate } = useKanjiGroundState();
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 2);
 
     const {
@@ -250,6 +251,7 @@ const JukugoRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {

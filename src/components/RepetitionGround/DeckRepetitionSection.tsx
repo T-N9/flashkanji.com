@@ -21,7 +21,7 @@ import { toast } from "sonner";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId, noOfCards } = useDeckGroundState();
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useDeckCards(deckId || 1, userId, parseInt(noOfCards));
 
     const {
@@ -57,6 +57,7 @@ const DeckRepetitionNormalMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {
@@ -150,7 +151,7 @@ const DeckRepetitionNormalMode = () => {
 const DeckRepetitionReviewMode = () => {
     const { selectedReviewDate } = useKanjiGroundState()
     const { deckId, srsId, isReviewMode, isReviewByDate } = useDeckGroundState();
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode, isReviewByDate ? selectedReviewDate : undefined);
     const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
 
@@ -187,6 +188,7 @@ const DeckRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {

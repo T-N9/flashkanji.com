@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { shuffleArray } from "@/util";
+import { toast } from "sonner";
 
 const JukugoBuilder = () => {
     const {
@@ -64,7 +65,7 @@ const JukugoBuilder = () => {
     // console.log("queue", queue);
     // console.log("currentItem", currentItem);
 
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
 
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
@@ -85,12 +86,17 @@ const JukugoBuilder = () => {
             level: mapItemData.level,
             phase: mapItemData.phase,
             stepIndex: (mapItemData.stepIndex || 1) - 1,
-            xp_points : 5,
-            isToDecrease: false, 
+            xp_points: 5,
+            isToDecrease: false,
         };
 
         saveSection(payload, {
-            onSuccess,
+            onSuccess: () => {
+                setXpPoints(xp_points + 5)
+                toast.success("5 XP points increased.")
+                router.push("/flashmap#resume");
+                onSuccess();
+            },
             onError: (error) => {
                 console.error("Failed to save section:", error);
                 onError?.(error);

@@ -22,7 +22,7 @@ import { toast } from "sonner";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useKanjiByChapterAndLevel(selectedChapter, level, isParted ? part : null);
 
     const {
@@ -61,6 +61,7 @@ const KanjiRepetitionNormalMode = () => {
                 },
                 {
                     onSuccess: () => {
+                        setXpPoints(xp_points + 5)
                         toast.success("5 XP points increased.")
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
@@ -218,7 +219,7 @@ const KanjiRepetitionNormalMode = () => {
 
 const KanjiRepetitionReviewMode = () => {
     const { level, selectedReviewDate } = useKanjiGroundState();
-    const { userId } = useUserStore();
+    const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
     const { isSaveRepetition, setIsSaveRepetition, mapItemData } = useGeneralStore();
 
@@ -256,6 +257,7 @@ const KanjiRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {

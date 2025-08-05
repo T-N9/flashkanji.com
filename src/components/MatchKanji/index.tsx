@@ -107,7 +107,7 @@ const MatchKanji = () => {
     }
   };
 
-  const { userId } = useUserStore();
+  const { userId, xp_points, setXpPoints } = useUserStore();
 
   const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
   const { mutate: saveStreak } = useSaveStreak();
@@ -135,6 +135,7 @@ const MatchKanji = () => {
 
     saveSection(payload, {
       onSuccess: () => {
+        setXpPoints(xp_points + 5);
         toast.success("5 XP points increased.")
         router.push("/flashmap#resume");
         onSuccess();

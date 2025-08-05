@@ -22,6 +22,7 @@ interface UserState {
   rank : number;
   xp_points : number;
   lives: number;
+  setXpPoints : (point : number) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -65,4 +66,5 @@ export const useUserStore = create<UserState>((set) => ({
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),
   expiredReviewCount: 0,
   setExpiredReviewCount: (count) => set({ expiredReviewCount: count }),
+  setXpPoints : (point) => set({ xp_points : point})
 }));
