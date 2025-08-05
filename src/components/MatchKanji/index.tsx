@@ -251,7 +251,7 @@ const MatchKanji = () => {
                 onClick={() => handleMatch(kanji)}
                 key={kanji.id + "-match"}
                 className={cn(
-                  "p-4 rounded text-base lg:text-xl transition-all duration-200",
+                  "p-4 rounded text-xs whitespace-normal lg:text-xl transition-all duration-200",
                   isMatchMatched(kanji.id)
                     ? "bg-green-200 text-green-800 cursor-default"
                     : "bg-white shadow hover:bg-yellow-50"
