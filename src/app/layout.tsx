@@ -7,6 +7,7 @@ import { Toaster } from 'sonner'
 
 import AuthListener from "@/components/auth/AuthListener";
 import SessionSync from "@/components/session-sync";
+import CookieConsent from "@/components/cookie-consent";
 
 export const metadata: Metadata = {
   title: "Flash Kanji | Your Kanji Learning Companion",
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics */}
+        {/* Google Analytics
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFN1W13SY3"></script>
         <script
           dangerouslySetInnerHTML={{
@@ -32,7 +33,7 @@ export default function RootLayout({
               gtag('config', 'G-DFN1W13SY3');
             `,
           }}
-        />
+        /> */}
       </head>
       <body
         className={`${poppins.className} antialiased text-dark`}
@@ -40,9 +41,9 @@ export default function RootLayout({
         <Providers>
           <SessionSync />
           <AuthListener />
-          <Toaster position="top-center" richColors/>
+          <Toaster position="top-center" richColors />
           {children}
-
+          <CookieConsent />
         </Providers>
       </body>
     </html>
