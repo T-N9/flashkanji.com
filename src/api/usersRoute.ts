@@ -13,6 +13,9 @@ export const checkUserExists = async (
   current_streak: number;
   total_learned: number;
   total_hours: number;
+  lives : number,
+  experience_points : number,
+  rank : number
 } }> => {
   const response = await apiClient.post("/users/check-or-create", {
     id,

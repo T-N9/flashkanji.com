@@ -88,6 +88,8 @@ export const JukugoGround = () => {
       level: mapItemData.level,
       phase: mapItemData.phase,
       stepIndex: (mapItemData.stepIndex || 1) - 1,
+                  xp_points : 5,
+            isToDecrease: false, 
     };
 
     saveSection(payload, {

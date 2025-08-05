@@ -44,6 +44,7 @@ export const useSaveRepetitionData = () => {
       repetitionData: SR_KanjiCard[];
       type: number;
       level?: number;
+      xp_points?: number;
     }) => saveRepetitionData(user_id, repetitionData, type, level),
   });
 };
@@ -65,10 +66,12 @@ export const useSaveRepetitionData_Review = () => {
       user_id,
       repetitionData,
       type,
+      xp_points,
     }: {
       user_id: string;
       repetitionData: SR_KanjiCard[];
       type: number;
-    }) => saveRepetitionData_Review(user_id, repetitionData, type),
+      xp_points?: number;
+    }) => saveRepetitionData_Review(user_id, repetitionData, type, xp_points),
   });
 };

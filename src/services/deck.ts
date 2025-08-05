@@ -68,11 +68,13 @@ export const useSaveDeckRepetitionData = () => {
       user_id,
       deck_id,
       repetitionData,
+      xp_points,
     }: {
       user_id: string;
       deck_id: number;
       repetitionData: SR_DeckCard[];
-    }) => saveDeckRepetitionData(user_id, deck_id, repetitionData),
+      xp_points?: number;
+    }) => saveDeckRepetitionData(user_id, deck_id, repetitionData, xp_points),
   });
 };
 
@@ -82,10 +84,12 @@ export const useSaveDeckRepetitionDataReview = () => {
       user_id,
       deck_id,
       repetitionData,
+      xp_points,
     }: {
       user_id: string;
       deck_id: number;
       repetitionData: SR_DeckCard[];
-    }) => saveDeckRepetitionData_Review(user_id, deck_id, repetitionData),
+      xp_points?: number;
+    }) => saveDeckRepetitionData_Review(user_id, deck_id, repetitionData, xp_points),
   });
 };

@@ -12,16 +12,18 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-} from "@heroui/navbar";
+} from "@heroui/react";
 import Image from "next/image";
 import { Button } from "@heroui/react";
-import { User } from "@phosphor-icons/react";
+import { Cherries, Fire, HeartStraight, User } from "@phosphor-icons/react";
 import Indicator from "../pomodoro/Indicator";
+import { useUserStore } from "@/store/userState";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [authCookie, setAuthCookie] = useState<string | undefined>(undefined);
+  const { currentStreak, lives, xp_points } = useUserStore();
 
   useEffect(() => {
     const cookie = Cookies.get('sb-access-token');
@@ -65,6 +67,21 @@ export function HeadingBar() {
 
               <Link href="/pomodoro"><Indicator /></Link>
             </NavbarItem>
+
+            <NavbarItem className="gap-5 hidden lg:flex">
+              <div className="flex justify-center items-center gap-2">
+                <p>{currentStreak}</p>
+                <Fire size={32} />
+              </div>
+              <div className="flex justify-center items-center gap-2">
+                <p>{lives}</p>
+                <HeartStraight size={32} />
+              </div>
+              <div className="flex justify-center items-center gap-2">
+                <p>{xp_points}</p>
+                <Cherries size={32} />
+              </div>
+            </NavbarItem>
             <NavbarItem
               isActive={path === "/profile"}
               onClick={() => delayedSetIsMenuOpen(false)}
@@ -92,12 +109,26 @@ export function HeadingBar() {
       onMenuOpenChange={setIsMenuOpen}
     >
       {/* Navbar Brand */}
-      <NavbarBrand>
+      <NavbarBrand className="hidden lg:block">
         <Link href="/">
           {/* <Logo/> */}
           <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
+      <NavbarItem className="flex gap-5 lg:hidden">
+        <div className="flex justify-center items-center gap-2">
+          <p>{currentStreak}</p>
+          <Fire size={32} />
+        </div>
+        <div className="flex justify-center items-center gap-2">
+          <p>{lives}</p>
+          <HeartStraight size={32} />
+        </div>
+        <div className="flex justify-center items-center gap-2">
+          <p>{xp_points}</p>
+          <Cherries size={32} />
+        </div>
+      </NavbarItem>
 
       {/* Navbar Content (Desktop) */}
       <NavbarContent className="hidden sm:flex gap-6" justify="center">

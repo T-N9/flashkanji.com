@@ -15,13 +15,17 @@ export const useSaveEndSection = () => {
       chapter,
       phase,
       stepIndex,
+      xp_points,
+      isToDecrease,
     }: {
       user_id: string;
       level: number;
       chapter: number;
       phase: number;
       stepIndex: number;
-    }) => saveEndSection(user_id, level, chapter, phase, stepIndex),
+      xp_points?: number;
+      isToDecrease?: boolean;
+    }) => saveEndSection(user_id, level, chapter, phase, stepIndex, xp_points, isToDecrease),
   });
 };
 
@@ -52,7 +56,7 @@ export const useSaveTimer = () => {
       duration_minutes,
     }: {
       user_id: string;
-      duration_minutes ?: number;
+      duration_minutes?: number;
     }) => saveTimer(user_id, duration_minutes || 25),
   });
 };

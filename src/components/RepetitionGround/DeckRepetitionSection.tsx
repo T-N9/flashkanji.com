@@ -17,6 +17,7 @@ import CharacterImage from "../common/character";
 import { getConfidenceEmoji } from "@/util";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useSaveStreak } from "@/services/progress";
+import { toast } from "sonner";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId, noOfCards } = useDeckGroundState();
@@ -51,10 +52,12 @@ const DeckRepetitionNormalMode = () => {
                     user_id: userId,
                     deck_id: deckId || 1,
                     repetitionData: spacedRepetitionData,
+                    xp_points: satisfactionPoint, // need to customize
                 },
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {
                             saveStreak(
@@ -179,10 +182,12 @@ const DeckRepetitionReviewMode = () => {
                     user_id: userId,
                     deck_id: deckId || 1,
                     repetitionData: spacedRepetitionData,
+                    xp_points: satisfactionPoint, // need to customize
                 },
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {
                             saveStreak(

@@ -5,7 +5,9 @@ export const saveEndSection = async (
   level: number,
   chapter: number,
   phase: number,
-  stepIndex: number
+  stepIndex: number,
+  xp_points ?: number,
+  isToDecrease ?: boolean 
 ): Promise<void> => {
   await apiClient.post("/progress/", {
     user_id,
@@ -13,6 +15,8 @@ export const saveEndSection = async (
     chapter,
     phase,
     stepIndex,
+    xp_points,
+    isToDecrease,
   });
   console.log("POST request sent");
 };

@@ -19,6 +19,9 @@ interface UserState {
   totalHours: number;
   currentStreak: number;
   longestStreak: number;
+  rank : number;
+  xp_points : number;
+  lives: number;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -38,6 +41,9 @@ export const useUserStore = create<UserState>((set) => ({
   totalHours: 0,
   currentStreak: 0,
   longestStreak: 0,
+  xp_points : 0,
+  rank : 1, 
+  lives : 5,
   resetUser: () =>
     set({
       username: "",
@@ -51,6 +57,9 @@ export const useUserStore = create<UserState>((set) => ({
       totalHours: 0,
       currentStreak: 0,
       longestStreak: 0,
+      lives : 5,
+      xp_points : 0,
+      rank : 1,
     }),
   todayReviewCount: 0,
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),

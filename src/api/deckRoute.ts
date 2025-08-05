@@ -75,12 +75,14 @@ export const fetchDeckDetail = async (
 export const saveDeckRepetitionData = async (
   user_id: string,
   deck_id: number,
-  repetitionData: SR_DeckCard[]
+  repetitionData: SR_DeckCard[],
+  xp_points?: number
 ): Promise<void> => {
   await apiClient.post(`/deck/srs`, {
     userId: user_id,
     deckId: deck_id,
     srsData: repetitionData,
+    xp_points,
   });
   console.log("POST request sent");
 };
@@ -88,12 +90,14 @@ export const saveDeckRepetitionData = async (
 export const saveDeckRepetitionData_Review = async (
   user_id: string,
   deck_id: number,
-  repetitionData: SR_DeckCard[]
+  repetitionData: SR_DeckCard[],
+  xp_points?: number
 ): Promise<void> => {
   await apiClient.post(`/deck/srs_review`, {
     userId: user_id,
     deckId: deck_id,
     srsData: repetitionData,
+    xp_points,
   });
   console.log("POST request sent");
 };

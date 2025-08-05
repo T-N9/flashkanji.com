@@ -18,6 +18,7 @@ import { useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
+import { toast } from "sonner";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -55,9 +56,12 @@ const KanjiRepetitionNormalMode = () => {
                     level: mapItemData.level,
                     phase: mapItemData.phase,
                     stepIndex: (mapItemData.stepIndex || 1) - 1,
+                    xp_points: 5,
+                    isToDecrease: false,
                 },
                 {
                     onSuccess: () => {
+                        toast.success("5 XP points increased.")
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
                         resolve();
@@ -247,10 +251,12 @@ const KanjiRepetitionReviewMode = () => {
                     user_id: userId,
                     repetitionData: spacedRepetitionData,
                     type: 1,
+                    xp_points: satisfactionPoint, // need to customize
                 },
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
                         if (!alreadySaved) {
                             saveStreak(

@@ -6,11 +6,12 @@ import { AirplaneTakeoff, ArrowElbowRightUp, BookOpen, BookOpenText, Brain, Cale
 import { useRouter } from "next/navigation";
 import ReviewSchedule from "../review-schedule/ReviewSchedule";
 import { useUserStore } from "@/store/userState";
+import { RANKS } from "@/util/ranks";
 
 export default function UserDashBoard() {
 
     const { setIsReviewMode } = useKanjiGroundState();
-    const { longestStreak, currentStreak, totalLearned, totalHours } = useUserStore();
+    const { longestStreak, currentStreak, totalLearned, totalHours, username, rank } = useUserStore();
     const router = useRouter();
 
     const handleStartReview = () => {
@@ -50,8 +51,14 @@ export default function UserDashBoard() {
             <main className="max-w-screen-md mx-auto px-6 py-8">
                 {/* Welcome Section */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-dark mb-2">Welcome back, Student!</h1>
-                    <p className="text-gray-600 mb-3">
+                    <div className="flex gap-4 items-center">
+                        <h1 className="text-lg lg:text-3xl font-bold text-dark mb-2">Welcome back, {username}!</h1>
+
+                        <div>
+                            Rank <span className="text-xs">{RANKS[rank-1].name}</span> <span className={`p-4 ${RANKS[rank-1].color}`}>{RANKS[rank-1].kanji}</span>
+                        </div>
+                    </div>
+                    <p className="text-gray-600 mb-3 text-xs">
                         Ready to continue your Kanji journey? You have {todayReviewCount} cards due today. {expiredReviewCount > 0 && <span className="text-red-500">You have {expiredReviewCount} expired reviews!</span>}
                     </p>
                 </div>

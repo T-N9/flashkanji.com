@@ -13,6 +13,7 @@ import { useSaveEndSection, useSaveStreak } from '@/services/progress';
 import { useRouter } from 'next/navigation';
 import { CheckCircle } from '@phosphor-icons/react';
 import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
+import { toast } from 'sonner';
 
 
 
@@ -82,10 +83,16 @@ const QuizGround = () => {
             level: mapItemData.level,
             phase: mapItemData.phase,
             stepIndex: (mapItemData.stepIndex || 1) - 1,
+            xp_points: 5,
+            isToDecrease: false,
         };
 
         saveSection(payload, {
-            onSuccess,
+            onSuccess: () => {
+                toast.success("5 XP points increased.")
+                router.push("/flashmap#resume");
+                onSuccess();
+            },
             onError: (error) => {
                 console.error("Failed to save section:", error);
                 onError?.(error);

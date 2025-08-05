@@ -129,10 +129,16 @@ const MatchKanji = () => {
       level: mapItemData.level,
       phase: mapItemData.phase,
       stepIndex: (mapItemData.stepIndex || 1) - 1,
+      xp_points: 5,
+      isToDecrease: false,
     };
 
     saveSection(payload, {
-      onSuccess,
+      onSuccess: () => {
+        toast.success("5 XP points increased.")
+        router.push("/flashmap#resume");
+        onSuccess();
+      },
       onError: (error) => {
         console.error("Failed to save section:", error);
         onError?.(error);
@@ -220,8 +226,8 @@ const MatchKanji = () => {
                 isPickMatched(kanji.id)
                   ? "bg-green-200 text-green-800 cursor-default"
                   : selectedPickItem?.kanji.id === kanji.id
-                  ? "bg-blue-200 text-blue-800"
-                  : "bg-white shadow hover:bg-blue-50"
+                    ? "bg-blue-200 text-blue-800"
+                    : "bg-white shadow hover:bg-blue-50"
               )}
             >
               {kanji.character}
@@ -297,10 +303,9 @@ const MatchKanji = () => {
       </div>
 
       <Button
-        className={`${
-          matchedPairs.length !== data?.length &&
+        className={`${matchedPairs.length !== data?.length &&
           "select-none pointer-events-none opacity-55"
-        } mt-10 text-center mx-auto table`}
+          } mt-10 text-center mx-auto table`}
         color={matchedPairs.length !== data?.length ? "default" : "primary"}
         onClick={handleClickContinue}
       >

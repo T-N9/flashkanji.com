@@ -70,12 +70,14 @@ export const saveRepetitionData = async (
 export const saveRepetitionData_Review = async (
   user_id: string,
   repetitionData: SR_KanjiCard[],
-  type: number
+  type: number,
+  xp_points?: number
 ): Promise<void> => {
   await apiClient.post("/repetition/save_review", {
     user_id,
     repetitionData,
     type,
+    xp_points,
   });
   console.log("POST request sent");
 };
