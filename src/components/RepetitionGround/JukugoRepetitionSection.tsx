@@ -19,6 +19,7 @@ import CharacterImage from "../common/character";
 import { getConfidenceEmoji } from "@/util";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { toast } from "sonner";
+import { playSound } from "@/util/soundPlayer";
 
 const JukugoRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -59,6 +60,7 @@ const JukugoRepetitionNormalMode = () => {
                 },
                 {
                     onSuccess: () => {
+                        playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
                         console.log("Section saved successfully.");
@@ -251,6 +253,7 @@ const JukugoRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 

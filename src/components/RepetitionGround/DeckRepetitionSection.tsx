@@ -18,6 +18,7 @@ import { getConfidenceEmoji } from "@/util";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useSaveStreak } from "@/services/progress";
 import { toast } from "sonner";
+import { playSound } from "@/util/soundPlayer";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId, noOfCards } = useDeckGroundState();
@@ -57,6 +58,7 @@ const DeckRepetitionNormalMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 
@@ -188,6 +190,7 @@ const DeckRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 

@@ -13,6 +13,7 @@ import { useUserStore } from "@/store/userState";
 import { useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
+import { playSound } from "@/util/soundPlayer";
 
 type selectItem = {
   id: number;
@@ -61,6 +62,7 @@ const MatchKanji = () => {
   }, [data]);
 
   const handlePick = (id: number, item: Kanji) => {
+    playSound('click');
     setSelectedPickItem({ id, kanji: item });
   };
 
@@ -75,12 +77,14 @@ const MatchKanji = () => {
       (pickValue !== "-" && matchValue === pickValue);
 
     if (isCorrect) {
+      playSound('right')
       setMatchedPairs((prev) => [
         ...prev,
         { pickId: selectedPickItem.kanji.id, matchId: matchItem.id },
       ]);
       setSelectedPickItem(null);
     } else {
+      playSound('alert')
       toast.error("Wrong Match. Try again!");
     }
   };
@@ -135,6 +139,7 @@ const MatchKanji = () => {
 
     saveSection(payload, {
       onSuccess: () => {
+        playSound('session');
         setXpPoints(xp_points + 5);
         toast.success("5 XP points increased.")
         router.push("/flashmap#resume");
@@ -211,7 +216,7 @@ const MatchKanji = () => {
     <section className="max-w-screen-md mx-auto px-6 py-8 relative z-20">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-orange-500">Flash Match</h1>
-        <p className="text-sm text-gray-500">Match Kanji with their meanings</p>
+        <p className="text-sm text-gray-500">Match Kanji with their {currentMode}.</p>
       </div>
       <div className="flex justify-between gap-5">
         {/* Pick Column (Kanji) */}

@@ -19,6 +19,7 @@ import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { toast } from "sonner";
+import { playSound } from "@/util/soundPlayer";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -61,6 +62,7 @@ const KanjiRepetitionNormalMode = () => {
                 },
                 {
                     onSuccess: () => {
+                        playSound('session');
                         setXpPoints(xp_points + 5)
                         toast.success("5 XP points increased.")
                         console.log("Section saved successfully.");
@@ -257,6 +259,7 @@ const KanjiRepetitionReviewMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
+                        playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
                         toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
 

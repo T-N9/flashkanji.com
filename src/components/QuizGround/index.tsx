@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { CheckCircle } from '@phosphor-icons/react';
 import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
 import { toast } from 'sonner';
+import { playSound } from '@/util/soundPlayer';
 
 
 
@@ -89,6 +90,7 @@ const QuizGround = () => {
 
         saveSection(payload, {
             onSuccess: () => {
+                playSound('session');
                 setXpPoints(xp_points + 5)
                 toast.success("5 XP points increased.")
                 router.push("/flashmap#resume");

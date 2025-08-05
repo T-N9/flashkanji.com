@@ -14,6 +14,7 @@ import { useGeneralStore } from "@/store/generalState";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { shuffleArray } from "@/util";
 import { toast } from "sonner";
+import { playSound } from "@/util/soundPlayer";
 
 const JukugoBuilder = () => {
     const {
@@ -92,6 +93,7 @@ const JukugoBuilder = () => {
 
         saveSection(payload, {
             onSuccess: () => {
+                playSound('session');
                 setXpPoints(xp_points + 5)
                 toast.success("5 XP points increased.")
                 router.push("/flashmap#resume");
@@ -199,6 +201,7 @@ const JukugoBuilderItem = ({
     }, [item]);
 
     const handleClickMora = (mora: string) => {
+        playSound('click')
         if (answerMora.includes(mora)) {
             setAnswerMora((prev) => prev.filter((m) => m !== mora));
         } else {
@@ -220,7 +223,15 @@ const JukugoBuilderItem = ({
                 answerMora.length === correctMoras.length &&
                 answerMora.every((mora, index) => mora === correctMoras[index]);
 
-            setIsAnswerCorrect(isCorrect);
+            if (isCorrect) {
+                playSound('right')
+                setIsAnswerCorrect(isCorrect);
+            }else{
+                 playSound('alert')
+                 toast.error('Opps, wrong answer!')
+            }
+
+
         }
     };
 
