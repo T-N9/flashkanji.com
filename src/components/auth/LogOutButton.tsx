@@ -24,7 +24,7 @@ export default function LogOutButton() {
   }
 
   return (
-    <Button color='danger' onClick={handleLogout}>
+    <Button className='mx-auto' color='danger' onClick={handleLogout}>
       Log Out
     </Button>
   )

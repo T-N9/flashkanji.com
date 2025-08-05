@@ -12,10 +12,11 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
+  Avatar,
 } from "@heroui/react";
 import Image from "next/image";
 import { Button } from "@heroui/react";
-import { Cherries, Fire, HeartStraight, User } from "@phosphor-icons/react";
+import { Clover, Fire, HeartStraight, User } from "@phosphor-icons/react";
 import Indicator from "../pomodoro/Indicator";
 import { useUserStore } from "@/store/userState";
 
@@ -23,7 +24,7 @@ export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [authCookie, setAuthCookie] = useState<string | undefined>(undefined);
-  const { currentStreak, lives, xp_points } = useUserStore();
+  const { currentStreak, lives, xp_points, avatarUrl } = useUserStore();
 
   useEffect(() => {
     const cookie = Cookies.get('sb-access-token');
@@ -68,25 +69,28 @@ export function HeadingBar() {
               <Link href="/pomodoro"><Indicator /></Link>
             </NavbarItem>
 
-            <NavbarItem className="gap-5 hidden lg:flex">
-              <div className="flex justify-center items-center gap-2">
+            <NavbarItem className="gap-3 hidden lg:flex">
+              <div className="flex justify-center items-center gap-1">
                 <p>{currentStreak}</p>
-                <Fire size={32} />
+                <Fire weight="duotone" size={32} color="orange" />
               </div>
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex justify-center items-center gap-1">
                 <p>{lives}</p>
-                <HeartStraight size={32} />
+                <HeartStraight weight="duotone" size={32} color="red" />
               </div>
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex justify-center items-center gap-1">
                 <p>{xp_points}</p>
-                <Cherries size={32} />
+                <Clover weight="duotone" size={32} color="green" />
               </div>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/profile"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
-              <Link href="/profile"><User className="mx-auto" size={32} /></Link>
+              <Link href="/profile"><Avatar
+                src={avatarUrl}
+                className="bg-gradient-to-br from-orange-500 to-yellow-400 text-white mx-auto"
+              /></Link>
             </NavbarItem>
           </>
           :
@@ -115,18 +119,18 @@ export function HeadingBar() {
           <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
-      <NavbarItem className="flex gap-5 lg:hidden">
-        <div className="flex justify-center items-center gap-2">
+      <NavbarItem className="gap-3 flex lg:hidden">
+        <div className="flex justify-center items-center gap-1">
           <p>{currentStreak}</p>
-          <Fire size={32} />
+          <Fire weight="duotone" size={32} color="orange" />
         </div>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-1">
           <p>{lives}</p>
-          <HeartStraight size={32} />
+          <HeartStraight weight="duotone" size={32} color="red" />
         </div>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-1">
           <p>{xp_points}</p>
-          <Cherries size={32} />
+          <Clover weight="duotone" size={32} color="green" />
         </div>
       </NavbarItem>
 
