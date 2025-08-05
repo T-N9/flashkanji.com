@@ -1,68 +1,68 @@
 export const RANKS = [
   {
     name: "Mizunoto",
-    xp: 0,
     kanji: "癸",
-    color: "bg-gradient-to-r from-[#4b5563] to-[#6b7280]", // Gray gradient
+    xp: 0,
+    color: "bg-gradient-to-r from-yellow-500 to-amber-600", // Bronze vibe
   },
   {
     name: "Mizunoe",
-    xp: 500,
     kanji: "壬",
-    color: "bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]", // Purple gradient
+    xp: 500,
+    color: "bg-gradient-to-r from-orange-400 to-yellow-500",
   },
   {
     name: "Kanoto",
-    xp: 1500,
     kanji: "辛",
-    color: "bg-gradient-to-r from-[#ec4899] to-[#f43f5e]", // Pink/Red
+    xp: 1500,
+    color: "bg-gradient-to-r from-amber-500 to-orange-600",
   },
   {
     name: "Kanoe",
-    xp: 3000,
     kanji: "庚",
-    color: "bg-gradient-to-r from-[#f59e0b] to-[#fbbf24]", // Amber
+    xp: 3000,
+    color: "bg-gradient-to-r from-slate-400 to-gray-500", // Silver-like
   },
   {
     name: "Tsuchinoto",
-    xp: 5000,
     kanji: "己",
-    color: "bg-gradient-to-r from-[#10b981] to-[#34d399]", // Green
+    xp: 5000,
+    color: "bg-gradient-to-r from-blue-400 to-sky-500",
   },
   {
     name: "Tsuchinoe",
-    xp: 8000,
     kanji: "戊",
-    color: "bg-gradient-to-r from-[#3b82f6] to-[#60a5fa]", // Blue
+    xp: 8000,
+    color: "bg-gradient-to-r from-violet-500 to-indigo-600",
   },
   {
     name: "Hinoto",
-    xp: 12000,
     kanji: "丁",
-    color: "bg-gradient-to-r from-[#9333ea] to-[#a855f7]", // Violet
+    xp: 12000,
+    color: "bg-gradient-to-r from-rose-400 to-pink-500",
   },
   {
     name: "Hinoe",
-    xp: 17000,
     kanji: "丙",
-    color: "bg-gradient-to-r from-[#f97316] to-[#fb923c]", // Orange
+    xp: 17000,
+    color: "bg-gradient-to-r from-red-500 to-rose-600",
   },
   {
     name: "Kinoto",
-    xp: 23000,
     kanji: "乙",
-    color: "bg-gradient-to-r from-[#eab308] to-[#fde047]", // Yellow
+    xp: 23000,
+    color: "bg-gradient-to-r from-lime-400 to-green-500",
   },
   {
     name: "Kinoe",
-    xp: 30000,
     kanji: "甲",
-    color: "bg-gradient-to-r from-[#facc15] to-[#fcd34d]", // Bright Yellow
+    xp: 30000,
+    color: "bg-gradient-to-r from-teal-400 to-emerald-500",
   },
   {
     name: "Hashira",
-    xp: 40000,
     kanji: "柱",
-    color: "bg-gradient-to-r from-[#ef4444] to-[#dc2626]", // Red (like flame Hashira)
+    xp: 40000,
+    color: "bg-gradient-to-r from-fuchsia-500 via-purple-500 to-pink-500", // Rainbow/elite
   },
 ];

@@ -1,46 +1,15 @@
 "use client"
 
-import useKanjiGroundState from "@/store/kanjiGroundState";
-import { Badge, Button, Card, CardBody, CardHeader, Progress } from "@heroui/react"
-import { AirplaneTakeoff, ArrowElbowRightUp, BookOpen, BookOpenText, Brain, Calendar, Clock, Fire, Target } from "@phosphor-icons/react"
-import { useRouter } from "next/navigation";
+import { Card, CardBody, CardHeader } from "@heroui/react"
+import {  BookOpenText, Clock, Fire, Target } from "@phosphor-icons/react"
+
 import ReviewSchedule from "../review-schedule/ReviewSchedule";
 import { useUserStore } from "@/store/userState";
-import { RANKS } from "@/util/ranks";
 
 export default function UserDashBoard() {
 
-    const { setIsReviewMode } = useKanjiGroundState();
     const { longestStreak, currentStreak, totalLearned, totalHours, username, rank } = useUserStore();
-    const router = useRouter();
 
-    const handleStartReview = () => {
-        setIsReviewMode(true);
-        router.push('/study/kanji/repetition');
-    }
-
-    // Sample data for the dashboard
-    const studyStats = {
-        dueToday: 47,
-        newCards: 15,
-        reviewCards: 32,
-        totalLearned: 1247,
-        accuracy: 87,
-        streak: currentStreak,
-        studyTime: 45, // minutes today
-    }
-
-    const srsLevels = [
-        { level: "Apprentice I", count: 23, color: "bg-pink-500" },
-        { level: "Apprentice II", count: 18, color: "bg-pink-400" },
-        { level: "Apprentice III", count: 15, color: "bg-pink-300" },
-        { level: "Apprentice IV", count: 12, color: "bg-pink-200" },
-        { level: "Guru I", count: 34, color: "bg-purple-500" },
-        { level: "Guru II", count: 28, color: "bg-purple-400" },
-        { level: "Master", count: 156, color: "bg-blue-500" },
-        { level: "Enlightened", count: 89, color: "bg-yellow-500" },
-        { level: "Burned", count: 872, color: "bg-gray-600" },
-    ]
 
     const { todayReviewCount, expiredReviewCount } = useUserStore()
 
@@ -54,9 +23,6 @@ export default function UserDashBoard() {
                     <div className="flex gap-4 items-center">
                         <h1 className="text-lg lg:text-3xl font-bold text-dark mb-2">Welcome back, {username}!</h1>
 
-                        <div>
-                            Rank <span className="text-xs">{RANKS[rank-1].name}</span> <span className={`p-4 ${RANKS[rank-1].color}`}>{RANKS[rank-1].kanji}</span>
-                        </div>
                     </div>
                     <p className="text-gray-600 mb-3 text-xs">
                         Ready to continue your Kanji journey? You have {todayReviewCount} cards due today. {expiredReviewCount > 0 && <span className="text-red-500">You have {expiredReviewCount} expired reviews!</span>}
@@ -113,130 +79,6 @@ export default function UserDashBoard() {
                 </div>
 
                 <ReviewSchedule />
-
-                <div className="hidden grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Study Session */}
-                    <div className="lg:col-span-2 space-y-6">
-                        <Card>
-                            <CardHeader className="justify-between">
-                                <h1 className="flex items-center">
-                                    <AirplaneTakeoff className="w-5 h-5 mr-2 text-yellow-500" />
-                                    Start Study Session
-                                </h1>
-                                <p>Continue your learning journey with spaced repetition</p>
-                            </CardHeader>
-                            <CardBody className="space-y-4">
-                                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-                                    <div>
-                                        <h3 className="font-semibold text-blue-900">Reviews Available</h3>
-                                        <p className="text-sm text-blue-700">{studyStats.reviewCards} cards ready for review</p>
-                                    </div>
-                                    <Button onClick={handleStartReview} className="bg-blue-600 hover:bg-blue-700">Start Reviews</Button>
-                                </div>
-
-                                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                                    <div>
-                                        <h3 className="font-semibold text-green-900">New Lessons</h3>
-                                        <p className="text-sm text-green-700">{studyStats.newCards} new Kanji to learn</p>
-                                    </div>
-                                    <Button
-                                        variant="bordered"
-                                        className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-                                    >
-                                        Start Lessons
-                                    </Button>
-                                </div>
-
-                                <div className="pt-4">
-                                    <div className="flex justify-between text-sm text-gray-600 mb-2">
-                                        <span>Today&apos;s Progress</span>
-                                        <span>{studyStats.studyTime} min studied</span>
-                                    </div>
-                                    <Progress value={65} className="h-2" />
-                                </div>
-                            </CardBody>
-                        </Card>
-
-                        {/* SRS Level Distribution */}
-                        <Card className="hidden">
-                            <CardHeader>
-                                <h1 className="flex items-center">
-                                    <ArrowElbowRightUp className="w-5 h-5 mr-2 text-purple-500" />
-                                    SRS Level Distribution
-                                </h1>
-                                <p>Your Kanji organized by spaced repetition intervals</p>
-                            </CardHeader>
-                            <CardBody>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {srsLevels.map((level, index) => (
-                                        <div key={index} className="text-center">
-                                            <div
-                                                className={`w-full h-8 ${level.color} rounded-md flex items-center justify-center text-white text-sm font-medium mb-1`}
-                                            >
-                                                {level.count}
-                                            </div>
-                                            <p className="text-xs text-gray-600">{level.level}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </CardBody>
-                        </Card>
-                    </div>
-
-                    {/* Sidebar */}
-                    <div className="space-y-6 hidden">
-                        {/* Study Goals */}
-                        <Card>
-                            <CardHeader>
-                                <h1>Daily Goals</h1>
-                            </CardHeader>
-                            <CardBody className="space-y-4">
-                                <div>
-                                    <div className="flex justify-between text-sm mb-1">
-                                        <span>Reviews</span>
-                                        <span>32/50</span>
-                                    </div>
-                                    <Progress value={64} className="h-2" />
-                                </div>
-                                <div>
-                                    <div className="flex justify-between text-sm mb-1">
-                                        <span>New Lessons</span>
-                                        <span>8/15</span>
-                                    </div>
-                                    <Progress value={53} className="h-2" />
-                                </div>
-                                <div>
-                                    <div className="flex justify-between text-sm mb-1">
-                                        <span>Study Time</span>
-                                        <span>45/60 min</span>
-                                    </div>
-                                    <Progress value={75} className="h-2" />
-                                </div>
-                            </CardBody>
-                        </Card>
-
-                        {/* Quick Actions */}
-                        <Card className="hidden">
-                            <CardHeader>
-                                <h1>Quick Actions</h1>
-                            </CardHeader>
-                            <CardBody className="space-y-2">
-                                <Button variant="bordered" className="w-full justify-start">
-                                    <BookOpen className="w-4 h-4 mr-2" />
-                                    Browse Kanji
-                                </Button>
-                                <Button variant="bordered" className="w-full justify-start">
-                                    <ArrowElbowRightUp className="w-4 h-4 mr-2" />
-                                    View Statistics
-                                </Button>
-                                <Button variant="bordered" className="w-full justify-start">
-                                    <Calendar className="w-4 h-4 mr-2" />
-                                    Study Calendar
-                                </Button>
-                            </CardBody>
-                        </Card>
-                    </div>
-                </div>
             </main>
         </div>
     )
