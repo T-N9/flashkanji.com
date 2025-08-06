@@ -42,6 +42,35 @@ export const saveStreak = async (user_id: string): Promise<void> => {
   console.log("POST request sent");
 };
 
+export const removeHeart = async (
+  user_id: string
+): Promise<{
+  lives: number;
+  next_restore_time: string;
+}> => {
+  const response = await apiClient.post("/progress/remove-heart", {
+    user_id,
+  });
+  console.log("POST request sent");
+
+  return response.data;
+};
+
+export const restoreHeart = async (
+  user_id: string
+): Promise<{
+  lives: number;
+  next_restore_time: string;
+  restored_lives : number;
+}> => {
+  const response = await apiClient.post("/progress/restore-heart", {
+    user_id,
+  });
+  console.log("POST request sent");
+
+  return response.data;
+};
+
 export const saveTimer = async (
   user_id: string,
   duration_minutes?: number

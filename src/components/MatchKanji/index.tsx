@@ -10,7 +10,7 @@ import CharacterImage from "../common/character";
 import RamenLoading from "../common/RamenLoading";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useUserStore } from "@/store/userState";
-import { useSaveEndSection, useSaveStreak } from "@/services/progress";
+import { useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { playSound } from "@/util/soundPlayer";
@@ -44,12 +44,21 @@ const MatchKanji = () => {
   >([]);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const { userId, xp_points, setXpPoints, setLives, lives } = useUserStore();
+
+  const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
+  const { mutate: saveStreak } = useSaveStreak();
+  const router = useRouter();
+  const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+
   // Simulated API fetch
   const { data, isFetching, error } = useKanjiByChapterAndLevel(
     chapter ?? null,
     level ?? null,
     isParted ? part : null
   );
+
+  const { mutate: removeHeart, isLoading } = useRemoveHeart();
 
   useEffect(() => {
     if (!data || data.length === 0) return;
@@ -84,6 +93,17 @@ const MatchKanji = () => {
       ]);
       setSelectedPickItem(null);
     } else {
+      setLives(lives - 1)
+      removeHeart({
+        user_id: userId
+      }, {
+        onSuccess: () => {
+          toast.error("A life have lost.")
+        },
+        onError: () => {
+          setLives(lives + 1)
+        },
+      })
       playSound('alert')
       toast.error("Wrong Match. Try again!");
     }
@@ -111,12 +131,7 @@ const MatchKanji = () => {
     }
   };
 
-  const { userId, xp_points, setXpPoints } = useUserStore();
 
-  const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
-  const { mutate: saveStreak } = useSaveStreak();
-  const router = useRouter();
-  const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
 
   const saveSectionWithPayload = (
     onSuccess: () => void,
@@ -243,7 +258,7 @@ const MatchKanji = () => {
 
         {/* Match Column (Meaning) */}
         {currentMode === "meaning" && (
-          <div className="flex flex-col gap-5 w-1/2">
+          <div className={`${isLoading && 'select-none opacity-60 pointer-events-none'} flex flex-col gap-5 w-1/2`}>
             {matchColumnData.map((kanji) => (
               <Button
                 size="lg"
@@ -265,7 +280,7 @@ const MatchKanji = () => {
 
         {/* Match Column (Meaning) */}
         {currentMode === "onyomi" && (
-          <div className="flex flex-col gap-5 w-1/2">
+          <div className={`${isLoading && 'select-none opacity-60 pointer-events-none'} flex flex-col gap-5 w-1/2`}>
             {matchColumnData.map((kanji) => (
               <Button
                 size="lg"
@@ -287,7 +302,7 @@ const MatchKanji = () => {
 
         {/* Match Column (Meaning) */}
         {currentMode === "kunyomi" && (
-          <div className="flex flex-col gap-5 w-1/2">
+          <div className={`${isLoading && 'select-none opacity-60 pointer-events-none'} flex flex-col gap-5 w-1/2`}>
             {matchColumnData.map((kanji) => (
               <Button
                 size="lg"

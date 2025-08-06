@@ -47,11 +47,11 @@ export default function AuthCallback() {
             longestStreak: result?.user?.longest_streak,
             totalLearned: result?.user?.total_learned,
             totalHours: result?.user?.total_hours,
-            lives : result?.user?.lives,
-            xp_points : result?.user?.experience_points,
-            rank : result?.user?.rank
+            lives: result?.user?.lives,
+            xp_points: result?.user?.experience_points,
+            rank: result?.user?.rank
           })
-          router.push('/profile')
+          router.push('/flashboard')
         } else {
           router.push('/create-profile')
         }

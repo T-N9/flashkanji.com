@@ -19,10 +19,13 @@ interface UserState {
   totalHours: number;
   currentStreak: number;
   longestStreak: number;
-  rank : number;
-  xp_points : number;
+  rank: number;
+  xp_points: number;
   lives: number;
-  setXpPoints : (point : number) => void;
+  timeToRestoreHeart: string;
+  setXpPoints: (point: number) => void;
+  setLives: (live: number) => void;
+  setTimeToRestoreHeart: (time: string) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -42,9 +45,10 @@ export const useUserStore = create<UserState>((set) => ({
   totalHours: 0,
   currentStreak: 0,
   longestStreak: 0,
-  xp_points : 0,
-  rank : 1, 
-  lives : 5,
+  xp_points: 0,
+  rank: 1,
+  lives: 5,
+  timeToRestoreHeart: "",
   resetUser: () =>
     set({
       username: "",
@@ -58,13 +62,15 @@ export const useUserStore = create<UserState>((set) => ({
       totalHours: 0,
       currentStreak: 0,
       longestStreak: 0,
-      lives : 5,
-      xp_points : 0,
-      rank : 1,
+      lives: 5,
+      xp_points: 0,
+      rank: 1,
     }),
   todayReviewCount: 0,
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),
   expiredReviewCount: 0,
   setExpiredReviewCount: (count) => set({ expiredReviewCount: count }),
-  setXpPoints : (point) => set({ xp_points : point})
+  setXpPoints: (point) => set({ xp_points: point }),
+  setLives: (live) => set({ lives: live }),
+  setTimeToRestoreHeart: (time) => set({ timeToRestoreHeart: time }),
 }));

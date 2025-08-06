@@ -1,6 +1,8 @@
 import {
   applyExpiryPenalty,
   fetchChapterProgress,
+  removeHeart,
+  restoreHeart,
   saveEndSection,
   saveInitChapter,
   saveStreak,
@@ -63,6 +65,18 @@ export const useApplyExpiryPenalty = () => {
   return useMutation({
     mutationFn: ({ user_id, point }: { user_id: string; point: number }) =>
       applyExpiryPenalty(user_id, point),
+  });
+};
+
+export const useRemoveHeart = () => {
+  return useMutation({
+    mutationFn: ({ user_id }: { user_id: string }) => removeHeart(user_id),
+  });
+};
+
+export const useRestoreHeart = () => {
+  return useMutation({
+    mutationFn: ({ user_id }: { user_id: string }) => restoreHeart(user_id),
   });
 };
 

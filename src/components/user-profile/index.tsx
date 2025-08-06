@@ -1,13 +1,15 @@
 'use client'
 import { useUserStore } from '@/store/userState';
 import { Avatar, Card, CardBody, CardHeader, Progress } from '@heroui/react';
+import { HeartIcon } from '@phosphor-icons/react';
 import moment from 'moment';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'sonner';
 
 const UserProfileSection = () => {
-
-    const { username, email, created_at, japanese_level, avatarUrl, rank , xp_points} = useUserStore();
-
+    const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
+    const { username, email, created_at, japanese_level, avatarUrl, rank, xp_points, setLives, lives, timeToRestoreHeart } = useUserStore();
+    console.log({ timeToRestoreHeart })
     const RANKS = [
         {
             name: "Mizunoto",
@@ -77,6 +79,49 @@ const UserProfileSection = () => {
         },
     ];
 
+    useEffect(() => {
+        if (timeToRestoreHeart === "" || lives >= 5) {
+            setRemainingSeconds(null);
+            return;
+        }
+
+        const targetTime = new Date(timeToRestoreHeart).getTime();
+
+        const updateCountdown = () => {
+            const now = Date.now();
+            const diff = Math.floor((targetTime - now) / 1000);
+            setRemainingSeconds(diff > 0 ? diff : 0);
+
+            if (diff <= 0) {
+
+                const newLives = Math.min(lives + 1, 5); // cap at 5
+                if (newLives <= 5) {
+                    toast.info("❤️ A heart has been restored!");
+                }
+                setLives(lives + 1);
+
+                setRemainingSeconds(null); // stop timer display
+                clearInterval(interval);
+            }
+        };
+
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 1000);
+
+        return () => clearInterval(interval);
+    }, [timeToRestoreHeart, lives, setLives]);
+
+    // if (remainingSeconds === null) return null;
+
+    const formatTime = (seconds: number) => {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${hrs.toString().padStart(2, '0')}:${mins
+            .toString()
+            .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
+
     return (
         <section className="">
             <Card className="rounded-2xl border border-gray-200">
@@ -91,36 +136,47 @@ const UserProfileSection = () => {
                     </div>
                 </CardHeader>
 
-                <CardBody className="text-sm text-gray-700 space-y-2">
-                    <div className='flex px-2 gap-2 justify-between items-center'>
-                        <span>
-                            {RANKS[rank - 1].name}
-                        </span>
-                        <Progress value={(100/RANKS[rank].xp)* xp_points} size='sm' />
-                        <span>
-                            {RANKS[rank].name}
-                        </span>
-                    </div>
-                    <div className='flex gap-3 justify-between overflow-x-scroll pb-4'>
-                        {
-                            RANKS.map((item, idx) => {
-                                return (
-                                    <div key={idx} className=''>
-                                        <div className={`text-3xl font-bold text-white ${item.color} p-2 rounded-full border shadow ${idx + 1 === rank ? '' : 'opacity-50'}`}>
-                                            {item.kanji}
+                <CardBody className="text-sm text-gray-700 space-y-5">
+                    {
+                        lives < 5 && remainingSeconds !== null &&
+                        <div className='flex gap-2 items-center'>
+                            <HeartIcon size={32} weight='fill' color='red' className='animate-heartbeat' />
+                            <p>Next heart restores in: <strong>{formatTime(remainingSeconds)}</strong></p>
+                        </div>
+                    }
+                    <div className='space-y-2'>
+                        <div className='flex px-2 gap-2 justify-between items-center'>
+                            <span>
+                                {RANKS[rank - 1].name}
+                            </span>
+                            <Progress value={(100 / RANKS[rank].xp) * xp_points} size='sm' />
+                            <span>
+                                {RANKS[rank].name}
+                            </span>
+                        </div>
+                        <div className='flex gap-3 justify-between overflow-x-scroll pb-4'>
+                            {
+                                RANKS.map((item, idx) => {
+                                    return (
+                                        <div key={idx} className=''>
+                                            <div className={`text-3xl font-bold text-white ${item.color} p-2 rounded-full border shadow ${idx + 1 === rank ? '' : 'opacity-50'}`}>
+                                                {item.kanji}
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        }
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
-                    <div>
-                        <span className="font-medium">Japanese Level: </span>
-                        {japanese_level || 'Unknown'}
-                    </div>
-                    <div>
-                        <span className="font-medium">Joined: </span>
-                        {created_at ? moment(created_at).format('MMMM Do YYYY') : 'N/A'}
+                    <div className='space-y-2'>
+                        <div>
+                            <span className="font-medium">Japanese Level: </span>
+                            {japanese_level || 'Unknown'}
+                        </div>
+                        <div>
+                            <span className="font-medium">Joined: </span>
+                            {created_at ? moment(created_at).format('MMMM Do YYYY') : 'N/A'}
+                        </div>
                     </div>
                 </CardBody>
             </Card>
