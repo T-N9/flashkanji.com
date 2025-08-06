@@ -1,4 +1,5 @@
 import {
+  applyExpiryPenalty,
   fetchChapterProgress,
   saveEndSection,
   saveInitChapter,
@@ -25,7 +26,16 @@ export const useSaveEndSection = () => {
       stepIndex: number;
       xp_points?: number;
       isToDecrease?: boolean;
-    }) => saveEndSection(user_id, level, chapter, phase, stepIndex, xp_points, isToDecrease),
+    }) =>
+      saveEndSection(
+        user_id,
+        level,
+        chapter,
+        phase,
+        stepIndex,
+        xp_points,
+        isToDecrease
+      ),
   });
 };
 
@@ -46,6 +56,13 @@ export const useSaveInitChapter = () => {
 export const useSaveStreak = () => {
   return useMutation({
     mutationFn: ({ user_id }: { user_id: string }) => saveStreak(user_id),
+  });
+};
+
+export const useApplyExpiryPenalty = () => {
+  return useMutation({
+    mutationFn: ({ user_id, point }: { user_id: string; point: number }) =>
+      applyExpiryPenalty(user_id, point),
   });
 };
 

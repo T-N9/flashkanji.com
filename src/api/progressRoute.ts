@@ -6,8 +6,8 @@ export const saveEndSection = async (
   chapter: number,
   phase: number,
   stepIndex: number,
-  xp_points ?: number,
-  isToDecrease ?: boolean 
+  xp_points?: number,
+  isToDecrease?: boolean
 ): Promise<void> => {
   await apiClient.post("/progress/", {
     user_id,
@@ -37,20 +37,37 @@ export const saveInitChapter = async (
 export const saveStreak = async (user_id: string): Promise<void> => {
   await apiClient.post("/progress/streak", {
     user_id,
-    reviewed_today : true
+    reviewed_today: true,
   });
   console.log("POST request sent");
 };
 
 export const saveTimer = async (
   user_id: string,
-  duration_minutes ?: number
+  duration_minutes?: number
 ): Promise<void> => {
   await apiClient.post("/progress/time", {
     user_id,
     duration_minutes,
   });
   console.log("POST request sent");
+};
+
+export const applyExpiryPenalty = async (
+  user_id: string,
+  point: number
+): Promise<{
+  message: string;
+  isApplied: boolean;
+}> => {
+  const response = await apiClient.post("/progress/update-xp", {
+    user_id,
+    point,
+    isExpiryPenalty: true,
+    isToDecrease: true,
+  });
+  console.log("Penalty applied.");
+  return response.data;
 };
 
 export const fetchChapterProgress = async (

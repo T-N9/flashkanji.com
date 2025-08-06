@@ -1,17 +1,52 @@
 "use client"
 
 import { Card, CardBody, CardHeader } from "@heroui/react"
-import {  BookOpenText, Clock, Fire, Target } from "@phosphor-icons/react"
+import { BookOpenText, Clock, Fire, Target } from "@phosphor-icons/react"
 
 import ReviewSchedule from "../review-schedule/ReviewSchedule";
 import { useUserStore } from "@/store/userState";
+import { useApplyExpiryPenalty } from "@/services/progress";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 export default function UserDashBoard() {
 
     const { longestStreak, currentStreak, totalLearned, totalHours, username, rank } = useUserStore();
+    const { todayReviewCount, expiredReviewCount, userId, setXpPoints, xp_points } = useUserStore();
 
+    const { mutate: applyPenalty, isLoading: saveLoading } = useApplyExpiryPenalty();
 
-    const { todayReviewCount, expiredReviewCount } = useUserStore()
+    const handleExpiryPenalty = () => {
+        const storedDate = localStorage.getItem("ex_penalty_date");
+
+        const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+        const storedDay = storedDate ? new Date(storedDate).toISOString().split("T")[0] : null;
+
+        if (storedDay === today) {
+            console.log("Expiry penalty already applied today.");
+            return;
+        }
+
+        applyPenalty({ user_id: userId, point: expiredReviewCount }, {
+            onSuccess: (res) => {
+                if (res?.isApplied) {
+                    setXpPoints(xp_points - expiredReviewCount)
+                    toast.error(`${expiredReviewCount} points have been deducted.`)
+                    localStorage.setItem('ex_penalty_date', new Date().toString())
+                }
+            },
+            onError: (err) => {
+                console.error("Penalty error:", err);
+            },
+        })
+    }
+
+    useEffect(() => {
+
+        if (expiredReviewCount > 0) {
+            handleExpiryPenalty();
+        }
+    }, [expiredReviewCount]);
 
     return (
         <div className="min-h-screen ">
