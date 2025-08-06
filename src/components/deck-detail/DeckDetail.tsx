@@ -78,7 +78,7 @@ const DeckDetail: React.FC = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-6 px-2 lg:px-6 space-y-10">
+    <div className="max-w-3xl mx-auto py-6 px-6 space-y-10">
       <Card className="border border-default-200">
         <CardHeader className="flex flex-col items-start gap-2 lg:flex-row justify-between lg:items-center">
           <h1 className="text-xl font-bold text-dark">{data.name}</h1>
