@@ -119,20 +119,31 @@ export function HeadingBar() {
           <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
-      <NavbarItem className="gap-3 flex lg:hidden">
-        <div className="flex justify-center items-center gap-1">
-          <p>{currentStreak}</p>
-          <Fire weight="duotone" size={32} color="orange" />
-        </div>
-        <div className="flex justify-center items-center gap-1">
-          <p>{lives}</p>
-          <HeartStraight weight="duotone" size={32} color="red" />
-        </div>
-        <div className="flex justify-center items-center gap-1">
-          <p>{xp_points}</p>
-          <Clover weight="duotone" size={32} color="green" />
-        </div>
-      </NavbarItem>
+      {authCookie === undefined ?
+        <NavbarBrand className="block lg:hidden">
+          <Link href="/">
+            {/* <Logo/> */}
+            <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
+          </Link>
+        </NavbarBrand>
+        :
+        <NavbarItem className="gap-3 flex lg:hidden">
+          <div className="flex justify-center items-center gap-1">
+            <p>{currentStreak}</p>
+            <Fire weight="duotone" size={32} color="orange" />
+          </div>
+          <div className="flex justify-center items-center gap-1">
+            <p>{lives}</p>
+            <HeartStraight weight="duotone" size={32} color="red" />
+          </div>
+          <div className="flex justify-center items-center gap-1">
+            <p>{xp_points}</p>
+            <Clover weight="duotone" size={32} color="green" />
+          </div>
+        </NavbarItem>
+      }
+
+
 
       {/* Navbar Content (Desktop) */}
       <NavbarContent className="hidden sm:flex gap-6" justify="center">
