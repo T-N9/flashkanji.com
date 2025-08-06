@@ -9,7 +9,7 @@ import RamenLoading from '../common/RamenLoading';
 import CharacterImage from '../common/character';
 import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
-import { useSaveEndSection, useSaveStreak } from '@/services/progress';
+import { useRemoveHeart, useSaveEndSection, useSaveStreak } from '@/services/progress';
 import { useRouter } from 'next/navigation';
 import { CheckCircle } from '@phosphor-icons/react';
 import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
@@ -48,7 +48,7 @@ function QuizResultReaction({ score, total, className }: QuizResultReactionProps
 }
 const QuizGround = () => {
 
-    const { level, chapter, mode, isQuizSubmit, currentMark, answeredCount, handleQuizQuit, handleQuizSubmit, setQuizData, quizData, part, isParted, resetQuizState } = useContainer();
+    const { level, chapter, mode, isQuizSubmit, currentMark, answeredCount, setIsQuizSubmit, handleQuizQuit, setQuizData, quizData, part, isParted, resetQuizState } = useContainer();
     console.log({ level, chapter, mode, part })
 
     const { data, isLoading, isError } = useKanjiQuiz(chapter ? chapter : null,
@@ -63,11 +63,16 @@ const QuizGround = () => {
         }
     }, [data]);
 
-    const { userId, xp_points, setXpPoints } = useUserStore();
+    useEffect(() => {
+        handleQuizQuit()
+    }, []);
+
+    const { userId, xp_points, setXpPoints, lives, setLives } = useUserStore();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak()
     const router = useRouter();
     const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+    const { mutate: removeHeart } = useRemoveHeart();
 
     const saveSectionWithPayload = (
         onSuccess: () => void,
@@ -141,6 +146,33 @@ const QuizGround = () => {
         }
     };
 
+    const handleQuizSubmit = () => {
+        if (answeredCount === quizData.length) {
+            setIsQuizSubmit(true);
+        }
+
+        if (currentMark < answeredCount) {
+            playSound('alert')
+            setLives(lives - 1)
+            removeHeart({
+                user_id: userId
+            }, {
+                onSuccess: () => {
+                    // toast.error("A life have lost.")
+                    console.log("one live lost.")
+                },
+                onError: () => {
+                    setLives(lives + 1)
+                },
+            })
+            playSound('alert')
+            toast.error(`💔 Opps, you have  ${answeredCount - currentMark > 1 ? 'wrong answers' : 'a wrong answer'} !`)
+        } else {
+            playSound('right'),
+                toast.success('All answers are correct!')
+        }
+    };
+
 
     return (
         <div className="max-w-[1280px] min-w-[70%] mx-auto p-4">
@@ -181,13 +213,13 @@ const QuizGround = () => {
                         )}
                         <div className='flex justify-center space-y-2 flex-col mb-10'>
                             <div className="my-5 flex gap-4 justify-center items-center">
-                                <Button
+                                {/* <Button
                                     onClick={() => handleQuizQuit()}
                                     className=""
                                     as={Link} href="/flashmap#resume"
                                 >
                                     Quit
-                                </Button>
+                                </Button> */}
 
                                 {
                                     !isQuizSubmit &&

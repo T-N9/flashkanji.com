@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CharacterImage from "../common/character";
 import RamenLoading from "../common/RamenLoading";
 import { useUserStore } from "@/store/userState";
-import { useSaveEndSection, useSaveStreak } from "@/services/progress";
+import { useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
@@ -189,6 +189,8 @@ const JukugoBuilderItem = ({
     const [answerMora, setAnswerMora] = useState<string[]>([]);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
+    const { mutate: removeHeart, isLoading } = useRemoveHeart();
+    const { userId, setLives, lives } = useUserStore()
 
     useEffect(() => {
         if (item) {
@@ -226,9 +228,21 @@ const JukugoBuilderItem = ({
             if (isCorrect) {
                 playSound('right')
                 setIsAnswerCorrect(isCorrect);
-            }else{
-                 playSound('alert')
-                 toast.error('Opps, wrong answer!')
+            } else {
+                setLives(lives - 1)
+                removeHeart({
+                    user_id: userId
+                }, {
+                    onSuccess: () => {
+                        // toast.error("A life have lost.")
+                        console.log("one live lost.")
+                    },
+                    onError: () => {
+                        setLives(lives + 1)
+                    },
+                })
+                playSound('alert')
+                toast.error('💔 Opps, wrong answer!')
             }
 
 

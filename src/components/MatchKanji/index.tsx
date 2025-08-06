@@ -98,14 +98,15 @@ const MatchKanji = () => {
         user_id: userId
       }, {
         onSuccess: () => {
-          toast.error("A life have lost.")
+          // toast.error("A life have lost.")
+          console.log("one live lost.")
         },
         onError: () => {
           setLives(lives + 1)
         },
       })
       playSound('alert')
-      toast.error("Wrong Match. Try again!");
+      toast.error("💔 Wrong Match. Try again!");
     }
   };
 

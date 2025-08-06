@@ -6,6 +6,7 @@ import { Checkbox, Card, CardBody, cn } from "@heroui/react";
 /* Hook */
 import useContainer from "./useContainer";
 import { KanjiQuizItem } from "@/types/quiz";
+import { playSound } from "@/util/soundPlayer";
 
 type QuizItemProps = {
   quizItem: KanjiQuizItem;
@@ -48,6 +49,7 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
                 <div key={index}>
                   <Checkbox
                     onChange={() => {
+                      playSound('click')
                       handleIsAnswered();
                       setCurrentAnswer(option);
                       setIsAnswered(true);

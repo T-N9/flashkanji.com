@@ -64,11 +64,7 @@ const useContainer = () => {
     setIsQuizReady(true);
   };
 
-  const handleQuizSubmit = () => {
-    if (answeredCount === quizData.length) {
-      setIsQuizSubmit(true);
-    }
-  };
+
 
   const handleQuizQuit = () => {
     setIsQuizSubmit(false);
@@ -100,12 +96,12 @@ const useContainer = () => {
     setSelectedMultiChapters,
     handleChapterData,
     handleQuizStart,
-    handleQuizSubmit,
     handleQuizQuit,
     setQuizMode,
     setPart,
     setIsParted,
-    resetQuizState
+    resetQuizState,
+    setIsQuizSubmit
   };
 };
 
