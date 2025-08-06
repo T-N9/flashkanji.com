@@ -252,14 +252,15 @@ const RoadmapItem = ({
       }
     }
 
-    
+
   }
 
 
 
   return (
 
-    <div id={isCurrent ? 'resume' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-slate-50' : 'bg-blue-100'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+    <div id={isCurrent ? 'resume111' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-white relative' : 'bg-blue-50'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+      {isCurrent && <div id="resume" className="h-3 w-3 bg-transparent absolute -top-20 z-30"></div>} 
       <div className={`${bg} relative inline-block p-2 rounded-full shadow-md opacity-${unlocked ? "100" : "50"}`}>
         <div className={`border-dashed ${isCurrent && 'animate-slow-spin'} border-white border-2 rounded-full p-2`}>
           <div className="opacity-0">{icon}</div>
@@ -397,6 +398,9 @@ export default function ChapterRoadmap() {
                 </div>
               );
             })}
+
+
+            <Button variant="bordered" className="fixed bottom-5 right-10 lg:bottom-14 lg:right-28" as={Link} href="#resume">Resume</Button>
           </>
       }
 

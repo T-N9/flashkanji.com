@@ -163,7 +163,7 @@ const JukugoBuilder = () => {
     return (
         <div className="max-w-screen-sm min-h-screen mx-auto pt-5">
             {!isCompleted && queue.length > 0 && (
-                <div className="mb-4">
+                <div className="mb-4 px-6">
                     <Progress aria-label="Loading..." className="max-w-md mx-auto" value={((currentIndex + 1) / queue.length) * 100} />
                 </div>
             )}
@@ -279,7 +279,7 @@ const JukugoBuilderItem = ({
                     {quizItem.options.map((mora, index) => (
                         <Button
                             key={index}
-                            className={`${answerMora.includes(mora) ? "bg-slate-700 text-white" : ""
+                            className={`${answerMora.includes(mora) ? "bg-slate-700 text-white" : "bg-white"
                                 }`}
                             onClick={() => handleClickMora(mora)}
                         >
@@ -294,7 +294,7 @@ const JukugoBuilderItem = ({
                         {
                             !isChecked ?
                                 <div className="relative flex justify-start">
-                                    <CharacterImage src="thinking.png" className="mx-0" />
+                                    <CharacterImage src="thinking.png" className="mx-0 w-[100px] h-[100px]" />
                                     <span className="absolute border-2 border-transparent bg-white p-1 shadow-lg rounded-md top-0 left-[10%]">
                                         {answerMora.length > 0 ? (
                                             <div className="flex">
@@ -324,9 +324,9 @@ const JukugoBuilderItem = ({
                                 <div className="relative flex justify-start">
                                     {
                                         isAnswerCorrect ? (
-                                            <CharacterImage src="happy.png" className="mx-0" />
+                                            <CharacterImage src="happy.png" className="mx-0 w-[100px] h-[100px]" />
                                         ) : (
-                                            <CharacterImage src="crying.png" className="mx-0" />
+                                            <CharacterImage src="crying.png" className="mx-0 w-[100px] h-[100px]" />
                                         )
                                     }
                                     {

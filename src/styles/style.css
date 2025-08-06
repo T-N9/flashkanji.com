@@ -9,6 +9,10 @@ h6 {
   font-family: 'Tektur';
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .card {
   width: 99%;
   height: 200px;

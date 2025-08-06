@@ -8,7 +8,7 @@ const DeckDetailLayout = ({
 }>) => {
     return (
         <>
-            <BackToMap />
+            {/* <BackToMap /> */}
             {children}
         </>
     )
