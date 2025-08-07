@@ -5,6 +5,7 @@ import Avatar from "../common/avatar/Avatar";
 import Image from "next/image";
 import { ratingButtons } from "@/constants/static";
 import CharacterImage from "../common/character";
+import { playSound } from "@/util/soundPlayer";
 
 export const KanjiRepetitionItem = ({
     sr_data,
@@ -56,7 +57,9 @@ export const KanjiRepetitionItem = ({
     // Handle keyboard shortcuts
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
+
             if (event.key === "Enter") {
+                 playSound('flip')
                 setIsFlipped((isFlipped) => !isFlipped);
                 setIsAnswerShown(true);
                 setIsRunning(false);
@@ -65,6 +68,7 @@ export const KanjiRepetitionItem = ({
 
             // } else {
             if (isAnswerShown && event.key >= "1" && event.key <= "4") {
+                playSound('click')
                 const index = Number(event.key) - 1;
                 handleButtonClick(index);
                 setIsFlipped(false);
@@ -77,6 +81,7 @@ export const KanjiRepetitionItem = ({
     }, [isFlipped]);
 
     const handleButtonClick = (index: number) => {
+        playSound('click')
         const updatedCard = calculateNextReview(sr_data, index, satisfaction, seconds);
         const updatedStoredData = spacedRepetitionData.map((item) => {
             console.log(item.id, updatedCard.updatedCard.card_id, item.card_id);
@@ -100,6 +105,7 @@ export const KanjiRepetitionItem = ({
     };
 
     const handleShowAnswer = () => {
+        playSound('flip')
         setIsFlipped(isFlipped => !isFlipped);
         setIsRunning(false);
         setIsAnswerShown(true);

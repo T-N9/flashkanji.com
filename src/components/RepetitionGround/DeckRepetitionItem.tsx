@@ -5,6 +5,7 @@ import Avatar from "../common/avatar/Avatar";
 import Image from "next/image";
 import { ratingButtons } from "@/constants/static";
 import CharacterImage from "../common/character";
+import { playSound } from "@/util/soundPlayer";
 
 export const DeckRepetitionItem = ({
     sr_data,
@@ -54,6 +55,7 @@ export const DeckRepetitionItem = ({
     // Handle keyboard shortcuts
     useEffect(() => {
         const handleKeyPress = (event: KeyboardEvent) => {
+            playSound('flip')
             if (event.key === "Enter") {
                 setIsFlipped((isFlipped) => !isFlipped);
                 setIsAnswerShown(true);
@@ -63,6 +65,7 @@ export const DeckRepetitionItem = ({
 
             // } else {
             if (isAnswerShown && event.key >= "1" && event.key <= "4") {
+                playSound('click')
                 const index = Number(event.key) - 1;
                 handleButtonClick(index);
                 setIsFlipped(false);
@@ -75,7 +78,8 @@ export const DeckRepetitionItem = ({
     }, [isFlipped]);
 
     const handleButtonClick = (index: number) => {
-        console.log({sr_data})
+        playSound('click')
+        console.log({ sr_data })
         const updatedCard = calculateDeckNextReview(sr_data, index, satisfaction, seconds);
         const updatedStoredData = spacedRepetitionData.map((item) => {
             // console.log(item.id, updatedCard.updatedCard.id, item.card_id);
@@ -92,6 +96,7 @@ export const DeckRepetitionItem = ({
     };
 
     const handleShowAnswer = () => {
+        playSound('flip')
         setIsFlipped(isFlipped => !isFlipped);
         setIsRunning(false);
         setIsAnswerShown(true);

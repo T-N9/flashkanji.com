@@ -1,4 +1,4 @@
-type SoundKey = 'right' | 'wrong' | 'session' | 'alert' | 'click';
+type SoundKey = 'right' | 'wrong' | 'session' | 'alert' | 'click' | 'flip';
 
 const soundFiles: Record<SoundKey, string> = {
   right: '/assets/sounds/right.mp3',
@@ -6,6 +6,7 @@ const soundFiles: Record<SoundKey, string> = {
   session: '/assets/sounds/session.mp3',
   alert : '/assets/sounds/alert.mp3',
   click : '/assets/sounds/click.mp3',
+  flip : '/assets/sounds/flip.mp3'
 };
 
 const audioCache = new Map<SoundKey, HTMLAudioElement>();

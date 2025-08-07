@@ -236,6 +236,7 @@ const DeckRepetitionReviewMode = () => {
                     }
                 );
             } else {
+                playSound('session')
                 router.push("/flashboard");
             }
         }
