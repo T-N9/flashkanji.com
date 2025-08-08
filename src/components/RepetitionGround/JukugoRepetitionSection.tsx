@@ -14,7 +14,7 @@ import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useGeneralStore } from "@/store/generalState";
-import { useSaveEndSection, useSaveStreak } from "@/services/progress";
+import { useAddXpPoints, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import CharacterImage from "../common/character";
 import { getConfidenceEmoji } from "@/util";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
@@ -41,8 +41,18 @@ const JukugoRepetitionNormalMode = () => {
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
-    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryModalType, setVictoryXp } = useGeneralStore();
     const { userId, xp_points, setXpPoints } = useUserStore();
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
+
+    const handleAddPracticePointsAndEndSession = () => {
+        playSound('session')
+        setVictoryModalType('victory')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(1)
+        setXpPoints(xp_points + 1);
+        router.push("/flashmap#resume");
+    }
 
     const saveSectionIfNeeded = async () => {
         if (!mapItemData?.isCurrent) return;
@@ -62,7 +72,8 @@ const JukugoRepetitionNormalMode = () => {
                     onSuccess: () => {
                         playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
-                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
+                        setIsVictoryModalOpen(true)
+                        setVictoryXp(satisfactionPoint)
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
                         resolve();
@@ -101,12 +112,12 @@ const JukugoRepetitionNormalMode = () => {
             setIsSaveRepetition(true);
             if (!isAlreadySaved) {
                 saveStreak(
-                    { user_id: userId },
+                    { user_id: userId, xp_points: 1 },
                     {
                         onSuccess: () => {
                             console.log("Streak saved successfully.");
                             saveStreakToLocalStorage();
-                            router.push("/flashmap#resume");
+                            handleAddPracticePointsAndEndSession();
                         },
                         onError: (error) => {
                             console.error("Failed to save streak:", error);
@@ -115,7 +126,16 @@ const JukugoRepetitionNormalMode = () => {
                     }
                 );
             } else {
-                router.push("/flashmap#resume");
+                addXpPoints({
+                    user_id: userId, point: 1
+                }, {
+                    onSuccess: () => {
+                        handleAddPracticePointsAndEndSession();
+                    },
+                    onError: (err) => {
+                        console.log(err, "Error ending session")
+                    }
+                })
             }
             return;
         }
@@ -169,7 +189,7 @@ const JukugoRepetitionNormalMode = () => {
                         <div className='flex gap-2 justify-center items-center mt-2'>
                             <CheckCircle className='text-green-500' size={32} />
                             <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
-                                Flashmap
+                                {isClaiming ? 'Claiming...' : 'Claim Practice Point'}
                             </Button>
                         </div>
                 }
@@ -235,9 +255,19 @@ const JukugoRepetitionReviewMode = () => {
     console.log({ fetchedData: data?.repetitionData })
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
-    const { isSaveRepetition, setIsSaveRepetition } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const { mutate: saveStreak } = useSaveStreak();
     const router = useRouter();
+
+    const handleAddPracticePointsAndEndSession = () => {
+        playSound('session')
+        setVictoryModalType('victory')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(1)
+        setXpPoints(xp_points + 1);
+        router.push("/flashboard");
+    }
 
     const handleEnd = () => {
         const alreadySaved = hasSavedStreakToday();
@@ -255,7 +285,10 @@ const JukugoRepetitionReviewMode = () => {
                         console.log("Repetition data saved successfully.");
                         playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
-                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
+                        // toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
+                        setVictoryXp(satisfactionPoint)
+                        setVictoryModalType('victory')
+                        setIsVictoryModalOpen(true)
 
                         if (!alreadySaved) {
                             saveStreak(
@@ -282,8 +315,17 @@ const JukugoRepetitionReviewMode = () => {
                 }
             );
         } else {
-            setIsSaveRepetition(true);
-            router.push("/flashboard");
+            addXpPoints({
+                user_id: userId, point: 1
+            }, {
+                onSuccess: () => {
+                    handleAddPracticePointsAndEndSession();
+                    setIsSaveRepetition(true)
+                },
+                onError: (err) => {
+                    console.log(err, "Error ending session")
+                }
+            })
         }
     };
 

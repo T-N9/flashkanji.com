@@ -9,7 +9,7 @@ import RamenLoading from '../common/RamenLoading';
 import CharacterImage from '../common/character';
 import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
-import { useRemoveHeart, useSaveEndSection, useSaveStreak } from '@/services/progress';
+import { useAddXpPoints, useRemoveHeart, useSaveEndSection, useSaveStreak } from '@/services/progress';
 import { useRouter } from 'next/navigation';
 import { CheckCircle } from '@phosphor-icons/react';
 import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
@@ -71,15 +71,30 @@ const QuizGround = () => {
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak()
     const router = useRouter();
-    const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+    const { mapItemData, setShouldRefetchChapter, setVictoryModalType, setVictoryXp, setIsVictoryModalOpen } = useGeneralStore();
     const { mutate: removeHeart } = useRemoveHeart();
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
 
     const saveSectionWithPayload = (
         onSuccess: () => void,
         onError?: (error: any) => void
     ) => {
         if (!mapItemData?.isCurrent) {
-            router.push('/flashmap#resume');
+            addXpPoints({
+                user_id: userId, point: 1
+            }, {
+                onSuccess: () => {
+                    playSound('session')
+                    setVictoryModalType('victory')
+                    setIsVictoryModalOpen(true)
+                    setVictoryXp(1)
+                    setXpPoints(xp_points + 1);
+                    router.push("/flashmap#resume");
+                },
+                onError: (err) => {
+                    console.log(err, "Error ending session")
+                }
+            })
             return;
         }
 
@@ -97,7 +112,10 @@ const QuizGround = () => {
             onSuccess: () => {
                 playSound('session');
                 setXpPoints(xp_points + 5)
-                toast.success("5 XP points increased.")
+                // toast.success("5 XP points increased.")
+                setVictoryXp(5)
+                setVictoryModalType('victory')
+                setIsVictoryModalOpen(true)
                 router.push("/flashmap#resume");
                 onSuccess();
             },
@@ -247,8 +265,8 @@ const QuizGround = () => {
 
                                             <div className='flex gap-2 justify-center items-center mt-2'>
                                                 <CheckCircle className='text-green-500' size={32} />
-                                                <Button as={Link} href="/flashmap#resume" size="sm" variant='faded' color='default' className=''>
-                                                    Flashmap
+                                                <Button onClick={handleFinishSection} size="sm" variant='faded' color='default' className=''>
+                                                    {isClaiming ? 'Claiming...' : 'Claim Practice Point'}
                                                 </Button>
                                             </div>
                                     }

@@ -10,10 +10,11 @@ import CharacterImage from "../common/character";
 import RamenLoading from "../common/RamenLoading";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useUserStore } from "@/store/userState";
-import { useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
+import { useAddXpPoints, useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { playSound } from "@/util/soundPlayer";
+import { CheckCircle } from "@phosphor-icons/react";
 
 type selectItem = {
   id: number;
@@ -49,7 +50,7 @@ const MatchKanji = () => {
   const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
   const { mutate: saveStreak } = useSaveStreak();
   const router = useRouter();
-  const { mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
+  const { mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryModalType, setVictoryXp } = useGeneralStore();
 
   // Simulated API fetch
   const { data, isFetching, error } = useKanjiByChapterAndLevel(
@@ -59,6 +60,7 @@ const MatchKanji = () => {
   );
 
   const { mutate: removeHeart, isLoading } = useRemoveHeart();
+  const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
 
   useEffect(() => {
     if (!data || data.length === 0) return;
@@ -144,7 +146,22 @@ const MatchKanji = () => {
     onError?: (error: any) => void
   ) => {
     if (!mapItemData?.isCurrent) {
-      router.push("/flashmap#resume");
+      addXpPoints({
+        user_id: userId, point: 1
+      }, {
+        onSuccess: () => {
+          playSound('session')
+          setVictoryModalType('victory')
+          setIsVictoryModalOpen(true)
+          setVictoryXp(1)
+          setXpPoints(xp_points + 1);
+          router.push("/flashmap#resume");
+        },
+        onError: (err) => {
+          console.log(err, "Error ending session")
+        }
+      })
+
       return;
     }
 
@@ -162,7 +179,10 @@ const MatchKanji = () => {
       onSuccess: () => {
         playSound('session');
         setXpPoints(xp_points + 5);
-        toast.success("5 XP points increased.")
+        // toast.success("5 XP points increased.")
+        setVictoryXp(5)
+        setVictoryModalType('victory')
+        setIsVictoryModalOpen(true)
         router.push("/flashmap#resume");
         onSuccess();
       },
@@ -215,15 +235,31 @@ const MatchKanji = () => {
     return (
       <div className="text-center py-10 relative z-30">
         <CharacterImage src="happy.png" className="mx-auto mb-4" />
-        <Button
-          onClick={handleFinishSection}
-          variant="bordered"
-          color="primary"
-          className="table mx-auto mt-2"
-        >
-          {saveLoading ? "Saving..." : "Mark as Done"}
-        </Button>
+        {
+          mapItemData?.isCurrent ?
+            <>
+
+              <Button
+                onClick={handleFinishSection}
+                variant="bordered"
+                color="primary"
+                className="table mx-auto mt-2"
+              >
+                {saveLoading ? "Saving..." : "Mark as Done"}
+              </Button>
+            </>
+
+            :
+            <div className='flex gap-2 justify-center items-center mt-2'>
+              <CheckCircle className='text-green-500' size={32} />
+              <Button onClick={handleFinishSection} size="sm" variant='faded' color='default' className=''>
+                {isClaiming ? 'Claiming...' : 'Claim Practice Point'}
+              </Button>
+            </div>
+
+        }
       </div>
+
     );
 
   if (isFetching)

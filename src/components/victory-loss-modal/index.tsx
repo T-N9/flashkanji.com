@@ -87,7 +87,13 @@ export const VictoryModal: React.FC = () => {
                             </Button>
 
                         }
-                        {isVictory === 'restore' || isVictory === 'buy' &&
+                        {isVictory === 'restore' &&
+                            <Button className='bg-orange-500' variant="solid" onPress={onClose}>
+                                Okay
+                            </Button>
+                        }
+
+                        {isVictory === 'buy' &&
                             <Button className='bg-orange-500' variant="solid" onPress={onClose}>
                                 Okay
                             </Button>

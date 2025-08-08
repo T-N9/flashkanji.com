@@ -18,7 +18,6 @@ import { useAddXpPoints, useSaveEndSection, useSaveStreak } from "@/services/pro
 import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
-import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
 
 const KanjiRepetitionNormalMode = () => {
@@ -42,13 +41,14 @@ const KanjiRepetitionNormalMode = () => {
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
-    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryXp } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setVictoryModalType, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryXp } = useGeneralStore();
     const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
 
     const router = useRouter();
 
     const handleAddPracticePointsAndEndSession = () => {
         playSound('session')
+        setVictoryModalType('victory')
         setIsVictoryModalOpen(true)
         setVictoryXp(1)
         setXpPoints(xp_points + 1);
@@ -66,15 +66,15 @@ const KanjiRepetitionNormalMode = () => {
                     level: mapItemData.level,
                     phase: mapItemData.phase,
                     stepIndex: (mapItemData.stepIndex || 1) - 1,
-                    xp_points: 5,
+                    xp_points: satisfactionPoint,
                     isToDecrease: false,
                 },
                 {
                     onSuccess: () => {
                         playSound('session');
-                        setXpPoints(xp_points + 5)
+                        setXpPoints(xp_points + satisfactionPoint)
                         setIsVictoryModalOpen(true)
-                        setVictoryXp(5)
+                        setVictoryXp(satisfactionPoint)
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
                         resolve();
@@ -195,7 +195,7 @@ const KanjiRepetitionNormalMode = () => {
                         <div className='flex gap-2 justify-center items-center mt-2'>
                             <CheckCircle className='text-green-500' size={32} />
                             <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
-                                {isClaiming ? 'Claiming...' : 'Claim Practice Point'} 
+                                {isClaiming ? 'Claiming...' : 'Claim Practice Point'}
                             </Button>
                         </div>
                 }
@@ -245,7 +245,7 @@ const KanjiRepetitionReviewMode = () => {
     const { level, selectedReviewDate } = useKanjiGroundState();
     const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
-    const { isSaveRepetition, setIsSaveRepetition, mapItemData } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
 
     console.log({ fetchedData: data?.repetitionData })
 
@@ -263,9 +263,19 @@ const KanjiRepetitionReviewMode = () => {
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
     const { mutate: saveStreak } = useSaveStreak();
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const router = useRouter();
 
     console.log({ spacedRepetitionData, shuffledData })
+
+    const handleAddPracticePointsAndEndSession = () => {
+        playSound('session')
+        setVictoryModalType('victory')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(1)
+        setXpPoints(xp_points + 1);
+        router.push("/flashboard");
+    }
 
     const handleEnd = () => {
         const alreadySaved = hasSavedStreakToday();
@@ -283,7 +293,10 @@ const KanjiRepetitionReviewMode = () => {
                         console.log("Repetition data saved successfully.");
                         playSound('session');
                         setXpPoints(xp_points + satisfactionPoint)
-                        toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
+                        // toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
+                        setVictoryXp(satisfactionPoint)
+                        setVictoryModalType('victory')
+                        setIsVictoryModalOpen(true)
 
                         if (!alreadySaved) {
                             saveStreak(
@@ -310,8 +323,18 @@ const KanjiRepetitionReviewMode = () => {
                 }
             );
         } else {
-            setIsSaveRepetition(true);
-            router.push("/flashboard");
+
+            addXpPoints({
+                user_id: userId, point: 1
+            }, {
+                onSuccess: () => {
+                    handleAddPracticePointsAndEndSession();
+                    setIsSaveRepetition(true)
+                },
+                onError: (err) => {
+                    console.log(err, "Error ending session")
+                }
+            })
         }
     };
 

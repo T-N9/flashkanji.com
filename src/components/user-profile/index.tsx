@@ -1,15 +1,18 @@
 'use client'
+import { useRestoreOrBuyHeart } from '@/services/progress';
+import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
-import { Avatar, Card, CardBody, CardHeader, Progress } from '@heroui/react';
-import { HeartIcon } from '@phosphor-icons/react';
+import { playSound } from '@/util/soundPlayer';
+import { Avatar, Button, Card, CardBody, CardHeader, Progress } from '@heroui/react';
+import { Clover, HeartIcon } from '@phosphor-icons/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
 
 const UserProfileSection = () => {
     const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
-    const { username, email, created_at, japanese_level, avatarUrl, rank, xp_points, setLives, lives, timeToRestoreHeart } = useUserStore();
-    console.log({ timeToRestoreHeart })
+    const { username, userId, email, created_at, japanese_level, avatarUrl, rank, xp_points, setLives, lives, timeToRestoreHeart, setXpPoints } = useUserStore();
+    // console.log({ timeToRestoreHeart })
     const RANKS = [
         {
             name: "Mizunoto",
@@ -79,6 +82,10 @@ const UserProfileSection = () => {
         },
     ];
 
+    const { setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
+
+    const { mutate: buyHeart, isLoading } = useRestoreOrBuyHeart();
+
     useEffect(() => {
         if (timeToRestoreHeart === "" || lives >= 5) {
             setRemainingSeconds(null);
@@ -122,6 +129,32 @@ const UserProfileSection = () => {
             .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
+    const handleBuyHeart = () => {
+        setLives(lives + 1)
+
+        if (xp_points >= 50) {
+            setXpPoints(xp_points - 50)
+            buyHeart({ user_id: userId, mode: 'buy' },
+                {
+                    onSuccess: () => {
+                        playSound('session')
+
+                        setVictoryModalType('restore')
+                        setIsVictoryModalOpen(true)
+
+                    },
+                    onError: (err) => {
+                        setLives(lives - 1)
+                        console.log(err, "Buying heart fails.")
+                    }
+                }
+            )
+        } else {
+            toast.error("You don't have sufficient points to buy.")
+        }
+
+    }
+
     return (
         <section className="">
             <Card className="rounded-2xl border border-gray-200">
@@ -139,11 +172,25 @@ const UserProfileSection = () => {
                 <CardBody className="text-sm text-gray-700 space-y-5">
                     {
                         lives < 5 && remainingSeconds !== null &&
-                        <div className='flex gap-2 items-center'>
-                            <HeartIcon size={32} weight='fill' color='red' className='animate-heartbeat' />
-                            <p>Next heart restores in: <strong>{formatTime(remainingSeconds)}</strong></p>
+                        <div className=''>
+                            <div className='flex gap-2 items-center'>
+                                <HeartIcon size={32} weight='fill' color='red' className='animate-heartbeat' />
+                                <p>Next heart restores in: <strong>{formatTime(remainingSeconds)}</strong></p>
+                            </div>
+                            {
+                                isLoading ?
+                                    <Button className='mx-auto bg-white shadow'>
+                                        Buying...
+                                    </Button>
+                                    :
+                                    <Button onClick={handleBuyHeart} className='mx-auto bg-white shadow'>
+                                        Buy <HeartIcon size={22} weight='fill' color='red' />/ 50  <Clover size={22} weight='fill' color='green' />
+                                    </Button>
+                            }
+
                         </div>
                     }
+
                     <div className='space-y-2'>
                         <div className='flex px-2 gap-2 justify-between items-center'>
                             <span>

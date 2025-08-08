@@ -15,6 +15,7 @@ import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { shuffleArray } from "@/util";
 import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
+import { CheckCircle } from "@phosphor-icons/react";
 
 const JukugoBuilder = () => {
     const {
@@ -70,7 +71,7 @@ const JukugoBuilder = () => {
 
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
-    const { mutate: addXpPoints } = useAddXpPoints()
+    const { mutate: addXpPoints, isLoading : isClaiming } = useAddXpPoints()
     const router = useRouter();
 
     const handleAddPointsAndEndSession = (point: number) => {
@@ -171,11 +172,26 @@ const JukugoBuilder = () => {
 
 
     if (isFetching) return <div><RamenLoading /></div>;
-    if (isCompleted) return <div className="text-center py-10 relative z-30">
+    if (isCompleted) return
+    <div className="text-center py-10 relative z-30">
         <CharacterImage src="happy.png" className="mx-auto mb-4" />
-        <Button onClick={handleFinishSection} variant='bordered' color='primary' className='table mx-auto mt-2'>
-            {saveLoading ? 'Saving...' : 'Mark as Done'}
-        </Button> </div>;
+
+        {
+            mapItemData?.isCurrent ?
+                <Button onClick={handleFinishSection} variant='bordered' color='primary' className='table mx-auto mt-2'>
+                    {saveLoading ? 'Saving...' : 'Mark as Done'}
+                </Button>
+                :
+                <div className='flex gap-2 justify-center items-center mt-2'>
+                    <CheckCircle className='text-green-500' size={32} />
+                    <Button onClick={handleFinishSection} size="sm" variant='faded' color='default' className=''>
+                        {isClaiming ? 'Claiming...' : 'Claim Practice Point'}
+                    </Button>
+                </div>
+        }
+
+
+    </div>;
     if (!data || data.length === 0) {
         return <div className="text-center py-10">No quiz items available.</div>;
     }
