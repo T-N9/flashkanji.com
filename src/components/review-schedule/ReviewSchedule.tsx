@@ -17,6 +17,7 @@ import useJukugoGroundState from "@/store/jukugoGroundState"
 import useDeckGroundState from "@/store/deckGroundState"
 import { useGeneralStore } from "@/store/generalState"
 import CharacterImage from "../common/character"
+import { isFutureDate } from "@/util/schedule"
 
 export default function SpacedLearningCalendar() {
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
@@ -51,7 +52,12 @@ export default function SpacedLearningCalendar() {
   }
 
   const handleStartReview = (type: 1 | 2 | 3, deckId?: number, srsId?: number) => {
-    setIsSaveRepetition(true);
+    if (isFutureDate(selectedReviewDate)) {
+      setIsSaveRepetition(false);
+    } else {
+      setIsSaveRepetition(true);
+    }
+
     setIsInGround(true);
     if (type === 1) {
       setIsReviewMode(true);
@@ -149,8 +155,9 @@ export default function SpacedLearningCalendar() {
                             </p>
 
                             <div className="flex items-center gap-2">
-                              <Button color="primary" onClick={() => handleStartReview(1)}>
-                                Review
+
+                              <Button className={`${isFutureDate(selectedDateKey) && 'bg-purple-500'}`} color="primary" onClick={() => handleStartReview(1)}>
+                                {isFutureDate(selectedDateKey) ? 'Preview' : 'Review'}
                               </Button>
 
                             </div>
@@ -162,8 +169,8 @@ export default function SpacedLearningCalendar() {
                             </p>
 
                             <div className="flex items-center gap-2">
-                              <Button color="primary" onClick={() => handleStartReview(2)}>
-                                Review
+                              <Button className={`${isFutureDate(selectedDateKey) && 'bg-purple-500'}`} color="primary" onClick={() => handleStartReview(2)}>
+                                {isFutureDate(selectedDateKey) ? 'Preview' : 'Review'}
                               </Button>
 
                             </div>
@@ -182,9 +189,10 @@ export default function SpacedLearningCalendar() {
 
                                   <Button
                                     color="primary"
+                                    className={`${isFutureDate(selectedDateKey) && 'bg-purple-500'}`}
                                     onClick={() => handleStartReview(3, item.id, item.srs_id)}
                                   >
-                                    Review
+                                    {isFutureDate(selectedDateKey) ? 'Preview' : 'Review'}
                                   </Button>
 
                                 </div>

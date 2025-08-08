@@ -46,7 +46,7 @@ export const VictoryModal: React.FC = () => {
                         {isVictory === 'victory' && (
                             <>
                                 <p className="text-lg">You earned</p>
-                                <p className="text-3xl font-semibold text-green-600">{xp > 1 ? `${xp} clovers` : `a clover`}.</p>
+                                <p className="text-3xl font-semibold text-green-600">{xp > 1 ? `${Math.floor(xp)} clovers` : `a clover`}.</p>
                                 <p className='flex gap-2 justify-center'><Clover size={20} weight='fill' color='green' />
                                     {Math.floor(xp_points)}
                                 </p>
