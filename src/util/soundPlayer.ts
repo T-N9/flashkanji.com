@@ -1,12 +1,20 @@
-type SoundKey = 'right' | 'wrong' | 'session' | 'alert' | 'click' | 'flip';
+type SoundKey =
+  | "right"
+  | "wrong"
+  | "session"
+  | "alert"
+  | "click"
+  | "flip"
+  | "loss";
 
 const soundFiles: Record<SoundKey, string> = {
-  right: '/assets/sounds/right.mp3',
-  wrong: '/assets/sounds/wrong.mp3',
-  session: '/assets/sounds/session.mp3',
-  alert : '/assets/sounds/alert.mp3',
-  click : '/assets/sounds/click.mp3',
-  flip : '/assets/sounds/flip.mp3'
+  right: "/assets/sounds/right.mp3",
+  wrong: "/assets/sounds/wrong.mp3",
+  session: "/assets/sounds/session.mp3",
+  alert: "/assets/sounds/alert.mp3",
+  click: "/assets/sounds/click.mp3",
+  flip: "/assets/sounds/flip.mp3",
+  loss: "/assets/sounds/loss.mp3",
 };
 
 const audioCache = new Map<SoundKey, HTMLAudioElement>();

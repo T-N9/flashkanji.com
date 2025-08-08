@@ -79,7 +79,7 @@ export default function SpacedLearningCalendar() {
     }
   }, [reviewMap]);
 
-  console.log({ reviewMap })
+  console.log({ reviewMap, selectedReviewDate })
 
 
 

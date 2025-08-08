@@ -71,7 +71,7 @@ const JukugoBuilder = () => {
 
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
-    const { mutate: addXpPoints, isLoading : isClaiming } = useAddXpPoints()
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const router = useRouter();
 
     const handleAddPointsAndEndSession = (point: number) => {
@@ -270,8 +270,10 @@ const JukugoBuilderItem = ({
                 setIsAnswerCorrect(isCorrect);
             } else {
                 if (lives === 1) {
+                    playSound('loss')
                     setVictoryModalType('loss');
                     setIsVictoryModalOpen(true)
+
                 }
                 setLives(lives - 1)
                 removeHeart({

@@ -96,6 +96,7 @@ const MatchKanji = () => {
       setSelectedPickItem(null);
     } else {
       if (lives === 1) {
+        playSound('loss')
         setVictoryModalType('loss');
         setIsVictoryModalOpen(true)
       }
