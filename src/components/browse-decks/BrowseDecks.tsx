@@ -2,11 +2,11 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import useBrowseDecks from "./useBrowseDecks";
-import { Button, Card, CardBody, CardHeader, Input, Pagination, Select, SelectItem } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Input, Pagination, Popover, PopoverContent, PopoverTrigger, Select, SelectItem } from "@heroui/react";
 import debounce from "lodash/debounce";
 import Link from "next/link";
 import Image from "next/image";
-import { Funnel } from "@phosphor-icons/react";
+import { Funnel, Info } from "@phosphor-icons/react";
 import CharacterImage from "../common/character";
 import { getBackgroundImage } from "@/util";
 
@@ -54,9 +54,24 @@ const BrowseDecks = () => {
   return (
     <div className="max-w-screen-md mx-auto p-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold mb-4">Browse Decks</h2>
+        <div className="flex gap-1 items-center mb-4">
+          <h2 className="text-2xl font-semibold">Browse Decks</h2>
 
-        <Funnel className="cursor-pointer" onClick={() => setIsFilterBar(!isFilterBar)} size={28} />
+
+          <Popover placement="bottom" showArrow={true} color="foreground">
+            <PopoverTrigger>
+              <Info className="cursor-pointer" size={25} weight="fill" color="gray" />
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className="px-1 py-2 max-w-screen-sm">
+                <div className="text-small font-bold">What are decks?</div>
+                <div className="text-tiny">Decks are collections of cards used in the Spaced Repetition System (SRS) to help you learn Kanji or Jukugo by topics efficiently. Each day, you can study a set number of cards from a deck, earning XP points for completing review sessions and even restoring a heart when you are out of lives.</div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        <Funnel className="cursor-pointer" color="orange" weight="duotone" onClick={() => setIsFilterBar(!isFilterBar)} size={28} />
       </div>
 
       {
