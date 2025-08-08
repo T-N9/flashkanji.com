@@ -79,7 +79,7 @@ export function HeadingBar() {
                 <HeartStraight weight="duotone" size={32} color="red" />
               </div>
               <div className="flex justify-center items-center gap-1">
-                <p>{xp_points}</p>
+                <p>{Math.floor(xp_points)}</p>
                 <Clover weight="duotone" size={32} color="green" />
               </div>
             </NavbarItem>
@@ -137,7 +137,7 @@ export function HeadingBar() {
             <HeartStraight weight="duotone" size={32} color="red" />
           </div>
           <div className="flex justify-center items-center gap-1">
-            <p>{xp_points}</p>
+            <p>{Math.floor(xp_points)}</p>
             <Clover weight="duotone" size={32} color="green" />
           </div>
         </NavbarItem>

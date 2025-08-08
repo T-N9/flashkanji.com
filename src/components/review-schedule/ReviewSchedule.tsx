@@ -23,7 +23,7 @@ export default function SpacedLearningCalendar() {
   const { setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setIsReviewMode: setIsReviewModeDeck, setDeckId, setIsReviewByDate, setSrsId } = useDeckGroundState();
   const { userId, setToDayReviewCount, setExpiredReviewCount } = useUserStore()
-  const { setIsInGround } = useGeneralStore();
+  const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
 
   const { data: reviewData, refetch, isFetching } = useFetchReviewCalendarData(userId)
 
@@ -51,6 +51,7 @@ export default function SpacedLearningCalendar() {
   }
 
   const handleStartReview = (type: 1 | 2 | 3, deckId?: number, srsId?: number) => {
+    setIsSaveRepetition(true);
     setIsInGround(true);
     if (type === 1) {
       setIsReviewMode(true);

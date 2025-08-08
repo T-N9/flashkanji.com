@@ -67,13 +67,21 @@ export const JukugoGround = () => {
     }
   };
 
-  const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+  const { mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryXp } = useGeneralStore();
 
   const { userId, setXpPoints, xp_points } = useUserStore();
 
   const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
   const { mutate: saveStreak } = useSaveStreak();
   const router = useRouter();
+
+  const handleAddPointsAndEndSession = (point: number) => {
+    playSound('session')
+    setIsVictoryModalOpen(true)
+    setVictoryXp(point)
+    setXpPoints(xp_points + point);
+    router.push("/flashmap#resume");
+  }
 
   const saveSectionWithPayload = (
     onSuccess: () => void,
@@ -96,10 +104,7 @@ export const JukugoGround = () => {
 
     saveSection(payload, {
       onSuccess: () => {
-        playSound('session');
-        setXpPoints(xp_points + 5)
-        toast.success("5 XP points increased.")
-        router.push("/flashmap#resume");
+        handleAddPointsAndEndSession(5)
         onSuccess();
       },
       onError: (error) => {

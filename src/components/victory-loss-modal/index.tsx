@@ -48,7 +48,7 @@ export const VictoryModal: React.FC = () => {
                                 <p className="text-lg">You earned</p>
                                 <p className="text-3xl font-semibold text-green-600">{xp > 1 ? `${xp} clovers` : `a clover`}.</p>
                                 <p className='flex gap-2 justify-center'><Clover size={20} weight='fill' color='green' />
-                                    {xp_points}
+                                    {Math.floor(xp_points)}
                                 </p>
                                 <p className="text-sm text-gray-500">Great job! Keep it up.</p>
                             </>

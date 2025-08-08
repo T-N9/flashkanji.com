@@ -10,7 +10,7 @@ const BackToMap = () => {
     const { currentStreak, lives, xp_points } = useUserStore();
 
     return (
-        <div className='fixed shadow w-full px-3 rounded-b-md bg-white top-0 left-0 right-0 z-50 max-w-screen-sm mx-auto'>
+        <div className='fixed border-4 border-orange-200 border-t-0 shadow w-full px-3 rounded-b-md bg-white top-0 left-0 right-0 z-50 max-w-screen-sm mx-auto'>
             <div className="bg-white p-2 flex justify-between items-center">
                 <Button
                     isIconOnly
