@@ -1,4 +1,5 @@
 import {
+  addXpPoints,
   applyExpiryPenalty,
   fetchChapterProgress,
   removeHeart,
@@ -57,7 +58,7 @@ export const useSaveInitChapter = () => {
 
 export const useSaveStreak = () => {
   return useMutation({
-    mutationFn: ({ user_id }: { user_id: string }) => saveStreak(user_id),
+    mutationFn: ({ user_id, xp_points }: { user_id: string, xp_points ?: number }) => saveStreak(user_id, xp_points),
   });
 };
 
@@ -79,6 +80,13 @@ export const useRestoreHeart = () => {
     mutationFn: ({ user_id }: { user_id: string }) => restoreHeart(user_id),
   });
 };
+
+export const useAddXpPoints = () => {
+    return useMutation({
+    mutationFn: ({ user_id, point }: { user_id: string; point: number }) =>
+      addXpPoints(user_id, point),
+  });
+}
 
 export const useSaveTimer = () => {
   return useMutation({

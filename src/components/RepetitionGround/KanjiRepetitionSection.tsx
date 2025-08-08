@@ -14,7 +14,7 @@ import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
-import { useSaveEndSection, useSaveStreak } from "@/services/progress";
+import { useAddXpPoints, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
@@ -42,9 +42,18 @@ const KanjiRepetitionNormalMode = () => {
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData();
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
-    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryXp } = useGeneralStore();
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
 
     const router = useRouter();
+
+    const handleAddPracticePointsAndEndSession = () => {
+        playSound('session')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(1)
+        setXpPoints(xp_points + 1);
+        router.push("/flashmap#resume");
+    }
 
     const saveSectionIfNeeded = async () => {
         if (!mapItemData?.isCurrent) return;
@@ -64,7 +73,8 @@ const KanjiRepetitionNormalMode = () => {
                     onSuccess: () => {
                         playSound('session');
                         setXpPoints(xp_points + 5)
-                        toast.success("5 XP points increased.")
+                        setIsVictoryModalOpen(true)
+                        setVictoryXp(5)
                         console.log("Section saved successfully.");
                         setShouldRefetchChapter(true);
                         resolve();
@@ -103,12 +113,14 @@ const KanjiRepetitionNormalMode = () => {
             setIsSaveRepetition(true);
             if (!isAlreadySaved) {
                 saveStreak(
-                    { user_id: userId },
+                    { user_id: userId, xp_points: 1 },
                     {
                         onSuccess: () => {
                             console.log("Streak saved successfully.");
                             saveStreakToLocalStorage();
-                            router.push("/flashmap#resume");
+
+                            handleAddPracticePointsAndEndSession();
+
                         },
                         onError: (error) => {
                             console.error("Failed to save streak:", error);
@@ -117,7 +129,17 @@ const KanjiRepetitionNormalMode = () => {
                     }
                 );
             } else {
-                router.push("/flashmap#resume");
+                addXpPoints({
+                    user_id: userId, point: 1
+                }, {
+                    onSuccess: () => {
+                        handleAddPracticePointsAndEndSession();
+                    },
+                    onError: (err) => {
+                        console.log(err, "Error ending session")
+                    }
+                })
+
             }
             return;
         }
@@ -173,7 +195,7 @@ const KanjiRepetitionNormalMode = () => {
                         <div className='flex gap-2 justify-center items-center mt-2'>
                             <CheckCircle className='text-green-500' size={32} />
                             <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
-                                Flashmap
+                                {isClaiming ? 'Claiming...' : 'Claim Practice Point'} 
                             </Button>
                         </div>
                 }

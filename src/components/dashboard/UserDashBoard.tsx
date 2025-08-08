@@ -30,7 +30,11 @@ export default function UserDashBoard() {
         applyPenalty({ user_id: userId, point: expiredReviewCount }, {
             onSuccess: (res) => {
                 if (res?.isApplied) {
-                    setXpPoints(xp_points - expiredReviewCount)
+                    if (xp_points - expiredReviewCount < 0) {
+                        setXpPoints(0)
+                    } else {
+                        setXpPoints(xp_points - expiredReviewCount)
+                    }
                     toast.error(`${expiredReviewCount} points have been deducted.`)
                     localStorage.setItem('ex_penalty_date', new Date().toString())
                 }

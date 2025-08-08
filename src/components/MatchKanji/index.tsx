@@ -49,7 +49,7 @@ const MatchKanji = () => {
   const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
   const { mutate: saveStreak } = useSaveStreak();
   const router = useRouter();
-  const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+  const { mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
 
   // Simulated API fetch
   const { data, isFetching, error } = useKanjiByChapterAndLevel(
@@ -93,6 +93,10 @@ const MatchKanji = () => {
       ]);
       setSelectedPickItem(null);
     } else {
+      if (lives === 1) {
+        setVictoryModalType('loss');
+        setIsVictoryModalOpen(true)
+      }
       setLives(lives - 1)
       removeHeart({
         user_id: userId
@@ -106,6 +110,7 @@ const MatchKanji = () => {
         },
       })
       playSound('alert')
+
       toast.error("💔 Wrong Match. Try again!");
     }
   };

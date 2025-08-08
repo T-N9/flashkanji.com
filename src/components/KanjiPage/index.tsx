@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { CheckCircle } from '@phosphor-icons/react';
 import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
 import { toast } from 'sonner';
+import { playSound } from '@/util/soundPlayer';
 
 const KanjiGround = () => {
 
@@ -51,7 +52,7 @@ const KanjiGround = () => {
             ? multipleChaptersData
             : singleChapterData;
 
-    const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+    const { mapItemData, setShouldRefetchChapter, setVictoryXp, setIsVictoryModalOpen } = useGeneralStore();
 
     // Update the number of chapters based on the selected level
     useEffect(() => {
@@ -99,6 +100,14 @@ const KanjiGround = () => {
     const { mutate: saveStreak } = useSaveStreak();
     const router = useRouter();
 
+    const handleAddPointsAndEndSession = (point: number) => {
+        playSound('session')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(point)
+        setXpPoints(xp_points + point);
+        router.push("/flashmap#resume");
+    }
+
     const saveSectionWithPayload = (
         onSuccess: () => void,
         onError?: (error: any) => void
@@ -119,10 +128,8 @@ const KanjiGround = () => {
         };
 
         saveSection(payload, {
-            onSuccess : () => {
-                setXpPoints(xp_points + 5)
-                toast.success("5 XP points increased.")
-                router.push("/flashmap#resume");
+            onSuccess: () => {
+                handleAddPointsAndEndSession(5)
                 onSuccess();
             },
             onError: (error) => {

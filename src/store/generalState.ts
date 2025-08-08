@@ -33,7 +33,11 @@ interface GeneralState {
     isCurrent: boolean;
   } | null;
 
-  shouldRefetchChapter : boolean;
+  shouldRefetchChapter: boolean;
+  /*  */
+  isVictoryModalOpen: boolean;
+  victoryModalType: "victory" | "loss";
+  victoryXp: number;
 
   /* Actions */
   toggleFlashModal: () => void;
@@ -66,7 +70,11 @@ interface GeneralState {
       isCurrent: boolean;
     } | null
   ) => void;
-  setShouldRefetchChapter : (shouldRefetchChapter : boolean) => void;
+  setShouldRefetchChapter: (shouldRefetchChapter: boolean) => void;
+
+  setIsVictoryModalOpen: (isVictoryModalOpen: boolean) => void;
+  setVictoryModalType: (type: "victory" | "loss") => void;
+  setVictoryXp: (point: number) => void;
 }
 
 export const useGeneralStore = create<GeneralState>((set) => ({
@@ -90,7 +98,12 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   isInGround: false,
   isSaveRepetition: true,
   mapItemData: null,
-  shouldRefetchChapter : false,
+  shouldRefetchChapter: false,
+
+  /* Victory Modal */
+  isVictoryModalOpen: false,
+  victoryModalType: "victory",
+  victoryXp: 0,
 
   /* Actions */
   toggleFlashModal: () =>
@@ -118,5 +131,10 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   setIsInGround: (isInGround) => set({ isInGround }),
   setIsSaveRepetition: (isSaveRepetition) => set({ isSaveRepetition }),
   setMapItemData: (data) => set({ mapItemData: data }),
-  setShouldRefetchChapter : (shouldRefetchChapter) => set({ shouldRefetchChapter })
+  setShouldRefetchChapter: (shouldRefetchChapter) =>
+    set({ shouldRefetchChapter }),
+
+  setIsVictoryModalOpen: (isVictoryModalOpen) => set({ isVictoryModalOpen }),
+  setVictoryModalType: (victoryModalType) => set({ victoryModalType }),
+  setVictoryXp: (victoryXp) => set({ victoryXp }),
 }));

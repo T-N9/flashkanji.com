@@ -1,5 +1,6 @@
 import HeartRestorer from '@/components/heart-restorer';
 import TimerController from '@/components/pomodoro/TimerController';
+import { VictoryModal } from '@/components/victory-loss-modal';
 import React from 'react'
 
 const LearnLayout = ({
@@ -12,6 +13,8 @@ const LearnLayout = ({
             <TimerController />
             <HeartRestorer/>
             {children}
+
+            <VictoryModal/>
         </>
     )
 }

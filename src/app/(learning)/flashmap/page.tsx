@@ -162,7 +162,8 @@ const RoadmapItem = ({
   const { setSelectedChapter, setSelectedLevel, setLevel, setPart, setIsParted, setIsReviewMode } = useKanjiGroundState();
   const { setSelectedChapter: setSelectedChapterJukugo, setSelectedLevel: setSelectedLevelJukugo, setLevel: setLevelJukugo, setPart: setPartJukugo, setIsParted: setIsPartedJukugo, setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setSelectedChapter: setSelectedChapterQuiz, setSelectedLevel: setSelectedLevelQuiz, setQuizMode, setPart: setPartQuiz, setIsParted: setIsPartedQuiz, setLevel: setLevelQuiz } = useQuizGroundStore();
-  const { setIsInGround, setIsSaveRepetition, setMapItemData, shouldRefetchChapter, setShouldRefetchChapter } = useGeneralStore();
+  const { setIsInGround, setIsSaveRepetition, setMapItemData, shouldRefetchChapter, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
+  const { lives } = useUserStore()
 
   const levelStr = String(japanese_level);
   const chapterStr = String(japanese_chapter);
@@ -172,6 +173,13 @@ const RoadmapItem = ({
   const unlocked = isStepUnlocked(progress, levelStr, chapterStr, phaseStr, stepIndex);
 
   const handleClickRoadmapItem = () => {
+
+    if(lives === 0){
+      setVictoryModalType('loss'),
+      setIsVictoryModalOpen(true)
+      // alert('No lives left')
+      return;
+    }
 
     shouldRefetchChapter && setShouldRefetchChapter(false)
 
@@ -187,6 +195,7 @@ const RoadmapItem = ({
 
     setIsInGround(true);
     if (route === 'kanji' || route === 'match') {
+      alert(`${step_i} match kanji`)
       setIsReviewMode(false);
       setSelectedChapter(japanese_chapter);
       setSelectedLevel("N" + japanese_level);
@@ -200,7 +209,7 @@ const RoadmapItem = ({
       if (phase === 1) {
         setPart("0");
       } else if (phase === 2) {
-        step_i > 3 ? setPart(null) : setPart("1");
+        step_i > 4 ? setPart(null) : setPart("1");
         console.log("Setting part to 1 for phase 2, step", step_i);
       } else {
         setIsParted(false);

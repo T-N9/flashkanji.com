@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CharacterImage from "../common/character";
 import RamenLoading from "../common/RamenLoading";
 import { useUserStore } from "@/store/userState";
-import { useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
+import { useAddXpPoints, useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
@@ -34,7 +34,7 @@ const JukugoBuilder = () => {
     const [currentItem, setCurrentItem] = useState<relatedJukugoItem | null>(null);
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const didInit = useRef(false); // 👈 prevent double setup
-    const { mapItemData, setShouldRefetchChapter } = useGeneralStore();
+    const { mapItemData, setShouldRefetchChapter, setVictoryXp, setIsVictoryModalOpen } = useGeneralStore();
 
     useEffect(() => {
         if (!didInit.current && data && data.length > 0) {
@@ -70,14 +70,40 @@ const JukugoBuilder = () => {
 
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
+    const { mutate: addXpPoints } = useAddXpPoints()
     const router = useRouter();
+
+    const handleAddPointsAndEndSession = (point: number) => {
+        playSound('session')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(point)
+        setXpPoints(xp_points + point);
+        router.push("/flashmap#resume");
+    }
+
+    const handleAddPracticePointsAndEndSession = () => {
+        playSound('session')
+        setIsVictoryModalOpen(true)
+        setVictoryXp(1)
+        setXpPoints(xp_points + 1);
+        router.push("/flashmap#resume");
+    }
 
     const saveSectionWithPayload = (
         onSuccess: () => void,
         onError?: (error: any) => void
     ) => {
         if (!mapItemData?.isCurrent) {
-            router.push('/flashmap#resume');
+            addXpPoints({
+                user_id: userId, point: 1
+            }, {
+                onSuccess: () => {
+                    handleAddPracticePointsAndEndSession();
+                },
+                onError: (err) => {
+                    console.log(err, "Error ending session")
+                }
+            })
             return;
         }
 
@@ -93,10 +119,7 @@ const JukugoBuilder = () => {
 
         saveSection(payload, {
             onSuccess: () => {
-                playSound('session');
-                setXpPoints(xp_points + 5)
-                toast.success("5 XP points increased.")
-                router.push("/flashmap#resume");
+                handleAddPointsAndEndSession(5);
                 onSuccess();
             },
             onError: (error) => {
@@ -191,6 +214,7 @@ const JukugoBuilderItem = ({
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
     const { mutate: removeHeart, isLoading } = useRemoveHeart();
     const { userId, setLives, lives } = useUserStore()
+    const { setVictoryModalType, setIsVictoryModalOpen } = useGeneralStore()
 
     useEffect(() => {
         if (item) {
@@ -229,6 +253,10 @@ const JukugoBuilderItem = ({
                 playSound('right')
                 setIsAnswerCorrect(isCorrect);
             } else {
+                if (lives === 1) {
+                    setVictoryModalType('loss');
+                    setIsVictoryModalOpen(true)
+                }
                 setLives(lives - 1)
                 removeHeart({
                     user_id: userId
