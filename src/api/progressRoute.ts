@@ -34,11 +34,14 @@ export const saveInitChapter = async (
   console.log("POST request sent");
 };
 
-export const saveStreak = async (user_id: string, xp_points?: number): Promise<void> => {
+export const saveStreak = async (
+  user_id: string,
+  xp_points?: number
+): Promise<void> => {
   await apiClient.post("/progress/streak", {
     user_id,
     reviewed_today: true,
-    xp_points
+    xp_points,
   });
   console.log("POST request sent");
 };
@@ -66,6 +69,23 @@ export const restoreHeart = async (
 }> => {
   const response = await apiClient.post("/progress/restore-heart", {
     user_id,
+  });
+  console.log("POST request sent");
+
+  return response.data;
+};
+
+export const restoreOrBuyHeart = async (
+  user_id: string,
+  mode: "free" | "buy"
+): Promise<{
+  lives: number;
+  message: string;
+  experience_points: number;
+}> => {
+  const response = await apiClient.post("/progress/restore-or-buy-heart", {
+    user_id,
+    mode,
   });
   console.log("POST request sent");
 

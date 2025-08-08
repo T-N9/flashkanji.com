@@ -195,7 +195,7 @@ const RoadmapItem = ({
 
     setIsInGround(true);
     if (route === 'kanji' || route === 'match') {
-      alert(`${step_i} match kanji`)
+      // alert(`${step_i} match kanji`)
       setIsReviewMode(false);
       setSelectedChapter(japanese_chapter);
       setSelectedLevel("N" + japanese_level);

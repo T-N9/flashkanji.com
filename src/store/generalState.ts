@@ -36,7 +36,7 @@ interface GeneralState {
   shouldRefetchChapter: boolean;
   /*  */
   isVictoryModalOpen: boolean;
-  victoryModalType: "victory" | "loss";
+  victoryModalType: "victory" | "loss" | "restore" | "buy";
   victoryXp: number;
 
   /* Actions */
@@ -73,7 +73,7 @@ interface GeneralState {
   setShouldRefetchChapter: (shouldRefetchChapter: boolean) => void;
 
   setIsVictoryModalOpen: (isVictoryModalOpen: boolean) => void;
-  setVictoryModalType: (type: "victory" | "loss") => void;
+  setVictoryModalType: (type: "victory" | "loss" | "restore" | "buy") => void;
   setVictoryXp: (point: number) => void;
 }
 

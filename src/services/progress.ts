@@ -4,6 +4,7 @@ import {
   fetchChapterProgress,
   removeHeart,
   restoreHeart,
+  restoreOrBuyHeart,
   saveEndSection,
   saveInitChapter,
   saveStreak,
@@ -58,7 +59,13 @@ export const useSaveInitChapter = () => {
 
 export const useSaveStreak = () => {
   return useMutation({
-    mutationFn: ({ user_id, xp_points }: { user_id: string, xp_points ?: number }) => saveStreak(user_id, xp_points),
+    mutationFn: ({
+      user_id,
+      xp_points,
+    }: {
+      user_id: string;
+      xp_points?: number;
+    }) => saveStreak(user_id, xp_points),
   });
 };
 
@@ -81,12 +88,24 @@ export const useRestoreHeart = () => {
   });
 };
 
+export const useRestoreOrBuyHeart = () => {
+  return useMutation({
+    mutationFn: ({
+      user_id,
+      mode,
+    }: {
+      user_id: string;
+      mode: "free" | "buy";
+    }) => restoreOrBuyHeart(user_id, mode),
+  });
+};
+
 export const useAddXpPoints = () => {
-    return useMutation({
+  return useMutation({
     mutationFn: ({ user_id, point }: { user_id: string; point: number }) =>
       addXpPoints(user_id, point),
   });
-}
+};
 
 export const useSaveTimer = () => {
   return useMutation({

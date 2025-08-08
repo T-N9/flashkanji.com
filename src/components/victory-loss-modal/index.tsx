@@ -31,7 +31,7 @@ export const VictoryModal: React.FC = () => {
                 {/* {() => ( */}
                 <>
                     <ModalHeader className="flex items-center gap-2 text-center justify-center text-2xl font-bold">
-                        {isVictory === 'victory' ? (
+                        {isVictory === 'victory' || isVictory === 'restore' ? (
                             <>
                                 <CharacterImage src='happy.png' />
                             </>
@@ -43,7 +43,7 @@ export const VictoryModal: React.FC = () => {
                     </ModalHeader>
 
                     <ModalBody className="text-center space-y-1">
-                        {isVictory === 'victory' ? (
+                        {isVictory === 'victory' && (
                             <>
                                 <p className="text-lg">You earned</p>
                                 <p className="text-3xl font-semibold text-green-600">{xp > 1 ? `${xp} clovers` : `a clover`}.</p>
@@ -52,24 +52,45 @@ export const VictoryModal: React.FC = () => {
                                 </p>
                                 <p className="text-sm text-gray-500">Great job! Keep it up.</p>
                             </>
-                        ) : (
+                        )}
+                        {isVictory === 'loss' && (
                             <>
                                 <p className="text-lg text-red-600">You’ve lost all your lives.</p>
-                                <p className="text-sm text-gray-500">Try again after cooldown or restore a heart by reviewing a deck or a scheduled review.</p>
+                                <p className="text-sm text-gray-500">Try again after cooldown or restore a heart by reviewing a deck/ a scheduled review.</p>
+                            </>
+                        )}
+                        {isVictory === 'buy' && (
+                            <>
+                                <p className="text-lg text-red-600">You have no lives to join this session.</p>
+                                <p className="text-sm text-gray-500">Try again after cooldown or restore a heart by reviewing a deck/ a scheduled review. Or Buy a live at profile.</p>
+                            </>
+                        )}
+                        {isVictory === 'restore' && (
+                            <>
+                                <p className="text-lg text-red-600">A life has restored.</p>
+                                <p className="text-sm text-gray-500">Enjoy learning.</p>
                             </>
                         )}
                     </ModalBody>
 
                     <ModalFooter className="flex justify-center gap-2">
                         {
-                            isVictory === 'victory' ?
-                                <Button className='bg-orange-500' variant="solid" onPress={onClose}>
-                                    Continue
-                                </Button>
-                                :
-                                <Button onClick={() => router.back()} className='bg-orange-500' variant="solid" onPress={onClose}>
-                                    Okay
-                                </Button>
+                            isVictory === 'victory' &&
+                            <Button className='bg-orange-500' variant="solid" onPress={onClose}>
+                                Continue
+                            </Button>
+                        }
+
+                        {isVictory === 'loss' &&
+                            <Button onClick={() => router.back()} className='bg-orange-500' variant="solid" onPress={onClose}>
+                                Okay
+                            </Button>
+
+                        }
+                        {isVictory === 'restore' || isVictory === 'buy' &&
+                            <Button className='bg-orange-500' variant="solid" onPress={onClose}>
+                                Okay
+                            </Button>
                         }
 
                     </ModalFooter>
