@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation"; // if you're using App Router
-import { Card, CardHeader, CardBody, Button, Select, SelectItem } from "@heroui/react";
+import { Card, CardHeader, CardBody, Button, Select, SelectItem, Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 import { useDeckDetail, useDeckSrsSessions } from "@/services/deck";
 import { useUserStore } from "@/store/userState";
 import Link from "next/link";
@@ -56,6 +56,14 @@ const DeckDetail: React.FC = () => {
     router.push('/study/deck/repetition')
   }
 
+  const handleClickStartReview = () => {
+    setDeckId(deck_id);
+    setIsInGround(true);
+    setIsReviewMode(false)
+    setIsSaveRepetition(true);
+    router.push('/study/deck/repetition')
+  }
+
   const hasTodaySession = sessionData?.sessions?.some((session) =>
     moment(session.created_at).isSame(moment(), 'day')
   );
@@ -79,35 +87,43 @@ const DeckDetail: React.FC = () => {
 
   return (
     <div className="max-w-3xl mx-auto py-6 px-6 space-y-10">
-      <Card className="border border-default-200">
-        <CardHeader className="flex flex-col items-start gap-2 lg:flex-row justify-between lg:items-center">
-          <h1 className="text-xl font-bold text-dark">{data.name}</h1>
-          <div className="flex gap-1 justify-center items-center ">
-            <p className="text-sm !text-gray-500">{moment(data.updated_at).format('MMMM Do YYYY')}</p>
-            <div className="text-gray-500">
-              {data.is_public ? <Globe size={20} /> : <Lock size={20} />}
+      <div>
+        <Breadcrumbs className="mb-1">
+          <BreadcrumbItem onClick={() => router.back()}>Decks</BreadcrumbItem>
+          <BreadcrumbItem>{data.name}</BreadcrumbItem>
+        </Breadcrumbs>
+        <Card className="border border-default-200">
+          <CardHeader className="flex flex-col items-start gap-2 lg:flex-row justify-between lg:items-center">
+            <h1 className="text-xl font-bold text-dark">{data.name}</h1>
+            <div className="flex gap-1 justify-center items-center ">
+              <p className="text-sm !text-gray-500">{moment(data.updated_at).format('MMMM Do YYYY')}</p>
+              <div className="text-gray-500">
+                {data.is_public ? <Globe size={20} /> : <Lock size={20} />}
+              </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <p className="text-gray-700 mb-3">{data.description}</p>
-          <div className="text-sm text-gray-500 space-y-1">
-            <p><strong>Level:</strong> N{data.level}</p>
-            <p><strong>Learned </strong> {data.learnedCards} / {data.totalCards} cards</p>
+          </CardHeader>
+          <CardBody>
+            <p className="text-gray-700 mb-3">{data.description}</p>
+            <div className="text-sm text-gray-500 space-y-1">
+              <p><strong>Level:</strong> N{data.level}</p>
+              <p><strong>Learned </strong> {data.learnedCards} / {data.totalCards} cards</p>
 
-            <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
-              {data.categories.map((cat) => (
-                <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
-                  {cat}
-                </span>
-              ))}
+              <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
+                {data.categories.map((cat) => (
+                  <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
+                    {cat}
+                  </span>
+                ))}
 
+
+              </div>
 
             </div>
+          </CardBody>
+        </Card>
+      </div>
 
-          </div>
-        </CardBody>
-      </Card>
+
 
 
       <>
@@ -144,13 +160,8 @@ const DeckDetail: React.FC = () => {
                   </div>
 
                   <Button
-                    onClick={() => {
-                      setDeckId(deck_id);
-                      setIsInGround(true);
-                    }}
+                    onClick={handleClickStartReview}
                     color="primary"
-                    as={Link}
-                    href="/study/deck/repetition"
                   >
                     Start
                   </Button>

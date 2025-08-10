@@ -55,7 +55,7 @@ const DeckRepetitionNormalMode = () => {
                     playSound('session');
                     setVictoryModalType('restore');
                     setIsVictoryModalOpen(true);
-                    router.push('/flashboard')
+                    toast.success("A life has restored.")
                 },
                 onError: (err) => {
                     setLives(0);
@@ -79,14 +79,15 @@ const DeckRepetitionNormalMode = () => {
                 {
                     onSuccess: () => {
                         console.log("Repetition data saved successfully.");
-                        playSound('session');
+
                         setXpPoints(xp_points + satisfactionPoint)
                         // toast.success(`${Math.floor(satisfactionPoint)} XP points increased.`)
-                        setVictoryXp(satisfactionPoint)
-                        setVictoryModalType('victory');
-                        setIsVictoryModalOpen(true);
-
-
+                        if (lives > 0) {
+                            playSound('session');
+                            setVictoryXp(satisfactionPoint)
+                            setVictoryModalType('victory');
+                            setIsVictoryModalOpen(true);
+                        }
 
                         if (!alreadySaved) {
                             saveStreak(
@@ -96,6 +97,10 @@ const DeckRepetitionNormalMode = () => {
                                         console.log("Streak saved successfully.");
                                         saveStreakToLocalStorage();
                                         handleRestoreHeart();
+                                        // router.back()
+                                        setTimeout(() => {
+                                            router.back();
+                                        }, 1500);
                                     },
                                     onError: (error) => {
                                         console.error("Failed to save streak:", error);
@@ -105,6 +110,10 @@ const DeckRepetitionNormalMode = () => {
                             );
                         } else {
                             handleRestoreHeart();
+                            // router.back()
+                            setTimeout(() => {
+                                router.back();
+                            }, 1500);
                         }
                     },
                     onError: (error) => {
@@ -113,6 +122,7 @@ const DeckRepetitionNormalMode = () => {
                 }
             );
         } else {
+            alert('this is alert')
             setIsSaveRepetition(true);
             router.push("/flashboard");
         }
@@ -201,16 +211,17 @@ const DeckRepetitionReviewMode = () => {
     const { mutate: saveRepetition, isLoading } = useSaveDeckRepetitionDataReview();
     const { mutate: saveStreak } = useSaveStreak();
     const { mutate: restoreHeart } = useRestoreOrBuyHeart();
-    const { mutate: addXpPoints } = useAddXpPoints()
+    const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const router = useRouter();
 
     const handleReviewPointAndEndSession = (point: number) => {
-        playSound('session');
         setXpPoints(xp_points + point)
-        // toast.success(`${Math.floor(point)} XP points increased.`)
-        setVictoryXp(point)
-        setVictoryModalType('victory');
-        setIsVictoryModalOpen(true);
+        if (lives > 0) {
+            playSound('session');
+            setVictoryXp(point)
+            setVictoryModalType('victory');
+            setIsVictoryModalOpen(true);
+        }
     }
 
     const handleRestoreHeart = () => {
@@ -223,6 +234,7 @@ const DeckRepetitionReviewMode = () => {
                     playSound('session');
                     setVictoryModalType('restore');
                     setIsVictoryModalOpen(true);
+                    toast.success("A life has restored.")
                 },
                 onError: (err) => {
                     setLives(0);
@@ -257,7 +269,10 @@ const DeckRepetitionReviewMode = () => {
                                     onSuccess: () => {
                                         console.log("Streak saved successfully.");
                                         saveStreakToLocalStorage();
-                                        router.push("/flashboard");
+                                        setTimeout(() => {
+                                            router.push("/flashboard");
+                                        }, 1500);
+
                                     },
                                     onError: (error) => {
                                         console.error("Failed to save streak:", error);
@@ -279,7 +294,10 @@ const DeckRepetitionReviewMode = () => {
                                     }
                                 }
                             )
-                            router.push("/flashboard");
+                            setTimeout(() => {
+                                router.push("/flashboard");
+                            }, 1500);
+
                         }
                     },
                     onError: (error) => {
@@ -288,7 +306,7 @@ const DeckRepetitionReviewMode = () => {
                 }
             );
         } else {
-            setIsSaveRepetition(true);
+
             if (!alreadySaved) {
                 saveStreak(
                     { user_id: userId, xp_points: satisfactionPoint },
@@ -299,23 +317,30 @@ const DeckRepetitionReviewMode = () => {
                             handleReviewPointAndEndSession(satisfactionPoint);
 
                             handleRestoreHeart()
-                            router.push("/flashboard");
+                            setIsSaveRepetition(true);
+                            router.back();
                         },
                         onError: (error) => {
                             console.error("Failed to save streak:", error);
 
-                            router.push("/flashboard");
+                            router.back();
                         },
                     }
                 );
             } else {
+                handleRestoreHeart()
                 addXpPoints({ user_id: userId, point: 1 }, {
                     onSuccess: () => {
+
                         handleReviewPointAndEndSession(1)
-                        router.push("/flashboard");
+                        setIsSaveRepetition(true);
+                        setTimeout(() => {
+                            router.back();
+                        }, 1500);
+
                     }
                 })
-                handleRestoreHeart()
+
 
             }
         }
@@ -346,7 +371,7 @@ const DeckRepetitionReviewMode = () => {
                         <div className='flex gap-2 justify-center items-center mt-2'>
                             <CheckCircle className='text-green-500' size={32} />
                             <Button onClick={handleEnd} size="sm" variant='faded' color='default' className=''>
-                                Flashboard
+                                {isClaiming ? 'Claiming' : 'Claim practice point'}
                             </Button>
                         </div>
                 }

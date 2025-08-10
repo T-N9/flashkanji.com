@@ -41,7 +41,7 @@ export default function RootLayout({
         <Providers>
           <SessionSync />
           <AuthListener />
-          <Toaster position="top-center" richColors />
+          <Toaster position="top-right" richColors />
           {children}
           <CookieConsent />
         </Providers>
