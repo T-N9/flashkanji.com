@@ -201,12 +201,12 @@ const UserProfileSection = () => {
                                 {RANKS[rank].name}
                             </span>
                         </div>
-                        <div className='flex gap-3 justify-between overflow-x-scroll pb-4'>
+                        <div className='flex gap-3 justify-between overflow-x-scroll py-4'>
                             {
                                 RANKS.map((item, idx) => {
                                     return (
                                         <div key={idx} className=''>
-                                            <div className={`text-3xl font-bold text-white ${item.color} p-2 rounded-full border shadow ${idx + 1 === rank ? '' : 'opacity-50'}`}>
+                                            <div className={`text-3xl font-bold text-white ${item.color} p-2 rounded-full border shadow ${idx + 1 === rank ? 'scale-110' : 'scale-90 opacity-50'}`}>
                                                 {item.kanji}
                                             </div>
                                         </div>

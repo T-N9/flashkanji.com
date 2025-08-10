@@ -23,15 +23,15 @@ const BackToMap = () => {
                 <div className="gap-3 flex">
                     <div className="flex justify-center items-center gap-1">
                         <p>{currentStreak}</p>
-                        <Fire weight="duotone" size={32} color="orange" />
+                        <Fire weight="fill" size={32} color="orange" />
                     </div>
                     <div className="flex justify-center items-center gap-1">
                         <p>{lives}</p>
-                        <HeartStraight weight="duotone" size={32} color="red" />
+                        <HeartStraight weight="fill" size={32} color="red" />
                     </div>
                     <div className="flex justify-center items-center gap-1">
                         <p>{Math.floor(xp_points)}</p>
-                        <Clover weight="duotone" size={32} color="green" />
+                        <Clover weight="fill" size={32} color="green" />
                     </div>
                 </div>
             </div>
