@@ -46,6 +46,8 @@ const KanjiRepetitionNormalMode = () => {
 
     const router = useRouter();
 
+    console.log({isSaveRepetition})
+
     const handleAddPracticePointsAndEndSession = () => {
         playSound('session')
         setVictoryModalType('victory')
@@ -406,6 +408,7 @@ const KanjiRepetitionReviewMode = () => {
 const KanjiRepetitionSection = () => {
 
     const { isReviewMode } = useKanjiGroundState();
+    console.log({isReviewMode})
 
     return (
         <>
