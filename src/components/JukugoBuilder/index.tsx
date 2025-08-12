@@ -2,7 +2,7 @@
 import { useJukugoByChapterAndLevel } from "@/services/jukugo";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import { relatedJukugoItem } from "@/types/jukugo";
-import { buildQuizOptions, OptionSet } from "@/util/buildQuizOptions";
+import { buildQuizOptions, handleChouon, OptionSet } from "@/util/buildQuizOptions";
 import { Button, Card, CardBody, CardHeader, Progress } from "@heroui/react";
 import React, { useEffect, useRef, useState } from "react";
 import CharacterImage from "../common/character";
@@ -56,10 +56,12 @@ const JukugoBuilder = () => {
         }
 
         if (nextIndex < nextQueue.length) {
+            // console.log('Next Item??')
             setCurrentIndex(nextIndex);
             setQueue(nextQueue);
             setCurrentItem(nextQueue[nextIndex]);
         } else {
+            // console.log('ending....')
             setIsCompleted(true);
             setCurrentItem(null); // Done!
         }
@@ -172,8 +174,7 @@ const JukugoBuilder = () => {
 
 
     if (isFetching) return <div><RamenLoading /></div>;
-    if (isCompleted) return
-    <div className="text-center py-10 relative z-30">
+    if (isCompleted) return (<div className="text-center py-10 relative z-30">
         <CharacterImage src="happy.png" className="mx-auto mb-4" />
 
         {
@@ -189,9 +190,7 @@ const JukugoBuilder = () => {
                     </Button>
                 </div>
         }
-
-
-    </div>;
+    </div>);
     if (!data || data.length === 0) {
         return <div className="text-center py-10">No quiz items available.</div>;
     }
@@ -225,7 +224,7 @@ const JukugoBuilderItem = ({
     onContinue: (wasCorrect: boolean) => void;
 }) => {
     const [quizItem, setQuizItem] = useState<OptionSet | null>(null);
-    const [answerMora, setAnswerMora] = useState<string[]>([]);
+    const [answerMora, setAnswerMora] = useState<number[]>([]);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
     const { mutate: removeHeart, isLoading } = useRemoveHeart();
@@ -239,31 +238,46 @@ const JukugoBuilderItem = ({
             setAnswerMora([]);
             setIsChecked(false);
             setIsAnswerCorrect(null);
+            console.log({ quizData, item, allData })
         }
     }, [item]);
 
-    const handleClickMora = (mora: string) => {
+    console.log({ quizItem })
+
+    console.log({ trick: handleChouon("びょ") })
+
+    const handleClickMora = (index: number) => {
         playSound('click')
-        if (answerMora.includes(mora)) {
-            setAnswerMora((prev) => prev.filter((m) => m !== mora));
-        } else {
-            setAnswerMora((prev) => {
-                if (prev.includes(mora)) {
-                    return prev.filter((m) => m !== mora);
-                } else {
-                    return [...prev, mora];
-                }
-            });
-        }
+        // if (answerMora.includes(mora)) {
+        //     setAnswerMora((prev) => prev.filter((m) => m !== mora));
+        // } else {
+        //     setAnswerMora((prev) => {
+        //         if (prev.includes(mora)) {
+        //             return prev.filter((m) => m !== mora);
+        //         } else {
+        //             return [...prev, mora];
+        //         }
+        //     });
+        // }
+
+        setAnswerMora((prev) => {
+            if (prev.includes(index)) {
+                return prev.filter((i) => i !== index);
+            } else {
+                return [...prev, index];
+            }
+        });
     };
 
     const handleCheckAnswer = () => {
         setIsChecked(true);
         if (quizItem) {
+            const selectedMoras = answerMora.map((i) => quizItem.options[i]);
             const correctMoras = quizItem.correctMoras;
+
             const isCorrect =
-                answerMora.length === correctMoras.length &&
-                answerMora.every((mora, index) => mora === correctMoras[index]);
+                selectedMoras.length === correctMoras.length &&
+                selectedMoras.every((mora, index) => mora === correctMoras[index]);
 
             if (isCorrect) {
                 playSound('right')
@@ -315,14 +329,18 @@ const JukugoBuilderItem = ({
                                 isAnswerCorrect !== null && !isAnswerCorrect && <p className="text-xs text-center absolute -top-3 z-30">Correct Answer : <span>{item.hiragana}</span></p>
                             }
                             <div className="flex flex-wrap gap-2 mb-4">
-                                {answerMora.map((mora, index) => (
-                                    <div
-                                        key={index}
-                                        className={`bg-white shadow relative text-dark p-2 rounded border-b-2 border-orange-500 ${isChecked ? isAnswerCorrect ? '!bg-green-400' : '!bg-red-400' : ''}`}
-                                    >
-                                        <p className="text-lg lg:text-2xl">{mora}</p>
-                                    </div>
-                                ))}
+                                {answerMora.map((selectedIndex, index) => {
+                                    const mora = quizItem.options[selectedIndex];
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={`bg-white shadow relative text-dark p-2 rounded border-b-2 border-orange-500 
+                    ${isChecked ? (isAnswerCorrect ? '!bg-green-400' : '!bg-red-400') : ''}`}
+                                        >
+                                            <p className="text-lg lg:text-2xl">{mora}</p>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </>
                     )
@@ -339,9 +357,9 @@ const JukugoBuilderItem = ({
                     {quizItem.options.map((mora, index) => (
                         <Button
                             key={index}
-                            className={`${answerMora.includes(mora) ? "bg-slate-700 text-white" : "bg-white"
+                            className={`${answerMora.includes(index) ? "bg-slate-700 text-white" : "bg-white"
                                 }`}
-                            onClick={() => handleClickMora(mora)}
+                            onClick={() => handleClickMora(index)}
                         >
                             {mora}
                         </Button>
@@ -359,14 +377,18 @@ const JukugoBuilderItem = ({
                                         {answerMora.length > 0 ? (
                                             <div className="flex">
                                                 「
-                                                {answerMora.map((mora, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className=""
-                                                    >
-                                                        <p className="text-xs">{mora}</p>
-                                                    </div>
-                                                ))}
+                                                {answerMora.map((selectedIndex, index) => {
+                                                    const mora = quizItem.options[selectedIndex];
+                                                    return (
+
+                                                        <div
+                                                            key={index}
+                                                            className=""
+                                                        >
+                                                            <p className="text-xs">{mora}</p>
+                                                        </div>
+                                                    )
+                                                })}
                                                 」
                                             </div>
                                         )
