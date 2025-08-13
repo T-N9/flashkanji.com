@@ -71,7 +71,7 @@ export function HeadingBar() {
 
             <NavbarItem className="gap-3 hidden lg:flex">
               <div className="flex justify-center items-center gap-1">
-                <p>{currentStreak}</p>
+                <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
                 <Fire weight="fill" size={32} color="orange" />
               </div>
               <div className="flex justify-center items-center gap-1">
@@ -129,7 +129,7 @@ export function HeadingBar() {
         :
         <NavbarItem className="gap-3 flex lg:hidden">
           <div className="flex justify-center items-center gap-1">
-            <p>{currentStreak}</p>
+            <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
             <Fire weight="fill" size={32} color="orange" />
           </div>
           <div className="flex justify-center items-center gap-1">

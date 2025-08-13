@@ -111,8 +111,8 @@ export default function UserDashBoard() {
                             <Fire className="h-4 w-4" />
                         </CardHeader>
                         <CardBody>
-                            <div className="text-2xl font-bold">{currentStreak}</div>
-                            <p className="text-xs opacity-90">{longestStreak} days in a row</p>
+                            <div className="text-2xl font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</div>
+                            <p className="text-xs opacity-90">{longestStreak === 0 ? 0 : longestStreak - 1} days in a row</p>
                         </CardBody>
                     </Card>
                 </div>

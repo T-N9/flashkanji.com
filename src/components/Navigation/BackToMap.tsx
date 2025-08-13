@@ -22,7 +22,7 @@ const BackToMap = () => {
 
                 <div className="gap-3 flex">
                     <div className="flex justify-center items-center gap-1">
-                        <p>{currentStreak}</p>
+                        <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
                         <Fire weight="fill" size={32} color="orange" />
                     </div>
                     <div className="flex justify-center items-center gap-1">
