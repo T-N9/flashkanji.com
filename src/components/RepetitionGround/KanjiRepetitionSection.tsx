@@ -150,7 +150,7 @@ const KanjiRepetitionNormalMode = () => {
             {
                 user_id: userId,
                 repetitionData: spacedRepetitionData,
-                type: 2,
+                type: 1,
                 level: level,
             },
             {
