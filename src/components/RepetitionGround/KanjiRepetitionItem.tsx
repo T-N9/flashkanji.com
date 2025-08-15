@@ -84,7 +84,7 @@ export const KanjiRepetitionItem = ({
         playSound('click')
         const updatedCard = calculateNextReview(sr_data, index, satisfaction, seconds);
         const updatedStoredData = spacedRepetitionData.map((item) => {
-            console.log(item.id, updatedCard.updatedCard.card_id, item.card_id);
+            // console.log(item.id, updatedCard.updatedCard.card_id, item.card_id);
             if (isReview) {
                 return item.card_id === updatedCard.updatedCard.card_id ? updatedCard.updatedCard : item
             } else {

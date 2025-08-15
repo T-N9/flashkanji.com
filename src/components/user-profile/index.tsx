@@ -172,18 +172,18 @@ const UserProfileSection = () => {
                 <CardBody className="text-sm text-gray-700 space-y-5">
                     {
                         lives < 5 && remainingSeconds !== null &&
-                        <div className=''>
+                        <div className=' flex  justify-between items-center flex-col lg:flex-row'>
                             <div className='flex gap-2 items-center'>
                                 <HeartIcon size={32} weight='fill' color='red' className='animate-heartbeat' />
                                 <p>Next heart restores in: <strong>{formatTime(remainingSeconds)}</strong></p>
                             </div>
                             {
                                 isLoading ?
-                                    <Button className='mx-auto bg-white shadow'>
+                                    <Button className=' bg-white shadow'>
                                         Buying...
                                     </Button>
                                     :
-                                    <Button onClick={handleBuyHeart} className='mx-auto bg-white shadow'>
+                                    <Button onClick={handleBuyHeart} className=' bg-white shadow'>
                                         Buy <HeartIcon size={22} weight='fill' color='red' />/ 50  <Clover size={22} weight='fill' color='green' />
                                     </Button>
                             }
