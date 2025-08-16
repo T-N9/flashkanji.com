@@ -72,7 +72,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             Grade:
                           </p>{" "}
-                          <span className="text-dark font-bold text-lg flex flex-wrap">
+                          <span className="text-dark dark:text-gray-100 font-bold text-lg flex flex-wrap">
                             {renderStars()}
                           </span>
                         </div>
@@ -80,7 +80,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             Unicode:
                           </p>{" "}
-                          <span className="text-dark font-bold text-xl font-english-text">
+                          <span className="text-dark dark:text-gray-100 font-bold text-xl font-english-text">
                             {charData?.unicode}
                           </span>
 
@@ -90,7 +90,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             Stroke Count:
                           </p>{" "}
-                          <span className="text-dark font-bold text-xl font-english-text">
+                          <span className="text-dark dark:text-gray-100 font-bold text-xl font-english-text">
                             {charData?.stroke_count}
                           </span>
                         </div>
@@ -99,7 +99,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             Meanings:
                           </p>
-                          <ul className="list-disc pl-4 flex gap-x-7 gap-y-2 flex-wrap text-dark font-english-text">
+                          <ul className="list-disc pl-4 flex gap-x-7 gap-y-2 flex-wrap text-dark dark:text-gray-100 font-english-text">
                             {charData?.meanings.map((meaning: string, index: number) => (
                               <li key={index}>{meaning}</li>
                             ))}
@@ -114,7 +114,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             Kun Readings:
                           </p>
-                          <ul className="list-disc pl-4 gap-4 flex flex-col text-dark font-bold text-xl">
+                          <ul className="list-disc pl-4 gap-4 flex flex-col text-dark dark:text-gray-100 font-bold text-xl">
                             {charData?.kun_readings.length > 0
                               ? charData?.kun_readings.map(
                                 (kunReading: string, index: number) => (
@@ -132,7 +132,7 @@ export function KanjiDetailModal() {
                           <p className="text-info font-english text-xs">
                             On Readings:
                           </p>
-                          <ul className="list-disc pl-4  gap-4 flex flex-col text-dark font-bold text-xl">
+                          <ul className="list-disc pl-4  gap-4 flex flex-col text-dark dark:text-gray-100 font-bold text-xl">
                             {charData?.on_readings.length > 0
                               ? charData?.on_readings.map((onReading: string, index: number) => (
                                 // <li onClick={() =>speakJapaneseText(onReading)} key={index}>{onReading}</li>
@@ -162,7 +162,7 @@ export function KanjiDetailModal() {
                                 >
                                   <p className="flex justify-between flex-col">
               
-                                    <ruby className="text-dark text-2xl -mb-7">
+                                    <ruby className="text-dark dark:text-gray-100 text-2xl -mb-7">
                                     
                                       <rt className="text-sm text-gray-400 tracking-tighter">
                                         {item.hiragana}
@@ -171,7 +171,7 @@ export function KanjiDetailModal() {
                                     <span className="text-2xl">
                                       <TextSpeech japaneseText={item.character}/>{" "}
                                     </span>
-                                    <span className="text-sm font-english-text text-dark">
+                                    <span className="text-sm font-english-text text-dark dark:text-gray-100">
                                       {item.meaning}
                                     </span>
                                   </p>
@@ -190,7 +190,7 @@ export function KanjiDetailModal() {
 
                     <div className="mt-4 hidden">
                       <strong className="text-info font-english text-xs">Notes:</strong>
-                      <p className="text-gray-700">
+                      <p className="text-gray-700 dark:text-gray-200">
                         {charData?.notes.length > 0
                           ? charData?.notes
                           : "No notes available"}

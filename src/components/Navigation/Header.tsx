@@ -158,7 +158,7 @@ export function HeadingBar() {
       {/* Navbar Menu (Mobile) */}
       <NavbarMenu>
         <div className="container flex flex-col gap-6 mx-auto">
-          <div className="text-gray-700 gap-6 flex flex-col text-center">
+          <div className="text-gray-700 dark:text-gray-200 gap-6 flex flex-col text-center">
             {navList}
           </div>
         </div>

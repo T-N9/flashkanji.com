@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Analytics
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFN1W13SY3"></script>
@@ -36,7 +36,7 @@ export default function RootLayout({
         /> */}
       </head>
       <body
-        className={`${poppins.className} antialiased text-dark`}
+        className={`${poppins.className} min-h-screen antialiased text-dark dark:text-gray-100  dark:bg-slate-900`}
       >
         <Providers>
           <SessionSync />

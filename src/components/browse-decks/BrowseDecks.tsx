@@ -214,12 +214,12 @@ const BrowseDecks = () => {
                 data?.decks.map((deck, i) => (
                   <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
                     <Card shadow="sm" className="border border-default-200">
-                      <CardHeader className="font-semibold text-dark">{deck.name}</CardHeader>
+                      <CardHeader className="font-semibold text-dark dark:text-gray-100">{deck.name}</CardHeader>
                       <CardBody style={{
                         backgroundImage: `url('${getBackgroundImage(i)}')`,
                         backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
                       }} className=" bg-right-bottom bg-no-repeat">
-                        <p className="text-sm text-gray-600 mb-2">{deck.description}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-200 mb-2">{deck.description}</p>
                         <p className="text-xs text-gray-400">Level: {deck.level}</p>
                         <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
                           {deck.categories.map((cat) => (

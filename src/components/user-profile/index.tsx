@@ -3,11 +3,49 @@ import { useRestoreOrBuyHeart } from '@/services/progress';
 import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
 import { playSound } from '@/util/soundPlayer';
-import { Avatar, Button, Card, CardBody, CardHeader, Progress } from '@heroui/react';
+import { Avatar, Button, Card, CardBody, CardHeader, Progress, SelectItem, Select } from '@heroui/react';
 import { Clover, HeartIcon } from '@phosphor-icons/react';
 import moment from 'moment';
+import { useTheme } from 'next-themes';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
+
+function ThemeSelector() {
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-sm text-gray-500 dark:text-gray-400">
+        Theme: <span className="font-medium capitalize">{currentTheme}</span>
+      </span>
+
+      <Select
+        aria-label="Theme Selector"
+        selectedKeys={[theme ?? 'system']}
+        className="w-[140px]"
+        onChange={(e) => setTheme(e.target.value)}
+      >
+        <SelectItem key="system">
+          System
+        </SelectItem>
+        <SelectItem key="light">
+          Light
+        </SelectItem>
+        <SelectItem key="dark">
+          Dark
+        </SelectItem>
+      </Select>
+    </div>
+  );
+}
 
 const UserProfileSection = () => {
     const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
@@ -169,7 +207,7 @@ const UserProfileSection = () => {
                     </div>
                 </CardHeader>
 
-                <CardBody className="text-sm text-gray-700 space-y-5">
+                <CardBody className="text-sm text-gray-700 dark:text-gray-200 space-y-5">
                     {
                         lives < 5 && remainingSeconds !== null &&
                         <div className=' flex  justify-between items-center flex-col lg:flex-row'>
@@ -225,6 +263,8 @@ const UserProfileSection = () => {
                             {created_at ? moment(created_at).format('MMMM Do YYYY') : 'N/A'}
                         </div>
                     </div>
+
+                    <ThemeSelector/>
                 </CardBody>
             </Card>
         </section>

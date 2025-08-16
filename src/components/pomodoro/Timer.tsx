@@ -63,11 +63,11 @@ export default function Timer() {
   return (
     <Card className="w-full max-w-md text-center py-6">
       <CardBody className='text-center'>
-        <h1 className="text-xl font-bold mb-2 text-dark">
+        <h1 className="text-xl font-bold mb-2 text-dark dark:text-gray-100">
           {currentMode === 'pomodoro' ? 'Time to focus.' : currentMode === 'shortBreak' ? 'Take a rest.' : 'Relax, it is time to reward yourself.'}
         </h1>
         <Chip color="secondary" variant="flat" className="mb-4 mx-auto">#{pomodoroCount}</Chip>
-        <div className="text-6xl font-mono mb-4 text-dark">
+        <div className="text-6xl font-mono mb-4 text-dark dark:text-gray-100">
           {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
         </div>
         <Progress

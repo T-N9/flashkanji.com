@@ -334,7 +334,7 @@ const JukugoBuilderItem = ({
                                     return (
                                         <div
                                             key={index}
-                                            className={`bg-white shadow relative text-dark p-2 rounded border-b-2 border-orange-500 
+                                            className={`bg-white shadow relative text-dark dark:text-gray-100 p-2 rounded border-b-2 border-orange-500 
                     ${isChecked ? (isAnswerCorrect ? '!bg-green-400' : '!bg-red-400') : ''}`}
                                         >
                                             <p className="text-lg lg:text-2xl">{mora}</p>
@@ -347,7 +347,7 @@ const JukugoBuilderItem = ({
 
                         :
                         <div
-                            className="bg-white mb-4 shadow relative text-dark px-4 py-2 rounded border-b-2 border-orange-500"
+                            className="bg-white mb-4 shadow relative text-dark dark:text-gray-100 px-4 py-2 rounded border-b-2 border-orange-500"
                         >
                             <p className="text-lg lg:text-2xl animate-pulse">???</p>
                         </div>

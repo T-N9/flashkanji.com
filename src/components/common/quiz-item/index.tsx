@@ -33,8 +33,8 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
             {number + 1}
           </span>
           <div className="flex-1 flex-col gap-5 flex justify-center items-center">
-            <p className="text-sm text-gray-700">{quizItem?.question}</p>
-            <h1 className="text-9xl text-dark">{quizItem?.kanji}</h1>
+            <p className="text-sm text-gray-700 dark:text-gray-200">{quizItem?.question}</p>
+            <h1 className="text-9xl text-dark dark:text-gray-100">{quizItem?.kanji}</h1>
           </div>
 
           <div className="grid grid-cols-1 gap-5 flex-1 w-full option-item p-4">

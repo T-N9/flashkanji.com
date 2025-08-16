@@ -60,10 +60,10 @@ export default function UserDashBoard() {
                 {/* Welcome Section */}
                 <div className="mb-8">
                     <div className="flex gap-4 items-center">
-                        <h1 className="text-lg lg:text-3xl font-bold text-dark mb-2">Welcome back, {username}!</h1>
+                        <h1 className="text-lg lg:text-3xl font-bold text-dark dark:text-gray-100 mb-2">Welcome back, {username}!</h1>
 
                     </div>
-                    <p className="text-gray-600 mb-3 text-xs">
+                    <p className="text-gray-600 dark:text-gray-200 mb-3 text-xs">
                         Ready to continue your Kanji journey? You have {todayReviewCount} cards due today. {expiredReviewCount > 0 && <span className="text-red-500">You have {expiredReviewCount} expired reviews!</span>}
                     </p>
                 </div>

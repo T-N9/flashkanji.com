@@ -108,7 +108,7 @@ export const DeckDetailModal = () => {
                     <ModalBody className=" bg-gray-100 overflow-y-auto">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1">
-                                <h1 className="text-4xl text-dark">{deckCardDetail?.character}</h1>
+                                <h1 className="text-4xl text-dark dark:text-gray-100">{deckCardDetail?.character}</h1>
                                 {
                                     deckCardDetail?.hiragana &&
                                     <TextSpeech japaneseText={deckCardDetail?.hiragana} />
@@ -118,7 +118,7 @@ export const DeckDetailModal = () => {
 
                                 <div>
                                     <p className="mt-5 font-english-text text-info">Stroke Information</p>
-                                    <div className="flex gap-2 text-dark">
+                                    <div className="flex gap-2 text-dark dark:text-gray-100">
                                         {deckCardDetail?.character?.split("").map((item: string, index: number) => {
                                             return (
                                                 <div key={index}>

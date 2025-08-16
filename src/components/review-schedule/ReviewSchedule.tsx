@@ -104,7 +104,7 @@ export default function SpacedLearningCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader className="font-semibold text-lg flex justify-between items-center gap-2">
-                <div className="flex items-center gap-2 text-dark">
+                <div className="flex items-center gap-2 text-dark dark:text-gray-100">
                   <CalendarIcon size={20} /> Review Schedule
                 </div>
                 {
@@ -131,7 +131,7 @@ export default function SpacedLearningCalendar() {
             </Card>
 
             <Card>
-              <CardHeader className="font-semibold text-lg text-dark">
+              <CardHeader className="font-semibold text-lg text-dark dark:text-gray-100">
                 {new Date(selectedReviewDate).toLocaleDateString("en-US", {
                   weekday: "long",
                   month: "short",
@@ -150,7 +150,7 @@ export default function SpacedLearningCalendar() {
                       return (
                         <div className="space-y-2 w-full">
                           {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                            <p className="text-gray-700 text-xs">
+                            <p className="text-gray-700 dark:text-gray-200 text-xs">
                               <span className="text-orange-500 text-base">{kanji}</span> Kanji review{kanji !== 1 ? "s" : ""}
                             </p>
 
@@ -164,7 +164,7 @@ export default function SpacedLearningCalendar() {
 
                           </div>}
                           {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                            <p className="text-gray-700 text-xs">
+                            <p className="text-gray-700 dark:text-gray-200 text-xs">
                               <span className="text-orange-500 text-base">{jukugo}</span> Jukugo review{jukugo !== 1 ? "s" : ""}
                             </p>
 
@@ -182,7 +182,7 @@ export default function SpacedLearningCalendar() {
                             deck?.map((item) => {
                               return (
                                 <div key={item.srs_id} className="relative flex items-center justify-between bg-gray-100 p-2 rounded">
-                                  <p className="text-gray-700 text-xs">
+                                  <p className="text-gray-700 dark:text-gray-200 text-xs">
                                     <span className="absolute -top-1 px-1 py-0 rounded bg-white border">Session</span>
                                     <span className="text-orange-500 text-base">{item.card_count}</span> cards in <span className="font-bold">{item.name}</span>
                                   </p>
@@ -238,7 +238,7 @@ export default function SpacedLearningCalendar() {
                     return (
                       <div className="space-y-2">
                         {kanji !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                          <p className="text-gray-700 text-xs">
+                          <p className="text-gray-700 dark:text-gray-200 text-xs">
                             <span className="text-orange-500 text-base">{kanji}</span> Kanji review{kanji !== 1 ? "s" : ""}
                           </p>
 
@@ -251,7 +251,7 @@ export default function SpacedLearningCalendar() {
 
                         </div>}
                         {jukugo !== 0 && <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                          <p className="text-gray-700 text-xs">
+                          <p className="text-gray-700 dark:text-gray-200 text-xs">
                             <span className="text-orange-500 text-base">{jukugo}</span> Jukugo review{jukugo !== 1 ? "s" : ""}
                           </p>
 
@@ -269,7 +269,7 @@ export default function SpacedLearningCalendar() {
                           deck?.map((item) => {
                             return (
                               <div key={item.srs_id} className="relative flex items-center justify-between bg-gray-100 p-2 rounded">
-                                <p className="text-gray-700 text-xs">
+                                <p className="text-gray-700 dark:text-gray-200 text-xs">
                                   <span className="absolute -top-1 px-1 py-0 rounded bg-white border">Session {item.srs_id}</span>
                                   <span className="text-orange-500 text-base">{item.card_count}</span> cards in <span className="font-bold">{item.name}</span>
                                 </p>

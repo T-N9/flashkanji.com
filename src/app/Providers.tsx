@@ -2,6 +2,7 @@
 import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { ThemeProvider } from 'next-themes'
 
 const queryClient = new QueryClient();
 
@@ -11,12 +12,14 @@ const Providers = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <HeroUIProvider>
-        {children}
-      </HeroUIProvider>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        <HeroUIProvider>
+          {children}
+        </HeroUIProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ThemeProvider>
 
   )
 }

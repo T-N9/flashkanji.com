@@ -94,7 +94,7 @@ const DeckDetail: React.FC = () => {
         </Breadcrumbs>
         <Card className="border border-default-200">
           <CardHeader className="flex flex-col items-start gap-2 lg:flex-row justify-between lg:items-center">
-            <h1 className="text-xl font-bold text-dark">{data.name}</h1>
+            <h1 className="text-xl font-bold text-dark dark:text-gray-100">{data.name}</h1>
             <div className="flex gap-1 justify-center items-center ">
               <p className="text-sm !text-gray-500">{moment(data.updated_at).format('MMMM Do YYYY')}</p>
               <div className="text-gray-500">
@@ -103,7 +103,7 @@ const DeckDetail: React.FC = () => {
             </div>
           </CardHeader>
           <CardBody>
-            <p className="text-gray-700 mb-3">{data.description}</p>
+            <p className="text-gray-700 dark:text-gray-200 mb-3">{data.description}</p>
             <div className="text-sm text-gray-500 space-y-1">
               <p><strong>Level:</strong> N{data.level}</p>
               <p><strong>Learned </strong> {data.learnedCards} / {data.totalCards} cards</p>

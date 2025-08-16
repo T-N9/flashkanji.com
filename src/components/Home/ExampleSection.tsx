@@ -50,7 +50,7 @@ const ExampleSection = () => {
                         <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">
                             Flashcards
                         </div>
-                        <h2 className="text-3xl text-dark font-bold tracking-tighter sm:text-5xl">
+                        <h2 className="text-3xl text-dark dark:text-gray-100 font-bold tracking-tighter sm:text-5xl">
                             Learn with Interactive{" "}
                             <span className="text-primary">Flashcards</span>
                         </h2>
