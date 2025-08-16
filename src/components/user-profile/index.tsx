@@ -23,7 +23,7 @@ function ThemeSelector() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-gray-500 dark:text-gray-400">
+      <span className="text-sm text-gray-500 dark:text-gray-300">
         Theme: <span className="font-medium capitalize">{currentTheme}</span>
       </span>
 
@@ -195,7 +195,7 @@ const UserProfileSection = () => {
 
     return (
         <section className="">
-            <Card className="rounded-2xl border border-gray-200">
+            <Card className="rounded-2xl border border-gray-200 dark:border-gray-800">
                 <CardHeader className="flex gap-4 items-center">
                     <Avatar
                         src={avatarUrl}
@@ -203,11 +203,11 @@ const UserProfileSection = () => {
                     />
                     <div>
                         <h3 className="text-lg font-semibold">{username || 'Guest'}</h3>
-                        <p className="text-sm text-gray-500">{email || 'No email'}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-300">{email || 'No email'}</p>
                     </div>
                 </CardHeader>
 
-                <CardBody className="text-sm text-gray-700 dark:text-gray-200 space-y-5">
+                <CardBody className="text-sm text-gray-700 dark:text-gray-300 space-y-5">
                     {
                         lives < 5 && remainingSeconds !== null &&
                         <div className=' flex  justify-between items-center flex-col lg:flex-row'>
@@ -217,11 +217,11 @@ const UserProfileSection = () => {
                             </div>
                             {
                                 isLoading ?
-                                    <Button className=' bg-white shadow'>
+                                    <Button className=' bg-white dark:bg-dark shadow'>
                                         Buying...
                                     </Button>
                                     :
-                                    <Button onClick={handleBuyHeart} className=' bg-white shadow'>
+                                    <Button onClick={handleBuyHeart} className=' bg-white dark:bg-dark shadow'>
                                         Buy <HeartIcon size={22} weight='fill' color='red' />/ 50  <Clover size={22} weight='fill' color='green' />
                                     </Button>
                             }

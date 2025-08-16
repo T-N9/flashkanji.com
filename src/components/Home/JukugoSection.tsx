@@ -15,7 +15,7 @@ const JukugoSection = () => {
                             <span className="text-primary">Jukugo Mastery</span>:
                             Explore, Learn, Excel!
                         </h2>
-                        <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                        <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-300">
                             Explore the rich world of Jukugo effortlessly with our
                             Flashcards feature. Master compound Kanji words in a snap,
                             making your Japanese language journey both enjoyable and

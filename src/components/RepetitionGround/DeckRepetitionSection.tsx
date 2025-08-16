@@ -157,7 +157,7 @@ const DeckRepetitionNormalMode = () => {
                 activeItem === card.id && (
                     <div key={card.id}>
                         {/* <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} /> */}
-                        <p className="text-gray-600 dark:text-gray-200 table mx-auto relative z-20 text-center p-2 rounded-full text-xs bg-gray-200">
+                        <p className="text-gray-600 dark:text-gray-300 dark:bg-dark table mx-auto relative z-20 text-center p-2 rounded-full text-xs bg-gray-200">
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <DeckRepetitionItem
@@ -387,7 +387,7 @@ const DeckRepetitionReviewMode = () => {
                 activeItem === card.id && (
                     <div key={card.id}>
                         {/* <Avatar className="table mx-auto scale-75" emoji={getConfidenceEmoji(satisfactionPoint)} /> */}
-                        <p className="text-gray-600 dark:text-gray-200 table mx-auto relative z-20 text-center p-2 rounded-full text-xs bg-gray-200">
+                        <p className="text-gray-600 dark:text-gray-300 table mx-auto relative z-20 text-center p-2 rounded-full text-xs bg-gray-200 dark:bg-dark">
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
                         <DeckRepetitionItem

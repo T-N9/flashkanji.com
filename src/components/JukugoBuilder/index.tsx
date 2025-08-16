@@ -312,7 +312,7 @@ const JukugoBuilderItem = ({
     if (!quizItem) return null;
 
     return (
-        <Card className="w-full p-4  border rounded-xl bg-gradient-to-br from-gray-50 via-gray-200 to-gray-300 ">
+        <Card className="w-full p-4  border rounded-xl bg-gradient-to-br from-gray-50 via-gray-200 to-gray-300 dark:from-slate-950 dark:via-slate-800 dark:to-slate-700">
             <CardHeader className="flex flex-col gap-2 justify-center items-center">
                 <div className="text-5xl lg:text-8xl font-normal text-center">{item.character}</div>
                 <p className="text-base italic text-gray-400 text-center">
@@ -334,7 +334,7 @@ const JukugoBuilderItem = ({
                                     return (
                                         <div
                                             key={index}
-                                            className={`bg-white shadow relative text-dark dark:text-gray-100 p-2 rounded border-b-2 border-orange-500 
+                                            className={`bg-white dark:bg-dark shadow relative text-dark dark:text-gray-100 p-2 rounded border-b-2 border-orange-500 
                     ${isChecked ? (isAnswerCorrect ? '!bg-green-400' : '!bg-red-400') : ''}`}
                                         >
                                             <p className="text-lg lg:text-2xl">{mora}</p>
@@ -347,7 +347,7 @@ const JukugoBuilderItem = ({
 
                         :
                         <div
-                            className="bg-white mb-4 shadow relative text-dark dark:text-gray-100 px-4 py-2 rounded border-b-2 border-orange-500"
+                            className="bg-white dark:bg-dark mb-4 shadow relative text-dark dark:text-gray-100 px-4 py-2 rounded border-b-2 border-orange-500"
                         >
                             <p className="text-lg lg:text-2xl animate-pulse">???</p>
                         </div>
@@ -357,7 +357,7 @@ const JukugoBuilderItem = ({
                     {quizItem.options.map((mora, index) => (
                         <Button
                             key={index}
-                            className={`${answerMora.includes(index) ? "bg-slate-700 text-white" : "bg-white"
+                            className={`${answerMora.includes(index) ? "bg-slate-700 dark:bg-blue-900 text-white" : "bg-white dark:bg-slate-950"
                                 }`}
                             onClick={() => handleClickMora(index)}
                         >
@@ -373,7 +373,7 @@ const JukugoBuilderItem = ({
                             !isChecked ?
                                 <div className="relative flex justify-start">
                                     <CharacterImage src="thinking.png" className="mx-0 w-[100px] h-[100px]" />
-                                    <span className="absolute border-2 border-transparent bg-white p-1 shadow-lg rounded-md top-0 left-[10%]">
+                                    <span className="absolute border-2 border-transparent bg-white p-1 dark:bg-dark shadow-lg rounded-md top-0 left-[10%]">
                                         {answerMora.length > 0 ? (
                                             <div className="flex">
                                                 「
@@ -413,11 +413,11 @@ const JukugoBuilderItem = ({
                                     }
                                     {
                                         isAnswerCorrect ?
-                                            <span className="absolute bg-white border-dashed border-2 border-green-500 p-1 shadow-lg rounded-md top-0 left-[10%]">
+                                            <span className="absolute bg-white dark:bg-dark border-dashed border-2 border-green-500 p-1 shadow-lg rounded-md top-0 left-[10%]">
                                                 <p className="text-xs">「当たった……！」</p>
                                             </span>
                                             :
-                                            <span className="absolute bg-white p-1 border-dashed shadow-lg border-2 border-red-500 rounded-md top-0 left-[10%]">
+                                            <span className="absolute bg-white p-1 dark:bg-dark border-dashed shadow-lg border-2 border-red-500 rounded-md top-0 left-[10%]">
                                                 <p className="text-xs">「読めると思ったのに……」</p>
                                             </span>
                                     }

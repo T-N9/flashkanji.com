@@ -274,7 +274,7 @@ const MatchKanji = () => {
     <section className="max-w-screen-md mx-auto px-6 py-8 relative z-20">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-orange-500">Flash Match</h1>
-        <p className="text-sm text-gray-500">Match Kanji with their {currentMode}.</p>
+        <p className="text-sm text-gray-500 dark:text-gray-300">Match Kanji with their {currentMode}.</p>
       </div>
       <div className="flex justify-between gap-5">
         {/* Pick Column (Kanji) */}
@@ -288,10 +288,10 @@ const MatchKanji = () => {
               className={cn(
                 "p-4 rounded text-xl transition-all duration-200",
                 isPickMatched(kanji.id)
-                  ? "bg-green-200 text-green-800 cursor-default"
+                  ? "bg-green-200 text-green-800 dark:bg-green-400 dark:text-green-950 cursor-default"
                   : selectedPickItem?.kanji.id === kanji.id
-                    ? "bg-blue-200 text-blue-800"
-                    : "bg-white shadow hover:bg-blue-50"
+                    ? "bg-blue-200 dark:bg-blue-400 text-blue-800 dark:text-blue-950"
+                    : "bg-white dark:bg-dark shadow hover:bg-blue-50"
               )}
             >
               {kanji.character}
@@ -311,8 +311,8 @@ const MatchKanji = () => {
                 className={cn(
                   "p-4 rounded text-xs whitespace-normal lg:text-xl transition-all duration-200",
                   isMatchMatched(kanji.id)
-                    ? "bg-green-200 text-green-800 cursor-default"
-                    : "bg-white shadow hover:bg-yellow-50"
+                    ? "bg-green-200 text-green-800 dark:bg-green-400 dark:text-green-950 cursor-default"
+                    : "bg-white dark:bg-dark shadow hover:bg-yellow-50"
                 )}
               >
                 {kanji.meaning}
@@ -333,8 +333,8 @@ const MatchKanji = () => {
                 className={cn(
                   "p-4 rounded text-base lg:text-xl whitespace-normal transition-all duration-200",
                   isMatchMatched(kanji.id)
-                    ? "bg-green-200 text-green-800 cursor-default"
-                    : "bg-white shadow hover:bg-yellow-50"
+                    ? "bg-green-200 text-green-800 dark:bg-green-400 dark:text-green-950 cursor-default"
+                    : "bg-white dark:bg-dark shadow hover:bg-yellow-50"
                 )}
               >
                 {kanji.onyomi}
@@ -355,8 +355,8 @@ const MatchKanji = () => {
                 className={cn(
                   "p-4 rounded text-base lg:text-xl whitespace-normal transition-all duration-200",
                   isMatchMatched(kanji.id)
-                    ? "bg-green-200 text-green-800 cursor-default"
-                    : "bg-white shadow hover:bg-yellow-50"
+                    ? "bg-green-200 text-green-800 dark:bg-green-400 dark:text-green-950 cursor-default"
+                    : "bg-white dark:bg-dark shadow hover:bg-yellow-50"
                 )}
               >
                 {kanji.kunyomi}

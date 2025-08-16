@@ -50,25 +50,25 @@ export const VictoryModal: React.FC = () => {
                                 <p className='flex gap-2 justify-center'><Clover size={20} weight='fill' color='green' />
                                     {Math.floor(xp_points)}
                                 </p>
-                                <p className="text-sm text-gray-500">Great job! Keep it up.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">Great job! Keep it up.</p>
                             </>
                         )}
                         {isVictory === 'loss' && (
                             <>
                                 <p className="text-lg text-red-600">You’ve lost all your lives.</p>
-                                <p className="text-sm text-gray-500">Try again after cooldown or restore a heart by reviewing a deck/ a scheduled review.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">Try again after cooldown or restore a heart by reviewing a deck/ a scheduled review.</p>
                             </>
                         )}
                         {isVictory === 'buy' && (
                             <>
                                 <p className="text-lg text-red-600">You have no lives to join this session.</p>
-                                <p className="text-sm text-gray-500">Try again after cooldown or restore a heart by reviewing a deck/ a scheduled review. Or Buy a live at profile.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">Try again after cooldown or restore a heart by reviewing a deck/ a scheduled review. Or Buy a live at profile.</p>
                             </>
                         )}
                         {isVictory === 'restore' && (
                             <>
                                 <p className="text-lg text-red-600">A life has restored.</p>
-                                <p className="text-sm text-gray-500">Enjoy learning.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">Enjoy learning.</p>
                             </>
                         )}
                     </ModalBody>

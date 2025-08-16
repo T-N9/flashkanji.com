@@ -7,12 +7,12 @@ const KanjiPage = () => {
 
   return (
     <>
-      <div className="min-h-screen w-full bg-[#f8fafc] relative">
+      <div className="min-h-screen w-full bg-[#f8fafc] dark:bg-background relative">
         {/* Magenta Orb Grid Background */}
         <div
           className="absolute inset-0 z-0"
           style={{
-            background: "white",
+            background: "transparent",
             backgroundImage: `
      linear-gradient(to right, rgba(71,85,105,0.15) 1px, transparent 1px),
      linear-gradient(to bottom, rgba(71,85,105,0.15) 1px, transparent 1px),

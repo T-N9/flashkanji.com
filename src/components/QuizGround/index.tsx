@@ -39,7 +39,7 @@ function QuizResultReaction({ score, total, className }: QuizResultReactionProps
     return (
         <div className={`text-center space-y-4 my-6 ${className}`}>
             <CharacterImage src={imageSrc} alt={`percentage mark`} />
-            <div className="text-xl text-gray-500">
+            <div className="text-xl text-gray-500 dark:text-gray-300">
                 Score :{" "}
                 <span className="font-medium text-info">{score}</span> / {total}
             </div>

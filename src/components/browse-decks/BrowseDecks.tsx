@@ -218,8 +218,8 @@ const BrowseDecks = () => {
                       <CardBody style={{
                         backgroundImage: `url('${getBackgroundImage(i)}')`,
                         backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
-                      }} className=" bg-right-bottom bg-no-repeat">
-                        <p className="text-sm text-gray-600 dark:text-gray-200 mb-2">{deck.description}</p>
+                      }} className=" dark:!bg-none dark:bg-opacity-0 bg-right-bottom bg-no-repeat">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{deck.description}</p>
                         <p className="text-xs text-gray-400">Level: {deck.level}</p>
                         <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
                           {deck.categories.map((cat) => (

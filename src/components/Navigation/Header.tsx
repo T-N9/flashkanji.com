@@ -107,7 +107,7 @@ export function HeadingBar() {
   return (
     <Navbar
       isMenuOpen={isMenuOpen}
-      className="z-[45]"
+      className="z-[45] bg-white dark:bg-slate-900"
       isBordered
       isBlurred={false}
       onMenuOpenChange={setIsMenuOpen}
@@ -116,14 +116,16 @@ export function HeadingBar() {
       <NavbarBrand className="hidden lg:block">
         <Link href="/">
           {/* <Logo/> */}
-          <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
+          <Image className="w-28 dark:hidden" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
+          <Image className="w-28 hidden dark:block" src={'/assets/logo-white.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
       {authCookie === undefined ?
         <NavbarBrand className="block lg:hidden">
           <Link href="/">
             {/* <Logo/> */}
-            <Image className="w-28" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
+            <Image className="w-28 dark:hidden" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
+            <Image className="w-28 hidden dark:block" src={'/assets/logo-white.png'} width={638} height={205} alt="Flash Kanji Logo" />
           </Link>
         </NavbarBrand>
         :
@@ -158,7 +160,7 @@ export function HeadingBar() {
       {/* Navbar Menu (Mobile) */}
       <NavbarMenu>
         <div className="container flex flex-col gap-6 mx-auto">
-          <div className="text-gray-700 dark:text-gray-200 gap-6 flex flex-col text-center">
+          <div className="text-gray-700 dark:text-gray-300 gap-6 flex flex-col text-center">
             {navList}
           </div>
         </div>

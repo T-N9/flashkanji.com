@@ -116,7 +116,7 @@ export const KanjiRepetitionItem = ({
             {/* <p>{seconds}</p> */}
             <div className="lg:py-10 py-5">
                 <div className="flex h-full flex-col justify-between items-center transition-all duration-200 ease-out">
-                    <div className="relative w-full md:w-[300px] h-[300px]">
+                    <div className="relative w-full md:w-[300px] h-[300px] overflow-hidden">
                         <div
                             onClick={() => handleShowAnswer()}
                             className={`bg-gradient-to-br from-gray-50 via-gray-200 to-gray-400 !h-full relative font-writing-1 z-20 text-slate-800 p-5 rounded-md card w-40 min-w-[150px] border-4 lg:min-w-[200px] card-shadow ${isFlipped && "flipped"
@@ -167,7 +167,7 @@ export const KanjiRepetitionItem = ({
                                     >
                                         <CharacterImage src={rating.img} alt={rating.text} />
                                     </Button>
-                                   <p className="text-xs -mt-7 relative z-20 bg-white border px-2 py-1 rounded-lg">{rating.text}</p>
+                                   <p className="text-xs -mt-7 relative z-20 bg-white dark:bg-dark border dark:border-slate-700 px-2 py-1 rounded-lg">{rating.text}</p>
                                     <span className="text-gray-400 text-sm text-center hidden lg:block">
                                         Press {index + 1}
                                     </span>

@@ -120,7 +120,7 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
             </NextButton>
           </Tooltip>
           <div className="flex flex-col gap-1 justify-center items-center w-24">
-            <p className="text-xs">Hide Meaning</p>
+            <p className="text-xs dark:text-dark">Hide Meaning</p>
 
             <Switch
               color="primary"
@@ -153,7 +153,7 @@ export const JukugoSetting: React.FC<JukugoSettingProps> = ({ handleShuffle }) =
           <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
             <Button
               variant="bordered"
-              className="rounded-full"
+              className="rounded-full text-info"
               title="Slide View"
               isIconOnly
               onClick={() => {

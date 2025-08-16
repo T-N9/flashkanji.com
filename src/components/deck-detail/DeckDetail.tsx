@@ -96,15 +96,15 @@ const DeckDetail: React.FC = () => {
           <CardHeader className="flex flex-col items-start gap-2 lg:flex-row justify-between lg:items-center">
             <h1 className="text-xl font-bold text-dark dark:text-gray-100">{data.name}</h1>
             <div className="flex gap-1 justify-center items-center ">
-              <p className="text-sm !text-gray-500">{moment(data.updated_at).format('MMMM Do YYYY')}</p>
-              <div className="text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-300">{moment(data.updated_at).format('MMMM Do YYYY')}</p>
+              <div className="text-gray-500 dark:text-gray-300">
                 {data.is_public ? <Globe size={20} /> : <Lock size={20} />}
               </div>
             </div>
           </CardHeader>
           <CardBody>
-            <p className="text-gray-700 dark:text-gray-200 mb-3">{data.description}</p>
-            <div className="text-sm text-gray-500 space-y-1">
+            <p className="text-gray-700 dark:text-gray-300 mb-3">{data.description}</p>
+            <div className="text-sm text-gray-500 dark:text-gray-300 space-y-1">
               <p><strong>Level:</strong> N{data.level}</p>
               <p><strong>Learned </strong> {data.learnedCards} / {data.totalCards} cards</p>
 
@@ -169,7 +169,7 @@ const DeckDetail: React.FC = () => {
               ) : (
                 <div className="text-center">
                   <CharacterImage src="happy.png" alt="Great Job" />
-                  <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br />You’ve already studied new cards today.<br /> Come back tomorrow!</p>
+                  <p className="text-gray-500 dark:text-gray-300 italic"><span className="text-2xl text-orange-500 font-bold">Great Job!</span><br />You’ve already studied new cards today.<br /> Come back tomorrow!</p>
                 </div>
               )}
             </div>
@@ -177,7 +177,7 @@ const DeckDetail: React.FC = () => {
             :
             <div className="text-center space-y-4">
               <CharacterImage src="kiss.png" alt="Learn new cards today" />
-              <p className="text-gray-500 italic"><span className="text-2xl text-orange-500 font-bold">Congratulations!</span><br />You’ve learned all cards in this deck.<br /> Review them accordingly!</p>
+              <p className="text-gray-500 dark:text-gray-300 italic"><span className="text-2xl text-orange-500 font-bold">Congratulations!</span><br />You’ve learned all cards in this deck.<br /> Review them accordingly!</p>
             </div>
         }
 
@@ -193,7 +193,7 @@ const DeckDetail: React.FC = () => {
 
             sessionData?.sessions?.map((session, idx) => {
               return (
-                <div key={idx} className=" p-2 border rounded-md space-y-2">
+                <div key={idx} className=" p-2 border dark:border-dark rounded-md dark:bg-slate-900 space-y-2">
                   <div className="flex justify-between">
                     <p className="text-sm">Reviewed <span className="text-orange-500"> {moment(session.created_at).fromNow()}</span> | {moment(session.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                     <p className="text-sm">{session.card_count} cards </p>

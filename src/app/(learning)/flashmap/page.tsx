@@ -268,7 +268,7 @@ const RoadmapItem = ({
 
   return (
 
-    <div id={isCurrent ? 'resume111' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-white relative' : 'bg-blue-50'} ${border} border gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+    <div id={isCurrent ? 'resume111' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-white dark:bg-gray-800 relative' : 'bg-blue-50  dark:bg-slate-950'} ${border} border dark:border-dark gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
       {isCurrent && <div id="resume" className="h-3 w-3 bg-transparent absolute -top-20 z-30"></div>} 
       <div className={`${bg} relative inline-block p-2 rounded-full shadow-md opacity-${unlocked ? "100" : "50"}`}>
         <div className={`border-dashed ${isCurrent && 'animate-slow-spin'} border-white border-2 rounded-full p-2`}>
@@ -282,7 +282,7 @@ const RoadmapItem = ({
       <div className="flex flex-col lg:flex-row justify-between items-start w-full gap-2">
         <div>
           <h3 className={`font-bold ${!unlocked ? "opacity-50" : ""}`}>{label}</h3>
-          <p className="text-xs text-gray-600 dark:text-gray-200">{description}</p>
+          <p className="text-xs text-gray-600 dark:text-gray-300">{description}</p>
         </div>
 
         {
@@ -327,7 +327,7 @@ export default function ChapterRoadmap() {
 
 
   return (
-    <div className="space-y-12 max-w-screen-md mx-auto mb-10">
+    <div className="space-y-12 max-w-screen-md mx-auto pb-10">
       <div className=" px-6 pt-8 space-y-5 lg:space-y-12">
         <div className="flex items-center gap-4">
           <CompassRose size={32} />
@@ -370,8 +370,8 @@ export default function ChapterRoadmap() {
               const completedSteps = chapter_progress?.[levelStr]?.[chapterStr]?.[phaseStr] || [];
 
               return (
-                <div key={idx} className="space-y-4 bg-blue-50 border rounded-none md:rounded-md overflow-hidden">
-                  <div className="bg-slate-600 p-5">
+                <div key={idx} className="space-y-4 bg-blue-50 dark:bg-zinc-800 border dark:border-dark rounded-none md:rounded-md overflow-hidden">
+                  <div className="bg-slate-600 dark:bg-slate-950 p-5">
                     <h2 className="text-xl font-semibold text-white">{phase.title}</h2>
                   </div>
                   <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 px-6 py-5 lg:p-5">

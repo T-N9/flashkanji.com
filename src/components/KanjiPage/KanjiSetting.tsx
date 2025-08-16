@@ -167,7 +167,7 @@ export const KanjiSetting: React.FC<KanjiSettingProps> = ({ handleShuffle }) => 
                     <Tooltip className="font-primary-san" content="Slide View" color="primary" placement="bottom">
             <Button
               variant="bordered"
-              className="rounded-full"
+              className="rounded-full text-info"
               title="Slide View"
               isIconOnly
               onClick={() => {

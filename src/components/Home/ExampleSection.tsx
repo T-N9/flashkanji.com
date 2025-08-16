@@ -54,7 +54,7 @@ const ExampleSection = () => {
                             Learn with Interactive{" "}
                             <span className="text-primary">Flashcards</span>
                         </h2>
-                        <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                        <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-300">
                             Our flashcards provide a fun and interactive way to learn
                             and review kanji. Flip the card to see the meaning,
                             pronunciation, Kunyomi and Onyomi. We also provide an
@@ -68,7 +68,7 @@ const ExampleSection = () => {
                         <h3 className="text-lg font-bold text-primary">
                             Interactive Learning
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-300">
                             Flip the card to learn the meaning, pronunciation, and
                             example sentences.
                         </p>
@@ -77,7 +77,7 @@ const ExampleSection = () => {
                         <h3 className="text-lg font-bold text-primary">
                             Track Your Progress
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-300">
                             Mark cards as &quot;learned&quot; or &quot;need more practice&quot; to track
                             your progress.
                         </p>
@@ -86,7 +86,7 @@ const ExampleSection = () => {
                         <h3 className="text-lg font-bold text-primary">
                             Personalized Learning
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-300">
                             Customize your learning by selecting the kanji you want to
                             focus on.
                         </p>

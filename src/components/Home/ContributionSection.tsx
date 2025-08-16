@@ -10,7 +10,7 @@ const ContributionSection = () => {
           Contribute to{" "}
           <span className="text-primary">FlashKanji</span>
         </h2>
-        <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+        <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-300">
           Join us in shaping the future of Kanji learning! Our project
           thrives on collaboration and open-source contributions.
         </p>

@@ -61,14 +61,14 @@ export function KanjiDetailModal() {
               <ModalHeader className="flex justify-between text-orange-500 font-english-text font-bold items-center shadow">
                 <p>Kanji information</p>
               </ModalHeader>
-              <ModalBody className=" min-h-40 bg-gray-200 overflow-y-scroll">
+              <ModalBody className=" min-h-40 bg-gray-200 dark:bg-gray-800 overflow-y-scroll">
 
                 {!isLoading ? (
                   <div className=" flex gap-4 flex-col-reverse lg:flex-row font-primary-san">
                     <div className="flex-1">
                       <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
 
-                        <div className="bg-white p-3 rounded-md">
+                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
                           <p className="text-info font-english text-xs">
                             Grade:
                           </p>{" "}
@@ -76,7 +76,7 @@ export function KanjiDetailModal() {
                             {renderStars()}
                           </span>
                         </div>
-                        <div className="bg-white p-3 rounded-md">
+                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
                           <p className="text-info font-english text-xs">
                             Unicode:
                           </p>{" "}
@@ -86,7 +86,7 @@ export function KanjiDetailModal() {
 
                         </div>
 
-                        <div className="bg-white p-3 rounded-md">
+                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
                           <p className="text-info font-english text-xs">
                             Stroke Count:
                           </p>{" "}
@@ -95,7 +95,7 @@ export function KanjiDetailModal() {
                           </span>
                         </div>
 
-                        <div className="bg-white p-3 rounded-md col-span-3">
+                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md col-span-3">
                           <p className="text-info font-english text-xs">
                             Meanings:
                           </p>
@@ -110,7 +110,7 @@ export function KanjiDetailModal() {
                       </div>
 
                       <div className="grid grid-cols-2  mt-4 gap-4 flex-wrap">
-                        <div className="bg-white p-3 rounded-md">
+                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
                           <p className="text-info font-english text-xs">
                             Kun Readings:
                           </p>
@@ -128,7 +128,7 @@ export function KanjiDetailModal() {
                           </ul>
                         </div>
 
-                        <div className="bg-white p-3 rounded-md">
+                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
                           <p className="text-info font-english text-xs">
                             On Readings:
                           </p>
@@ -148,7 +148,7 @@ export function KanjiDetailModal() {
                       </div>
 
                       {jukugoData && jukugoData?.length > 0 && (
-                        <div className="mt-4 bg-white p-3 rounded-md">
+                        <div className="mt-4 bg-white dark:bg-slate-900 p-3 rounded-md">
                           <p className="text-info font-english text-xs">
                             Related jukugo:
                           </p>
@@ -157,7 +157,7 @@ export function KanjiDetailModal() {
                             {jukugoData?.map((item, index) => {
                               return (
                                 <li
-                                  className="p-2 border-2 rounded-md"
+                                  className="p-2 dark:border-gray-700 border-2 rounded-md"
                                   key={index}
                                 >
                                   <p className="flex justify-between flex-col">
@@ -190,7 +190,7 @@ export function KanjiDetailModal() {
 
                     <div className="mt-4 hidden">
                       <strong className="text-info font-english text-xs">Notes:</strong>
-                      <p className="text-gray-700 dark:text-gray-200">
+                      <p className="text-gray-700 dark:text-gray-300">
                         {charData?.notes.length > 0
                           ? charData?.notes
                           : "No notes available"}

@@ -33,7 +33,7 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
             {number + 1}
           </span>
           <div className="flex-1 flex-col gap-5 flex justify-center items-center">
-            <p className="text-sm text-gray-700 dark:text-gray-200">{quizItem?.question}</p>
+            <p className="text-sm text-gray-700 dark:text-gray-300">{quizItem?.question}</p>
             <h1 className="text-9xl text-dark dark:text-gray-100">{quizItem?.kanji}</h1>
           </div>
 
@@ -57,7 +57,7 @@ export const QuizItem: React.FC<QuizItemProps> = ({ quizItem, number, isSubmitte
                     aria-label={optionItem.toString()}
                     classNames={{
                       base: cn(
-                        "inline-flex w-full max-w-md bg-content1 border-default shadow border-2 border-gray-200",
+                        "inline-flex dark:bg-slate-800 w-full max-w-md bg-content1 border-default shadow border-2 border-gray-200",
                         "hover:bg-content2 items-center justify-start",
                         "cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
                         ` ${currentAnswer === option && "border-primary"} ${isSubmitted &&

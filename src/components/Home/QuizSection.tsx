@@ -5,7 +5,7 @@ import React from 'react'
 
 const QuizSection = () => {
   return (
-    <section className="w-full bg-light py-12 md:py-14 lg:py-16">
+    <section className="w-full bg-light dark:bg-slate-950 py-12 md:py-14 lg:py-16">
       <div className="main-container">
         <div className="flex gap-10 md:gap-16 flex-col-reverse lg:flex-row">
           <div className="flex flex-1 justify-center lg:justify-start">
@@ -25,7 +25,7 @@ const QuizSection = () => {
               <span className="text-primary">Quiz Quest</span>: Test
               Your Kanji Knowledge!
             </h2>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-300">
               Challenge yourself with our interactive quizzes. Reinforce
               Kanji skills, enhance recall, and track your progress in an
               engaging, fun-filled learning experience! 🀄🤔

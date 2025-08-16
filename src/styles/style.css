@@ -378,6 +378,6 @@ button {
   animation: heartbeat 2s infinite;
 }
 
-[data-theme='dark'] p{
+[data-theme='dark'] p {
   color: aliceblue !important;
 }

@@ -186,9 +186,9 @@ const KanjiGround = () => {
             <div className='relative z-20 pt-4'>
                 <div className="flex justify-center items-center gap-2">
                     <h1 className="text-2xl font-bold text-orange-500">Kanji Ground</h1>
-                    <span className="text-sm text-gray-500">({kanjiData?.length === 0 ? '?' : kanjiData?.length} kanji)</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-300">({kanjiData?.length === 0 ? '?' : kanjiData?.length} kanji)</span>
                 </div>
-                <p className="text-center lg:w-1/2 px-2 mx-auto text-sm text-gray-500">
+                <p className="text-center lg:w-1/2 px-2 mx-auto text-sm text-gray-500 dark:text-gray-300">
                     Sit back and relax, and take your time to learn each kanji.
                     You may write them down on your physical book.
                     Click on the kanji to flip the card and see the readings.
