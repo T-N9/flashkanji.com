@@ -58,7 +58,7 @@ export default function UserDashBoard() {
 
             <main className="max-w-screen-md mx-auto px-6 py-8">
                 {/* Welcome Section */}
-                <div className="mb-8">
+                <div className="mb-4">
                     <div className="flex gap-4 items-center">
                         <h1 className="text-lg lg:text-3xl font-bold text-dark dark:text-gray-100 mb-2">Welcome back, {username}!</h1>
 
@@ -69,13 +69,13 @@ export default function UserDashBoard() {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-8">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-4">
                     <Card className="bg-gradient-to-r from-red-500 to-pink-500 text-white">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                             <h1 className="text-sm font-medium">Due Today</h1>
                             <Clock className="h-4 w-4" />
                         </CardHeader>
-                        <CardBody>
+                        <CardBody className="pt-1">
                             <div className="text-2xl font-bold">{todayReviewCount}</div>
                             <p className="text-xs opacity-90">
                                 cards to review today. {expiredReviewCount > 0 && `${expiredReviewCount} cards expired.`}
@@ -84,33 +84,33 @@ export default function UserDashBoard() {
                     </Card>
 
                     <Card className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                             <h1 className="text-sm font-medium">Total Learned</h1>
                             <BookOpenText className="h-4 w-4" />
                         </CardHeader>
-                        <CardBody>
+                        <CardBody  className="pt-1">
                             <div className="text-2xl font-bold">{totalLearned}</div>
                             <p className="text-xs opacity-90">cards mastered</p>
                         </CardBody>
                     </Card>
 
                     <Card className="bg-gradient-to-r from-green-500 to-emerald-500 text-white">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                             <h1 className="text-sm font-medium">Study Hours</h1>
                             <Target className="h-4 w-4" />
                         </CardHeader>
-                        <CardBody>
+                        <CardBody className="pt-1">
                             <div className="text-2xl font-bold">{totalHours}</div>
                             <p className="text-xs opacity-90">Last Pomodoro Sessions</p>
                         </CardBody>
                     </Card>
 
                     <Card className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                             <h1 className="text-sm font-medium">Study Streak</h1>
                             <Fire className="h-4 w-4" />
                         </CardHeader>
-                        <CardBody>
+                        <CardBody className="pt-1">
                             <div className="text-2xl font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</div>
                             <p className="text-xs opacity-90">{longestStreak === 0 ? 0 : longestStreak - 1} days in a row</p>
                         </CardBody>

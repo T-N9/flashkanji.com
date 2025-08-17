@@ -28,7 +28,8 @@ export default {
         light : '#fff1e0',
         dark : '#2f4858',
         info: "#485682",
-        background : "#1A2027"
+        background : "#161618",
+        dark_1: "#323234"
       }
     },
   },

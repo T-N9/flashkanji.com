@@ -312,7 +312,7 @@ const JukugoBuilderItem = ({
     if (!quizItem) return null;
 
     return (
-        <Card className="w-full p-4  border rounded-xl bg-gradient-to-br from-gray-50 via-gray-200 to-gray-300 dark:from-slate-950 dark:via-slate-800 dark:to-slate-700">
+        <Card className="w-full p-4  border dark:border-slate-800 rounded-xl bg-gradient-to-br from-gray-50 via-gray-200 to-gray-300 dark:from-slate-950 dark:via-slate-800 dark:to-slate-700">
             <CardHeader className="flex flex-col gap-2 justify-center items-center">
                 <div className="text-5xl lg:text-8xl font-normal text-center">{item.character}</div>
                 <p className="text-base italic text-gray-400 text-center">
@@ -357,7 +357,7 @@ const JukugoBuilderItem = ({
                     {quizItem.options.map((mora, index) => (
                         <Button
                             key={index}
-                            className={`${answerMora.includes(index) ? "bg-slate-700 dark:bg-blue-900 text-white" : "bg-white dark:bg-slate-950"
+                            className={`${answerMora.includes(index) ? "bg-slate-700 dark:bg-blue-900 text-white" : "bg-white dark:bg-dark_1"
                                 }`}
                             onClick={() => handleClickMora(index)}
                         >

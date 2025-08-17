@@ -142,7 +142,7 @@ const BrowseDecks = () => {
 
 
       {/* Deck Results */}
-      {isFetching ? (
+      {isLoading ? (
         <div className="grid md:grid-cols-2 gap-4">
           <Card shadow="sm" className="border border-default-200 animate-pulse">
             <CardHeader className="font-semibold">

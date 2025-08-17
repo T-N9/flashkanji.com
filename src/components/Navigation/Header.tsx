@@ -89,7 +89,7 @@ export function HeadingBar() {
             >
               <Link href="/profile"><Avatar
                 src={avatarUrl}
-                className="bg-gradient-to-br from-orange-500 to-yellow-400 text-white mx-auto"
+                className="bg-gradient-to-br border-orange-500 border from-orange-500 to-yellow-400 text-white mx-auto"
               /></Link>
             </NavbarItem>
           </>
@@ -107,7 +107,7 @@ export function HeadingBar() {
   return (
     <Navbar
       isMenuOpen={isMenuOpen}
-      className="z-[45] bg-white dark:bg-slate-900"
+      className="z-[45] bg-white dark:bg-background"
       isBordered
       isBlurred={false}
       onMenuOpenChange={setIsMenuOpen}

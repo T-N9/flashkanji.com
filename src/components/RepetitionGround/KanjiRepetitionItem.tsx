@@ -147,7 +147,7 @@ export const KanjiRepetitionItem = ({
                             </p>
 
                             {/* Back Side */}
-                            <div className="back absolute text-white w-full top-[27%] left-0 space-y-3 z-20 bg-slate-900 px-2 py-4 p-2 text-2xl md:text-2xl">
+                            <div className="back absolute text-white w-full top-[27%] left-0 space-y-3 z-20 bg-dark_1 px-2 py-4 p-2 text-2xl md:text-2xl">
                                 <div>{kunyomi}</div>
                                 <div>{onyomi}</div>
                                 <div>{meaning}</div>

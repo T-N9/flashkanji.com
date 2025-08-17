@@ -255,7 +255,7 @@ const JukugoRepetitionReviewMode = () => {
     console.log({ fetchedData: data?.repetitionData })
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
-    const { isSaveRepetition, setIsSaveRepetition, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType, setShouldRefetchCalendar } = useGeneralStore();
     const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const { mutate: saveStreak } = useSaveStreak();
     const router = useRouter();
@@ -271,6 +271,7 @@ const JukugoRepetitionReviewMode = () => {
 
     const handleEnd = () => {
         const alreadySaved = hasSavedStreakToday();
+        setShouldRefetchCalendar(true)
 
         if (isSaveRepetition) {
             saveRepetition(

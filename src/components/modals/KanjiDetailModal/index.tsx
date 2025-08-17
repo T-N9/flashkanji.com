@@ -61,23 +61,23 @@ export function KanjiDetailModal() {
               <ModalHeader className="flex justify-between text-orange-500 font-english-text font-bold items-center shadow">
                 <p>Kanji information</p>
               </ModalHeader>
-              <ModalBody className=" min-h-40 bg-gray-200 dark:bg-gray-800 overflow-y-scroll">
+              <ModalBody className=" min-h-40 bg-gray-200 dark:bg-background overflow-y-scroll">
 
                 {!isLoading ? (
                   <div className=" flex gap-4 flex-col-reverse lg:flex-row font-primary-san">
                     <div className="flex-1">
                       <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
 
-                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
+                        <div className="bg-white dark:bg-dark_1 p-3 rounded-md">
+                          <p className="text-gray-400 font-english text-xs">
                             Grade:
                           </p>{" "}
                           <span className="text-dark dark:text-gray-100 font-bold text-lg flex flex-wrap">
                             {renderStars()}
                           </span>
                         </div>
-                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
+                        <div className="bg-white dark:bg-dark_1 p-3 rounded-md">
+                          <p className="text-gray-400 font-english text-xs">
                             Unicode:
                           </p>{" "}
                           <span className="text-dark dark:text-gray-100 font-bold text-xl font-english-text">
@@ -86,8 +86,8 @@ export function KanjiDetailModal() {
 
                         </div>
 
-                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
+                        <div className="bg-white dark:bg-dark_1 p-3 rounded-md">
+                          <p className="text-gray-400 font-english text-xs">
                             Stroke Count:
                           </p>{" "}
                           <span className="text-dark dark:text-gray-100 font-bold text-xl font-english-text">
@@ -95,8 +95,8 @@ export function KanjiDetailModal() {
                           </span>
                         </div>
 
-                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md col-span-3">
-                          <p className="text-info font-english text-xs">
+                        <div className="bg-white dark:bg-dark_1 p-3 rounded-md col-span-3">
+                          <p className="text-gray-400 font-english text-xs">
                             Meanings:
                           </p>
                           <ul className="list-disc pl-4 flex gap-x-7 gap-y-2 flex-wrap text-dark dark:text-gray-100 font-english-text">
@@ -110,8 +110,8 @@ export function KanjiDetailModal() {
                       </div>
 
                       <div className="grid grid-cols-2  mt-4 gap-4 flex-wrap">
-                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
+                        <div className="bg-white dark:bg-dark_1 p-3 rounded-md">
+                          <p className="text-gray-400 font-english text-xs">
                             Kun Readings:
                           </p>
                           <ul className="list-disc pl-4 gap-4 flex flex-col text-dark dark:text-gray-100 font-bold text-xl">
@@ -128,8 +128,8 @@ export function KanjiDetailModal() {
                           </ul>
                         </div>
 
-                        <div className="bg-white dark:bg-slate-900 p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
+                        <div className="bg-white dark:bg-dark_1 p-3 rounded-md">
+                          <p className="text-gray-400 font-english text-xs">
                             On Readings:
                           </p>
                           <ul className="list-disc pl-4  gap-4 flex flex-col text-dark dark:text-gray-100 font-bold text-xl">
@@ -148,8 +148,8 @@ export function KanjiDetailModal() {
                       </div>
 
                       {jukugoData && jukugoData?.length > 0 && (
-                        <div className="mt-4 bg-white dark:bg-slate-900 p-3 rounded-md">
-                          <p className="text-info font-english text-xs">
+                        <div className="mt-4 bg-white dark:bg-dark_1 p-3 rounded-md">
+                          <p className="text-gray-400 font-english text-xs">
                             Related jukugo:
                           </p>
 
@@ -189,7 +189,7 @@ export function KanjiDetailModal() {
 
 
                     <div className="mt-4 hidden">
-                      <strong className="text-info font-english text-xs">Notes:</strong>
+                      <strong className="text-gray-400 font-english text-xs">Notes:</strong>
                       <p className="text-gray-700 dark:text-gray-300">
                         {charData?.notes.length > 0
                           ? charData?.notes

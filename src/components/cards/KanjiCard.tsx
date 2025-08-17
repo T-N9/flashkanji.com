@@ -60,7 +60,7 @@ const KanjiCard: React.FC<KanjiCardProps> = ({ item, isSwiped = false, isInfoSho
 
           {/* Back Side */}
           <div
-              className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col  bg-slate-900  px-2 py-6 p-2 ${isSwiped ? "text-xl md:text-[2rem] space-y-0 lg:space-y-0" : " space-y-4 text-lg md:text-xl"
+              className={`back absolute w-full top-[25%] -left-[0%] -translate-x-1/2 -translate-y-1/2 flex flex-col  bg-dark_1  px-2 py-6 p-2 ${isSwiped ? "text-xl md:text-[2rem] space-y-0 lg:space-y-0" : " space-y-4 text-lg md:text-xl"
               }`}
           >
             {/* Kunyomi */}

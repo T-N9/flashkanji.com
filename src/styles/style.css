@@ -381,3 +381,7 @@ button {
 [data-theme='dark'] p {
   color: aliceblue !important;
 }
+
+.dark .bg-content1{
+  background-color: #323234;
+}

@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { DayPicker } from "react-day-picker"
 import { Tabs, Tab, Card, CardBody, CardHeader, Button, Chip } from "@heroui/react"
-import { Calendar as CalendarIcon, BookOpen, Check, CircleNotchIcon } from "@phosphor-icons/react"
+import { Calendar as CalendarIcon, BookOpen, Check, CircleNotchIcon, ArrowCounterClockwise } from "@phosphor-icons/react"
 import { ja } from "react-day-picker/locale";
 
 import "react-day-picker/dist/style.css"
@@ -24,14 +24,14 @@ export default function SpacedLearningCalendar() {
   const { setIsReviewMode: setIsReviewModeJukugo } = useJukugoGroundState();
   const { setIsReviewMode: setIsReviewModeDeck, setDeckId, setIsReviewByDate, setSrsId } = useDeckGroundState();
   const { userId, setToDayReviewCount, setExpiredReviewCount } = useUserStore()
-  const { setIsInGround, setIsSaveRepetition } = useGeneralStore();
+  const { setIsInGround, setIsSaveRepetition, shouldRefetchCalendar, setShouldRefetchCalendar } = useGeneralStore();
 
   const { data: reviewData, refetch, isFetching } = useFetchReviewCalendarData(userId)
 
   const router = useRouter()
 
   useEffect(() => {
-    if (userId) refetch()
+    if (userId && shouldRefetchCalendar) { refetch(); setShouldRefetchCalendar(false) }
   }, [userId])
 
   const reviewMap = useMemo(() => {
@@ -108,9 +108,11 @@ export default function SpacedLearningCalendar() {
                   <CalendarIcon size={20} /> Review Schedule
                 </div>
                 {
-                  isFetching && <div>
+                  isFetching ? <div>
                     <CircleNotchIcon size={22} className="animate-spin" />
                   </div>
+                    :
+                    <div><ArrowCounterClockwise className="cursor-pointer" onClick={() => refetch()} size={22} /></div>
                 }
 
               </CardHeader>
@@ -126,6 +128,7 @@ export default function SpacedLearningCalendar() {
                   modifiersClassNames={{
                     hasReviews: "bg-orange-200 text-orange-900 font-semibold rounded-full",
                   }}
+                  className={"text-xs"}
                 />
               </CardBody>
             </Card>

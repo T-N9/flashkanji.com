@@ -36,7 +36,7 @@ export default function RootLayout({
         /> */}
       </head>
       <body
-        className={`${poppins.className} min-h-screen antialiased text-dark dark:text-gray-100  dark:bg-[#1A2027]`}
+        className={`${poppins.className} min-h-screen antialiased text-dark dark:text-gray-100  dark:bg-background`}
       >
         <Providers>
           <SessionSync />

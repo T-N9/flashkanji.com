@@ -268,7 +268,7 @@ const RoadmapItem = ({
 
   return (
 
-    <div id={isCurrent ? 'resume111' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-white dark:bg-gray-800 relative' : 'bg-blue-50  dark:bg-slate-950'} ${border} border dark:border-dark gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
+    <div id={isCurrent ? 'resume111' : `${japanese_chapter + phase + stepIndex}`} className={`${isCurrent ? 'bg-white dark:bg-gray-800 relative' : 'bg-blue-50  dark:bg-dark_1'} ${border} border dark:border-dark gap-4 p-2 rounded-lg w-full flex items-center shadow ${!unlocked && 'select-none opacity-65 grayscale cursor-not-allowed pointer-events-none'}`}>
       {isCurrent && <div id="resume" className="h-3 w-3 bg-transparent absolute -top-20 z-30"></div>} 
       <div className={`${bg} relative inline-block p-2 rounded-full shadow-md opacity-${unlocked ? "100" : "50"}`}>
         <div className={`border-dashed ${isCurrent && 'animate-slow-spin'} border-white border-2 rounded-full p-2`}>
@@ -371,7 +371,7 @@ export default function ChapterRoadmap() {
 
               return (
                 <div key={idx} className="space-y-4 bg-blue-50 dark:bg-zinc-800 border dark:border-dark rounded-none md:rounded-md overflow-hidden">
-                  <div className="bg-slate-600 dark:bg-slate-950 p-5">
+                  <div className="bg-slate-600 dark:bg-dark_1 p-5">
                     <h2 className="text-xl font-semibold text-white">{phase.title}</h2>
                   </div>
                   <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 px-6 py-5 lg:p-5">

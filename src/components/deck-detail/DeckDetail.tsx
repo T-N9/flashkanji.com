@@ -193,7 +193,7 @@ const DeckDetail: React.FC = () => {
 
             sessionData?.sessions?.map((session, idx) => {
               return (
-                <div key={idx} className=" p-2 border dark:border-dark rounded-md dark:bg-slate-900 space-y-2">
+                <div key={idx} className=" p-2 border dark:border-background rounded-md dark:bg-dark_1 space-y-2">
                   <div className="flex justify-between">
                     <p className="text-sm">Reviewed <span className="text-orange-500"> {moment(session.created_at).fromNow()}</span> | {moment(session.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                     <p className="text-sm">{session.card_count} cards </p>

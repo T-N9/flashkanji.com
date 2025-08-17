@@ -239,7 +239,7 @@ const UserProfileSection = () => {
                                 {RANKS[rank].name}
                             </span>
                         </div>
-                        <div className='flex gap-3 justify-between overflow-x-scroll py-4'>
+                        <div className='flex gap-3 justify-between overflow-x-scroll p-4'>
                             {
                                 RANKS.map((item, idx) => {
                                     return (

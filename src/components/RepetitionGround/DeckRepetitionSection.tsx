@@ -191,7 +191,7 @@ const DeckRepetitionReviewMode = () => {
     const { deckId, srsId, isReviewMode, isReviewByDate } = useDeckGroundState();
     const { userId, xp_points, setXpPoints, lives, setLives } = useUserStore();
     const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode, isReviewByDate ? selectedReviewDate : undefined);
-    const { isSaveRepetition, setIsSaveRepetition, setIsVictoryModalOpen, setVictoryModalType, setVictoryXp } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, setIsVictoryModalOpen, setVictoryModalType, setVictoryXp, setShouldRefetchCalendar } = useGeneralStore();
 
     const {
         shuffledData,
@@ -246,6 +246,7 @@ const DeckRepetitionReviewMode = () => {
 
     const handleEnd = () => {
         const alreadySaved = hasSavedStreakToday();
+        setShouldRefetchCalendar(true)
 
         if (isSaveRepetition) {
             saveRepetition(

@@ -34,6 +34,7 @@ interface GeneralState {
   } | null;
 
   shouldRefetchChapter: boolean;
+  shouldRefetchCalendar: boolean;
   /*  */
   isVictoryModalOpen: boolean;
   victoryModalType: "victory" | "loss" | "restore" | "buy";
@@ -71,6 +72,7 @@ interface GeneralState {
     } | null
   ) => void;
   setShouldRefetchChapter: (shouldRefetchChapter: boolean) => void;
+  setShouldRefetchCalendar: (shouldRefetchChapter: boolean) => void;
 
   setIsVictoryModalOpen: (isVictoryModalOpen: boolean) => void;
   setVictoryModalType: (type: "victory" | "loss" | "restore" | "buy") => void;
@@ -99,6 +101,7 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   isSaveRepetition: true,
   mapItemData: null,
   shouldRefetchChapter: false,
+  shouldRefetchCalendar: false,
 
   /* Victory Modal */
   isVictoryModalOpen: false,
@@ -133,6 +136,8 @@ export const useGeneralStore = create<GeneralState>((set) => ({
   setMapItemData: (data) => set({ mapItemData: data }),
   setShouldRefetchChapter: (shouldRefetchChapter) =>
     set({ shouldRefetchChapter }),
+  setShouldRefetchCalendar: (shouldRefetchCalendar) =>
+    set({ shouldRefetchCalendar }),
 
   setIsVictoryModalOpen: (isVictoryModalOpen) => set({ isVictoryModalOpen }),
   setVictoryModalType: (victoryModalType) => set({ victoryModalType }),

@@ -5,7 +5,7 @@ import useKanjiGroundState from "@/store/kanjiGroundState";
 import { useKanjiByChapterAndLevel } from "@/services/kanji";
 import { KanjiRepetitionItem } from "./KanjiRepetitionItem";
 import { Kanji } from "@/types/kanji";
-import { Button } from "@heroui/react";
+import { Button, Progress } from "@heroui/react";
 import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { playSound } from "@/util/soundPlayer";
+import CardProgress from "./CardProgress";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
@@ -46,7 +47,7 @@ const KanjiRepetitionNormalMode = () => {
 
     const router = useRouter();
 
-    console.log({isSaveRepetition})
+    console.log({ isSaveRepetition })
 
     const handleAddPracticePointsAndEndSession = () => {
         playSound('session')
@@ -247,7 +248,7 @@ const KanjiRepetitionReviewMode = () => {
     const { level, selectedReviewDate } = useKanjiGroundState();
     const { userId, xp_points, setXpPoints } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
-    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType } = useGeneralStore();
+    const { isSaveRepetition, setIsSaveRepetition, mapItemData, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType, setShouldRefetchCalendar } = useGeneralStore();
 
     console.log({ fetchedData: data?.repetitionData })
 
@@ -281,6 +282,7 @@ const KanjiRepetitionReviewMode = () => {
 
     const handleEnd = () => {
         const alreadySaved = hasSavedStreakToday();
+        setShouldRefetchCalendar(true)
 
         if (isSaveRepetition) {
             saveRepetition(
@@ -377,6 +379,10 @@ const KanjiRepetitionReviewMode = () => {
                         <p className="text-gray-600 dark:text-gray-300 table mx-auto text-center p-2 rounded-full text-xs bg-gray-200 dark:bg-gray-950 relative z-20">
                             {clickedRepetitionData.length}/{shuffledData.length} cards left
                         </p>
+                        {/* <CardProgress
+                            total={shuffledData.length}
+                            left={clickedRepetitionData.length}
+                        /> */}
                         <KanjiRepetitionItem
                             sr_data={spacedRepetitionData.find((item) => item.card_id === kanji.id) || {
                                 id: kanji.id,
@@ -408,7 +414,7 @@ const KanjiRepetitionReviewMode = () => {
 const KanjiRepetitionSection = () => {
 
     const { isReviewMode } = useKanjiGroundState();
-    console.log({isReviewMode})
+    console.log({ isReviewMode })
 
     return (
         <>

@@ -5,7 +5,7 @@ import React from 'react'
 
 const QuizSection = () => {
   return (
-    <section className="w-full bg-light dark:bg-slate-950 py-12 md:py-14 lg:py-16">
+    <section className="w-full bg-light dark:bg-dark_1 py-12 md:py-14 lg:py-16">
       <div className="main-container">
         <div className="flex gap-10 md:gap-16 flex-col-reverse lg:flex-row">
           <div className="flex flex-1 justify-center lg:justify-start">
