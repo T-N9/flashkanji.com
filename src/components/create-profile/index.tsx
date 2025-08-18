@@ -84,7 +84,7 @@ export default function CreateProfileForm() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-background shadow-lg rounded-xl">
+        <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-backdrop shadow-lg rounded-xl">
             <h2 className="text-2xl font-bold mb-4">Complete Your Profile</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 

@@ -49,7 +49,8 @@ export default function AuthCallback() {
             totalHours: result?.user?.total_hours,
             lives: result?.user?.lives,
             xp_points: result?.user?.experience_points,
-            rank: result?.user?.rank
+            rank: result?.user?.rank,
+            resume_learning_section: result.user?.resume_learning_section
           })
           router.push('/flashboard')
         } else {

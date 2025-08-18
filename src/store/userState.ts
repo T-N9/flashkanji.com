@@ -20,6 +20,7 @@ interface UserState {
   currentStreak: number;
   longestStreak: number;
   rank: number;
+  resume_learning_section: { chapter: number | null; level: number | null};
   xp_points: number;
   lives: number;
   timeToRestoreHeart: string;
@@ -48,6 +49,7 @@ export const useUserStore = create<UserState>((set) => ({
   xp_points: 0,
   rank: 1,
   lives: 5,
+  resume_learning_section: { chapter: null, level: null },
   timeToRestoreHeart: "",
   resetUser: () =>
     set({
@@ -65,6 +67,7 @@ export const useUserStore = create<UserState>((set) => ({
       lives: 5,
       xp_points: 0,
       rank: 1,
+      resume_learning_section: { chapter: null, level: null },
     }),
   todayReviewCount: 0,
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),

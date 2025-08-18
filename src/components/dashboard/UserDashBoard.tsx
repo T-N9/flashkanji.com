@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardBody, CardHeader } from "@heroui/react"
+import { Button, Card, CardBody, CardHeader } from "@heroui/react"
 import { BookOpenText, Clock, Fire, Target } from "@phosphor-icons/react"
 
 import ReviewSchedule from "../review-schedule/ReviewSchedule";
@@ -8,11 +8,13 @@ import { useUserStore } from "@/store/userState";
 import { useApplyExpiryPenalty } from "@/services/progress";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useGeneralStore } from "@/store/generalState";
 
 export default function UserDashBoard() {
 
-    const { longestStreak, currentStreak, totalLearned, totalHours, username, rank } = useUserStore();
-    const { todayReviewCount, expiredReviewCount, userId, setXpPoints, xp_points } = useUserStore();
+    const { longestStreak, currentStreak, totalLearned, totalHours, username, resume_learning_section, todayReviewCount, expiredReviewCount, userId, setXpPoints, xp_points, setUser } = useUserStore();
+    const { setShouldRefetchCalendar } = useGeneralStore()
 
     const { mutate: applyPenalty, isLoading: saveLoading } = useApplyExpiryPenalty();
 
@@ -52,6 +54,21 @@ export default function UserDashBoard() {
         }
     }, [expiredReviewCount]);
 
+    const router = useRouter();
+
+    const handleResumeToFlashMap = (chapter: number, level: number) => {
+        setShouldRefetchCalendar(true)
+        setUser(
+            {
+                japanese_chapter: chapter,
+                //@ts-ignore
+                japanese_level: `N${level}`
+            }
+        )
+
+        router.push('/flashmap')
+    }
+
     return (
         <div className="min-h-screen ">
 
@@ -88,7 +105,7 @@ export default function UserDashBoard() {
                             <h1 className="text-sm font-medium">Total Learned</h1>
                             <BookOpenText className="h-4 w-4" />
                         </CardHeader>
-                        <CardBody  className="pt-1">
+                        <CardBody className="pt-1">
                             <div className="text-2xl font-bold">{totalLearned}</div>
                             <p className="text-xs opacity-90">cards mastered</p>
                         </CardBody>
@@ -116,6 +133,20 @@ export default function UserDashBoard() {
                         </CardBody>
                     </Card>
                 </div>
+
+
+                {
+                    resume_learning_section?.chapter !== null
+                    &&
+                    <div className="flex justify-between items-center my-3">
+                        Resume your journey
+
+                        <Button className="bg-blue-500 text-white" onClick={() => handleResumeToFlashMap(resume_learning_section.chapter ?? 1, resume_learning_section.level ?? 5)}>
+                            Learn
+                        </Button>
+                    </div>
+                }
+
 
                 <ReviewSchedule />
             </main>

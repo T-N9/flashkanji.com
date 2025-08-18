@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 const StartQuizPage = () => {
   return (
 
-    <div className="min-h-screen w-full bg-white dark:bg-background relative">
+    <div className="min-h-screen w-full bg-white dark:bg-backdrop relative">
       {/* Magenta Orb Grid Background */}
       <div
         className="absolute inset-0 z-0"

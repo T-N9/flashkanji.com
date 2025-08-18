@@ -107,7 +107,7 @@ export function HeadingBar() {
   return (
     <Navbar
       isMenuOpen={isMenuOpen}
-      className="z-[45] bg-white dark:bg-background"
+      className="z-[45] bg-white dark:bg-backdrop"
       isBordered
       isBlurred={false}
       onMenuOpenChange={setIsMenuOpen}

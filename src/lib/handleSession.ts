@@ -13,7 +13,7 @@ export const handleSession = async (router?: any) => {
   const user = session?.user;
 
   if (!user || !accessToken) {
-    router?.push?.('/login')
+    router?.push?.("/login");
     return;
   }
 
@@ -38,6 +38,7 @@ export const handleSession = async (router?: any) => {
         lives: result?.user?.lives,
         xp_points: result?.user?.experience_points,
         rank: result?.user?.rank,
+        resume_learning_section: result.user?.resume_learning_section,
       });
       // router?.push?.('/flashmap')
     } else {

@@ -61,7 +61,7 @@ export function KanjiDetailModal() {
               <ModalHeader className="flex justify-between text-orange-500 font-english-text font-bold items-center shadow">
                 <p>Kanji information</p>
               </ModalHeader>
-              <ModalBody className=" min-h-40 bg-gray-200 dark:bg-background overflow-y-scroll">
+              <ModalBody className=" min-h-40 bg-gray-200 dark:bg-backdrop overflow-y-scroll">
 
                 {!isLoading ? (
                   <div className=" flex gap-4 flex-col-reverse lg:flex-row font-primary-san">

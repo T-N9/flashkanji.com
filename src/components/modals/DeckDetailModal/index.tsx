@@ -105,7 +105,7 @@ export const DeckDetailModal = () => {
                     <ModalHeader className="flex justify-between font-english-text text-orange-500 items-center shadow">
                         <p>Jukugo information</p>
                     </ModalHeader>
-                    <ModalBody className=" bg-gray-100 dark:bg-background overflow-y-auto">
+                    <ModalBody className=" bg-gray-100 dark:bg-backdrop overflow-y-auto">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1 space-y-2">
                                 <h1 className="text-4xl text-dark dark:text-gray-100">{deckCardDetail?.character}</h1>

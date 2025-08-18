@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 const AUTH_ROUTES = ['/login', '/create-profile', '/']
 
 const SessionSync = () => {
-  const { userId, setUser, username } = useUserStore() // ✅ UPDATED (grab setUser)
+  const { userId, setUser } = useUserStore() // ✅ UPDATED (grab setUser)
   const router = useRouter()
   const [loading, setLoading] = useState(true) // ✅ UPDATED
   const pathname = usePathname()
@@ -53,6 +53,7 @@ const SessionSync = () => {
                 lives: result.user?.lives,
                 xp_points: result.user?.experience_points,
                 rank: result.user?.rank,
+                resume_learning_section: result.user?.resume_learning_section
               })
               localStorage.setItem('fk-user', JSON.stringify(result))
             } else {
@@ -78,7 +79,7 @@ const SessionSync = () => {
   }, [router, setUser])
   console.log({ loading, userId })
   // ✅ UPDATED: show loading screen until session check finishes
-  if (loading && !userId) return <div className='h-screen bg-white dark:bg-background absolute z-50 top-0 left-0 bottom-0 right-0 flex justify-center items-center'><RamenLoading /></div>
+  if (loading && !userId) return <div className='h-screen bg-white dark:bg-backdrop fixed z-50 top-0 left-0 bottom-0 right-0 flex justify-center items-center'><RamenLoading /></div>
 
   return null
 }

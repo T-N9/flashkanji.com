@@ -90,7 +90,7 @@ export default function SpacedLearningCalendar() {
 
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 review-calendar">
       <Tabs aria-label="Views" variant="underlined">
         <Tab
           key="calendar"

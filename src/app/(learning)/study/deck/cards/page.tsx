@@ -6,7 +6,7 @@ import React, { Suspense } from 'react'
 const DeckGroundPage = () => {
   return (
     <>
-      <div className="min-h-screen w-full bg-[#f8fafc] dark:bg-background relative">
+      <div className="min-h-screen w-full bg-[#f8fafc] dark:bg-backdrop relative">
         {/* Top Fade Grid Background */}
         <div
           className="absolute inset-0 z-0"
