@@ -2,7 +2,7 @@ import KanjiStrokeViewer from '@/components/KanjiStrokeViewer'
 
 const ViewerSection = () => {
   return (
-    <section className="w-full py-12 md:py-14 lg:py-16 bg-light dark:bg-dark_1">
+    <section className="w-full py-12 md:py-14 lg:py-16 bg-light dark:bg-zinc-900">
     <div className="main-container grid items-center justify-center gap-4 px-4 text-center">
       <div className="space-y-3">
         <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">

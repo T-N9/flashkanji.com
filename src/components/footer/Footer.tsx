@@ -5,7 +5,7 @@ import { BookOpen, GraduationCap, MessengerLogo, Users } from "@phosphor-icons/r
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-50 border-t mt-10">
+    <footer className="bg-slate-50 dark:bg-dark_1 border-t dark:border-dark">
       <div className="container max-w-[1280px]  mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and About */}
@@ -18,24 +18,6 @@ export default function Footer() {
               Learn Japanese kanji characters efficiently with our innovative flashcard system, detailed explanations,
               and practice exercises.
             </p>
-            {/* <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                <Youtube className="h-5 w-5" />
-                <span className="sr-only">YouTube</span>
-              </Link>
-            </div> */}
           </div>
 
           {/* Quick Links */}

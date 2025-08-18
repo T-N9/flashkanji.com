@@ -13,7 +13,7 @@ export const handleSession = async (router?: any) => {
   const user = session?.user;
 
   if (!user || !accessToken) {
-    // router?.push?.('/login')
+    router?.push?.('/login')
     return;
   }
 
@@ -46,5 +46,6 @@ export const handleSession = async (router?: any) => {
   } catch (error) {
     console.error("User check failed", error);
     // router?.push?.('/login')
+    router.push("/create-profile");
   }
 };

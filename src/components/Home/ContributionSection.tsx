@@ -15,13 +15,13 @@ const ContributionSection = () => {
           thrives on collaboration and open-source contributions.
         </p>
       </div>
-      <div className="divide-y rounded-lg border-2">
+      <div className="divide-y rounded-lg border-2 dark:border-dark">
         <div className="grid w-full grid-cols-1 items-stretch justify-center divide-x md:grid-cols-2 lg:grid-cols-3">
           <div className="mx-auto flex flex-col gap-3 w-full p-4 sm:p-8">
-            <h2>
+            <p>
               Explore and contribute to our GitHub repositories: Check
               out our projects that fuels this Kanji learning website
-            </h2>
+            </p>
             <a
               href="https://github.com/T-N9/flashkanji-next"
               target="_blank"

@@ -4,10 +4,12 @@ import { supabase } from '@/lib/supabaseClient'
 import { useUserStore } from '@/store/userState'
 import { Button } from '@heroui/react'
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 export default function LogOutButton() {
 
   const { resetUser } = useUserStore()
+  const router = useRouter();
   const handleLogout = async () => {
     // Sign out from Supabase
     await supabase.auth.signOut()
@@ -20,7 +22,7 @@ export default function LogOutButton() {
     localStorage.clear()
 
     // Redirect to login (or homepage)
-    window.location.href = '/login'
+    router.push('/login')
   }
 
   return (

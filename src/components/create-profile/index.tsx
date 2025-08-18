@@ -71,7 +71,7 @@ export default function CreateProfileForm() {
             const res = await createUser(payload);
             console.log({res})
             if (res.success) {
-                router.push("/callback"); // or /dashboard
+                router.push("/flashboard") 
             } else {
                 alert("Something went wrong.");
             }
@@ -84,7 +84,7 @@ export default function CreateProfileForm() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
+        <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-background shadow-lg rounded-xl">
             <h2 className="text-2xl font-bold mb-4">Complete Your Profile</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
