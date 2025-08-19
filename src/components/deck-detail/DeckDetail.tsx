@@ -27,6 +27,7 @@ const DeckDetail: React.FC = () => {
 
   useEffect(() => {
     userId && refetch();
+    setNoOfCards('20')
   }, []);
 
   if (isLoading) {
@@ -84,6 +85,8 @@ const DeckDetail: React.FC = () => {
     options.push(totalCardsLeft); // last item is always totalCardsLeft
     return options;
   }
+
+  let daysToMaster = Math.round((data.totalCards - data.learnedCards) / parseInt(noOfCards))
 
   return (
     <div className="max-w-3xl mx-auto py-6 px-6 space-y-10">
@@ -155,7 +158,7 @@ const DeckDetail: React.FC = () => {
                       ))}
                     </Select>
                     <div>
-                      <p>You are going to review <span className="text-orange-500">{noOfCards === (data.totalCards - data.learnedCards).toString() ? 'All' : data.totalCards - data.learnedCards < 10 ? data.totalCards - data.learnedCards : noOfCards}</span> cards.</p>
+                      <p className="text-sm">You are going to review <span className="text-orange-500">{noOfCards === (data.totalCards - data.learnedCards).toString() ? 'All' : data.totalCards - data.learnedCards < 10 ? data.totalCards - data.learnedCards : noOfCards}</span> cards. {daysToMaster > 1 ? `${daysToMaster} days to master this deck.` : `Finish this deck today.`} </p>
                     </div>
                   </div>
 
@@ -184,7 +187,7 @@ const DeckDetail: React.FC = () => {
       </>
 
 
-      <hr />
+      <hr className="dark:border-dark"/>
 
       <div className="space-y-2">
         <h1 className="font-bold text-xl text-center">Previous Sessions</h1>
@@ -199,8 +202,8 @@ const DeckDetail: React.FC = () => {
                     <p className="text-sm">{session.card_count} cards </p>
                   </div>
                   <div className="space-x-2">
-                    <Button size="sm" onClick={() => handleClickReview(session.id)}>Review</Button>
-                    <Button size="sm" onClick={() => handleClickRepetition(session.id)}>Repetition</Button>
+                    <Button className="bg-orange-500 text-white" size="sm" onClick={() => handleClickReview(session.id)}>Review</Button>
+                    <Button className="bg-gray-200 dark:bg-gray-500" size="sm" onClick={() => handleClickRepetition(session.id)}>Repetition</Button>
                   </div>
 
                 </div>

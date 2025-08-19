@@ -8,7 +8,7 @@ import useKanjiGroundState from "@/store/kanjiGroundState";
 import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
 import { Button, Select, SelectItem } from "@heroui/react";
-import { ApproximateEquals, Brain, CompassRose, Lock, SealQuestion, Stack } from "@phosphor-icons/react";
+import { ApproximateEquals, Brain, CompassRose, Lock, Play, SealQuestion, Stack } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -409,7 +409,7 @@ export default function ChapterRoadmap() {
             })}
 
 
-            <Button variant="bordered" className="fixed bottom-5 right-10 lg:bottom-14 lg:right-28" as={Link} href="#resume">Resume</Button>
+            <Button isIconOnly variant="bordered" className="fixed bottom-5 right-10 lg:bottom-14 lg:right-28" as={Link} href="#resume"><Play size={22} /></Button>
           </>
       }
 
