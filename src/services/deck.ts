@@ -22,6 +22,8 @@ export const useDeckCards = (
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -32,6 +34,8 @@ export const useDeckSrsSessions = (deck_id: number, user_id: string) => {
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -42,6 +46,8 @@ export const useDeckDetail = (deck_id: number, user_id: string) => {
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -50,15 +56,24 @@ export const useDeckSrsSessionDetail = (
   user_id: string,
   srs_id: number,
   is_Review: boolean,
-  date ?: string
+  date?: string
 ) => {
   return useQuery({
-    queryKey: ["deckSrsSessionDetail", deck_id, user_id, srs_id, is_Review, date],
+    queryKey: [
+      "deckSrsSessionDetail",
+      deck_id,
+      user_id,
+      srs_id,
+      is_Review,
+      date,
+    ],
     queryFn: () =>
       fetchDeckSrsSessionDetail(deck_id, user_id, srs_id, is_Review, date),
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id && !!srs_id,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -90,6 +105,12 @@ export const useSaveDeckRepetitionDataReview = () => {
       deck_id: number;
       repetitionData: SR_DeckCard[];
       xp_points?: number;
-    }) => saveDeckRepetitionData_Review(user_id, deck_id, repetitionData, xp_points),
+    }) =>
+      saveDeckRepetitionData_Review(
+        user_id,
+        deck_id,
+        repetitionData,
+        xp_points
+      ),
   });
 };

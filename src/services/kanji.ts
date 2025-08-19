@@ -12,6 +12,8 @@ export const useRandomKanji = (random: number) => {
     queryFn: () => fetchRandomKanji(random),
     staleTime: 5 * 60 * 1000, // 5 minutes before data is stale
     cacheTime: 10 * 60 * 1000, // Cache for 10 minutes
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -23,24 +25,35 @@ export const useKanjiDetail = (kanji: string) => {
   });
 };
 
-export const useKanjiByChapterAndLevel = (chapter: number | null, level: number | null, part ?: "0" | "1" | null) => {
+export const useKanjiByChapterAndLevel = (
+  chapter: number | null,
+  level: number | null,
+  part?: "0" | "1" | null
+) => {
   return useQuery({
     queryKey: ["kanjiByChapterAndLevel", chapter, level, part],
-    queryFn: () => fetchKanjiByChapterAndLevel(chapter!, level! , part!),
-    enabled: !!chapter && !!level, 
+    queryFn: () => fetchKanjiByChapterAndLevel(chapter!, level!, part!),
+    enabled: !!chapter && !!level,
     staleTime: 5 * 60 * 1000,
-    cacheTime: 10 * 60 * 1000, 
+    cacheTime: 10 * 60 * 1000,
     placeholderData: [],
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
-export const useKanjiByMultipleChapters = (chapters: string | null, level: number | null) => {
+export const useKanjiByMultipleChapters = (
+  chapters: string | null,
+  level: number | null
+) => {
   return useQuery({
     queryKey: ["kanjiByMultipleChapters", chapters, level],
     queryFn: () => fetchKanjiByMultipleChapters(chapters!, level!),
     enabled: !!chapters && !!level,
     staleTime: 5 * 60 * 1000,
-    cacheTime: 10 * 60 * 1000, 
+    cacheTime: 10 * 60 * 1000,
     placeholderData: [],
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
-}; 
+};

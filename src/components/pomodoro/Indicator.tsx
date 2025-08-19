@@ -16,26 +16,23 @@ export default function Indicator() {
     currentMode === 'pomodoro'
       ? 'Focus'
       : currentMode === 'shortBreak'
-      ? 'Short Break'
-      : 'Long Break';
+        ? 'Short Break'
+        : 'Long Break';
 
   const color =
     currentMode === 'pomodoro'
       ? 'primary'
       : currentMode === 'shortBreak'
-      ? 'success'
-      : 'warning';
+        ? 'success'
+        : 'warning';
 
   return (
-    <Tooltip content={`${label} • ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}> 
-      <Chip
-        color={color}
-        variant="shadow"
-        startContent={<Clock size={16} />}
-        className="font-semibold"
-      >
-        {label} {isRunning ? '⏳' : '⏸️'}
-      </Chip>
+    <Tooltip content={`${label} • ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}>
+      <div className='relative'>
+        <img src="/assets/icons/pomodoro.png" width={40} height={40} />
+        <span className={`${isRunning && 'animate-bounce'} absolute top-0 right-0 drop-shadow  border bg-white rounded text-xs`}>{isRunning ? '⏸️' : '▶️'}</span>
+      </div>
+
     </Tooltip>
   );
 }

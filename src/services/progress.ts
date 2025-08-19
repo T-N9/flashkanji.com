@@ -130,5 +130,7 @@ export const useFetchChapterProgress = (
     enabled: !!user_id && !!level && !!chapter,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };

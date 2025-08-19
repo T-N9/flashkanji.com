@@ -29,6 +29,8 @@ export const useKanjiRepetitionData_ByDate = (
       cardData: [],
       repetitionData: [],
     },
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
@@ -57,6 +59,8 @@ export const useFetchReviewCalendarData = (user_id: string) => {
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     placeholderData: [],
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 

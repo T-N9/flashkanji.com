@@ -47,29 +47,31 @@ export function HeadingBar() {
               isActive={path === "/flashdecks"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
-              <Link href="/flashdecks">Flashdecks</Link>
+              <Link className={`${path === "/flashdecks" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashdecks">
+                <img src="/assets/icons/flashdecks.png" width={40} height={40} />
+              </Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/flashmap"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
-              <Link href="/flashmap">Flashmap</Link>
+              <Link className={`${path === "/flashmap" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashmap"><img src="/assets/icons/flashmap.png" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/flashboard"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
-              <Link href="/flashboard">Flashboard</Link>
+              <Link className={`${path === "/flashboard" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashboard"><img src="/assets/icons/flashboard.png" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/pomodoro"}
               onClick={() => delayedSetIsMenuOpen(false)}
             >
 
-              <Link href="/pomodoro"><Indicator /></Link>
+              <Link className={`${path === "/pomodoro" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/pomodoro"><Indicator /></Link>
             </NavbarItem>
 
-            <NavbarItem className="gap-3 hidden lg:flex">
+            <NavbarItem className="gap-3 hidden lg:flex mx-10">
               <div className="flex justify-center items-center gap-1">
                 <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
                 <Fire weight="fill" size={32} color="orange" />
@@ -120,6 +122,7 @@ export function HeadingBar() {
           <Image className="w-28 hidden dark:block" src={'/assets/logo-white.png'} width={638} height={205} alt="Flash Kanji Logo" />
         </Link>
       </NavbarBrand>
+
       {authCookie === undefined ?
         <NavbarBrand className="block lg:hidden">
           <Link href="/">
@@ -148,7 +151,7 @@ export function HeadingBar() {
 
 
       {/* Navbar Content (Desktop) */}
-      <NavbarContent className="hidden sm:flex gap-6" justify="center">
+      <NavbarContent className="hidden sm:flex gap-2" justify="center">
         {navList}
       </NavbarContent>
 
