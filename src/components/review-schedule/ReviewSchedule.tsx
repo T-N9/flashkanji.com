@@ -27,7 +27,7 @@ export default function SpacedLearningCalendar() {
   const { userId, setToDayReviewCount, setExpiredReviewCount } = useUserStore()
   const { setIsInGround, setIsSaveRepetition, shouldRefetchCalendar, setShouldRefetchCalendar } = useGeneralStore();
 
-  const { data: reviewData, refetch, isFetching } = useFetchReviewCalendarData(userId)
+  const { data: reviewData, refetch, isFetching, isRefetching } = useFetchReviewCalendarData(userId)
 
   const router = useRouter()
 
@@ -109,7 +109,7 @@ export default function SpacedLearningCalendar() {
                   <CalendarIcon size={20} /> Review Schedule
                 </div>
                 {
-                  isFetching ? <div>
+                  isFetching || isRefetching ? <div>
                     <CircleNotchIcon size={22} className="animate-spin" />
                   </div>
                     :
