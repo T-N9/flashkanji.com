@@ -18,6 +18,7 @@ import useDeckGroundState from "@/store/deckGroundState"
 import { useGeneralStore } from "@/store/generalState"
 import CharacterImage from "../common/character"
 import { isFutureDate } from "@/util/schedule"
+import { isBefore, parseISO } from "date-fns"
 
 export default function SpacedLearningCalendar() {
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();
@@ -124,11 +125,17 @@ export default function SpacedLearningCalendar() {
                   onSelect={(date) => date && handleSelectDate(date)}
                   modifiers={{
                     hasReviews: (date) => reviewMap.has(formatDate(normalizeDate(date))),
+                    isExpired: (date) => {
+                      const formatted = formatDate(normalizeDate(date));
+                      const today = normalizeDate(new Date());
+                      return reviewMap.has(formatted) && isBefore(normalizeDate(date), today);
+                    }
                   }}
                   modifiersClassNames={{
                     hasReviews: "bg-orange-200 text-orange-900 font-semibold rounded-full",
+                    isExpired:
+                      "bg-red-400 text-red-900 font-semibold rounded-full",
                   }}
-                  className={"text-xs"}
                 />
               </CardBody>
             </Card>

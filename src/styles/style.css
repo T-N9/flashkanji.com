@@ -321,7 +321,7 @@ nav header {
     transform: rotate(0deg);
   }
 
-  25% {
+30% {
     transform: rotate(3deg);
   }
 
@@ -389,4 +389,26 @@ button {
 .review-calendar div[role="tabpanel"] {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.rdp-today:not(.rdp-outside) {
+  color: #fb8c00 !important;
+}
+
+.rdp-chevron {
+  fill: orange !important;
+}
+
+.rdp-day {
+  width:40px !important;
+  height: 40px !important;
+}
+
+.rdp-day_button {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.dark .rdp-chevron {
+  fill: white !important;
 }

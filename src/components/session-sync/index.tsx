@@ -28,6 +28,11 @@ const SessionSync = () => {
   // }, []);
 
   useEffect(() => {
+    const local = localStorage.getItem('fk-user')
+    if (local && pathname === '/') {
+      window.location.href = '/flashboard';
+    }
+
     if (AUTH_ROUTES.includes(pathname)) {
       setLoading(false)
       return
@@ -56,6 +61,8 @@ const SessionSync = () => {
                 resume_learning_section: result.user?.resume_learning_section
               })
               localStorage.setItem('fk-user', JSON.stringify(result))
+
+
             } else {
               router.push('/create-profile') // ✅ UPDATED
             }
@@ -77,9 +84,9 @@ const SessionSync = () => {
       authListener?.subscription.unsubscribe()
     }
   }, [router, setUser])
-  console.log({ loading, userId })
+  console.log({ loading, userId, pathname })
   // ✅ UPDATED: show loading screen until session check finishes
-  if (loading && !userId) return <div className='h-screen bg-white dark:bg-backdrop fixed z-50 top-0 left-0 bottom-0 right-0 flex justify-center items-center'><RamenLoading /></div>
+  if (loading && !userId && pathname !== '/') return <div className='h-screen bg-white dark:bg-backdrop fixed z-50 top-0 left-0 bottom-0 right-0 flex justify-center items-center'><RamenLoading /></div>
 
   return null
 }

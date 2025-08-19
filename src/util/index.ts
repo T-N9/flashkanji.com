@@ -433,9 +433,11 @@ export function getTodayReviewCount(reviewMap: Map<string, ReviewData>): {
         data.deck?.reduce((sum, deck) => sum + (deck.card_count || 0), 0) || 0;
       todayCount = kanjiCount + jukugoCount + deckCount;
     } else if (isBefore(parseISO(date), parseISO(today))) {
+      const kanjiCount = data.kanji_count || 0;
+      const jukugoCount = data.jukugo_count || 0;
       const deckCount =
         data.deck?.reduce((sum, deck) => sum + (deck.card_count || 0), 0) || 0;
-      expiredCount += deckCount;
+      expiredCount += kanjiCount + jukugoCount + deckCount;
     }
   }
   console.log({ todayCount, expiredCount });
