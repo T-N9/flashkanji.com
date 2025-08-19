@@ -86,7 +86,7 @@ const DeckDetail: React.FC = () => {
     return options;
   }
 
-  let daysToMaster = Math.round((data.totalCards - data.learnedCards) / parseInt(noOfCards))
+  const daysToMaster = Math.round((data.totalCards - data.learnedCards) / parseInt(noOfCards))
 
   return (
     <div className="max-w-3xl mx-auto py-6 px-6 space-y-10">
