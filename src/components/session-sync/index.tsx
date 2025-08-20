@@ -2,93 +2,22 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userState'
-import { supabase } from '@/lib/supabaseClient' // ✅ UPDATED
-import { checkUserExists } from '@/api/usersRoute' // ✅ UPDATED
+import { handleSession } from '@/lib/handleSession'
 import RamenLoading from '../common/RamenLoading'
-import Cookies from "js-cookie";
-const AUTH_ROUTES = ['/login', '/create-profile', '/']
 
 const SessionSync = () => {
-  const { userId, setUser } = useUserStore() // ✅ UPDATED (grab setUser)
+  const { userId, email } = useUserStore()
   const router = useRouter()
-  const [loading, setLoading] = useState(true) // ✅ UPDATED
-  const pathname = usePathname()
-  const isWellKnown = pathname?.startsWith("/.well-known")
 
-
-  // useEffect(() => {
-  //   const token = Cookies.get("sb-access-token");
-  //   const localCheck = localStorage.getItem('fk-user')
-  //   const localUser = localCheck && JSON.parse(localCheck)
-  //   console.log({ token, localUser })
-  //   if (token && !localUser) {
-  //     router.push('/login')
-  //   }
-  // }, []);
 
   useEffect(() => {
-     if (isWellKnown) return; 
-    const local = localStorage.getItem('fk-user')
-    if (local && pathname === '/') {
-      window.location.href = '/flashboard';
+
+    if (!userId) {
+      handleSession(router)
     }
-
-    if (AUTH_ROUTES.includes(pathname)) {
-      setLoading(false)
-      return
-    }
-    // ✅ UPDATED: subscribe to Supabase auth changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user) {
-          try {
-            const result = await checkUserExists(session.user.id)
-            if (result.exists) {
-              setUser({
-                userId: session.user.id,
-                email: session.user.email,
-                avatarUrl: session.user.user_metadata.avatar_url,
-                username: result.user?.username,
-                japanese_level: result.user?.japanese_level,
-                created_at: result.user?.created_at,
-                currentStreak: result.user?.current_streak,
-                longestStreak: result.user?.longest_streak,
-                totalLearned: result.user?.total_learned,
-                totalHours: result.user?.total_hours,
-                lives: result.user?.lives,
-                xp_points: result.user?.experience_points,
-                rank: result.user?.rank,
-                resume_learning_section: result.user?.resume_learning_section
-              })
-              localStorage.setItem('fk-user', JSON.stringify(result))
-
-
-            } else {
-              router.push('/create-profile') // ✅ UPDATED
-            }
-          } catch (err) {
-            console.error('User check failed', err)
-            router.push('/create-profile')
-          }
-        } else {
-          // No session → clear store
-          setUser({})
-          router.push('/login')
-        }
-        setLoading(false) // ✅ UPDATED
-      }
-    )
-
-    // ✅ UPDATED: clean up subscription
-    return () => {
-      authListener?.subscription.unsubscribe()
-    }
-  }, [router, setUser])
-  console.log({ loading, userId, pathname })
-  // ✅ UPDATED: show loading screen until session check finishes
-  if (loading && !userId && pathname !== '/') return <div className='h-screen bg-white dark:bg-backdrop fixed z-50 top-0 left-0 bottom-0 right-0 flex justify-center items-center'><RamenLoading /></div>
+  }, [userId, router])
 
   return null
 }

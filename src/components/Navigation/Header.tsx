@@ -46,6 +46,7 @@ export function HeadingBar() {
             <NavbarItem
               isActive={path === "/flashdecks"}
               onClick={() => delayedSetIsMenuOpen(false)}
+              className="flex justify-center"
             >
               <Link className={`${path === "/flashdecks" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashdecks">
                 <img src="/assets/icons/flashdecks.png" width={40} height={40} />
@@ -54,18 +55,21 @@ export function HeadingBar() {
             <NavbarItem
               isActive={path === "/flashmap"}
               onClick={() => delayedSetIsMenuOpen(false)}
+              className="flex justify-center"
             >
               <Link className={`${path === "/flashmap" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashmap"><img src="/assets/icons/flashmap.png" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/flashboard"}
               onClick={() => delayedSetIsMenuOpen(false)}
+              className="flex justify-center"
             >
               <Link className={`${path === "/flashboard" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashboard"><img src="/assets/icons/flashboard.png" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === "/pomodoro"}
               onClick={() => delayedSetIsMenuOpen(false)}
+              className="flex justify-center"
             >
 
               <Link className={`${path === "/pomodoro" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/pomodoro"><Indicator /></Link>
