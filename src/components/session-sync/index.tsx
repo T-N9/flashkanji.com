@@ -15,6 +15,7 @@ const SessionSync = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(true) // ✅ UPDATED
   const pathname = usePathname()
+  const isWellKnown = pathname?.startsWith("/.well-known")
 
 
   // useEffect(() => {
@@ -28,6 +29,7 @@ const SessionSync = () => {
   // }, []);
 
   useEffect(() => {
+     if (isWellKnown) return; 
     const local = localStorage.getItem('fk-user')
     if (local && pathname === '/') {
       window.location.href = '/flashboard';

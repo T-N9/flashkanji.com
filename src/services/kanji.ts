@@ -12,8 +12,6 @@ export const useRandomKanji = (random: number) => {
     queryFn: () => fetchRandomKanji(random),
     staleTime: 5 * 60 * 1000, // 5 minutes before data is stale
     cacheTime: 10 * 60 * 1000, // Cache for 10 minutes
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -33,12 +31,10 @@ export const useKanjiByChapterAndLevel = (
   return useQuery({
     queryKey: ["kanjiByChapterAndLevel", chapter, level, part],
     queryFn: () => fetchKanjiByChapterAndLevel(chapter!, level!, part!),
-    enabled: !!chapter && !!level,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    enabled: !!chapter && !!level,
     placeholderData: [],
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -49,11 +45,9 @@ export const useKanjiByMultipleChapters = (
   return useQuery({
     queryKey: ["kanjiByMultipleChapters", chapters, level],
     queryFn: () => fetchKanjiByMultipleChapters(chapters!, level!),
-    enabled: !!chapters && !!level,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    enabled: !!chapters && !!level,
     placeholderData: [],
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };

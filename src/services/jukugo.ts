@@ -10,8 +10,6 @@ export const useRelatedJukugo = (kanjis: string) => {
     queryFn: () => fetchRelatedJukugo(kanjis),
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -23,11 +21,9 @@ export const useJukugoByChapterAndLevel = (
   return useQuery({
     queryKey: ["jukugoByChapterAndLevel", chapter, level, part],
     queryFn: () => fetchJukugoByChapterAndLevel(chapter!, level!, part!),
-    enabled: !!chapter && !!level,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    enabled: !!chapter && !!level,
     placeholderData: [],
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };

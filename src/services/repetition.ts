@@ -22,15 +22,13 @@ export const useKanjiRepetitionData_ByDate = (
         type!,
         level && level.toLowerCase()
       ),
-    enabled: !!date && !!user_id && !!type,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    enabled: !!date && !!user_id && !!type,
     placeholderData: {
       cardData: [],
       repetitionData: [],
     },
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -55,12 +53,10 @@ export const useFetchReviewCalendarData = (user_id: string) => {
   return useQuery({
     queryKey: ["reviewCalendarData", user_id],
     queryFn: () => fetchReviewCalendarData(user_id),
-    enabled: !!user_id,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    enabled: !!user_id,
     placeholderData: [],
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 

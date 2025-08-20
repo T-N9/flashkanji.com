@@ -10,11 +10,9 @@ export const useKanjiQuiz = (
   return useQuery({
     queryKey: ["kanjiQuiz", chapter, level, mode, part],
     queryFn: () => fetchKanjiQuiz(chapter!, level!, mode!, part!),
-    enabled: !!chapter && !!level && !!mode,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
+    enabled: !!chapter && !!level && !!mode,
     placeholderData: [],
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };

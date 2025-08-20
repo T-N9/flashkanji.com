@@ -4,15 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { ThemeProvider } from 'next-themes'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: true, // important
-      refetchOnReconnect: true,
-      retry: 1,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 const Providers = ({
   children,

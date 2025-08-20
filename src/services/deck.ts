@@ -22,8 +22,6 @@ export const useDeckCards = (
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -34,8 +32,6 @@ export const useDeckSrsSessions = (deck_id: number, user_id: string) => {
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -46,8 +42,6 @@ export const useDeckDetail = (deck_id: number, user_id: string) => {
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 
@@ -72,8 +66,6 @@ export const useDeckSrsSessionDetail = (
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
     enabled: !!deck_id && !!user_id && !!srs_id,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
   });
 };
 

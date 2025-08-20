@@ -127,10 +127,8 @@ export const useFetchChapterProgress = (
   return useQuery({
     queryKey: ["chapterProgress", user_id, level, chapter],
     queryFn: () => fetchChapterProgress(user_id, level, chapter),
-    enabled: !!user_id && !!level && !!chapter,
     staleTime: 5 * 60 * 1000,
     cacheTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
+    enabled: !!user_id && !!level && !!chapter,
   });
 };
