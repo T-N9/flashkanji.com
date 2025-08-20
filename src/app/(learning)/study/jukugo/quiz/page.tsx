@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 const JukugoBuilderPage = () => {
   return (
 
-    <div className="min-h-screen w-full bg-[#f8fafc] dark:bg-backdrop relative">
+    <div className="min-h-screen w-full bg-[#f8fafc] pt-16 dark:bg-backdrop relative">
       {/* Top Fade Grid Background */}
       <div
         className="absolute inset-0 z-0"

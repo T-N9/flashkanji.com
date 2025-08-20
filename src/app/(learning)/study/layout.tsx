@@ -26,7 +26,7 @@ const StudyLayout = ({
                 isInGround ?
                     <>
                         <BackToMap />
-                        <div className='mb-14'></div>
+                        {/* <div className='mb-14'></div> */}
                         {children}
                     </>
                     :

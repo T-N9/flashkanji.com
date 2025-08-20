@@ -15,23 +15,23 @@ const BackToMap = () => {
                 <Button
                     isIconOnly
                     onClick={() => router.back()}
-                    className="text-gray-500 dark:text-white hover:underline"
+                    className="text-gray-500 dark:text-white dark:border dark:border-dark hover:underline"
                 >
                     <ArrowBendUpLeft size={32} />
                 </Button>
 
                 <div className="gap-3 flex">
-                    <div className="flex justify-center items-center gap-1">
-                        <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
-                        <Fire weight="fill" size={32} color="orange" />
+                    <div className="flex justify-center items-center gap-0">
+                        <p className="text-yellow-500 font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</p>
+                        <img src="/assets/icons/streak.png" width={35} height={35} />
                     </div>
-                    <div className="flex justify-center items-center gap-1">
-                        <p>{lives}</p>
-                        <HeartStraight weight="fill" size={32} color="red" />
+                    <div className="flex justify-center items-center gap-0">
+                        <p className="text-red-500 font-bold">{lives}</p>
+                        <img src="/assets/icons/heart.png" width={38} height={38} />
                     </div>
-                    <div className="flex justify-center items-center gap-1">
-                        <p>{Math.floor(xp_points)}</p>
-                        <Clover weight="fill" size={32} color="green" />
+                    <div className="flex justify-center items-center gap-0">
+                        <p className="text-green-500 font-bold">{Math.floor(xp_points)}</p>
+                        <img src="/assets/icons/clover.png" width={35} height={35} />
                     </div>
                 </div>
             </div>

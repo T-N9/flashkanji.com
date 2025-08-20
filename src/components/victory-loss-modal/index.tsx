@@ -46,9 +46,9 @@ export const VictoryModal: React.FC = () => {
                         {isVictory === 'victory' && (
                             <>
                                 <p className="text-lg">You earned</p>
-                                <p className="text-3xl font-semibold text-green-600">{xp > 1 ? `${Math.floor(xp)} clovers` : `a clover`}.</p>
-                                <p className='flex gap-2 justify-center'><Clover size={20} weight='fill' color='green' />
-                                    {Math.floor(xp_points)}
+                                <p className="text-3xl font-semibold text-green-500">{xp > 1 ? `${Math.floor(xp)} clovers` : `a clover`}.</p>
+                                <p className='flex gap-1 justify-center items-center'><img src="/assets/icons/clover.png" width={35} height={35} />
+                                    <span className="text-green-500 font-bold">{Math.floor(xp_points)}</span>
                                 </p>
                                 <p className="text-sm text-gray-500 dark:text-gray-300">Great job! Keep it up.</p>
                             </>

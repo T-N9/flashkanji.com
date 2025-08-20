@@ -212,7 +212,8 @@ const UserProfileSection = () => {
                         lives < 5 && remainingSeconds !== null &&
                         <div className=' flex  justify-between items-center flex-col lg:flex-row'>
                             <div className='flex gap-2 items-center'>
-                                <HeartIcon size={32} weight='fill' color='red' className='animate-heartbeat' />
+                                
+                                <img className='animate-heartbeat' src="/assets/icons/heart.png" width={38} height={38} />
                                 <p>Next heart restores in: <strong>{formatTime(remainingSeconds)}</strong></p>
                             </div>
                             {
@@ -222,7 +223,7 @@ const UserProfileSection = () => {
                                     </Button>
                                     :
                                     <Button onClick={handleBuyHeart} className=' bg-white dark:bg-dark shadow'>
-                                        Buy <HeartIcon size={22} weight='fill' color='red' />/ 50  <Clover size={22} weight='fill' color='green' />
+                                        Buy <img src="/assets/icons/heart.png" width={34} height={34} />/ 50 <img src="/assets/icons/clover.png" width={32} height={32} />
                                     </Button>
                             }
 
@@ -232,11 +233,11 @@ const UserProfileSection = () => {
                     <div className='space-y-2'>
                         <div className='flex px-2 gap-2 justify-between items-center'>
                             <span>
-                                {RANKS[rank - 1].name}
+                                {RANKS[rank].name}
                             </span>
                             <Progress value={(100 / RANKS[rank].xp) * xp_points} size='sm' />
                             <span>
-                                {RANKS[rank].name}
+                                {RANKS[rank + 1].name}
                             </span>
                         </div>
                         <div className='flex gap-3 justify-between overflow-x-scroll p-4'>
@@ -244,7 +245,7 @@ const UserProfileSection = () => {
                                 RANKS.map((item, idx) => {
                                     return (
                                         <div key={idx} className=''>
-                                            <div className={`text-3xl font-bold text-white ${item.color} p-2 rounded-full border shadow ${idx + 1 === rank ? 'scale-110' : 'scale-90 opacity-50'}`}>
+                                            <div className={`text-3xl font-bold text-white ${item.color} p-2 rounded-full border shadow ${idx === rank ? 'scale-110' : 'scale-90 opacity-50'}`}>
                                                 {item.kanji}
                                             </div>
                                         </div>

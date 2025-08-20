@@ -76,17 +76,17 @@ export function HeadingBar() {
             </NavbarItem>
 
             <NavbarItem className="gap-3 hidden lg:flex mx-10">
-              <div className="flex justify-center items-center gap-1">
-                <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
-                <Fire weight="fill" size={32} color="orange" />
+              <div className="flex justify-center items-center gap-0">
+                <p className="text-yellow-500 font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</p>
+                 <img src="/assets/icons/streak.png" width={35} height={35}/>
               </div>
-              <div className="flex justify-center items-center gap-1">
-                <p>{lives}</p>
-                <HeartStraight weight="fill" size={32} color="red" />
+              <div className="flex justify-center items-center gap-0">
+                <p className="text-red-500 font-bold">{lives}</p>
+                <img src="/assets/icons/heart.png" width={38} height={38}/>
               </div>
-              <div className="flex justify-center items-center gap-1">
-                <p>{Math.floor(xp_points)}</p>
-                <Clover weight="fill" size={32} color="green" />
+              <div className="flex justify-center items-center gap-0">
+                <p className="text-green-500 font-bold">{Math.floor(xp_points)}</p>
+                <img src="/assets/icons/clover.png" width={35} height={35}/>
               </div>
             </NavbarItem>
             <NavbarItem
@@ -137,17 +137,17 @@ export function HeadingBar() {
         </NavbarBrand>
         :
         <NavbarItem className="gap-3 flex lg:hidden">
-          <div className="flex justify-center items-center gap-1">
-            <p>{currentStreak === 0 ? 0 : currentStreak - 1}</p>
-            <Fire weight="fill" size={32} color="orange" />
+          <div className="flex justify-center items-center gap-0">
+            <p className="text-yellow-500 font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</p>
+            <img src="/assets/icons/streak.png" width={35} height={35}/>
           </div>
-          <div className="flex justify-center items-center gap-1">
-            <p>{lives}</p>
-            <HeartStraight weight="fill" size={32} color="red" />
+          <div className="flex justify-center items-center gap-0">
+            <p className="text-red-500 font-bold">{lives}</p>
+            <img src="/assets/icons/heart.png" width={38} height={38}/>
           </div>
-          <div className="flex justify-center items-center gap-1">
-            <p>{Math.floor(xp_points)}</p>
-            <Clover weight="fill" size={32} color="green" />
+          <div className="flex justify-center items-center gap-0">
+            <p className="text-green-500 font-bold">{Math.floor(xp_points)}</p>
+            <img src="/assets/icons/clover.png" width={35} height={35}/>
           </div>
         </NavbarItem>
       }
