@@ -44,6 +44,11 @@ export default function PWAInstallPrompt() {
     }
 
     const handler = (e: BeforeInstallPromptEvent) => {
+      if (localStorage.getItem('fk-not-install')) {
+        addDebugInfo('Install prompt blocked (user chose Maybe Later)')
+        return
+      }
+
       addDebugInfo('beforeinstallprompt event fired')
       e.preventDefault()
       setInstallPrompt(e)
