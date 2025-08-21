@@ -78,15 +78,15 @@ export function HeadingBar() {
             <NavbarItem className="gap-3 hidden lg:flex mx-10">
               <div className="flex justify-center items-center gap-0">
                 <p className="text-yellow-500 font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</p>
-                 <img src="/assets/icons/streak.png" width={35} height={35}/>
+                <img src="/assets/icons/streak.png" width={35} height={35} />
               </div>
               <div className="flex justify-center items-center gap-0">
                 <p className="text-red-500 font-bold">{lives}</p>
-                <img src="/assets/icons/heart.png" width={38} height={38}/>
+                <img src="/assets/icons/heart.png" width={38} height={38} />
               </div>
               <div className="flex justify-center items-center gap-0">
                 <p className="text-green-500 font-bold">{Math.floor(xp_points)}</p>
-                <img src="/assets/icons/clover.png" width={35} height={35}/>
+                <img src="/assets/icons/clover.png" width={35} height={35} />
               </div>
             </NavbarItem>
             <NavbarItem
@@ -122,8 +122,8 @@ export function HeadingBar() {
       <NavbarBrand className="hidden lg:block">
         <Link href="/">
           {/* <Logo/> */}
-          <Image className="w-28 dark:hidden" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
-          <Image className="w-28 hidden dark:block" src={'/assets/logo-white.png'} width={638} height={205} alt="Flash Kanji Logo" />
+          <Image className="w-14" src={'/assets/logo.png'} width={100} height={100} alt="Flash Kanji Logo" />
+
         </Link>
       </NavbarBrand>
 
@@ -131,23 +131,23 @@ export function HeadingBar() {
         <NavbarBrand className="block lg:hidden">
           <Link href="/">
             {/* <Logo/> */}
-            <Image className="w-28 dark:hidden" src={'/assets/logo.png'} width={638} height={205} alt="Flash Kanji Logo" />
-            <Image className="w-28 hidden dark:block" src={'/assets/logo-white.png'} width={638} height={205} alt="Flash Kanji Logo" />
+            <Image className="w-14" src={'/assets/logo.png'} width={100} height={100} alt="Flash Kanji Logo" />
+
           </Link>
         </NavbarBrand>
         :
         <NavbarItem className="gap-3 flex lg:hidden">
           <div className="flex justify-center items-center gap-0">
             <p className="text-yellow-500 font-bold">{currentStreak === 0 ? 0 : currentStreak - 1}</p>
-            <img src="/assets/icons/streak.png" width={35} height={35}/>
+            <img src="/assets/icons/streak.png" width={35} height={35} />
           </div>
           <div className="flex justify-center items-center gap-0">
             <p className="text-red-500 font-bold">{lives}</p>
-            <img src="/assets/icons/heart.png" width={38} height={38}/>
+            <img src="/assets/icons/heart.png" width={38} height={38} />
           </div>
           <div className="flex justify-center items-center gap-0">
             <p className="text-green-500 font-bold">{Math.floor(xp_points)}</p>
-            <img src="/assets/icons/clover.png" width={35} height={35}/>
+            <img src="/assets/icons/clover.png" width={35} height={35} />
           </div>
         </NavbarItem>
       }
