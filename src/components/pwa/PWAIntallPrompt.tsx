@@ -110,7 +110,7 @@ export default function PWAInstallPrompt() {
   return (
     <>
       {showDebug && (
-        <div className="fixed top-4 right-4 bg-gray-900 text-white p-4 rounded-lg shadow-lg z-50 max-w-md max-h-40 overflow-y-auto text-xs">
+        <div className="fixed top-4 right-4 hidden bg-gray-900 text-white p-4 rounded-lg shadow-lg z-50 max-w-md max-h-40 overflow-y-auto text-xs">
           <h4 className="font-bold mb-2">PWA Debug Info:</h4>
           {debugInfo.map((info, index) => (
             <div key={index} className="mb-1">{info}</div>
