@@ -15,6 +15,7 @@ export default function PWAInstallPrompt() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [isInstallable, setIsInstallable] = useState(false)
   const [debugInfo, setDebugInfo] = useState<string[]>([])
+  const [isUserNotInstall, setIsUserNotInstall] = useState<boolean>(false)
 
   const addDebugInfo = (info: string) => {
     console.log('PWA Debug:', info)
@@ -23,6 +24,11 @@ export default function PWAInstallPrompt() {
 
   useEffect(() => {
     addDebugInfo('PWA Install component mounted')
+    const isRejected = localStorage.getItem('fk-not-install');
+
+    if (isRejected) {
+      setIsUserNotInstall(true)
+    }
 
     // Check if already installed
     if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
@@ -91,9 +97,9 @@ export default function PWAInstallPrompt() {
       addDebugInfo('Showing install prompt')
       await installPrompt.prompt()
       const { outcome } = await installPrompt.userChoice
-      
+
       addDebugInfo(`Install prompt result: ${outcome}`)
-      
+
       if (outcome === 'accepted') {
         setInstallPrompt(null)
         setIsInstallable(false)
@@ -102,6 +108,11 @@ export default function PWAInstallPrompt() {
       addDebugInfo(`Install error: ${error}`)
       console.error('Error during installation:', error)
     }
+  }
+
+  const handleClickMayBeLater = () => {
+    setIsInstallable(false)
+    localStorage.setItem('fk-not-install', 'true')
   }
 
   // Show debug info in development
@@ -117,19 +128,19 @@ export default function PWAInstallPrompt() {
           ))}
         </div>
       )}
-      
-      {isInstallable && (
+
+      {isInstallable && !isUserNotInstall && (
         <div className="fixed bottom-4 left-4 right-4 bg-blue-600 text-white p-4 rounded-lg shadow-lg z-50 md:left-auto md:right-4 md:w-80">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2 flex-col">
             <div>
-              <h3 className="font-semibold">Install App</h3>
+              <h3 className="font-semibold">Install Flash Kanji</h3>
               <p className="text-sm opacity-90">
                 Install this app for a better experience
               </p>
             </div>
-            <div className="flex gap-2 ml-4">
+            <div className="flex gap-2 ml-auto">
               <button
-                onClick={() => setIsInstallable(false)}
+                onClick={handleClickMayBeLater}
                 className="px-3 py-1 text-sm bg-white/20 rounded hover:bg-white/30 transition-colors"
               >
                 Maybe Later
