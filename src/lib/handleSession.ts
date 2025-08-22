@@ -13,7 +13,7 @@ export const handleSession = async (router?: any) => {
   const user = session?.user;
 
   if (!user || !accessToken) {
-    router?.push?.("/login");
+    router?.push?.("/en/login");
     return;
   }
 

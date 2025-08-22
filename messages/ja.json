@@ -1,0 +1,29 @@
+{
+  "navigation": {
+    "flashboard": "フラッシュボード",
+    "flashdecks": "フラッシュデッキ",
+    "flashmap": "フラッシュマップ",
+    "pomodoro": "ポモドーロ",
+    "profile": "プロフィール",
+    "speech": "音声",
+    "study": "学習",
+    "viewer": "ビューア"
+  },
+  "auth": {
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "createProfile": "プロフィール作成"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "next": "次へ",
+    "previous": "前へ"
+  },
+  "meta": {
+    "title": "Flash Kanji - 日本語漢字学習",
+    "description": "インタラクティブなフラッシュカードシステムで効果的に日本語漢字を学習しましょう。"
+  }
+}

@@ -13,10 +13,9 @@ import { Button } from "@heroui/react";
 import { useUserStore } from "@/store/userState";
 import { useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { CheckCircle } from "@phosphor-icons/react";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
-import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
 
 export const JukugoGround = () => {

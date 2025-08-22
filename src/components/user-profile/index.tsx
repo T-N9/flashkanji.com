@@ -4,47 +4,48 @@ import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
 import { playSound } from '@/util/soundPlayer';
 import { Avatar, Button, Card, CardBody, CardHeader, Progress, SelectItem, Select } from '@heroui/react';
-import { Clover, HeartIcon } from '@phosphor-icons/react';
 import moment from 'moment';
 import { useTheme } from 'next-themes';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
+import LanguageSwitcher from '../language-switcher';
+import { useTranslations } from 'next-intl';
 
 function ThemeSelector() {
-  const { theme, setTheme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
-  // Avoid hydration mismatch
-  useEffect(() => setMounted(true), []);
+    // Avoid hydration mismatch
+    useEffect(() => setMounted(true), []);
 
-  if (!mounted) return null;
+    if (!mounted) return null;
 
-  const currentTheme = theme === 'system' ? systemTheme : theme;
+    // const currentTheme = theme === 'system' ? systemTheme : theme;
 
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-gray-500 dark:text-gray-300">
-        Theme: <span className="font-medium capitalize">{currentTheme}</span>
-      </span>
+    return (
+        <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-500 dark:text-gray-300">
+                Theme:
+            </span>
 
-      <Select
-        aria-label="Theme Selector"
-        selectedKeys={[theme ?? 'system']}
-        className="w-[140px]"
-        onChange={(e) => setTheme(e.target.value)}
-      >
-        <SelectItem key="system">
-          System
-        </SelectItem>
-        <SelectItem key="light">
-          Light
-        </SelectItem>
-        <SelectItem key="dark">
-          Dark
-        </SelectItem>
-      </Select>
-    </div>
-  );
+            <Select
+                aria-label="Theme Selector"
+                selectedKeys={[theme ?? 'system']}
+                className="w-[140px]"
+                onChange={(e) => setTheme(e.target.value)}
+            >
+                <SelectItem key="system">
+                    System
+                </SelectItem>
+                <SelectItem key="light">
+                    Light
+                </SelectItem>
+                <SelectItem key="dark">
+                    Dark
+                </SelectItem>
+            </Select>
+        </div>
+    );
 }
 
 const UserProfileSection = () => {
@@ -192,7 +193,7 @@ const UserProfileSection = () => {
         }
 
     }
-
+    const t = useTranslations('meta');
     return (
         <section className="">
             <Card className="rounded-2xl border border-gray-200 dark:border-gray-800">
@@ -208,11 +209,23 @@ const UserProfileSection = () => {
                 </CardHeader>
 
                 <CardBody className="text-sm text-gray-700 dark:text-gray-300 space-y-5">
+                    <h1>{t('title')}</h1>
+
+                    <div className='flex items-center justify-between gap-2 flex-wrap'>
+                        <div>
+                            <span className="font-medium">Japanese Level: </span>
+                            {japanese_level || 'Unknown'}
+                        </div>
+                        <div>
+                            <span className="font-medium">Joined </span>
+                            {created_at ? moment(created_at).format('MMMM Do YYYY') : 'N/A'}
+                        </div>
+                    </div>
                     {
                         lives < 5 && remainingSeconds !== null &&
                         <div className=' flex  justify-between items-center flex-col lg:flex-row'>
                             <div className='flex gap-2 items-center'>
-                                
+
                                 <img className='animate-heartbeat' src="/assets/icons/heart.png" width={38} height={38} />
                                 <p>Next heart restores in: <strong>{formatTime(remainingSeconds)}</strong></p>
                             </div>
@@ -254,18 +267,14 @@ const UserProfileSection = () => {
                             }
                         </div>
                     </div>
-                    <div className='space-y-2'>
-                        <div>
-                            <span className="font-medium">Japanese Level: </span>
-                            {japanese_level || 'Unknown'}
-                        </div>
-                        <div>
-                            <span className="font-medium">Joined: </span>
-                            {created_at ? moment(created_at).format('MMMM Do YYYY') : 'N/A'}
-                        </div>
-                    </div>
 
-                    <ThemeSelector/>
+                    <div className='flex items-center flex-wrap gap-3'>
+
+                        <ThemeSelector />
+
+
+                        <LanguageSwitcher />
+                    </div>
                 </CardBody>
             </Card>
         </section>

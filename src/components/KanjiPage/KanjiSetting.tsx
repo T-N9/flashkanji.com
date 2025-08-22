@@ -1,11 +1,10 @@
 "use client";
 
-import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem, Tooltip } from "@heroui/react";
+import { Button, Tooltip } from "@heroui/react";
 
 /* Hook */
 import { useKanjiSetting } from "./useKanjiSetting";
-import { ArrowsClockwise, Brain, DiamondsFour, Shuffle, Slideshow } from "@phosphor-icons/react";
-import Link from "next/link";
+import { ArrowsClockwise, Shuffle, Slideshow } from "@phosphor-icons/react";
 import { useGeneralStore } from "@/store/generalState";
 import { usePathname } from "next/navigation";
 

@@ -4,7 +4,6 @@ import useContainer from './useContainer';
 import { useKanjiQuiz } from '@/services/quiz';
 import { QuizItem } from '../common/quiz-item';
 import { useEffect } from 'react';
-import Link from 'next/link';
 import RamenLoading from '../common/RamenLoading';
 import CharacterImage from '../common/character';
 import { useGeneralStore } from '@/store/generalState';

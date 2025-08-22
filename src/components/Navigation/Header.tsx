@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import Cookies from 'js-cookie';
 
 import {
@@ -16,9 +15,9 @@ import {
 } from "@heroui/react";
 import Image from "next/image";
 import { Button } from "@heroui/react";
-import { Clover, Fire, HeartStraight, User } from "@phosphor-icons/react";
 import Indicator from "../pomodoro/Indicator";
 import { useUserStore } from "@/store/userState";
+import { Link } from "@/i18n/navigation";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
@@ -95,7 +94,7 @@ export function HeadingBar() {
             >
               <Link href="/profile"><Avatar
                 src={avatarUrl}
-                className="bg-gradient-to-br border-orange-500 border from-orange-500 to-yellow-400 text-white mx-auto"
+                className="bg-gradient-to-br border-orange-300 dark:border-orange-500 border-2 from-orange-500 to-yellow-400 text-white mx-auto"
               /></Link>
             </NavbarItem>
           </>

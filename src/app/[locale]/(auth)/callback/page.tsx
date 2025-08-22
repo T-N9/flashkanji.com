@@ -52,9 +52,9 @@ export default function AuthCallback() {
             rank: result?.user?.rank,
             resume_learning_section: result.user?.resume_learning_section
           })
-          router.push('/flashboard')
+          router.push('/en/flashboard')
         } else {
-          router.push('/create-profile')
+          router.push('/en/create-profile')
         }
       } catch (error) {
         console.error("User check failed", error)

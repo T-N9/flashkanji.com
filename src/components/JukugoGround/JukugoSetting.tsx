@@ -3,11 +3,10 @@
 /* Compoents */
 // import { Select, Option, Button, Switch } from "@material-tailwind/react";
 
-import { Button, Select, SelectItem, Switch, Tooltip } from "@heroui/react";
+import { Button, Switch, Tooltip } from "@heroui/react";
 import { Button as NextButton } from "@heroui/react";
 import useJukugoSetting from "./useJukugoSetting";
 import { ArrowsClockwise, Brain, Shuffle, Slideshow } from "@phosphor-icons/react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 

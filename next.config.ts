@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 
+const withNextIntl = require("next-intl/plugin")(
+  // This is the default (also the `src` folder is supported out of the box)
+  "./src/i18n/request.ts"
+);
+
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
   cacheOnFrontEndNav: true,
@@ -32,4 +37,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPWA(nextConfig);
+export default withPWA(withNextIntl(nextConfig));

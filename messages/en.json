@@ -1,0 +1,29 @@
+{
+  "navigation": {
+    "flashboard": "Flash Board",
+    "flashdecks": "Flash Decks",
+    "flashmap": "Flash Map",
+    "pomodoro": "Pomodoro",
+    "profile": "Profile",
+    "speech": "Speech",
+    "study": "Study",
+    "viewer": "Viewer"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "createProfile": "Create Profile"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "meta": {
+    "title": "Flash Kanji - Learn Japanese Characters",
+    "description": "Learn Japanese Kanji characters effectively with our interactive flashcard system."
+  }
+}

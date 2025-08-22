@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation"; // if you're using App R
 import { Card, CardHeader, CardBody, Button, Select, SelectItem, Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 import { useDeckDetail, useDeckSrsSessions } from "@/services/deck";
 import { useUserStore } from "@/store/userState";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import useDeckGroundState from "@/store/deckGroundState";
 import { Globe, Lock } from "@phosphor-icons/react";
 import moment from "moment";

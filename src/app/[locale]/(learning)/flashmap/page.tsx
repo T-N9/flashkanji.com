@@ -9,7 +9,7 @@ import useQuizGroundStore from "@/store/quizGroundState";
 import { useUserStore } from "@/store/userState";
 import { Button, Select, SelectItem } from "@heroui/react";
 import { ApproximateEquals, Brain, CompassRose, Lock, Play, SealQuestion, Stack } from "@phosphor-icons/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useEffect } from "react";
 
 const roadmapData = [
