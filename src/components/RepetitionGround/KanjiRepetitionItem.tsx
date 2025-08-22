@@ -101,7 +101,7 @@ export const KanjiRepetitionItem = ({
         // );
         updatedCard.updatedCard.card_id && handleClickLevel(updatedCard.updatedCard.card_id, index);
         setSatisfaction(updatedCard.satisfaction);
-        console.log({ updatedCard, updatedStoredData, sr_data, spacedRepetitionData });
+        // console.log({ updatedCard, updatedStoredData, sr_data, spacedRepetitionData });
     };
 
     const handleShowAnswer = () => {

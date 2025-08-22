@@ -238,13 +238,13 @@ const JukugoBuilderItem = ({
             setAnswerMora([]);
             setIsChecked(false);
             setIsAnswerCorrect(null);
-            console.log({ quizData, item, allData })
+            // console.log({ quizData, item, allData })
         }
     }, [item]);
 
-    console.log({ quizItem })
+    // console.log({ quizItem })
 
-    console.log({ trick: handleChouon("びょ") })
+    // console.log({ trick: handleChouon("びょ") })
 
     const handleClickMora = (index: number) => {
         playSound('click')

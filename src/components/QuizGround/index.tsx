@@ -48,7 +48,7 @@ function QuizResultReaction({ score, total, className }: QuizResultReactionProps
 const QuizGround = () => {
 
     const { level, chapter, mode, isQuizSubmit, currentMark, answeredCount, setIsQuizSubmit, handleQuizQuit, setQuizData, quizData, part, isParted, resetQuizState } = useContainer();
-    console.log({ level, chapter, mode, part })
+    // console.log({ level, chapter, mode, part })
 
     const { data, isLoading, isError } = useKanjiQuiz(chapter ? chapter : null,
         level ? level : null, mode ? mode : null, isParted ? part : null);

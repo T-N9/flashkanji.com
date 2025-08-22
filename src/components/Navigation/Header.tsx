@@ -38,7 +38,7 @@ export function HeadingBar() {
   };
   const locale = useLocale();
 
-  console.log({ path, locale, route: `/${locale}/flashdecks` })
+  // console.log({ path, locale, route: `/${locale}/flashdecks` })
 
   const navList = (
     <>

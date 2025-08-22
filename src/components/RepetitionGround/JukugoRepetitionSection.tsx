@@ -165,7 +165,7 @@ const JukugoRepetitionNormalMode = () => {
         );
     };
 
-    console.log({ spacedRepetitionData })
+    // console.log({ spacedRepetitionData })
 
     if (!data || data.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
@@ -252,7 +252,7 @@ const JukugoRepetitionReviewMode = () => {
         // handleEnd,
     } = useRepetitionReview<relatedJukugoItem>(data?.cardData || [], data?.repetitionData);
 
-    console.log({ fetchedData: data?.repetitionData })
+    // console.log({ fetchedData: data?.repetitionData })
 
     const { mutate: saveRepetition, isLoading } = useSaveRepetitionData_Review();
     const { isSaveRepetition, setIsSaveRepetition, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType, setShouldRefetchCalendar } = useGeneralStore();
@@ -331,7 +331,7 @@ const JukugoRepetitionReviewMode = () => {
     };
 
 
-    console.log({ spacedRepetitionData })
+    // console.log({ spacedRepetitionData })
 
     if (!data || data?.cardData?.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">

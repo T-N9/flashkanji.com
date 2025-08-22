@@ -414,7 +414,7 @@ const KanjiRepetitionReviewMode = () => {
 const KanjiRepetitionSection = () => {
 
     const { isReviewMode } = useKanjiGroundState();
-    console.log({ isReviewMode })
+    // console.log({ isReviewMode })
 
     return (
         <>

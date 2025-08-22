@@ -40,34 +40,42 @@ export const DeckDetailModal = () => {
 
     const askGemini = async () => {
         setIsGeminiLoading(true);
-        if (!deckCardDetail?.character) return;
-
-        const prompt = `Hello Sensei, I am a Japanese language learner, give me N${level} level 5 real-world usage of this word "${deckCardDetail.character}". Also give me hiragana and English translation version of each sentence.`;
+        if (!deckCardDetail?.character) {
+            setIsGeminiLoading(false);
+            return;
+        }
 
         try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`, {
+            const res = await fetch('/api/jukugo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: prompt }]
-                    }]
+                    jukugo: deckCardDetail.character,
+                    level: level
                 }),
             });
 
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
             const data = await res.json();
 
-            const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
-            setGeminiResponse(text);
-            setIsGeminiLoading(false);
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            setGeminiResponse(data.usage);
         } catch (error) {
+            console.error("Error calling usage API:", error);
+            setGeminiResponse("An error occurred while generating usage examples.");
+        } finally {
             setIsGeminiLoading(false);
-            console.error("Error calling Gemini API:", error);
-            setGeminiResponse("An error occurred while contacting the AI.");
         }
     };
+
 
     const handleOpen = (character: string | null) => {
         toggleDeckDetailModal();
@@ -158,11 +166,11 @@ export const DeckDetailModal = () => {
                             <p className="text-center">Ask Samurai Sensei how <span className="text-orange-500">{deckCardDetail?.character}</span> is used. </p>
                             {
                                 isGeminiLoading ?
-                                 <CharacterImage src="thinking.png" alt="ask samurai sensei" />
-                                :
-                                 <CharacterImage src="kiss.png" alt="ask samurai sensei" />
+                                    <CharacterImage src="thinking.png" alt="ask samurai sensei" />
+                                    :
+                                    <CharacterImage src="kiss.png" alt="ask samurai sensei" />
                             }
-                           
+
 
 
                             {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}

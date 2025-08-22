@@ -210,7 +210,7 @@ const RoadmapItem = ({
         setPart("0");
       } else if (phase === 2) {
         step_i > 4 ? setPart(null) : setPart("1");
-        console.log("Setting part to 1 for phase 2, step", step_i);
+        // console.log("Setting part to 1 for phase 2, step", step_i);
       } else {
         setIsParted(false);
       }

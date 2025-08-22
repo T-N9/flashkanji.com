@@ -29,7 +29,7 @@ export default function useDeckRepetitionReview<T extends { id: number }>(rawDat
 
       
       if (fetchedRepetitionData && fetchedRepetitionData.length > 0) {
-        console.log({fetchedRepetitionData})
+        // console.log({fetchedRepetitionData})
         setSpacedRepetitionData(fetchedRepetitionData);
       } else {
         console.log( "No stored repetition data found, initializing new data.");

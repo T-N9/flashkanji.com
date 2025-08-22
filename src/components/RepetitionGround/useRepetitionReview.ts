@@ -29,7 +29,7 @@ export default function useRepetitionReview<T extends { id: number }>(rawData: T
 
       
       if (fetchedRepetitionData && fetchedRepetitionData.length > 0) {
-        console.log({fetchedRepetitionData})
+        // console.log({fetchedRepetitionData})
         setSpacedRepetitionData(fetchedRepetitionData);
       } else {
         console.log( "No stored repetition data found, initializing new data.");

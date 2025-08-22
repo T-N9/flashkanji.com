@@ -64,7 +64,7 @@ export default function useDeckRepetitionCore<T extends { id: number }>(
   const handleClickLevel = (id: number, level: number) => {
     const temp = [...clickedRepetitionData];
     const index = temp.findIndex((item) => item.id === id);
-    console.log({ level, id, index });
+    // console.log({ level, id, index });
     if (index === -1) return;
 
     if (level === 3) {

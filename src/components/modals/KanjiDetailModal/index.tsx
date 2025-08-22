@@ -45,32 +45,38 @@ export function KanjiDetailModal() {
 
   const askGemini = async () => {
     setIsGeminiLoading(true);
-    if (!currentDetail) return;
-
-    const prompt = `Hello Sensei, I am a Japanese language learner, help me remember this kanji character "${currentDetail}" by telling me a memorable mnemonic story in simple English, short, engaging and make sense. You may break down the radicals to tell the story. (this is one time request, do not ask me to ask again or anything like that)`;
+    if (!currentDetail) {
+      setIsGeminiLoading(false);
+      return;
+    }
 
     try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`, {
+      const res = await fetch('/api/kanji', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          contents: [{
-            parts: [{ text: prompt }]
-          }]
+          kanji: currentDetail
         }),
       });
 
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const data = await res.json();
 
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
-      setGeminiResponse(text);
-      setIsGeminiLoading(false);
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setGeminiResponse(data.mnemonic);
     } catch (error) {
+      console.error("Error calling mnemonic API:", error);
+      setGeminiResponse("An error occurred while generating the mnemonic.");
+    } finally {
       setIsGeminiLoading(false);
-      console.error("Error calling Gemini API:", error);
-      setGeminiResponse("An error occurred while contacting the AI.");
     }
   };
 

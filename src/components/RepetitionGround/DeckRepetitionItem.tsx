@@ -79,7 +79,7 @@ export const DeckRepetitionItem = ({
 
     const handleButtonClick = (index: number) => {
         playSound('click')
-        console.log({ sr_data })
+        // console.log({ sr_data })
         const updatedCard = calculateDeckNextReview(sr_data, index, satisfaction, seconds);
         const updatedStoredData = spacedRepetitionData.map((item) => {
             // console.log(item.id, updatedCard.updatedCard.id, item.card_id);
@@ -92,7 +92,7 @@ export const DeckRepetitionItem = ({
         updatedCard.updatedCard.card_id ? handleClickLevel(updatedCard.updatedCard.card_id, index) :
             handleClickLevel(updatedCard.updatedCard.id, index);
         setSatisfaction(updatedCard.satisfaction);
-        console.log({ satisfaction: updatedStoredData });
+        // console.log({ satisfaction: updatedStoredData });
     };
 
     const handleShowAnswer = () => {
