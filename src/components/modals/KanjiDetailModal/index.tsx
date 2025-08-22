@@ -14,6 +14,9 @@ import {
 } from "@heroui/modal";
 
 import { Button, Spinner } from "@heroui/react";
+import { useState } from "react";
+import { GeminiResponse } from "../DeckDetailModal";
+import CharacterImage from "@/components/common/character";
 
 
 export function KanjiDetailModal() {
@@ -21,6 +24,9 @@ export function KanjiDetailModal() {
 
   const { data: charData, isLoading } = useKanjiDetail(currentDetail || "");
   const { data: jukugoData } = useRelatedJukugo(currentDetail || "");
+  const { onOpenChange, onClose } = useDisclosure();
+  const [geminiResponse, setGeminiResponse] = useState<string>("");
+  const [isGeminiLoading, setIsGeminiLoading] = useState<boolean>(false);
   // Function to generate stars based on the grade
   const renderStars = () => {
     const stars = Array.from({ length: charData?.grade }, (_, index) => (
@@ -33,12 +39,40 @@ export function KanjiDetailModal() {
 
   const handleOpen = (character: string | null) => {
     toggleDetailModal();
-
+    setGeminiResponse("");
     setCurrentDetail(character);
   };
 
-  // console.log({ jukugoData });
-  const { onOpenChange, onClose } = useDisclosure();
+  const askGemini = async () => {
+    setIsGeminiLoading(true);
+    if (!currentDetail) return;
+
+    const prompt = `Hello Sensei, I am a Japanese language learner, help me remember this kanji character "${currentDetail}" by telling me a memorable mnemonic story in simple English, short, engaging and make sense. You may break down the radicals to tell the story. (this is one time request, do not ask me to ask again or anything like that)`;
+
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{ text: prompt }]
+          }]
+        }),
+      });
+
+      const data = await res.json();
+
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
+      setGeminiResponse(text);
+      setIsGeminiLoading(false);
+    } catch (error) {
+      setIsGeminiLoading(false);
+      console.error("Error calling Gemini API:", error);
+      setGeminiResponse("An error occurred while contacting the AI.");
+    }
+  };
 
   return (
     <>
@@ -66,6 +100,37 @@ export function KanjiDetailModal() {
                 {!isLoading ? (
                   <div className=" flex gap-4 flex-col-reverse lg:flex-row font-primary-san">
                     <div className="flex-1">
+                      <div>
+                        {/* AI Component */}
+                        <p className="text-center text-sm">Ask Samurai Sensei how to remember this <span className="text-orange-500">{currentDetail}</span> character.</p>
+                        {
+                          isGeminiLoading ?
+                            <CharacterImage src="thinking.png" alt="ask samurai sensei" />
+                            :
+                            <CharacterImage src="kiss.png" alt="ask samurai sensei" />
+                        }
+
+
+
+                        {geminiResponse === "" && <Button className={`${isGeminiLoading && 'opacity-40 select-none pointer-events-none'} table mx-auto my-4`} onClick={askGemini} color="warning">Ask</Button>}
+                        <div>
+                          {/* This will be result got back from Gemini API */}
+                          {isGeminiLoading ? (
+                            <p className="text-center animate-pulse">Sensei is thinking...</p>
+                          ) : (
+                            <div>
+                              {geminiResponse && (
+                                <div className="mt-4">
+                                  <h2 className="text-lg font-bold text-center">Sensei Response:</h2>
+                                  <div className="mt-4 mb-5 p-4 bg-white dark:bg-dark text-sm rounded-lg shadow-md">
+                                    <GeminiResponse content={geminiResponse} />
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                       <div className=" grid grid-cols-1 md:grid-cols-3 gap-3">
 
                         <div className="bg-white dark:bg-dark_1 p-3 rounded-md">
@@ -161,15 +226,15 @@ export function KanjiDetailModal() {
                                   key={index}
                                 >
                                   <p className="flex justify-between flex-col">
-              
+
                                     <ruby className="text-dark dark:text-gray-100 text-2xl -mb-7">
-                                    
+
                                       <rt className="text-sm text-gray-400 tracking-tighter">
                                         {item.hiragana}
                                       </rt>
                                     </ruby>{" "}
                                     <span className="text-2xl">
-                                      <TextSpeech japaneseText={item.character}/>{" "}
+                                      <TextSpeech japaneseText={item.character} />{" "}
                                     </span>
                                     <span className="text-sm font-english-text text-dark dark:text-gray-100">
                                       {item.meaning}

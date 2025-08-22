@@ -14,15 +14,12 @@ import {
     useDisclosure,
 } from "@heroui/modal";
 import { Button } from "@heroui/react";
-import { Envelope } from "@phosphor-icons/react";
-import { useParams, useSearchParams } from "next/navigation";
-import { env } from "process";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 export const GeminiResponse = ({ content }: { content: string }) => {
     return (
-        <div className="prose prose-sm md:prose-base max-w-none prose-orange">
+        <div className="prose prose-sm md:prose-base max-w-none prose-orange text-sm">
             <ReactMarkdown>{content}</ReactMarkdown>
         </div>
     );
