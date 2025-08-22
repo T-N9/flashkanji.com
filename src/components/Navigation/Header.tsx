@@ -18,6 +18,7 @@ import { Button } from "@heroui/react";
 import Indicator from "../pomodoro/Indicator";
 import { useUserStore } from "@/store/userState";
 import { Link } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 
 export function HeadingBar() {
   const path = usePathname(); // Get the current path for active links
@@ -35,6 +36,9 @@ export function HeadingBar() {
       setIsMenuOpen(val);
     }, 500);
   };
+  const locale = useLocale();
+
+  console.log({ path, locale, route: `/${locale}/flashdecks` })
 
   const navList = (
     <>
@@ -43,35 +47,35 @@ export function HeadingBar() {
         authCookie !== undefined ?
           <>
             <NavbarItem
-              isActive={path === "/flashdecks"}
+              isActive={path === `/${locale}/flashdecks`}
               onClick={() => delayedSetIsMenuOpen(false)}
               className="flex justify-center"
             >
-              <Link className={`${path === "/flashdecks" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashdecks">
-                <img src="/assets/icons/flashdecks.png" width={40} height={40} />
+              <Link className={`${path === `/${locale}/flashdecks` ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashdecks">
+                <img src="/assets/icons/flashdecks.png" className="w-20 h-20 lg:w-10 lg:h-10" width={40} height={40} />
               </Link>
             </NavbarItem>
             <NavbarItem
-              isActive={path === "/flashmap"}
+              isActive={path === `/${locale}/flashmap`}
               onClick={() => delayedSetIsMenuOpen(false)}
               className="flex justify-center"
             >
-              <Link className={`${path === "/flashmap" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashmap"><img src="/assets/icons/flashmap.png" width={40} height={40} /></Link>
+              <Link className={`${path === `/${locale}/flashmap` ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashmap"><img src="/assets/icons/flashmap.png" className="w-20 h-20 lg:w-10 lg:h-10" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
-              isActive={path === "/flashboard"}
+              isActive={path === `/${locale}/flashboard`}
               onClick={() => delayedSetIsMenuOpen(false)}
               className="flex justify-center"
             >
-              <Link className={`${path === "/flashboard" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashboard"><img src="/assets/icons/flashboard.png" width={40} height={40} /></Link>
+              <Link className={`${path === `/${locale}/flashboard` ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashboard"><img src="/assets/icons/flashboard.png" className="w-20 h-20 lg:w-10 lg:h-10" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
-              isActive={path === "/pomodoro"}
+              isActive={path === `/${locale}/pomodoro`}
               onClick={() => delayedSetIsMenuOpen(false)}
               className="flex justify-center"
             >
 
-              <Link className={`${path === "/pomodoro" ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/pomodoro"><Indicator /></Link>
+              <Link className={`${path === `/${locale}/pomodoro` ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/pomodoro"><Indicator /></Link>
             </NavbarItem>
 
             <NavbarItem className="gap-3 hidden lg:flex mx-10">

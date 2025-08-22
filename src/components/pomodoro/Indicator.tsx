@@ -29,7 +29,7 @@ export default function Indicator() {
   return (
     <Tooltip content={`${label} • ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}>
       <div className='relative'>
-        <img src="/assets/icons/pomodoro.png" width={40} height={40} />
+        <img src="/assets/icons/pomodoro.png" className="w-20 h-20 lg:w-10 lg:h-10" width={40} height={40} />
         <span className={`${isRunning && 'animate-bounce'} absolute top-0 right-0 drop-shadow  border bg-white rounded text-xs`}>{isRunning ? '⏸️' : '▶️'}</span>
       </div>
 
