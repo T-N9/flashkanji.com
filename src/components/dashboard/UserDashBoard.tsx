@@ -8,8 +8,8 @@ import { useUserStore } from "@/store/userState";
 import { useApplyExpiryPenalty } from "@/services/progress";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
+import { useRouter } from "@/i18n/navigation";
 
 export default function UserDashBoard() {
 

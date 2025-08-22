@@ -12,14 +12,13 @@ import Image from "next/image";
 import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetitionData_Review } from "@/services/repetition";
 import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
-import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { useAddXpPoints, useSaveEndSection, useSaveStreak } from "@/services/progress";
 import { getConfidenceEmoji } from "@/util";
 import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { playSound } from "@/util/soundPlayer";
-import CardProgress from "./CardProgress";
+import { useRouter } from "@/i18n/navigation";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();

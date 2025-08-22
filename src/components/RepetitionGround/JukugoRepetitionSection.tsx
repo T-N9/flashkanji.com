@@ -8,7 +8,6 @@ import { Button } from "@heroui/react";
 import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import useRepetitionCore from "./useRepetitionCore";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useKanjiRepetitionData_ByDate, useSaveRepetitionData, useSaveRepetitionData_Review } from "@/services/repetition";
 import { useUserStore } from "@/store/userState";
 import useRepetitionReview from "./useRepetitionReview";
@@ -20,6 +19,7 @@ import { getConfidenceEmoji } from "@/util";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
+import { useRouter } from "@/i18n/navigation";
 
 const JukugoRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();

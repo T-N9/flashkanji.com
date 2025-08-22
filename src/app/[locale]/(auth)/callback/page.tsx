@@ -1,13 +1,12 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
 import Cookies from 'js-cookie'
 import { checkUserExists } from '@/api/usersRoute'
-import { CircleNotch } from '@phosphor-icons/react'
 import { useUserStore } from '@/store/userState'
 import RamenLoading from '@/components/common/RamenLoading'
+import { useRouter } from '@/i18n/navigation'
 
 export default function AuthCallback() {
   const router = useRouter()
@@ -52,9 +51,9 @@ export default function AuthCallback() {
             rank: result?.user?.rank,
             resume_learning_section: result.user?.resume_learning_section
           })
-          router.push('/en/flashboard')
+          router.push('/flashboard')
         } else {
-          router.push('/en/create-profile')
+          router.push('/create-profile')
         }
       } catch (error) {
         console.error("User check failed", error)

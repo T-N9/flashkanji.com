@@ -3,7 +3,6 @@ import React from "react";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userState";
 import useDeckGroundState from "@/store/deckGroundState";
 import { useDeckCards, useDeckSrsSessionDetail, useSaveDeckRepetitionData, useSaveDeckRepetitionDataReview } from "@/services/deck";
@@ -19,6 +18,7 @@ import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useAddXpPoints, useRestoreOrBuyHeart, useSaveStreak } from "@/services/progress";
 import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
+import { useRouter } from "@/i18n/navigation";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId, noOfCards } = useDeckGroundState();

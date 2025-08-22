@@ -33,11 +33,11 @@ export default function LanguageSwitcher() {
                 Language:
             </span>
             <Select
-                size="sm"
-                label={`${current?.label}`}
+                // label={`${current?.label}`}
                 className="w-[140px]"
                 aria-label="Theme Selector"
                 onChange={(e) => switchLocale(e.target.value)}
+                selectedKeys={[locale ?? 'en']}
             >
                 {locales.map(({ code, label }) => (
                     <SelectItem

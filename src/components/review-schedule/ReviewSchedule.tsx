@@ -10,7 +10,6 @@ import { ja } from "react-day-picker/locale";
 import "react-day-picker/dist/style.css"
 import { formatDate, getTodayReviewCount, normalizeDate } from "@/util"
 import useKanjiGroundState from "@/store/kanjiGroundState"
-import { useRouter } from "next/navigation"
 import { useFetchReviewCalendarData } from "@/services/repetition"
 import { useUserStore } from "@/store/userState"
 import useJukugoGroundState from "@/store/jukugoGroundState"
@@ -19,6 +18,7 @@ import { useGeneralStore } from "@/store/generalState"
 import CharacterImage from "../common/character"
 import { isFutureDate } from "@/util/schedule"
 import { isBefore, parseISO } from "date-fns"
+import { useRouter } from "@/i18n/navigation"
 
 export default function SpacedLearningCalendar() {
   const { setSelectedReviewDate, setIsReviewMode, selectedReviewDate } = useKanjiGroundState();

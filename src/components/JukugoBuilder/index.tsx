@@ -2,20 +2,20 @@
 import { useJukugoByChapterAndLevel } from "@/services/jukugo";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import { relatedJukugoItem } from "@/types/jukugo";
-import { buildQuizOptions, handleChouon, OptionSet } from "@/util/buildQuizOptions";
+import { buildQuizOptions, OptionSet } from "@/util/buildQuizOptions";
 import { Button, Card, CardBody, CardHeader, Progress } from "@heroui/react";
 import React, { useEffect, useRef, useState } from "react";
 import CharacterImage from "../common/character";
 import RamenLoading from "../common/RamenLoading";
 import { useUserStore } from "@/store/userState";
 import { useAddXpPoints, useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
-import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { shuffleArray } from "@/util";
 import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
 import { CheckCircle } from "@phosphor-icons/react";
+import { useRouter } from "@/i18n/navigation";
 
 const JukugoBuilder = () => {
     const {

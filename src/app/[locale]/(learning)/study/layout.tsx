@@ -1,8 +1,8 @@
 'use client'
 
 import BackToMap from '@/components/Navigation/BackToMap';
+import { useRouter } from '@/i18n/navigation';
 import { useGeneralStore } from '@/store/generalState';
-import { useRouter } from 'next/navigation';
 
 import React, { useEffect } from 'react'
 

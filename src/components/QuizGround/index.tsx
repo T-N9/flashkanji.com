@@ -9,11 +9,11 @@ import CharacterImage from '../common/character';
 import { useGeneralStore } from '@/store/generalState';
 import { useUserStore } from '@/store/userState';
 import { useAddXpPoints, useRemoveHeart, useSaveEndSection, useSaveStreak } from '@/services/progress';
-import { useRouter } from 'next/navigation';
 import { CheckCircle } from '@phosphor-icons/react';
 import { hasSavedStreakToday, saveStreakToLocalStorage } from '@/util/streak';
 import { toast } from 'sonner';
 import { playSound } from '@/util/soundPlayer';
+import { useRouter } from '@/i18n/navigation';
 
 
 

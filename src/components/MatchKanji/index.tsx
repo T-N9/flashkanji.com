@@ -11,10 +11,10 @@ import RamenLoading from "../common/RamenLoading";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { useUserStore } from "@/store/userState";
 import { useAddXpPoints, useRemoveHeart, useSaveEndSection, useSaveStreak } from "@/services/progress";
-import { useRouter } from "next/navigation";
 import { useGeneralStore } from "@/store/generalState";
 import { playSound } from "@/util/soundPlayer";
 import { CheckCircle } from "@phosphor-icons/react";
+import { useRouter } from "@/i18n/navigation";
 
 type selectItem = {
   id: number;
