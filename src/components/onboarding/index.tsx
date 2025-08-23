@@ -99,14 +99,14 @@ export default function OnboardingGuide() {
             const driverObj = driver({
                 showProgress: true,
                 overlayOpacity: 0.6,
-                nextBtnText: "Next →",
-                prevBtnText: "← Back",
-                doneBtnText: "Finish 🎉",
+                nextBtnText: "Next",
+                prevBtnText: "Back",
+                doneBtnText: "Finish",
                 steps,
             });
 
             driverObj.drive();
-            //   localStorage.setItem(storageKey, "true"); // save per-page flag
+            localStorage.setItem(storageKey, "true");
         }
     }, [pathname]);
 

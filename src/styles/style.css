@@ -440,3 +440,31 @@ img {
   -webkit-tap-highlight-color: transparent !important;
   -webkit-user-select: none !important;
 }
+
+.driver-popover {
+  background-color: white !important;
+  color: #1b1b1b;
+  border: 3px solid #fb8c00;
+  border-radius: 20px !important;
+}
+
+.driver-popover-title {
+  letter-spacing: 0px !important;
+  font-family: 'Tektur' !important;
+}
+
+.driver-popover-description {
+  font-family: 'Poppins' !important;
+}
+
+.driver-popover-navigation-btns button {
+  background-color: #fb8c00 !important;
+  color: white !important;
+  border-radius: 10px !important;
+  font-family: 'Poppins' !important;
+  text-shadow: none !important;
+  font-size: 15px !important;
+  padding: 5px 15px !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
