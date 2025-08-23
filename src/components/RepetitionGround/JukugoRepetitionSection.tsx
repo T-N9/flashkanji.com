@@ -391,7 +391,7 @@ const JukugoRepetitionReviewMode = () => {
 const JukugoRepetitionSection = () => {
     const { isReviewMode } = useJukugoGroundState();
 
-
+    console.log({ "jukugo" : isReviewMode })
     return (
         <>
             {isReviewMode ? <JukugoRepetitionReviewMode /> : <JukugoRepetitionNormalMode />}

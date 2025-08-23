@@ -7,8 +7,9 @@ import { Button, Switch, Tooltip } from "@heroui/react";
 import { Button as NextButton } from "@heroui/react";
 import useJukugoSetting from "./useJukugoSetting";
 import { ArrowsClockwise, Brain, Shuffle, Slideshow } from "@phosphor-icons/react";
-import { usePathname } from "next/navigation";
+
 import { useGeneralStore } from "@/store/generalState";
+import { usePathname } from "@/i18n/navigation";
 
 interface JukugoSettingProps {
   handleShuffle: () => void; // Add this prop type

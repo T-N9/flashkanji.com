@@ -6,7 +6,6 @@ import { Button, Tooltip } from "@heroui/react";
 
 import { ArrowsClockwise, Shuffle, Slideshow } from "@phosphor-icons/react";
 import { useGeneralStore } from "@/store/generalState";
-import { usePathname } from "next/navigation";
 import { useDeckSetting } from "./useDeckSetting";
 
 interface DeckSettingProps {

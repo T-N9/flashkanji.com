@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+
 import { Clicked_Item, SR_DeckCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useJukugoGroundState from "@/store/jukugoGroundState";
+import { usePathname } from "@/i18n/navigation";
 
 export default function useDeckRepetitionCore<T extends { id: number }>(
   rawData: T[]

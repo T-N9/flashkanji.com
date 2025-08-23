@@ -6,7 +6,7 @@ import { Button, Tooltip } from "@heroui/react";
 import { useKanjiSetting } from "./useKanjiSetting";
 import { ArrowsClockwise, Shuffle, Slideshow } from "@phosphor-icons/react";
 import { useGeneralStore } from "@/store/generalState";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 
 interface KanjiSettingProps {
   handleShuffle: () => void; // Add this prop type

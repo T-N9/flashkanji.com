@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { usePathname } from "next/navigation";
 
 import KanjiRepetitionSection from "./KanjiRepetitionSection";
 import JukugoRepetitionSection from "./JukugoRepetitionSection";
+import { usePathname } from "@/i18n/navigation";
 
 const SpacedRepetition = () => {
   const pathname = usePathname();

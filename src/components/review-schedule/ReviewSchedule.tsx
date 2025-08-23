@@ -59,6 +59,8 @@ export default function SpacedLearningCalendar() {
       setIsSaveRepetition(true);
     }
 
+    console.log({type})
+
     setIsInGround(true);
     if (type === 1) {
       setIsReviewMode(true);
