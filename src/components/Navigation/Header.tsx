@@ -56,11 +56,12 @@ export function HeadingBar() {
               </Link>
             </NavbarItem>
             <NavbarItem
+
               isActive={path === `/${locale}/flashmap`}
               onClick={() => delayedSetIsMenuOpen(false)}
               className="flex justify-center"
             >
-              <Link className={`${path === `/${locale}/flashmap` ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashmap"><img src="/assets/icons/flashmap.png" className="w-20 h-20 lg:w-10 lg:h-10" width={40} height={40} /></Link>
+              <Link id="flashmap_btn" className={`${path === `/${locale}/flashmap` ? 'grayscale-0 scale-125' : 'grayscale'} hover:scale-125 transform duration-300 block`} href="/flashmap"><img src="/assets/icons/flashmap.png" className="w-20 h-20 lg:w-10 lg:h-10" width={40} height={40} /></Link>
             </NavbarItem>
             <NavbarItem
               isActive={path === `/${locale}/flashboard`}

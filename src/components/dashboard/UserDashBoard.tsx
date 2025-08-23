@@ -73,7 +73,7 @@ export default function UserDashBoard() {
         <div className="min-h-screen ">
 
 
-            <main className="max-w-screen-md mx-auto px-6 py-8">
+            <main id="flashboard_section" className="max-w-screen-md mx-auto px-6 py-8">
                 {/* Welcome Section */}
                 <div className="mb-4">
                     <div className="flex gap-4 items-center">
@@ -86,7 +86,7 @@ export default function UserDashBoard() {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-4">
+                <div id="flashboard_stats" className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-4">
                     <Card className="bg-gradient-to-r from-red-500 to-pink-500 text-white">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                             <h1 className="text-sm font-medium">Due Today</h1>
@@ -148,7 +148,9 @@ export default function UserDashBoard() {
                 }
 
 
-                <ReviewSchedule />
+                <div id="flashboard_calendar">
+                    <ReviewSchedule />
+                </div>
             </main>
         </div>
     )

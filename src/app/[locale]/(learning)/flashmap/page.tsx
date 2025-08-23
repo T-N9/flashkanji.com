@@ -327,7 +327,7 @@ export default function ChapterRoadmap() {
 
 
   return (
-    <div className="space-y-12 max-w-screen-md mx-auto pb-10">
+    <div id="flashmap_section" className="space-y-12 max-w-screen-md mx-auto pb-10">
       <div className=" px-6 pt-8 space-y-5 lg:space-y-12">
         <div className="flex items-center gap-4">
           <CompassRose size={32} />
@@ -335,7 +335,7 @@ export default function ChapterRoadmap() {
         </div>
 
         <div className="flex gap-4">
-          <Select label="Select Level" selectedKeys={[japanese_level]} onChange={(e) => setUser({
+          <Select id="flashmap_level" label="Select Level" selectedKeys={[japanese_level]} onChange={(e) => setUser({
             // @ts-ignore
             japanese_level: e.target.value, japanese_chapter: 1
           })}>
@@ -346,7 +346,7 @@ export default function ChapterRoadmap() {
             ))}
           </Select>
 
-          <Select label="Select Chapter" selectedKeys={[String(japanese_chapter)]} onChange={(e) => setUser({ japanese_chapter: parseInt(e.target.value) })}>
+          <Select id="flashmap_chapter" label="Select Chapter" selectedKeys={[String(japanese_chapter)]} onChange={(e) => setUser({ japanese_chapter: parseInt(e.target.value) })}>
             {chapters.map((ch) => (
               <SelectItem key={ch}>
                 {ch}

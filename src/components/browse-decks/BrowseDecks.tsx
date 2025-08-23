@@ -51,7 +51,7 @@ const BrowseDecks = () => {
 
 
   return (
-    <div className="max-w-screen-md mx-auto p-6">
+    <div id="flashdecks_section" className="max-w-screen-md mx-auto p-6">
       <div className="flex justify-between items-center">
         <div className="flex gap-1 items-center mb-4">
           <h2 className="text-2xl font-semibold">Browse Decks</h2>
@@ -140,118 +140,120 @@ const BrowseDecks = () => {
 
 
 
-      {/* Deck Results */}
-      {isLoading ? (
-        <div className="grid md:grid-cols-2 gap-4">
-          <Card shadow="sm" className="border border-default-200 animate-pulse">
-            <CardHeader className="font-semibold">
-              <div className="h-5 w-3/4 bg-gray-200 rounded" />
-            </CardHeader>
-            <CardBody>
-              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
-              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
-              <div className="flex gap-2 mt-2 text-xs flex-wrap">
-                <span className="h-5 w-16 bg-orange-200 rounded" />
-                <span className="h-5 w-20 bg-orange-200 rounded" />
-                <span className="h-5 w-12 bg-orange-200 rounded" />
-              </div>
-            </CardBody>
-          </Card>
-          <Card shadow="sm" className="border border-default-200 animate-pulse">
-            <CardHeader className="font-semibold">
-              <div className="h-5 w-3/4 bg-gray-200 rounded" />
-            </CardHeader>
-            <CardBody>
-              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
-              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
-              <div className="flex gap-2 mt-2 text-xs flex-wrap">
-                <span className="h-5 w-16 bg-orange-200 rounded" />
-                <span className="h-5 w-20 bg-orange-200 rounded" />
-                <span className="h-5 w-12 bg-orange-200 rounded" />
-              </div>
-            </CardBody>
-          </Card>
-          <Card shadow="sm" className="border border-default-200 animate-pulse">
-            <CardHeader className="font-semibold">
-              <div className="h-5 w-3/4 bg-gray-200 rounded" />
-            </CardHeader>
-            <CardBody>
-              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
-              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
-              <div className="flex gap-2 mt-2 text-xs flex-wrap">
-                <span className="h-5 w-16 bg-orange-200 rounded" />
-                <span className="h-5 w-20 bg-orange-200 rounded" />
-                <span className="h-5 w-12 bg-orange-200 rounded" />
-              </div>
-            </CardBody>
-          </Card>
-          <Card shadow="sm" className="border border-default-200 animate-pulse">
-            <CardHeader className="font-semibold">
-              <div className="h-5 w-3/4 bg-gray-200 rounded" />
-            </CardHeader>
-            <CardBody>
-              <div className="h-4 w-full bg-gray-200 rounded mb-2" />
-              <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
-              <div className="flex gap-2 mt-2 text-xs flex-wrap">
-                <span className="h-5 w-16 bg-orange-200 rounded" />
-                <span className="h-5 w-20 bg-orange-200 rounded" />
-                <span className="h-5 w-12 bg-orange-200 rounded" />
-              </div>
-            </CardBody>
-          </Card>
-        </div>
-      ) : (
-        <div>
-          <div className="">
-            {data?.decks.length === 0 ? (
-              <div>
-                <CharacterImage src="hmm.png" alt="No Sessions" />
-                <p className="text-center text-gray-400 col-span-full">No decks found.</p>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-2 gap-4">{
-                data?.decks.map((deck, i) => (
-                  <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
-                    <Card shadow="sm" className="border border-default-200">
-                      <CardHeader className="font-semibold text-dark dark:text-gray-100">{deck.name}</CardHeader>
-                      <CardBody style={{
-                        backgroundImage: `url('${getBackgroundImage(i)}')`,
-                        backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
-                      }} className=" dark:!bg-none dark:bg-opacity-0 bg-right-bottom bg-no-repeat">
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{deck.description}</p>
-                        <p className="text-xs text-gray-400">Level: {deck.level}</p>
-                        <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
-                          {deck.categories.map((cat) => (
-                            <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
-                              {cat}
-                            </span>
-                          ))}
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            )}
+      <div id="flashdecks_choose">
+        {/* Deck Results */}
+        {isLoading ? (
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card shadow="sm" className="border border-default-200 animate-pulse">
+              <CardHeader className="font-semibold">
+                <div className="h-5 w-3/4 bg-gray-200 rounded" />
+              </CardHeader>
+              <CardBody>
+                <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+                <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+                <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                  <span className="h-5 w-16 bg-orange-200 rounded" />
+                  <span className="h-5 w-20 bg-orange-200 rounded" />
+                  <span className="h-5 w-12 bg-orange-200 rounded" />
+                </div>
+              </CardBody>
+            </Card>
+            <Card shadow="sm" className="border border-default-200 animate-pulse">
+              <CardHeader className="font-semibold">
+                <div className="h-5 w-3/4 bg-gray-200 rounded" />
+              </CardHeader>
+              <CardBody>
+                <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+                <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+                <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                  <span className="h-5 w-16 bg-orange-200 rounded" />
+                  <span className="h-5 w-20 bg-orange-200 rounded" />
+                  <span className="h-5 w-12 bg-orange-200 rounded" />
+                </div>
+              </CardBody>
+            </Card>
+            <Card shadow="sm" className="border border-default-200 animate-pulse">
+              <CardHeader className="font-semibold">
+                <div className="h-5 w-3/4 bg-gray-200 rounded" />
+              </CardHeader>
+              <CardBody>
+                <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+                <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+                <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                  <span className="h-5 w-16 bg-orange-200 rounded" />
+                  <span className="h-5 w-20 bg-orange-200 rounded" />
+                  <span className="h-5 w-12 bg-orange-200 rounded" />
+                </div>
+              </CardBody>
+            </Card>
+            <Card shadow="sm" className="border border-default-200 animate-pulse">
+              <CardHeader className="font-semibold">
+                <div className="h-5 w-3/4 bg-gray-200 rounded" />
+              </CardHeader>
+              <CardBody>
+                <div className="h-4 w-full bg-gray-200 rounded mb-2" />
+                <div className="h-3 w-1/3 bg-gray-200 rounded mb-4" />
+                <div className="flex gap-2 mt-2 text-xs flex-wrap">
+                  <span className="h-5 w-16 bg-orange-200 rounded" />
+                  <span className="h-5 w-20 bg-orange-200 rounded" />
+                  <span className="h-5 w-12 bg-orange-200 rounded" />
+                </div>
+              </CardBody>
+            </Card>
           </div>
-          <div className="flex justify-center py-4">
+        ) : (
+          <div>
+            <div className="">
+              {data?.decks.length === 0 ? (
+                <div>
+                  <CharacterImage src="hmm.png" alt="No Sessions" />
+                  <p className="text-center text-gray-400 col-span-full">No decks found.</p>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 gap-4">{
+                  data?.decks.map((deck, i) => (
+                    <Link key={deck.id} href={`/flashdecks/${deck.id}`} className="no-underline">
+                      <Card shadow="sm" className="border border-default-200">
+                        <CardHeader className="font-semibold text-dark dark:text-gray-100">{deck.name}</CardHeader>
+                        <CardBody style={{
+                          backgroundImage: `url('${getBackgroundImage(i)}')`,
+                          backgroundSize: `${(i % 3) + 1 === 3 ? '70%' : '50%'}`
+                        }} className=" dark:!bg-none dark:bg-opacity-0 bg-right-bottom bg-no-repeat">
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{deck.description}</p>
+                          <p className="text-xs text-gray-400">Level: {deck.level}</p>
+                          <div className="flex gap-2 mt-2 text-xs text-orange-500 flex-wrap">
+                            {deck.categories.map((cat) => (
+                              <span key={cat} className="bg-orange-100 px-2 py-1 rounded">
+                                {cat}
+                              </span>
+                            ))}
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="flex justify-center py-4">
 
-            {
-              totalPages &&
-              <Pagination
-                total={totalPages}
-                page={page}
-                onChange={handleChange}
-                showControls
-                variant="flat"
-                color="primary"
-              />
-            }
+              {
+                totalPages &&
+                <Pagination
+                  total={totalPages}
+                  page={page}
+                  onChange={handleChange}
+                  showControls
+                  variant="flat"
+                  color="primary"
+                />
+              }
 
+            </div>
           </div>
-        </div>
-      )
-      }
+        )
+        }
+      </div>
     </div >
   );
 };

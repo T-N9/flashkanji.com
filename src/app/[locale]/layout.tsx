@@ -14,6 +14,7 @@ import { Locale, hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import OnboardingGuide from "@/components/onboarding";
 
 type Props = {
     children: ReactNode;
@@ -96,6 +97,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                         {children}
                         <CookieConsent />
                         <PWAInstallPrompt />
+                        <OnboardingGuide />
                     </NextIntlClientProvider>
                 </Providers>
             </body>
