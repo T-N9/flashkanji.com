@@ -39,6 +39,7 @@ export const handleSession = async (router?: any) => {
         xp_points: result?.user?.experience_points,
         rank: result?.user?.rank,
         resume_learning_section: result.user?.resume_learning_section,
+        waniExists: result.wani_exist,
       });
       // router?.push?.('/flashmap')
     } else {

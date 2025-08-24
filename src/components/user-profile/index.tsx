@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
 import LanguageSwitcher from '../language-switcher';
 import { useTranslations } from 'next-intl';
+import SubmitWaniTokenForm from '../wanikani/SubmitWaniTokenForm';
 
 function ThemeSelector() {
     const { theme, setTheme } = useTheme();
@@ -50,7 +51,7 @@ function ThemeSelector() {
 
 const UserProfileSection = () => {
     const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
-    const { username, userId, email, created_at, japanese_level, avatarUrl, rank, xp_points, setLives, lives, timeToRestoreHeart, setXpPoints } = useUserStore();
+    const { username, userId, email, created_at, japanese_level, avatarUrl, rank, xp_points, setLives, lives, timeToRestoreHeart, setXpPoints, waniExists } = useUserStore();
     // console.log({ timeToRestoreHeart })
     const RANKS = [
         {
@@ -194,6 +195,8 @@ const UserProfileSection = () => {
 
     }
     const t = useTranslations('meta');
+
+    console.log({waniExists})
     return (
         <section className="">
             <Card className="rounded-2xl border border-gray-200 dark:border-gray-800">
@@ -271,10 +274,10 @@ const UserProfileSection = () => {
                     <div className='flex items-center flex-wrap gap-3'>
 
                         <ThemeSelector />
-
-
                         <LanguageSwitcher />
                     </div>
+                    <hr />
+                    <SubmitWaniTokenForm/>
                 </CardBody>
             </Card>
         </section>

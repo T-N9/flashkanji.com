@@ -20,13 +20,15 @@ interface UserState {
   currentStreak: number;
   longestStreak: number;
   rank: number;
-  resume_learning_section: { chapter: number | null; level: number | null};
+  resume_learning_section: { chapter: number | null; level: number | null };
   xp_points: number;
   lives: number;
   timeToRestoreHeart: string;
+  waniExists: boolean;
   setXpPoints: (point: number) => void;
   setLives: (live: number) => void;
   setTimeToRestoreHeart: (time: string) => void;
+  setWaniExists: (exists: boolean) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -36,6 +38,8 @@ export const useUserStore = create<UserState>((set) => ({
   japanese_chapter: 1,
   email: "",
   avatarUrl: "",
+  waniExists: false,
+
   setUser: (user) =>
     set((state) => ({
       ...state,
@@ -68,6 +72,7 @@ export const useUserStore = create<UserState>((set) => ({
       xp_points: 0,
       rank: 0,
       resume_learning_section: { chapter: null, level: null },
+      waniExists: false,
     }),
   todayReviewCount: 0,
   setToDayReviewCount: (count) => set({ todayReviewCount: count }),
@@ -76,4 +81,5 @@ export const useUserStore = create<UserState>((set) => ({
   setXpPoints: (point) => set({ xp_points: point }),
   setLives: (live) => set({ lives: live }),
   setTimeToRestoreHeart: (time) => set({ timeToRestoreHeart: time }),
+  setWaniExists: (exists: boolean) => set({ waniExists: exists }),
 }));
