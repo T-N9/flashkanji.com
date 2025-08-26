@@ -145,8 +145,8 @@ export function calculateNextReview(
   }
 
   const updatedCard = { ...card };
-  // const currentDate = new Date();
-  const currentDate = new Date("2025-08-27T06:47:29.824Z");
+  const currentDate = new Date();
+  // const currentDate = new Date("2025-08-27T06:47:29.824Z");
   console.log({ satisfactionInFunction: satisfaction });
 
   const sm2Quality = quality;
@@ -262,8 +262,8 @@ export function calculateDeckNextReview(
   }
 
   const updatedCard = { ...card };
-  // const currentDate = new Date();
-  const currentDate = new Date("2025-08-28T06:47:29.824Z");
+  const currentDate = new Date();
+  // const currentDate = new Date("2025-08-28T06:47:29.824Z");
   console.log({ satisfactionInFunction: satisfaction });
 
   const sm2Quality = quality;
