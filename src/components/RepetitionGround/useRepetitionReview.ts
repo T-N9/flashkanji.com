@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Clicked_Item, SR_KanjiCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
+import { useUserStore } from "@/store/userState";
 
 export default function useRepetitionReview<T extends { id: number }>(rawData: T[], fetchedRepetitionData?: SR_KanjiCard[]) {
   const [spacedRepetitionData, setSpacedRepetitionData] = useState<SR_KanjiCard[]>([]);
@@ -11,6 +12,7 @@ export default function useRepetitionReview<T extends { id: number }>(rawData: T
   const isInitialized = useRef(false);
 
   const { level } = useKanjiGroundState();
+  const { clearUserRepetitionTrackData } = useUserStore();
 
   const shuffledData = useMemo(() => {
     if (!rawData || !Array.isArray(rawData)) return [];
@@ -73,6 +75,7 @@ export default function useRepetitionReview<T extends { id: number }>(rawData: T
 
   const handleRestart = () => {
     isInitialized.current = false;
+    clearUserRepetitionTrackData();
     handlePrepareRepetitionData();
   };
 

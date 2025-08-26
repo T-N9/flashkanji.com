@@ -1,5 +1,11 @@
 // src/store/userStore.ts
+import { SR_DeckCard } from "@/util";
 import { create } from "zustand";
+
+export type RepetitionTrackItem = {
+  updatedCard: { updatedCard: SR_DeckCard; satisfaction: number };
+  index: number;
+};
 
 interface UserState {
   username: string;
@@ -29,6 +35,14 @@ interface UserState {
   setLives: (live: number) => void;
   setTimeToRestoreHeart: (time: string) => void;
   setWaniExists: (exists: boolean) => void;
+
+  userRepetitionTrackData: RepetitionTrackItem[];
+  // append one item
+  addUserRepetitionTrackItem: (item: RepetitionTrackItem) => void;
+  // replace whole array (optional)
+  setUserRepetitionTrackData: (items: RepetitionTrackItem[]) => void;
+  // clear (optional)
+  clearUserRepetitionTrackData: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -82,4 +96,13 @@ export const useUserStore = create<UserState>((set) => ({
   setLives: (live) => set({ lives: live }),
   setTimeToRestoreHeart: (time) => set({ timeToRestoreHeart: time }),
   setWaniExists: (exists: boolean) => set({ waniExists: exists }),
+
+  userRepetitionTrackData: [],
+  addUserRepetitionTrackItem: (item) =>
+    set((state) => ({
+      userRepetitionTrackData: [...state.userRepetitionTrackData, item],
+    })),
+  setUserRepetitionTrackData: (items) =>
+    set({ userRepetitionTrackData: items }),
+  clearUserRepetitionTrackData: () => set({ userRepetitionTrackData: [] }),
 }));

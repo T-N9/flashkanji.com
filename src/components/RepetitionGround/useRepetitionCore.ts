@@ -4,11 +4,11 @@ import { Clicked_Item, SR_KanjiCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import { usePathname } from "@/i18n/navigation";
+import { useUserStore } from "@/store/userState";
 
 export default function useRepetitionCore<T extends { id: number }>(
   rawData: T[]
 ) {
-
   const [spacedRepetitionData, setSpacedRepetitionData] = useState<
     SR_KanjiCard[]
   >([]);
@@ -19,8 +19,9 @@ export default function useRepetitionCore<T extends { id: number }>(
   const [satisfactionPoint, setSatisfactionPoint] = useState<number>(0);
   const isInitialized = useRef(false);
   const { level } = useKanjiGroundState();
-  const { level : levelJukugo } = useJukugoGroundState();
-  const pathname = usePathname()
+  const { clearUserRepetitionTrackData } = useUserStore();
+  const { level: levelJukugo } = useJukugoGroundState();
+  const pathname = usePathname();
 
   const shuffledData = useMemo(() => {
     if (!rawData || !Array.isArray(rawData)) return [];
@@ -81,6 +82,7 @@ export default function useRepetitionCore<T extends { id: number }>(
 
   const handleRestart = () => {
     isInitialized.current = false;
+    clearUserRepetitionTrackData();
     handlePrepareRepetitionData();
   };
 

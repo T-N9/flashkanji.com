@@ -1,4 +1,4 @@
-import { calculateDeckNextReview, calculateNextReview, SR_DeckCard } from "@/util";
+import { calculateDeckNextReview, calculateNextReview, getCardRepetitionInfo, SR_DeckCard } from "@/util";
 import { Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import Avatar from "../common/avatar/Avatar";
@@ -6,6 +6,9 @@ import Image from "next/image";
 import { ratingButtons } from "@/constants/static";
 import CharacterImage from "../common/character";
 import { playSound } from "@/util/soundPlayer";
+import { useUserStore } from "@/store/userState";
+import useRepetitionCore from "./useRepetitionCore";
+import useDeckRepetitionCore from "./useDeckRepetitionCore";
 
 export const DeckRepetitionItem = ({
     sr_data,
@@ -17,6 +20,7 @@ export const DeckRepetitionItem = ({
     hiragana,
     satisfaction,
     setSatisfaction,
+    isActive,
 }: {
     sr_data: SR_DeckCard;
     spacedRepetitionData: SR_DeckCard[];
@@ -27,12 +31,14 @@ export const DeckRepetitionItem = ({
     hiragana: string;
     satisfaction: number;
     setSatisfaction: React.Dispatch<React.SetStateAction<number>>;
+    isActive?: boolean;
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isAnswerShown, setIsAnswerShown] = useState(false);
 
     const [seconds, setSeconds] = useState<number>(0);
     const [isRunning, setIsRunning] = useState<boolean>(true);
+    const { addUserRepetitionTrackItem, userRepetitionTrackData } = useUserStore();
 
     // console.log({sr_data})
 
@@ -79,10 +85,12 @@ export const DeckRepetitionItem = ({
 
     const handleButtonClick = (index: number) => {
         playSound('click')
-        // console.log({ sr_data })
-        const updatedCard = calculateDeckNextReview(sr_data, index, satisfaction, seconds);
+        const repeatedCardInfo = getCardRepetitionInfo(userRepetitionTrackData, sr_data.id);
+        const updatedCard = calculateDeckNextReview(sr_data, index, satisfaction, seconds, repeatedCardInfo.repeated, repeatedCardInfo.count);
         const updatedStoredData = spacedRepetitionData.map((item) => {
-            // console.log(item.id, updatedCard.updatedCard.id, item.card_id);
+            // console.log(item.id, updatedCard.updatedCard.id, item.card_id, seconds);
+
+
             return item.id === updatedCard.updatedCard.id ? updatedCard.updatedCard : item
         }
 
@@ -92,7 +100,10 @@ export const DeckRepetitionItem = ({
         updatedCard.updatedCard.card_id ? handleClickLevel(updatedCard.updatedCard.card_id, index) :
             handleClickLevel(updatedCard.updatedCard.id, index);
         setSatisfaction(updatedCard.satisfaction);
-        // console.log({ satisfaction: updatedStoredData });
+        isActive && addUserRepetitionTrackItem({ updatedCard, index });
+        console.log({ updatedCard, index, seconds });
+        console.log({ satisfaction: updatedCard.satisfaction });
+        setSeconds(0);
     };
 
     const handleShowAnswer = () => {

@@ -5,6 +5,7 @@ import { Clicked_Item, SR_DeckCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import { usePathname } from "@/i18n/navigation";
+import { useUserStore } from "@/store/userState";
 
 export default function useDeckRepetitionCore<T extends { id: number }>(
   rawData: T[]
@@ -20,6 +21,7 @@ export default function useDeckRepetitionCore<T extends { id: number }>(
   const [satisfactionPoint, setSatisfactionPoint] = useState<number>(0);
   const isInitialized = useRef(false);
   const { level } = useKanjiGroundState();
+  const { clearUserRepetitionTrackData } = useUserStore();
   const { level: levelJukugo } = useJukugoGroundState();
   const pathname = usePathname();
 
@@ -82,6 +84,7 @@ export default function useDeckRepetitionCore<T extends { id: number }>(
 
   const handleRestart = () => {
     isInitialized.current = false;
+    clearUserRepetitionTrackData();
     handlePrepareRepetitionData();
   };
 

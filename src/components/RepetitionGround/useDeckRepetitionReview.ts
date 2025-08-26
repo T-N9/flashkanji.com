@@ -2,15 +2,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Clicked_Item, SR_DeckCard } from "@/util";
 import useKanjiGroundState from "@/store/kanjiGroundState";
+import { useUserStore } from "@/store/userState";
 
-export default function useDeckRepetitionReview<T extends { id: number }>(rawData: T[], fetchedRepetitionData?: SR_DeckCard[]) {
-  const [spacedRepetitionData, setSpacedRepetitionData] = useState<SR_DeckCard[]>([]);
-  const [clickedRepetitionData, setClickedRepetitionData] = useState<Clicked_Item[]>([]);
+export default function useDeckRepetitionReview<T extends { id: number }>(
+  rawData: T[],
+  fetchedRepetitionData?: SR_DeckCard[]
+) {
+  const [spacedRepetitionData, setSpacedRepetitionData] = useState<
+    SR_DeckCard[]
+  >([]);
+  const [clickedRepetitionData, setClickedRepetitionData] = useState<
+    Clicked_Item[]
+  >([]);
   const [activeItem, setActiveItem] = useState<number | null>(null);
   const [satisfactionPoint, setSatisfactionPoint] = useState<number>(0);
   const isInitialized = useRef(false);
 
   const { level } = useKanjiGroundState();
+  const { clearUserRepetitionTrackData } = useUserStore();
 
   const shuffledData = useMemo(() => {
     if (!rawData || !Array.isArray(rawData)) return [];
@@ -25,14 +34,15 @@ export default function useDeckRepetitionReview<T extends { id: number }>(rawDat
   const handlePrepareRepetitionData = () => {
     if (!isInitialized.current && shuffledData.length > 0) {
       setActiveItem(shuffledData[0].id);
-      setClickedRepetitionData(shuffledData.map((item) => ({ id: item.id, clickedLevel: 0 })));
+      setClickedRepetitionData(
+        shuffledData.map((item) => ({ id: item.id, clickedLevel: 0 }))
+      );
 
-      
       if (fetchedRepetitionData && fetchedRepetitionData.length > 0) {
         // console.log({fetchedRepetitionData})
         setSpacedRepetitionData(fetchedRepetitionData);
       } else {
-        console.log( "No stored repetition data found, initializing new data.");
+        console.log("No stored repetition data found, initializing new data.");
         const initial = shuffledData.map((item) => ({
           id: item.id,
           interval: 1,
@@ -40,7 +50,7 @@ export default function useDeckRepetitionReview<T extends { id: number }>(rawDat
           easeFactor: 2.5,
           nextReviewDate: new Date(),
           previousClick: null,
-          level : level
+          level: level,
         }));
         setSpacedRepetitionData(initial);
       }
@@ -56,7 +66,7 @@ export default function useDeckRepetitionReview<T extends { id: number }>(rawDat
   const handleClickLevel = (id: number, level: number) => {
     const temp = [...clickedRepetitionData];
     const index = temp.findIndex((item) => item.id === id);
-    console.log({level, id, index});
+    console.log({ level, id, index });
     if (index === -1) return;
 
     if (level === 3) {
@@ -73,9 +83,9 @@ export default function useDeckRepetitionReview<T extends { id: number }>(rawDat
 
   const handleRestart = () => {
     isInitialized.current = false;
+    clearUserRepetitionTrackData();
     handlePrepareRepetitionData();
   };
-
 
   return {
     shuffledData,

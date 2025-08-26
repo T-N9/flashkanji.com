@@ -183,7 +183,7 @@ export const DeckDetailModal = () => {
                                         {geminiResponse && (
                                             <div className="mt-4">
                                                 <h2 className="text-lg font-bold text-center">Sensei Response:</h2>
-                                                <div className="mt-4 bg-white p-4 rounded-lg shadow-md">
+                                                <div className="mt-4 bg-white dark:bg-dark p-4 rounded-lg shadow-md">
                                                     <GeminiResponse content={geminiResponse} />
                                                 </div>
                                             </div>

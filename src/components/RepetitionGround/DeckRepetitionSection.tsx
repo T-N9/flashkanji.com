@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@heroui/react";
 import { ArrowCounterClockwise, CheckCircle } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -19,11 +19,16 @@ import { useAddXpPoints, useRestoreOrBuyHeart, useSaveStreak } from "@/services/
 import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
 import { useRouter } from "@/i18n/navigation";
+import DeckRepetitionSummary from "./DeckRepetitionSummary";
 
 const DeckRepetitionNormalMode = () => {
     const { deckId, noOfCards } = useDeckGroundState();
-    const { userId, xp_points, setXpPoints, lives, setLives } = useUserStore();
+    const { userId, xp_points, setXpPoints, lives, setLives, userRepetitionTrackData, clearUserRepetitionTrackData } = useUserStore();
     const { data } = useDeckCards(deckId || 1, userId, parseInt(noOfCards));
+
+    useEffect(() => {
+        clearUserRepetitionTrackData();
+    }, []);
 
     const {
         shuffledData,
@@ -130,7 +135,7 @@ const DeckRepetitionNormalMode = () => {
 
 
 
-    console.log({ spacedRepetitionData })
+    console.log({ userRepetitionTrackData })
 
     if (!data || data.cards.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
@@ -147,6 +152,8 @@ const DeckRepetitionNormalMode = () => {
                     <ArrowCounterClockwise size={52} />
                 </Button>
                 <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+
+                <DeckRepetitionSummary cardData={data?.cards} trackedData={userRepetitionTrackData} />
             </div>
         );
     }
@@ -178,6 +185,7 @@ const DeckRepetitionNormalMode = () => {
                             hiragana={card.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isActive={activeItem === card.id}
                         />
                     </div>
                 )
@@ -189,9 +197,13 @@ const DeckRepetitionNormalMode = () => {
 const DeckRepetitionReviewMode = () => {
     const { selectedReviewDate } = useKanjiGroundState()
     const { deckId, srsId, isReviewMode, isReviewByDate } = useDeckGroundState();
-    const { userId, xp_points, setXpPoints, lives, setLives } = useUserStore();
+    const { userId, xp_points, setXpPoints, lives, setLives, userRepetitionTrackData, clearUserRepetitionTrackData } = useUserStore();
     const { data } = useDeckSrsSessionDetail(deckId || 1, userId, srsId || 1, isReviewMode, isReviewByDate ? selectedReviewDate : undefined);
     const { isSaveRepetition, setIsSaveRepetition, setIsVictoryModalOpen, setVictoryModalType, setVictoryXp, setShouldRefetchCalendar } = useGeneralStore();
+
+    useEffect(() => {
+        clearUserRepetitionTrackData();
+    }, []);
 
     const {
         shuffledData,
@@ -348,7 +360,7 @@ const DeckRepetitionReviewMode = () => {
     };
 
 
-    console.log({ spacedRepetitionData })
+    console.log({ cardData: data?.cardData, userRepetitionTrackData })
 
     if (!data || data?.cardData?.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
@@ -377,7 +389,7 @@ const DeckRepetitionReviewMode = () => {
                         </div>
                 }
 
-
+                <DeckRepetitionSummary cardData={data?.cardData} trackedData={userRepetitionTrackData} />
             </div>
         );
     }
@@ -409,6 +421,7 @@ const DeckRepetitionReviewMode = () => {
                             hiragana={card.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isActive={activeItem === card.id}
                         />
                     </div>
                 )

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { calculateNextReview, SR_KanjiCard } from "@/util";
+import { calculateNextReview, getCardRepetitionInfo, SR_KanjiCard } from "@/util";
 import { Button } from "@heroui/react";
-import Avatar from "../common/avatar/Avatar";
-import Image from "next/image";
 import { ratingButtons } from "@/constants/static";
 import CharacterImage from "../common/character";
 import { playSound } from "@/util/soundPlayer";
+import { useUserStore } from "@/store/userState";
 
 export const KanjiRepetitionItem = ({
     sr_data,
@@ -19,6 +18,7 @@ export const KanjiRepetitionItem = ({
     satisfaction,
     setSatisfaction,
     isReview = false,
+    isActive,
 }: {
     sr_data: SR_KanjiCard;
     spacedRepetitionData: SR_KanjiCard[];
@@ -31,12 +31,14 @@ export const KanjiRepetitionItem = ({
     satisfaction: number;
     setSatisfaction: React.Dispatch<React.SetStateAction<number>>;
     isReview?: boolean;
+    isActive?: boolean;
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isAnswerShown, setIsAnswerShown] = useState(false);
 
     const [seconds, setSeconds] = useState<number>(0);
     const [isRunning, setIsRunning] = useState<boolean>(true);
+    const { addUserRepetitionTrackItem, userRepetitionTrackData } = useUserStore();
 
     useEffect(() => {
         let interval: NodeJS.Timeout | undefined;
@@ -59,7 +61,7 @@ export const KanjiRepetitionItem = ({
         const handleKeyPress = (event: KeyboardEvent) => {
 
             if (event.key === "Enter") {
-                 playSound('flip')
+                playSound('flip')
                 setIsFlipped((isFlipped) => !isFlipped);
                 setIsAnswerShown(true);
                 setIsRunning(false);
@@ -82,7 +84,8 @@ export const KanjiRepetitionItem = ({
 
     const handleButtonClick = (index: number) => {
         playSound('click')
-        const updatedCard = calculateNextReview(sr_data, index, satisfaction, seconds);
+        const repeatedCardInfo = getCardRepetitionInfo(userRepetitionTrackData, sr_data.id);
+        const updatedCard = calculateNextReview(sr_data, index, satisfaction, seconds, repeatedCardInfo.repeated, repeatedCardInfo.count);
         const updatedStoredData = spacedRepetitionData.map((item) => {
             // console.log(item.id, updatedCard.updatedCard.card_id, item.card_id);
             if (isReview) {
@@ -101,7 +104,10 @@ export const KanjiRepetitionItem = ({
         // );
         updatedCard.updatedCard.card_id && handleClickLevel(updatedCard.updatedCard.card_id, index);
         setSatisfaction(updatedCard.satisfaction);
-        // console.log({ updatedCard, updatedStoredData, sr_data, spacedRepetitionData });
+        isActive && addUserRepetitionTrackItem({ updatedCard, index });
+        console.log({ updatedCard, index, seconds });
+        console.log({ satisfaction: updatedCard.satisfaction });
+        setSeconds(0);
     };
 
     const handleShowAnswer = () => {
@@ -167,7 +173,7 @@ export const KanjiRepetitionItem = ({
                                     >
                                         <CharacterImage src={rating.img} alt={rating.text} />
                                     </Button>
-                                   <p className="text-xs -mt-7 relative z-20 bg-white dark:bg-dark border dark:border-slate-700 px-2 py-1 rounded-lg">{rating.text}</p>
+                                    <p className="text-xs -mt-7 relative z-20 bg-white dark:bg-dark border dark:border-slate-700 px-2 py-1 rounded-lg">{rating.text}</p>
                                     <span className="text-gray-400 text-sm text-center hidden lg:block">
                                         Press {index + 1}
                                     </span>

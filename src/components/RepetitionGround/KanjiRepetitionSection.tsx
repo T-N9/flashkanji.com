@@ -19,10 +19,11 @@ import CharacterImage from "../common/character";
 import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { playSound } from "@/util/soundPlayer";
 import { useRouter } from "@/i18n/navigation";
+import RepetitionSummary from "./RepetitionSummary";
 
 const KanjiRepetitionNormalMode = () => {
     const { selectedChapter, level, part, isParted } = useKanjiGroundState();
-    const { userId, xp_points, setXpPoints } = useUserStore();
+    const { userId, xp_points, setXpPoints, userRepetitionTrackData } = useUserStore();
     const { data } = useKanjiByChapterAndLevel(selectedChapter, level, isParted ? part : null);
 
     const {
@@ -170,7 +171,7 @@ const KanjiRepetitionNormalMode = () => {
             }
         );
     };
-    console.log({ spacedRepetitionData })
+    console.log({ spacedRepetitionData, userRepetitionTrackData })
 
 
     if (!data || data?.length === 0) {
@@ -202,6 +203,7 @@ const KanjiRepetitionNormalMode = () => {
                         </div>
                 }
 
+                <RepetitionSummary cardData={data} trackedData={userRepetitionTrackData} />
             </div>
         );
     }
@@ -235,6 +237,7 @@ const KanjiRepetitionNormalMode = () => {
                             meaning={kanji.meaning}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isActive={kanji.id === activeItem}
                         />
                     </div>
                 )
@@ -245,11 +248,9 @@ const KanjiRepetitionNormalMode = () => {
 
 const KanjiRepetitionReviewMode = () => {
     const { level, selectedReviewDate } = useKanjiGroundState();
-    const { userId, xp_points, setXpPoints } = useUserStore();
+    const { userId, xp_points, setXpPoints, userRepetitionTrackData } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 1);
     const { isSaveRepetition, setIsSaveRepetition, mapItemData, setVictoryXp, setIsVictoryModalOpen, setVictoryModalType, setShouldRefetchCalendar } = useGeneralStore();
-
-    console.log({ fetchedData: data?.repetitionData })
 
     const {
         shuffledData,
@@ -268,7 +269,7 @@ const KanjiRepetitionReviewMode = () => {
     const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const router = useRouter();
 
-    console.log({ spacedRepetitionData, shuffledData })
+    console.log({ spacedRepetitionData, shuffledData,  userRepetitionTrackData })
 
     const handleAddPracticePointsAndEndSession = () => {
         playSound('session')
@@ -363,7 +364,7 @@ const KanjiRepetitionReviewMode = () => {
                 <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
 
 
-
+                <RepetitionSummary cardData={data?.cardData} trackedData={userRepetitionTrackData}/>
 
             </div>
         );
@@ -402,6 +403,7 @@ const KanjiRepetitionReviewMode = () => {
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
                             isReview={true}
+                            isActive={kanji.id === activeItem}
                         />
                     </div>
                 )

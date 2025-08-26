@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import useJukugoGroundState from "@/store/jukugoGroundState";
 import { useJukugoByChapterAndLevel } from "@/services/jukugo";
 import { JukugoRepetitionItem } from "./JukugoRepetitionItem";
@@ -20,6 +20,7 @@ import { hasSavedStreakToday, saveStreakToLocalStorage } from "@/util/streak";
 import { toast } from "sonner";
 import { playSound } from "@/util/soundPlayer";
 import { useRouter } from "@/i18n/navigation";
+import RepetitionSummary from "./RepetitionSummary";
 
 const JukugoRepetitionNormalMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
@@ -42,8 +43,12 @@ const JukugoRepetitionNormalMode = () => {
     const { mutate: saveSection, isLoading: saveLoading } = useSaveEndSection();
     const { mutate: saveStreak } = useSaveStreak();
     const { isSaveRepetition, setIsSaveRepetition, mapItemData, setShouldRefetchChapter, setIsVictoryModalOpen, setVictoryModalType, setVictoryXp } = useGeneralStore();
-    const { userId, xp_points, setXpPoints } = useUserStore();
+    const { userId, xp_points, setXpPoints, userRepetitionTrackData, clearUserRepetitionTrackData } = useUserStore();
     const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
+
+    useEffect(() => {
+        clearUserRepetitionTrackData();
+    }, []);
 
     const handleAddPracticePointsAndEndSession = () => {
         playSound('session')
@@ -193,6 +198,8 @@ const JukugoRepetitionNormalMode = () => {
                             </Button>
                         </div>
                 }
+
+                <RepetitionSummary cardData={data} trackedData={userRepetitionTrackData} />
             </div>
         );
     }
@@ -225,6 +232,7 @@ const JukugoRepetitionNormalMode = () => {
                             hiragana={jukugo.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isActive={activeItem === jukugo.id}
                         />
                     </div>
                 )
@@ -236,7 +244,7 @@ const JukugoRepetitionNormalMode = () => {
 const JukugoRepetitionReviewMode = () => {
     const { selectedChapter, level, part } = useJukugoGroundState();
     const { selectedReviewDate } = useKanjiGroundState();
-    const { userId, xp_points, setXpPoints } = useUserStore();
+    const { userId, xp_points, setXpPoints, userRepetitionTrackData, clearUserRepetitionTrackData } = useUserStore();
     const { data } = useKanjiRepetitionData_ByDate(selectedReviewDate, userId, 2);
 
     const {
@@ -259,6 +267,10 @@ const JukugoRepetitionReviewMode = () => {
     const { mutate: addXpPoints, isLoading: isClaiming } = useAddXpPoints()
     const { mutate: saveStreak } = useSaveStreak();
     const router = useRouter();
+
+    useEffect(() => {
+        clearUserRepetitionTrackData();
+    }, []);
 
     const handleAddPracticePointsAndEndSession = () => {
         playSound('session')
@@ -331,7 +343,7 @@ const JukugoRepetitionReviewMode = () => {
     };
 
 
-    // console.log({ spacedRepetitionData })
+    console.log({ spacedRepetitionData, userRepetitionTrackData })
 
     if (!data || data?.cardData?.length === 0) {
         return (<div className="w-full h-80 flex justify-center items-center">
@@ -348,6 +360,8 @@ const JukugoRepetitionReviewMode = () => {
                     <ArrowCounterClockwise size={52} />
                 </Button>
                 <Button variant="bordered" color="primary" onClick={handleEnd}>{isLoading ? 'Saving Session...' : 'Mark as Done'} </Button>
+
+                <RepetitionSummary cardData={data?.cardData} trackedData={userRepetitionTrackData} />
             </div>
         );
     }
@@ -379,6 +393,7 @@ const JukugoRepetitionReviewMode = () => {
                             hiragana={jukugo.hiragana}
                             satisfaction={satisfactionPoint}
                             setSatisfaction={setSatisfactionPoint}
+                            isActive={activeItem === jukugo.id}
                             isReview={true}
                         />
                     </div>
@@ -391,7 +406,7 @@ const JukugoRepetitionReviewMode = () => {
 const JukugoRepetitionSection = () => {
     const { isReviewMode } = useJukugoGroundState();
 
-    console.log({ "jukugo" : isReviewMode })
+    console.log({ "jukugo": isReviewMode })
     return (
         <>
             {isReviewMode ? <JukugoRepetitionReviewMode /> : <JukugoRepetitionNormalMode />}
